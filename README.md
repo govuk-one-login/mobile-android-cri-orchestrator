@@ -2,11 +2,11 @@
 
 ## About
 
-The Credential Issuer (CRI) Orchestrator coordinates identity proofing functionality for the [GOV.UK One Login app](https://github.com/govuk-one-login/mobile-android-one-login-app).
+The Credential Issuer (CRI) Orchestrator coordinates identity proofing capability for the [GOV.UK One Login app](https://github.com/govuk-one-login/mobile-android-one-login-app).
 It builds on the [ID Check SDK](https://github.com/govuk-one-login/mobile-id-check-android-sdk) used in the [GOV.UK ID Check app](https://github.com/govuk-one-login/mobile-id-check-android) with additional functionality including REST API based web-to-app handoff and document selection.
 
-Currently the only CRI supported within the SDK is the [Document Checking CRI (DCMAW)](https://github.com/govuk-one-login/mobile-id-check-async), but this component could be extended in the future to allow for additional app-based CRIs.
-In particular, adding support for the Address-Check and Fraud CRIs into the app would enable a complete end-to-end identity proofing journey within the GOV.UK One Login app.
+Currently the only CRI supported within the SDK is the [Document Checking CRI (DCMAW)](https://github.com/govuk-one-login/mobile-id-check-async), but this component could be extended in the future to allow for additional app-based CRI‍s.
+In particular, adding support for the Address-Check and Fraud CRI‍s into the app would enable a complete end-to-end identity proofing journey within the GOV.UK One Login app.
 
 ```mermaid
 flowchart
@@ -38,6 +38,17 @@ app --> crisdk
 ```
 
 See the [Mobile App Integration](https://github.com/govuk-one-login/architecture/blob/main/adr/0178-mobile-app-integration.md) ADR for more details.
+
+## How to use
+
+You can trigger the identity proofing journey in two ways:
+
+1. **Directly by the consuming app**: displays the full-screen "You can now continue your identity check" page, providing the user has a current active session.
+2. **Indirectly by displaying the ID Check card**: displays a card-view component designed to appear on an app home-screen, providing the user has a current active session.
+
+If there is no active session, these components are hidden.
+
+See the [Orchestration of ID Check SDK in One Login app tech design](https://govukverify.atlassian.net/wiki/spaces/DCMAW/pages/3800006819/Orchestration+of+ID+Check+SDK+in+One+Login+app) for more details.
 
 ## Getting Started
 
