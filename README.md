@@ -8,47 +8,7 @@ It builds on the [ID Check SDK](https://github.com/govuk-one-login/mobile-id-che
 Currently the only CRI supported within the SDK is the [Document Checking CRI (DCMAW)](https://github.com/govuk-one-login/mobile-id-check-async), but this component could be extended in the future to allow for additional app-based CRI‍s.
 In particular, adding support for the Address-Check and Fraud CRI‍s into the app would enable a complete end-to-end identity proofing journey within the GOV.UK One Login app.
 
-```mermaid
-flowchart
-
-subgraph "Mobile Platform"
-  app("GOV.UK One Login")
-end
-
-subgraph "Third Parties"
-  readid(Read ID SDK)
-  iproov(iProov SDK)
-  Firebase
-end
-
-subgraph "ID Check"
-  legacyapp("GOV.UK ID Check")
-  legacyapp --> doccheck
-
-  idchecktest(ID Check Test App) --> crisdk
-
-  doccheck(Document Checking SDK) --> readid
-  doccheck --> iproov
-
-  crisdk(CRI Orchestrator) --> doccheck
-end
-
-app("GOV.UK One Login")
-app --> crisdk
-```
-
 See the [Mobile App Integration](https://github.com/govuk-one-login/architecture/blob/main/adr/0178-mobile-app-integration.md) ADR for more details.
-
-## How to use
-
-You can trigger the identity proofing journey in two ways:
-
-1. **Directly by the consuming app**: displays the full-screen "You can now continue your identity check" page, providing the user has a current active session.
-2. **Indirectly by displaying the ID Check card**: displays a card-view component designed to appear on an app home-screen, providing the user has a current active session.
-
-If there is no active session, these components are hidden.
-
-See the [Orchestration of ID Check SDK in One Login app tech design](https://govukverify.atlassian.net/wiki/spaces/DCMAW/pages/3800006819/Orchestration+of+ID+Check+SDK+in+One+Login+app) for more details.
 
 ## Getting Started
 
@@ -57,3 +17,26 @@ Clone the repository, including the Android pipelines submodule:
 git clone --recurse-submodules git@github.com:govuk-one-login/mobile-android-cri-orchestrator.git
 ```
 Learn more about working with [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+
+## Usage
+
+You can trigger the identity proofing journey in two ways.
+If there is no active session, both of these components are hidden.
+
+See the [Orchestration of ID Check SDK in One Login app tech design](https://govukverify.atlassian.net/wiki/spaces/DCMAW/pages/3800006819/Orchestration+of+ID+Check+SDK+in+One+Login+app) for more details.
+
+### Start an ID Check immediately
+
+This displays the full-screen "You can now continue your identity check" page, providing the user has a current active session.
+
+```kt
+// Code snippet TBC
+```
+
+### Allow users to start an ID Check
+
+This displays a card-view component designed to appear on an app home-screen, providing the user has a current active session.
+
+```kt
+// Code snippet TBC
+```
