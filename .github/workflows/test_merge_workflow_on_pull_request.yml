@@ -66,7 +66,7 @@ jobs:
       - name: Publish release tags
         if: ${{ github.event_name != 'pull_request'
           && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tags@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
+        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
 
       - name: Bundle release artefacts
         id: bundle-release-artefacts
@@ -105,7 +105,7 @@ jobs:
 
       # Temporary step to upload bundle
       - name: Upload .aab bundles
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: App .aab bundle
           retention-days: 1

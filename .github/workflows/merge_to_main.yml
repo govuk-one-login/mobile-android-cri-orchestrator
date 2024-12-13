@@ -59,7 +59,7 @@ jobs:
       - name: Publish release tags
         if: ${{ github.event_name != 'pull_request'
           && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tags@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
+        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
 
       - name: Bundle release artefacts
         id: bundle-release-artefacts
