@@ -21,7 +21,7 @@ jobs:
       contents: write
       id-token: write
       packages: write
-    runs-on: ubuntu-latest-8core-x64
+    runs-on: ubuntu-latest
     steps:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
