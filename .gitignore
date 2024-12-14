@@ -23,3 +23,7 @@ gradle-app.setting
 
 # Intellij
 .idea/
+
+### Kotlin ###
+# Kotlin build
+.kotlin/

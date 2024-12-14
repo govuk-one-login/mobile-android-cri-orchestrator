@@ -23,6 +23,9 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     steps:
+      - name: Verify Conventional commit standards against latest git tag
+        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
+
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
 
@@ -31,9 +34,6 @@ jobs:
 
       - name: Setup GitHub Runner workflow
         uses: govuk-one-login/mobile-android-pipelines/actions/setup-runner@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
-
-      - name: Verify Conventional commit standards against latest git tag
-        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
 
       - name: Lint script files
         uses: govuk-one-login/mobile-android-pipelines/actions/lint-script-files@1ed3ea40181687a7750b2af0ecfa2615a6da7f78

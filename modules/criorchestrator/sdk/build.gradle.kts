@@ -14,7 +14,7 @@ android {
         namespace = apkConfig.applicationId + ".api"
         compileSdk = apkConfig.sdkVersions.compile
         minSdk = apkConfig.sdkVersions.minimum
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "uk.gov.criorchestrator.sdk.InstrumentationTestRunner"
     }
 
     buildTypes {
@@ -36,13 +36,31 @@ android {
 }
 
 dependencies {
+    listOf(
+        libs.androidx.espresso.core,
+        libs.androidx.test.espresso.accessibility,
+        libs.androidx.junit,
+        libs.hilt.android.testing,
+    ).forEach {
+        androidTestImplementation(it)
+    }
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestUtil(libs.androidx.test.orchestrator)
+
+    listOf(
+        libs.androidx.appcompat,
+        libs.androidx.core.ktx,
+        libs.hilt.android,
+        libs.material,
+    ).forEach {
+        implementation(it)
+    }
+
+    listOf(
+        libs.junit
+    ).forEach {
+        testImplementation(it)
+    }
 }
 
 mavenPublishingConfig {
