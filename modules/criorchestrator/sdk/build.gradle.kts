@@ -57,7 +57,7 @@ dependencies {
     }
 
     listOf(
-        libs.junit
+        libs.junit,
     ).forEach {
         testImplementation(it)
     }
