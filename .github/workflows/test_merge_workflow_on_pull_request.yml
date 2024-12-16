@@ -79,11 +79,10 @@ jobs:
           SIGNING_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MODULES_TO_BUNDLE: 'modules/test-wrapper'
-          GITHUB_ACTOR: ${{ github.actor }}
+          MODULES: 'modules/test-wrapper'
 
       - name: Publish package
-        if: ${{ github.event_name != 'pull_request'
+        if: ${{ github.event_name == 'pull_request'
           && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
         with:
