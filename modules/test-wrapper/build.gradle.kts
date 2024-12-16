@@ -1,6 +1,8 @@
 import com.android.build.api.dsl.ApplicationExtension
 import uk.gov.onelogin.criorchestrator.extensions.setApplicationId
 import uk.gov.onelogin.criorchestrator.extensions.setNamespace
+import uk.gov.pipelines.extensions.ProjectExtensions.versionCode
+import uk.gov.pipelines.extensions.ProjectExtensions.versionName
 
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-app-config")
@@ -33,7 +35,7 @@ configure<ApplicationExtension> {
     setNamespace(suffix = ".testwrapper")
 
     defaultConfig {
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = project.versionCode
+        versionName = project.versionName
     }
 }
