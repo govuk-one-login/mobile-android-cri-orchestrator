@@ -110,7 +110,7 @@ jobs:
       - name: Check .aab bundles exist
         run:
           cd modules/test-wrapper/build/outputs/bundle
-          ls -r
+          ls -R
         shell: bash
 
       # Temporary step to upload bundle
