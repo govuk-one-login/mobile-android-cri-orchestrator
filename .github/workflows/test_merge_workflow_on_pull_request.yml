@@ -40,7 +40,11 @@ jobs:
         uses: govuk-one-login/mobile-android-pipelines/actions/lint-script-files@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
 
       - name: Run gradle testing suite
-        uses: govuk-one-login/mobile-android-pipelines/actions/run-testing-suite@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
+        run: |
+          ./gradlew \ 
+          testDebugUnitTest \
+          allDevicesCheck
+        shell: bash
 
       - name: Upload results to sonarcloud (merge)
         if: ${{ github.event_name != 'pull_request' }}
