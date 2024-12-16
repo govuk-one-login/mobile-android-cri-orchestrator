@@ -36,30 +36,30 @@ jobs:
 #      - name: Verify Conventional commit standards against latest git tag
 #        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
 
-      - name: Lint files
-        uses: govuk-one-login/mobile-android-pipelines/actions/lint-files@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
+#      - name: Lint files
+#        uses: govuk-one-login/mobile-android-pipelines/actions/lint-files@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
+#
+#      - name: Run gradle testing suite
+#        run: ./gradlew testDebugUnitTest allDevicesCheck
+#        shell: bash
+#
+##     TODO: This is currently for PR - change to BRANCH for post-merge workflow
+#      - name: Sonar scan
+#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-scan@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
+#        with:
+#          sonar-token: ${{ secrets.SONAR_TOKEN }}
+#          analysis-type: PR
+#
+##     TODO: This is currently for PR - remove for post-merge
+#      - name: SonarQube Quality Gate check
+#        id: sonarqube-quality-gate-check
+#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-quality-gate@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
+#        with:
+#          sonar-token: ${{ secrets.SONAR_TOKEN }}
+#          working-directory: ${{ github.workspace }}
 
-      - name: Run gradle testing suite
-        run: ./gradlew testDebugUnitTest allDevicesCheck
-        shell: bash
-
-#     TODO: This is currently for PR - change to BRANCH for post-merge workflow
-      - name: Sonar scan
-        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-scan@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          analysis-type: PR
-
-#     TODO: This is currently for PR - remove for post-merge
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-quality-gate@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          working-directory: ${{ github.workspace }}
-
-      - name: Bundle reports folder
-        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-reports@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
+#      - name: Bundle reports folder
+#        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-reports@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
 
       - name: Increment the release version using Conventional Commits
         id: versioning
@@ -106,9 +106,20 @@ jobs:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
           NEW_VERSION: ${{ steps.versioning.outputs.new-version }}
 
+      - name: echo aab paths
+        run: |
+          echo "${PATHS}"
+        shell: bash
+        env:
+          PATHS: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
+
       # TODO: remove - for debugging only
       - name: Check .aab bundles exist
         run: |
+          ls -R modules \
+          ls -R modules/test-wrapper \
+          ls -R modules/test-wrapper/build/ \
+          ls -R modules/test-wrapper/build/outputs/ \
           ls -R modules/test-wrapper/build/outputs/bundle
         shell: bash
 
@@ -119,8 +130,7 @@ jobs:
           name: App .aab bundle
           retention-days: 1
           if-no-files-found: error
-          path: |
-            modules/test-wrapper/build/outputs/bundle
+          path: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
 
       - name: Upload .aab bundles
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
