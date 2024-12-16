@@ -106,23 +106,6 @@ jobs:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
           NEW_VERSION: ${{ steps.versioning.outputs.new-version }}
 
-      - name: echo aab paths
-        run: |
-          echo "${PATHS}"
-        shell: bash
-        env:
-          PATHS: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
-
-      # TODO: remove - for debugging only
-      - name: Check .aab bundles exist
-        run: |
-          ls -R modules \
-          ls -R modules/test-wrapper \
-          ls -R modules/test-wrapper/build/ \
-          ls -R modules/test-wrapper/build/outputs/ \
-          ls -R modules/test-wrapper/build/outputs/bundle
-        shell: bash
-
       # Temporary step to upload bundle
       - name: Upload .aab bundles
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
@@ -130,17 +113,17 @@ jobs:
           name: App .aab bundle
           retention-days: 1
           if-no-files-found: error
-          path: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
+          path: modules/test-wrapper/build/outputs/bundle
 
-      - name: Upload .aab bundles
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-        with:
-          name: App .aab bundle
-          retention-days: 1
-          if-no-files-found: error
-          path: |
-            modules/test-wrapper/build/outputs/bundle/**/*
-          overwrite: true
+#      - name: Upload .aab bundles
+#        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+#        with:
+#          name: App .aab bundle
+#          retention-days: 1
+#          if-no-files-found: error
+#          path: |
+#            modules/test-wrapper/build/outputs/bundle/**/*
+#          overwrite: true
 
       - name: Clean workspace
         uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@5811e78b1a8f759ca0624ca1f5223f9a75d5f0cc
