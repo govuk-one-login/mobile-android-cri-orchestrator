@@ -109,7 +109,7 @@ jobs:
       # TODO: remove - for debugging only
       - name: Check .aab bundles exist
         run:
-          cd modules/test-wrapper/build/outputs/bundle
+          cd modules/test-wrapper/build/outputs/bundle \
           ls -R
         shell: bash
 
