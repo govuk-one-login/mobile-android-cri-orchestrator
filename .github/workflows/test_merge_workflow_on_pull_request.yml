@@ -75,9 +75,9 @@ jobs:
         id: bundle-release-artefacts
         uses: govuk-one-login/mobile-android-pipelines/actions/bundle-release-artefacts@09494d32d321ccd306253511efb4dba23da90b5f
         with:
-          SIGNING_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODULES: 'modules/test-wrapper'
 
