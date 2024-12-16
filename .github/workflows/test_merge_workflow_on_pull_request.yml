@@ -106,6 +106,13 @@ jobs:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
           NEW_VERSION: ${{ steps.versioning.outputs.new-version }}
 
+      # TODO: remove - for debugging only
+      - name: Check .aab bundles exist
+        run:
+          cd modules/test-wrapper/build/outputs/bundle
+          ls -r
+        shell: bash
+
       # Temporary step to upload bundle
       - name: Upload .aab bundles
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
@@ -115,6 +122,16 @@ jobs:
           if-no-files-found: error
           path: |
             modules/test-wrapper/build/outputs/bundle
+
+      - name: Upload .aab bundles
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: App .aab bundle
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            modules/test-wrapper/build/outputs/bundle/**/*
+          overwrite: true
 
       - name: Clean workspace
         uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@26ee89ba21be9c25795aaac2d5b038e4d2f96d03
