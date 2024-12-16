@@ -36,14 +36,11 @@ jobs:
 #      - name: Verify Conventional commit standards against latest git tag
 #        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@c2f3ac4d34f896a8942ef31a5ca7884c712584d0
 
-      - name: Lint script files
+      - name: Lint files
         uses: govuk-one-login/mobile-android-pipelines/actions/lint-files@c2f3ac4d34f896a8942ef31a5ca7884c712584d0
 
       - name: Run gradle testing suite
-        run: |
-          ./gradlew \ 
-            testDebugUnitTest \
-            allDevicesCheck
+        run: ./gradlew testDebugUnitTest allDevicesCheck
         shell: bash
 
       - name: Upload results to sonarcloud (merge)
