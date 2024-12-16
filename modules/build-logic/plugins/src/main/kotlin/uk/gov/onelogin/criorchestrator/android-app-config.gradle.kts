@@ -40,6 +40,32 @@ configure<ApplicationExtension> {
     setJavaVersion()
     setUiConfig()
     setPackagingConfig()
+
+    configure<ApplicationExtension> {
+        val releaseSigningConfig =
+            this.signingConfigs.register("releaseSigningConfig") {
+                val tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"
+                val allFilesFromDir = File(tmpFilePath).listFiles()
+                val keyStoreFile = File("${project.rootProject.projectDir}/config/keystore.jks")
+
+                val hasMovedGitRunnerKeystore =
+                    allFilesFromDir?.first()?.renameTo(keyStoreFile) ?: false
+
+                val logMessage =
+                    if (hasMovedGitRunnerKeystore) {
+                        "Moved keystore file from \"$tmpFilePath\"!"
+                    } else {
+                        "Using existing keystore in \"$keyStoreFile\"!"
+                    }
+
+                project.logger.lifecycle(logMessage)
+
+                storeFile = keyStoreFile
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            }
+    }
 }
 
 configure<KotlinAndroidProjectExtension> {
