@@ -108,9 +108,8 @@ jobs:
 
       # TODO: remove - for debugging only
       - name: Check .aab bundles exist
-        run:
-          cd modules/test-wrapper/build/outputs/bundle \
-          ls -R
+        run: |
+          ls -R modules/test-wrapper/build/outputs/bundle
         shell: bash
 
       # Temporary step to upload bundle
