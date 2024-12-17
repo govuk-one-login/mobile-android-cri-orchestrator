@@ -100,9 +100,9 @@ jobs:
         uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@9b75f29f7a9424fd50f0005bc42b42162897a74a
         with:
           aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
-          package-name: "uk.gov.onelogin.criorchestrator.testwrapper"
+          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
           json-key-data: ${{ secrets.json-key-data }}
-          track: ${{ inputs.track }}
+          track: 'internal'
 
       - name: Generate Changelog
         if: ${{ github.event_name != 'pull_request'
