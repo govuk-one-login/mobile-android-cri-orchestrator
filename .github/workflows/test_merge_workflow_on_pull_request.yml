@@ -88,12 +88,12 @@ jobs:
           MODULES: 'modules/test-wrapper'
           FLAVORS: 'staging,build'
 
-      - name: Publish package
-        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@2ebe87d8968460f410819c064f47c1e5097822ef
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
+#      - name: Publish package
+#        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+#        uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@2ebe87d8968460f410819c064f47c1e5097822ef
+#        with:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_ACTOR: ${{ github.actor }}
 
 #      - name: Upload to Play Store
 #        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
