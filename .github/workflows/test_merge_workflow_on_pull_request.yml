@@ -95,14 +95,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
 
-      - name: Upload to Play Store
-        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@2ebe87d8968460f410819c064f47c1e5097822ef
+#      - name: Upload to Play Store
+#        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+#        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@2ebe87d8968460f410819c064f47c1e5097822ef
+#        with:
+#          aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
+#          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
+#          json-key-data: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+#          track: 'internal'
+
+      # Temporary step to upload bundle
+      - name: Upload .aab bundles
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
-          aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
-          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
-          json-key-data: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          track: 'internal'
+          name: App .aab bundle
+          retention-days: 1
+          if-no-files-found: error
+          path: modules/test-wrapper/build/outputs/bundle
 
       - name: Generate Changelog
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
