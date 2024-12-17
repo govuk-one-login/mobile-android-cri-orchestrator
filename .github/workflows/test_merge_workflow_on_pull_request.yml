@@ -69,16 +69,15 @@ jobs:
 
       - name: Increment the release version using Conventional Commits
         id: versioning
-        if: ${{ github.event_name != 'pull_request' }}
         uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@9b75f29f7a9424fd50f0005bc42b42162897a74a
 
       - name: Publish release tags
-        if: ${{ github.event_name != 'pull_request'
-          && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@9b75f29f7a9424fd50f0005bc42b42162897a74a
 
       - name: Bundle release artefacts
         id: bundle-release-artefacts
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/bundle-release-artefacts@9b75f29f7a9424fd50f0005bc42b42162897a74a
         with:
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
@@ -89,14 +88,14 @@ jobs:
           FLAVORS: 'staging,build'
 
       - name: Publish package
-        if: ${{ github.event_name == 'pull_request'
-          && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@9b75f29f7a9424fd50f0005bc42b42162897a74a
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
 
       - name: Upload to Play Store
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@9b75f29f7a9424fd50f0005bc42b42162897a74a
         with:
           aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
@@ -105,8 +104,7 @@ jobs:
           track: 'internal'
 
       - name: Generate Changelog
-        if: ${{ github.event_name != 'pull_request'
-          && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/generate-and-upload-changelog@9b75f29f7a9424fd50f0005bc42b42162897a74a
         with:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
