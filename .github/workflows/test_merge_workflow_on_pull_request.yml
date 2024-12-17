@@ -96,13 +96,13 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
 
 #      TODO: uncomment when fastlane is able to communicate with Play Store (post first bundle upload)
-#      - name: Upload to Play Store
-#        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@9b75f29f7a9424fd50f0005bc42b42162897a74a
-#        with:
-#          INPUT_AAB_PATHS: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
-#          INPUT_PACKAGE_NAME: ${{  }}
-#          INPUT_JSON_KEY_DATA: ${{  secrets.json-key-data  }}
-#          INPUT_TRACK: ${{ inputs.track }}
+      - name: Upload to Play Store
+        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@9b75f29f7a9424fd50f0005bc42b42162897a74a
+        with:
+          INPUT_AAB_PATHS: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
+          INPUT_PACKAGE_NAME: ${{ uk.gov.onelogin.criorchestrator.testwrapper }}
+          INPUT_JSON_KEY_DATA: ${{ secrets.json-key-data }}
+          INPUT_TRACK: ${{ inputs.track }}
 
       - name: Generate Changelog
         if: ${{ github.event_name != 'pull_request'
@@ -111,25 +111,6 @@ jobs:
         with:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
           NEW_VERSION: ${{ steps.versioning.outputs.new-version }}
-
-      # Temporary step to upload bundle
-      - name: Upload .aab bundles
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-        with:
-          name: App .aab bundle
-          retention-days: 1
-          if-no-files-found: error
-          path: modules/test-wrapper/build/outputs/bundle
-
-#      - name: Upload .aab bundles
-#        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-#        with:
-#          name: App .aab bundle
-#          retention-days: 1
-#          if-no-files-found: error
-#          path: |
-#            modules/test-wrapper/build/outputs/bundle/**/*
-#          overwrite: true
 
       - name: Clean workspace
         uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@9b75f29f7a9424fd50f0005bc42b42162897a74a
