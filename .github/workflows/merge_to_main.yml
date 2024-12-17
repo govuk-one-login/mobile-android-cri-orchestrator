@@ -94,8 +94,8 @@ jobs:
           && steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: govuk-one-login/mobile-android-pipelines/actions/generate-and-upload-changelog@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
         with:
-          CURRENT_VERSION: ${{ steps.versioning.outputs.current-version }}
-          NEW_VERSION: ${{ steps.versioning.outputs.new-version }}
+          CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
+          NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
   
       - name: Clean workspace
         uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@1ed3ea40181687a7750b2af0ecfa2615a6da7f78
