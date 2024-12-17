@@ -24,26 +24,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run checkout github action
-        uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
       - name: Clean workspace
-        uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
       - name: Setup GitHub Runner workflow
-        uses: govuk-one-login/mobile-android-pipelines/actions/setup-runner@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/setup-runner@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
       - name: Retrieve GitHub secrets
-        uses: govuk-one-login/mobile-android-pipelines/actions/retrieve-secrets@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/retrieve-secrets@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
         with:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           SERVICE_ACCOUNT_JSON_BASE64: ${{ secrets.SERVICE_ACCOUNT_JSON_BASE64 }}
 
 #     TODO: this is failing due to PR state and initial commit - remove after testing
 #      - name: Verify Conventional commit standards against latest git tag
-#        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/verify-conventional-commit@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
 #      - name: Lint files
-#        uses: govuk-one-login/mobile-android-pipelines/actions/lint-files@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/lint-files@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 #
 #      - name: Run gradle testing suite
 #        run: ./gradlew testDebugUnitTest allDevicesCheck
@@ -51,7 +51,7 @@ jobs:
 #
 ##     TODO: This is currently for PR - change to BRANCH for post-merge workflow
 #      - name: Sonar scan
-#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-scan@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-scan@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 #        with:
 #          sonar-token: ${{ secrets.SONAR_TOKEN }}
 #          analysis-type: PR
@@ -59,27 +59,27 @@ jobs:
 ##     TODO: This is currently for PR - remove for post-merge
 #      - name: SonarQube Quality Gate check
 #        id: sonarqube-quality-gate-check
-#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-quality-gate@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/sonar-quality-gate@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 #        with:
 #          sonar-token: ${{ secrets.SONAR_TOKEN }}
 #          working-directory: ${{ github.workspace }}
 
 #      - name: Bundle reports folder
-#        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-reports@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-reports@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
       - name: Increment the release version using Conventional Commits
         id: versioning
-        uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
 #     TODO: Uncomment for post-merge
 #      - name: Publish release tags
 #        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-#        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
       - name: Bundle release artefacts
         id: bundle-release-artefacts
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-release-artefacts@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-release-artefacts@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
         with:
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
@@ -90,14 +90,14 @@ jobs:
 
 #      - name: Publish package
 #        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-#        uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/maven-publish@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 #        with:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          GITHUB_ACTOR: ${{ github.actor }}
 
 #      - name: Upload to Play Store
 #        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-#        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@2ebe87d8968460f410819c064f47c1e5097822ef
+#        uses: govuk-one-login/mobile-android-pipelines/actions/upload-to-play-store@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 #        with:
 #          aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
 #          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
@@ -115,10 +115,10 @@ jobs:
 
       - name: Generate Changelog
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/generate-and-upload-changelog@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/generate-and-upload-changelog@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
         with:
           CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
           NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
 
       - name: Clean workspace
-        uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@2ebe87d8968460f410819c064f47c1e5097822ef
+        uses: govuk-one-login/mobile-android-pipelines/actions/clean-workspace@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
