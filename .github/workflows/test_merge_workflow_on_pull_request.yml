@@ -71,9 +71,10 @@ jobs:
         id: versioning
         uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@2ebe87d8968460f410819c064f47c1e5097822ef
 
-      - name: Publish release tags
-        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@2ebe87d8968460f410819c064f47c1e5097822ef
+#     TODO: Uncomment for post-merge
+#      - name: Publish release tags
+#        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+#        uses: govuk-one-login/mobile-android-pipelines/actions/publish-release-tag@2ebe87d8968460f410819c064f47c1e5097822ef
 
       - name: Bundle release artefacts
         id: bundle-release-artefacts
