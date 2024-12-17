@@ -6,6 +6,7 @@ androidXTest = "1.6.1"
 androidXTestJUnit = "1.2.1"
 androidXTestOrchestrator = "1.5.1"
 appcompat = "1.7.0"
+bouncycastle = "1.79"
 composeBom = "2024.11.00"
 dagger = "2.53.1" # https://github.com/google/dagger/releases
 espressoCore = "3.6.1"
@@ -34,6 +35,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+bouncycastle = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }

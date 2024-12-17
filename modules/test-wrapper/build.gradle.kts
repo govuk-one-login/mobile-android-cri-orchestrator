@@ -32,17 +32,25 @@ android {
 configure<ApplicationExtension> {
     setApplicationId(suffix = ".testwrapper")
     setNamespace(suffix = ".testwrapper")
+
     val semanticVersion = project.versionName
-    val (first, second, third) = semanticVersion.split(".")
+    val (major, minor, patch) = semanticVersion.split(".")
     val versionCodeFromSemVer =
-        first.toInt().times(10000).plus(
-            second.toInt().times(100).plus(
-                third.toInt()
-            )
+        major.toInt().times(10000).plus(
+            minor.toInt().times(100).plus(
+                patch.toInt(),
+            ),
         )
 
     defaultConfig {
         versionName = semanticVersion
         versionCode = versionCodeFromSemVer
+    }
+}
+
+buildscript {
+    dependencies {
+        // https://issuetracker.google.com/issues/380600747
+        classpath(libs.bouncycastle)
     }
 }
