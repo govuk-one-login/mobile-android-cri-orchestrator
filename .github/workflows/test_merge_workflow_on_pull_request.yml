@@ -101,7 +101,7 @@ jobs:
         with:
           aab-paths: ${{ steps.bundle-release-artefacts.outputs.aab-paths }}
           package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
-          json-key-data: ${{ secrets.json-key-data }}
+          json-key-data: ${{ secrets.JSON_KEY_DATA }}
           track: 'internal'
 
       - name: Generate Changelog
