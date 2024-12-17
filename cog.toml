@@ -1,0 +1,21 @@
+disable_bump_commit = true
+ignore_merge_commits = true
+
+[changelog]
+authors = [
+    # Signatures are commonly the visual name attached to a github account. This is found above
+    # the user ID on a User's profile page.
+    { signature = "Jonny Andrew", username = "jonnyandrew" },
+    { signature = "Delphine", username = "de1phine" },
+    { signature = "Jackson", username = "JacksonJ2W" },
+]
+template = "remote"
+remote = "github.com"
+repository = "mobile-android-cri-orchestrator"
+owner = "govuk-one-login"
+
+[commit_types]
+wip = { changelog_title = "Work in Progress", omit_from_changelog = true }
+chore = { changelog_title = "Chore", bump_patch = true }
+build = { changelog_title = "Build", bump_patch = true }
+refactor = { changelog_title = "Refactor", bump_patch = true }
