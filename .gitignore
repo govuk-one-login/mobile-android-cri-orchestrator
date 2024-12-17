@@ -27,3 +27,8 @@ gradle-app.setting
 ### Kotlin ###
 # Kotlin build
 .kotlin/
+
+## Environment normalization:
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
