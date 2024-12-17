@@ -23,13 +23,21 @@ buildscript {
             "sonar.projectId" to "mobile-android-cri-orchestrator",
         )
     )
+    dependencies {
+        listOf(
+            // https://issuetracker.google.com/issues/380600747
+            libs.org.bouncycastle.bcutil.jdk18on,
+        ).forEach {
+            classpath(it)
+        }
+    }
 }
 
 val apkConfig by rootProject.extra(
-    object: ApkConfig {
+    object : ApkConfig {
         override val applicationId: String = "uk.gov.criorchestrator"
         override val debugVersion: String = "DEBUG_VERSION"
-        override val sdkVersions = object: ApkConfig.SdkVersions {
+        override val sdkVersions = object : ApkConfig.SdkVersions {
             override val minimum = 29
             override val target = 33
             override val compile = 35
@@ -72,4 +80,3 @@ tasks.register<Copy>("publishAllDefaultPublicationsToLocalBuildRepository") {
     }
     includeEmptyDirs = false
 }
-

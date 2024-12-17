@@ -47,10 +47,3 @@ configure<ApplicationExtension> {
         versionCode = versionCodeFromSemVer
     }
 }
-
-buildscript {
-    dependencies {
-        // https://issuetracker.google.com/issues/380600747
-        classpath(libs.bouncycastle)
-    }
-}
