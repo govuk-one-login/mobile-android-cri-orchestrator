@@ -38,7 +38,7 @@ configure<ApplicationExtension> {
     val versionCodeFromSemVer =
         major.toInt().times(10000).plus(
             minor.toInt().times(100).plus(
-                patch.toInt().plus(1),
+                patch.toInt(),
             ),
         )
 
