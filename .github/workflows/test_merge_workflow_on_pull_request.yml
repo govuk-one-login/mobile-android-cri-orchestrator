@@ -67,9 +67,10 @@ jobs:
 #      - name: Bundle reports folder
 #        uses: govuk-one-login/mobile-android-pipelines/actions/bundle-reports@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
-      - name: Increment the release version using Conventional Commits
-        id: versioning
-        uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
+#     TODO: uncomment for post-merge
+#      - name: Increment the release version using Conventional Commits
+#        id: versioning
+#        uses: govuk-one-login/mobile-android-pipelines/actions/increment-cog-semantic-version@5b2867aad9ac331b3cd8e619d51a980a8dfa8f22
 
 #     TODO: Uncomment for post-merge
 #      - name: Publish release tags
