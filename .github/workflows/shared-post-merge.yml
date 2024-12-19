@@ -1,0 +1,22 @@
+name: Shared Post Merge steps
+
+on:
+  workflow_run:
+    workflows: [Test]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  shared-post-merge-steps:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    env:
+      JDK_VERSION: 17
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
