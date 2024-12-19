@@ -19,27 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 0
-          submodules: true
+        uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
       - name: Set up git runner
         uses: ./mobile-android-pipelines/actions/setup-runner
         with:
           jdk-version: 21
 
-      - name: Lint Kotlin with detekt
-        run: ./gradlew detekt
-
-      - name: Lint Kotlin with ktlint
-        run: ./gradlew ktlintCheck
-
-      - name: Lint documentation with vale
-        run: ./gradlew vale
-
-      - name: Lint Android
-        run: ./gradlew lint
+      - name: Lint
+        uses: ./mobile-android-pipelines/actions/lint
 
       - name: Clean workspace
         if: ${{ always() }}
