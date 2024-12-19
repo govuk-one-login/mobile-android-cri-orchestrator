@@ -1,4 +1,4 @@
-name: 'Test merge workflow on Pull Request'
+name: Test merge workflow on Pull Request
 
 on:
   workflow_run:
