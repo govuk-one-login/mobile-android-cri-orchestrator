@@ -23,31 +23,31 @@ jobs:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
-      - name: Clean workspace
-        uses: ./mobile-android-pipelines/actions/clean-workspace
-
-      - name: Setup GitHub Runner workflow
-        uses: ./mobile-android-pipelines/actions/setup-runner
-
-      - name: Verify Conventional commit standards against latest git tag
-        uses: ./mobile-android-pipelines/actions/verify-conventional-commit
-
-      - name: Bundle reports folder
-        uses: ./mobile-android-pipelines/actions/bundle-reports
-
-      - name: Increment the release version using Conventional Commits
-        id: versioning
-        uses: ./mobile-android-pipelines/actions/increment-cog-semantic-version
-
-      - name: Publish release tags
-        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-        uses: ./mobile-android-pipelines/actions/publish-release-tag
-
-      - name: Generate Changelog
-        uses: ./mobile-android-pipelines/actions/generate-and-upload-changelog
-        with:
-          CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
-          NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
+#      - name: Clean workspace
+#        uses: ./mobile-android-pipelines/actions/clean-workspace
+#
+#      - name: Setup GitHub Runner workflow
+#        uses: ./mobile-android-pipelines/actions/setup-runner
+#
+#      - name: Verify Conventional commit standards against latest git tag
+#        uses: ./mobile-android-pipelines/actions/verify-conventional-commit
+#
+#      - name: Bundle reports folder
+#        uses: ./mobile-android-pipelines/actions/bundle-reports
+#
+#      - name: Increment the release version using Conventional Commits
+#        id: versioning
+#        uses: ./mobile-android-pipelines/actions/increment-cog-semantic-version
+#
+#      - name: Publish release tags
+#        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+#        uses: ./mobile-android-pipelines/actions/publish-release-tag
+#
+#      - name: Generate Changelog
+#        uses: ./mobile-android-pipelines/actions/generate-and-upload-changelog
+#        with:
+#          CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
+#          NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
 
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace

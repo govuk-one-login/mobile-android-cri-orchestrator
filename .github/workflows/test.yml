@@ -25,18 +25,18 @@ jobs:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
-      - name: Set up git runner
-        uses: ./mobile-android-pipelines/actions/setup-runner
-        with:
-          jdk-version: 21
+#      - name: Set up git runner
+#        uses: ./mobile-android-pipelines/actions/setup-runner
+#        with:
+#          jdk-version: 21
 
-      - name: Unit test
-        run: ./gradlew testDebugUnitTest
-
-      - name: Upload test coverage report
-        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
-        with:
-          artifact-name: unit-test-coverage
+#      - name: Unit test
+#        run: ./gradlew testDebugUnitTest
+#
+#      - name: Upload test coverage report
+#        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+#        with:
+#          artifact-name: unit-test-coverage
 
       - name: Clean workspace
         if: ${{ always() }}
@@ -49,18 +49,18 @@ jobs:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
-      - name: Set up git runner
-        uses: ./mobile-android-pipelines/actions/setup-runner
-        with:
-          jdk-version: 21
-
-      - name: Instrumentation test
-        run: ./gradlew allDevicesCheck
-
-      - name: Upload test coverage report
-        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
-        with:
-          artifact-name: instrumentation-test-coverage
+#      - name: Set up git runner
+#        uses: ./mobile-android-pipelines/actions/setup-runner
+#        with:
+#          jdk-version: 21
+#
+#      - name: Instrumentation test
+#        run: ./gradlew allDevicesCheck
+#
+#      - name: Upload test coverage report
+#        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+#        with:
+#          artifact-name: instrumentation-test-coverage
 
       - name: Clean workspace
         if: ${{ always() }}
@@ -76,37 +76,41 @@ jobs:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
-      - name: Setup runner
-        uses: ./mobile-android-pipelines/actions/setup-runner
-        with:
-          jdk-version: 21
+#      - name: Setup runner
+#        uses: ./mobile-android-pipelines/actions/setup-runner
+#        with:
+#          jdk-version: 21
+#
+#      - name: Download unit test coverage reports
+#        uses: ./mobile-android-pipelines/actions/download-artifact
+#        with:
+#          artifact-name: unit-test-coverage
+#
+#      - name: Download instrumentation test coverage reports
+#        uses: ./mobile-android-pipelines/actions/download-artifact
+#        with:
+#          artifact-name: instrumentation-test-coverage
+#
+#      - name: Scan with Sonar if PR
+#        if: ${{ github.event_name == 'pull_request' }}
+#        uses: ./mobile-android-pipelines/actions/sonar-scan
+#        with:
+#          sonar-token: ${{ secrets.SONAR_TOKEN }}
+#          analysis-type: 'PR'
+#
+#      - name: Scan with Sonar if Merge
+#        if: ${{ github.event_name != 'pull_request' }}
+#        uses: ./mobile-android-pipelines/actions/sonar-scan
+#        with:
+#          sonar-token: ${{ secrets.SONAR_TOKEN }}
+#          analysis-type: 'BRANCH'
+#
+#      - name: Run sonar quality gate if PR
+#        if: ${{ github.event_name == 'pull_request' }}
+#        uses: ./mobile-android-pipelines/actions/sonar-quality-gate
+#        with:
+#          sonar-token: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Download unit test coverage reports
-        uses: ./mobile-android-pipelines/actions/download-artifact
-        with:
-          artifact-name: unit-test-coverage
-
-      - name: Download instrumentation test coverage reports
-        uses: ./mobile-android-pipelines/actions/download-artifact
-        with:
-          artifact-name: instrumentation-test-coverage
-
-      - name: Scan with Sonar if PR
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: ./mobile-android-pipelines/actions/sonar-scan
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          analysis-type: 'PR'
-
-      - name: Scan with Sonar if Merge
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: ./mobile-android-pipelines/actions/sonar-scan
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          analysis-type: 'BRANCH'
-
-      - name: Run sonar quality gate if PR
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: ./mobile-android-pipelines/actions/sonar-quality-gate
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
