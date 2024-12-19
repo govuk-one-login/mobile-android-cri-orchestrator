@@ -28,13 +28,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout codebase
+        uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
         with:
-          fetch-depth: 0
           # Check the PR HEAD instead of the merge commit
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Check commit messages
-        uses: cocogitto/cocogitto-action@f1d28f8e65281597d8209bf233328ddfd4424d10 # v3.9
+        uses: ./mobile-android-pipelines/actions/verify-conventional-commit
         with:
           check-latest-tag-only: true
