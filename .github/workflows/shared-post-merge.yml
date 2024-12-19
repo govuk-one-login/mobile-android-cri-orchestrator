@@ -6,7 +6,6 @@ on:
     branches: [DCMAW-10666-post-merge-workflow-test]
     #    branches: [main]
     types: [completed]
-  push:
   workflow_dispatch:
 
 jobs:
