@@ -24,18 +24,18 @@ jobs:
       - name: Run checkout github action
         uses: govuk-one-login/mobile-android-pipelines/actions/checkout-codebase@b73863294484f4e8babaf132a1a3ac5572525cee
 
-#      - name: Set up git runner
-#        uses: ./mobile-android-pipelines/actions/setup-runner
-#        with:
-#          jdk-version: 21
+      - name: Set up git runner
+        uses: ./mobile-android-pipelines/actions/setup-runner
+        with:
+          jdk-version: 21
 
-#      - name: Unit test
-#        run: ./gradlew testDebugUnitTest
-#
-#      - name: Upload test coverage report
-#        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
-#        with:
-#          artifact-name: unit-test-coverage
+      - name: Unit test
+        run: ./gradlew testDebugUnitTest
+
+      - name: Upload test coverage report
+        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+        with:
+          artifact-name: unit-test-coverage
 
       - name: Clean workspace
         if: ${{ always() }}
