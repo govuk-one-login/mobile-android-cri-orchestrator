@@ -7,8 +7,7 @@ on:
       - reopened
       - synchronize
   push:
-    branches:
-      - main
+    branches: [DCMAW-10666-post-merge-workflow-test]
   merge_group:
   workflow_dispatch:
 
