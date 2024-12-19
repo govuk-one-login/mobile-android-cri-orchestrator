@@ -3,7 +3,6 @@ name: Upload to GitHub Packages
 on:
   workflow_run:
     workflows: [Shared Post Merge steps]
-    branches: [DCMAW-10666-post-merge-workflow-test]
     #    branches: [main]
     types: [completed]
   workflow_dispatch:
