@@ -3,7 +3,7 @@ name: Upload to Play Store
 on:
   workflow_run:
     workflows:
-      - shared-post-merge
+      - Shared Post Merge steps
     branches:
       - DCMAW-10666-post-merge-workflow-test
     #      - main

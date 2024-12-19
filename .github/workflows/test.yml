@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - DCMAW-10666-post-merge-workflow-test
+#      - main
   merge_group:
   workflow_dispatch:
 
