@@ -2,10 +2,13 @@ name: Upload to Play Store
 
 on:
   workflow_run:
-    workflows: [ shared-post-merge ]
-    branches: [ DCMAW-10666-post-merge-workflow-test ]
-    #    branches: [main]
-    types: [ completed ]
+    workflows:
+      - shared-post-merge
+    branches:
+      - DCMAW-10666-post-merge-workflow-test
+    #      - main
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
