@@ -2,7 +2,7 @@ name: Upload to GitHub Packages
 
 on:
   workflow_run:
-    workflows: [Shared Post Merge steps]
+    workflows: ["Create new release"]
     #    branches: [main]
     types: [completed]
   workflow_dispatch:
