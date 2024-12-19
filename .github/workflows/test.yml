@@ -8,8 +8,7 @@ on:
       - synchronize
   push:
     branches:
-      - DCMAW-10666-post-merge-workflow-test
-#      - main
+      - main
   merge_group:
   workflow_dispatch:
 
