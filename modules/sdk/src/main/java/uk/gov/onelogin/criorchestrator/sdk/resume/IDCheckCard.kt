@@ -22,7 +22,8 @@ fun IDCheckCard(
             text = R.string.start_id_check_primary_button,
         ),
     ) {
-        // todo: display the ID Check Dialog:
+        // Identity Proofing and Verification (IPV)
+        // TODO: display the ID Check Dialog:
         // DCMAW-10056: Android | Resume IPV | Create 'Start ID Check' modal UI
     }
 }
