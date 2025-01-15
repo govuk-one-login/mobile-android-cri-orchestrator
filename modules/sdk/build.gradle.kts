@@ -8,10 +8,19 @@ plugins {
     ).forEach {
         id(it)
     }
+
+    listOf(
+        libs.plugins.compose.compiler,
+    ).forEach {
+        id(it.get().pluginId)
+    }
 }
 
 configure<LibraryExtension> {
     setNamespace(suffix = ".sdk")
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {

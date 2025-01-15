@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_id_check_title">Prove your identity</string>
+    <string name="start_id_check_content">You need to prove your identity to access the service you’re trying to use.</string>
+    <string name="start_id_check_primary_button">Continue proving your identity</string>
+</resources>
