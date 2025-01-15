@@ -13,14 +13,14 @@ import uk.gov.onelogin.criorchestrator.sdk.R
 @Composable
 fun IDCheckCard(
     component: CriOrchestrator,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     GdsContentTile(
         parameters = ContentTileParameters(
             title = R.string.start_id_check_title,
             body = R.string.start_id_check_content,
-            text = R.string.start_id_check_primary_button
-        )
+            text = R.string.start_id_check_primary_button,
+        ),
     ) {
         // on click
     }
@@ -32,7 +32,7 @@ internal fun ContentTilePreview() {
     GdsTheme {
         IDCheckCard(
             component = CriOrchestrator(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
