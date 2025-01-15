@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.sdk.resume
 
 import android.content.Context
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Before
 import org.junit.Rule
@@ -32,7 +32,7 @@ class IDCheckCardTests {
     fun verifyUI() {
         composeTestRule.setContent {
             IDCheckCard(
-                component = CriOrchestrator()
+                component = CriOrchestrator(),
             )
         }
         composeTestRule.onNode(title).assertIsDisplayed()
