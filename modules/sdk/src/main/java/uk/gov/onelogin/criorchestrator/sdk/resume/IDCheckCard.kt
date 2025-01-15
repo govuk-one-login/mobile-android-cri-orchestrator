@@ -13,7 +13,7 @@ import uk.gov.onelogin.criorchestrator.sdk.R
 @Composable
 fun IDCheckCard(
     component: CriOrchestrator,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     GdsContentTile(
         parameters = ContentTileParameters(
@@ -22,7 +22,8 @@ fun IDCheckCard(
             text = R.string.start_id_check_primary_button,
         ),
     ) {
-        // on click
+        // todo: display the ID Check Dialog:
+        // DCMAW-10056: Android | Resume IPV | Create 'Start ID Check' modal UI
     }
 }
 
