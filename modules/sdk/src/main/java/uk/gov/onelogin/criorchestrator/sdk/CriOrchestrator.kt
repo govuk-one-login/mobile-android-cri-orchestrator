@@ -1,5 +1,5 @@
 package uk.gov.onelogin.criorchestrator.sdk
 
-class TestClass {
+class CriOrchestrator {
     val greeting = "HELLO WORLD"
 }
