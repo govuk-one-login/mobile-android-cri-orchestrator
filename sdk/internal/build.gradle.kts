@@ -17,6 +17,7 @@ configure<PublishingExtension> {
 dependencies {
     listOf(
         libs.uk.gov.networking,
+        libs.uk.gov.logging.api,
         project(":sdk:shared-api"),
         project(":features:resume:internal"),
         project(":features:resume:internal-api"),

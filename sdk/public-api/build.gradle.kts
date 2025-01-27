@@ -18,6 +18,7 @@ configure<PublishingExtension> {
 dependencies {
     listOf(
         libs.uk.gov.networking,
+        libs.uk.gov.logging.api,
         project(":sdk:internal"),
     ).forEach {
         implementation(it)
