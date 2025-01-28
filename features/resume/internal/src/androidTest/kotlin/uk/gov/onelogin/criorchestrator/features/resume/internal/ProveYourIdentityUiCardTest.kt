@@ -5,6 +5,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Before
 import org.junit.Rule
@@ -29,11 +30,26 @@ class ProveYourIdentityUiCardTest {
     @Test
     fun verifyUI() {
         composeTestRule.setContent {
-            ProveYourIdentityUiCard()
+            ProveYourIdentityUiCard(onStartClick = {})
         }
         composeTestRule.onNode(title).assertIsDisplayed()
         composeTestRule.onNode(body).assertIsDisplayed()
         composeTestRule.onNode(primaryButton).assertIsDisplayed()
+    }
+
+    @Test
+    fun onClick() {
+        var didClick = false
+
+        composeTestRule.setContent {
+            ProveYourIdentityUiCard(onStartClick = {
+                didClick = true
+            })
+        }
+
+        composeTestRule.onNode(primaryButton).performClick()
+
+        assert(didClick)
     }
 
     @Test

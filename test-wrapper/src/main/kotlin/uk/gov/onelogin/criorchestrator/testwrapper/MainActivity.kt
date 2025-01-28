@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     StubHttpClient(
                         apiResponse = ApiResponse.Offline,
                     ),
-                    analyticsLogger = analyticsLogger,
+                    analyticsLogger,
                 )
             GdsTheme {
                 ProveYourIdentityCard(

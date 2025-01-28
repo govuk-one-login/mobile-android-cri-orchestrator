@@ -15,6 +15,8 @@ dependencies {
     ).forEach {
         implementation(it)
     }
+
+    api(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 mavenPublishingConfig {
