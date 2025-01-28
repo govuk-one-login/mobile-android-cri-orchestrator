@@ -78,6 +78,7 @@ org-junit-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 org-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 uk-gov-logging-api = { group = "uk.gov.logging", name = "logging-api", version.ref = "uk-gov-logging" }
 uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version.ref = "uk-gov-logging" }
+uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
 uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
 uk-gov-components = { group = "uk.gov.android", name = "components", version.ref = "uk-gov-ui" }

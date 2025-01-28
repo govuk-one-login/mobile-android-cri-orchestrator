@@ -16,5 +16,5 @@ fun createCriOrchestratorComponent(
 ): CriOrchestratorComponent =
     DaggerMergedBaseCriOrchestratorComponent.factory().create(
         authenticatedHttpClient = authenticatedHttpClient,
-        analyticsLogger = analyticsLogger
+        analyticsLogger = analyticsLogger,
     )
