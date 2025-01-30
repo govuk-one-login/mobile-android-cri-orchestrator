@@ -1,21 +1,22 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal
 
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel2
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel3
-import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
+import uk.gov.logging.api.v3dot1.logger.logEventV3Dot1
 import uk.gov.logging.api.v3dot1.model.AnalyticsEvent
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
-import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
 
 class FakeResourceProvider : ResourceProvider {
     override fun getEnglishString(resId: Int): String = "dummy string"
 }
 
 class ProveYourIdentityViewModelTest {
-    private val analyticsLogger = FakeAnalyticsLogger()
+    private val analyticsLogger = mock<AnalyticsLogger>()
 
     private val viewModel by lazy {
         ProveYourIdentityViewModel(
@@ -37,6 +38,6 @@ class ProveYourIdentityViewModelTest {
                         taxonomyLevel3 = TaxonomyLevel3.PASSPORT_CRI,
                     ),
             )
-        assertTrue(expectedEvent.asLegacyEvent() in analyticsLogger)
+        verify(analyticsLogger).logEventV3Dot1(expectedEvent)
     }
 }

@@ -64,9 +64,10 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
     listOf(
         libs.kotlinx.coroutines.test,
+        libs.mockito.core,
+        libs.mockito.kotlin,
         libs.org.junit.jupiter.api,
         libs.org.junit.jupiter.engine,
-        libs.uk.gov.logging.testdouble,
         platform(libs.org.junit.bom),
     ).forEach {
         testImplementation(it)
@@ -88,6 +89,7 @@ internal fun DependencyHandlerScope.androidTestDependencies(libs: LibrariesForLi
         libs.androidx.junit,
         libs.androidx.test.core.ktx,
         libs.androidx.test.runner,
+        libs.mockito.android,
     ).forEach {
         androidTestImplementation(it)
     }

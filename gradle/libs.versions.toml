@@ -24,6 +24,8 @@ kotlinx-coroutines = "1.10.1"
 ksp = "2.1.10-1.0.29"
 lifecycleRuntimeKtx = "2.8.7"
 material = "1.12.0"
+mockito = "5.15.2" # https://github.com/mockito/mockito/releases
+mockito-kotlin = "5.4.0" # https://github.com/mockito/mockito-kotlin/releases
 molecule = "2.0.0"
 paparazzi = "1.3.5"
 testparameterinjector = "1.18"
@@ -70,6 +72,9 @@ google-testparameterinjector = { module = "com.google.testparameterinjector:test
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines"}
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 org-bouncycastle-bcutil-jdk18on = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle-jdk18on" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 org-junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter" }
@@ -79,7 +84,6 @@ org-junit-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 org-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 uk-gov-logging-api = { group = "uk.gov.logging", name = "logging-api", version.ref = "uk-gov-logging" }
 uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version.ref = "uk-gov-logging" }
-uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
 uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
 uk-gov-components = { group = "uk.gov.android", name = "components", version.ref = "uk-gov-ui" }
