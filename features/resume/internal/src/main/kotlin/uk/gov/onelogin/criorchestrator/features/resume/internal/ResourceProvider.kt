@@ -7,7 +7,7 @@ import uk.gov.logging.api.analytics.extensions.getEnglishString
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
-interface ResourceProvider {
+fun interface ResourceProvider {
     fun getEnglishString(
         @StringRes resId: Int,
     ): String
