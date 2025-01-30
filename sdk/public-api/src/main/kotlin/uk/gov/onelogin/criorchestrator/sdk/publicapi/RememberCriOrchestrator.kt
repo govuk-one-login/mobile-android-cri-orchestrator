@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.sdk.publicapi
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.sdk.internal.createCriOrchestratorComponent
@@ -17,10 +18,13 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 fun rememberCriOrchestrator(
     authenticatedHttpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
-): CriOrchestratorComponent =
-    remember {
+): CriOrchestratorComponent {
+    val context = LocalContext.current
+    return remember {
         createCriOrchestratorComponent(
             authenticatedHttpClient = authenticatedHttpClient,
             analyticsLogger = analyticsLogger,
+            context = context,
         )
     }
+}

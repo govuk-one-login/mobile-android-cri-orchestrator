@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
+import android.content.Context
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 import uk.gov.android.network.client.GenericHttpClient
@@ -18,6 +19,7 @@ interface BaseCriOrchestratorComponent {
         fun create(
             @BindsInstance authenticatedHttpClient: GenericHttpClient,
             @BindsInstance analyticsLogger: AnalyticsLogger,
+            @BindsInstance context: Context,
         ): BaseCriOrchestratorComponent
     }
 }
