@@ -9,17 +9,16 @@ import uk.gov.android.ui.componentsv2.GdsCard
 import uk.gov.android.ui.theme.m3.GdsTheme
 
 @Composable
-internal fun ProveYourIdentityUiCard(modifier: Modifier = Modifier) {
+internal fun ProveYourIdentityUiCard(
+    onStartClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     GdsCard(
         title = stringResource(R.string.start_id_check_title),
         body = stringResource(R.string.start_id_check_content),
         buttonText = stringResource(R.string.start_id_check_primary_button),
         modifier = modifier,
-        onClick = {
-            // Identity Proofing and Verification (IPV)
-            // display the ID Check Dialog:
-            // DCMAW-10056: Android | Resume IPV | Create 'Start ID Check' modal UI
-        },
+        onClick = onStartClick,
     )
 }
 
@@ -28,6 +27,7 @@ internal fun ProveYourIdentityUiCard(modifier: Modifier = Modifier) {
 internal fun ProveYourIdentityUiCardPreview() {
     GdsTheme {
         ProveYourIdentityUiCard(
+            onStartClick = { },
             modifier = Modifier.fillMaxWidth(),
         )
     }

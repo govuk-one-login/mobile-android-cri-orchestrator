@@ -20,6 +20,7 @@ class MainActivity : ComponentActivity() {
             GdsTheme {
                 MainContent(
                     httpClient = httpClient,
+                    analyticsLogger = analyticsLogger,
                 )
             }
         }

@@ -15,6 +15,9 @@ dependencies {
     ).forEach {
         implementation(it)
     }
+
+    api(libs.uk.gov.logging.api)
+    api(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 mavenPublishingConfig {

@@ -51,6 +51,8 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
     libs.androidx.appcompat,
     libs.material,
     libs.androidx.lifecycle.runtime.ktx,
+    libs.androidx.lifecycle.viewmodel.compose,
+    libs.androidx.activity.compose,
     libs.androidx.ui.graphics,
     libs.androidx.ui.tooling.preview,
     libs.androidx.material3,
@@ -62,6 +64,8 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
     listOf(
         libs.kotlinx.coroutines.test,
+        libs.mockito.core,
+        libs.mockito.kotlin,
         libs.org.junit.jupiter.api,
         libs.org.junit.jupiter.engine,
         platform(libs.org.junit.bom),
@@ -85,6 +89,7 @@ internal fun DependencyHandlerScope.androidTestDependencies(libs: LibrariesForLi
         libs.androidx.junit,
         libs.androidx.test.core.ktx,
         libs.androidx.test.runner,
+        libs.mockito.android,
     ).forEach {
         androidTestImplementation(it)
     }
