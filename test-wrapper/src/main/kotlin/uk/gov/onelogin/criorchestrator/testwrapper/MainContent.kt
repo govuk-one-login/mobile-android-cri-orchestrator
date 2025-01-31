@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
+import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.AnalyticsLoggerFactory.createAnalyticsLogger
@@ -34,6 +35,6 @@ fun MainContentPreview() =
     GdsTheme {
         MainContent(
             httpClient = createHttpClient(),
-            analyticsLogger = createAnalyticsLogger(LocalContext.current),
+            analyticsLogger = FakeAnalyticsLogger(),
         )
     }

@@ -24,6 +24,7 @@ dependencies {
         libs.firebase.crashlytics,
         libs.uk.gov.logging.api,
         libs.uk.gov.logging.impl,
+        libs.uk.gov.logging.testdouble,
         libs.uk.gov.networking,
         libs.androidx.activity.compose,
         project(":sdk:public-api"),
