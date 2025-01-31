@@ -31,7 +31,7 @@ jobs:
           jdk-version: 21
 
       - name: Lint
-        uses: govuk-one-login/mobile-android-pipelines/actions/lint@be6882791c9d7f538c9d32d9db281dd5299da653
+        uses: govuk-one-login/mobile-android-pipelines/actions/lint@6eb38183ca56030f33817f9c49f8ede5a2219fbe
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
