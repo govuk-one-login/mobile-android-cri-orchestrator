@@ -25,6 +25,7 @@ dependencies {
         libs.uk.gov.logging.api,
         libs.uk.gov.logging.impl,
         libs.uk.gov.networking,
+        libs.androidx.activity.compose,
         project(":sdk:public-api"),
         project(":sdk:shared-api"),
         platform(libs.firebase.bom),

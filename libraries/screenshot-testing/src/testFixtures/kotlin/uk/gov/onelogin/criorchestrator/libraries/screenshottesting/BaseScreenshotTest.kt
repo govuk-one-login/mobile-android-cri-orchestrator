@@ -13,16 +13,18 @@ import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
 /**
  * A base class to execute screenshot tests.
  *
- * Extend this class and use together with [AllPreviewsProvider] to generate screenshot tests for
+ * Extend this class and use together with [PackagePreviewsProvider] to generate screenshot tests for
  * all the Composable previews in the project.
  *
  * #### Example usage
  *
  * ```kt
+ * private object ModulePackagePreviewsProvider: PackagePreviewsProvider()
+ *
  * @RunWith(TestParameterInjector::class)
  * class ScreenshotTest(
  *     @TestParameter(
- *         valuesProvider = AllPreviewsProvider::class,
+ *         valuesProvider = ModulePackagePreviewsProvider::class,
  *     )
  *     preview: ComposablePreview<AndroidPreviewInfo>,
  * ) : BaseScreenshotTest(preview = preview)

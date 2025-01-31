@@ -46,9 +46,12 @@ jobs:
         run: |
           ./gradlew assembleDebugUnitTest
           ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
+          ./gradlew testBuildDebugUnitTest
 
       - name: Verify screenshots
-        run: ./gradlew verifyPaparazziDebug
+        run: |
+          ./gradlew verifyPaparazziDebug
+          ./gradlew verifyPaparazziBuildDebug
 
       # Sonar analyzers must have access to the bytecode to perform an accurate analysis.
       # https://community.sonarsource.com/t/sonarscanner-for-gradle-you-can-now-decide-when-to-compile/102069

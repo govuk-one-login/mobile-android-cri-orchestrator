@@ -5,14 +5,21 @@ import sergio.sastre.composable.preview.scanner.android.AndroidComposablePreview
 import sergio.sastre.composable.preview.scanner.android.AndroidPreviewInfo
 import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
 
-private const val BASE_PACKAGE = "uk.gov.onelogin.criorchestrator"
-
 /**
- * A [TestParameterValuesProvider] that provides all the composable previews found in the project.
+ * A [TestParameterValuesProvider] that provides all the composable previews found with the same
+ * package as the instance of this class.
+ *
+ * To create a provider for a given module, create a new subclass in the module.
+ *
+ * ```kt
+ * object ModulePackagePreviewsProvider: PackagePreviewsProvider()
+ * ```
  */
-class AllPreviewsProvider : TestParameterValuesProvider() {
+abstract class PackagePreviewsProvider : TestParameterValuesProvider() {
+    private val namespace = this::class.java.`package`!!.name
+
     override fun provideValues(context: Context?): List<ComposablePreview<AndroidPreviewInfo>> =
         AndroidComposablePreviewScanner()
-            .scanPackageTrees(BASE_PACKAGE)
+            .scanPackageTrees(namespace)
             .getPreviews()
 }
