@@ -2,10 +2,11 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
 }
 dependencies {
-    implementation(project(":libraries:di"))
-    implementation(project(":features:session:internal-api"))
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.logging.api)
+    implementation(libs.uk.gov.networking)
+    implementation(project(":features:session:internal-api"))
+    implementation(project(":libraries:di"))
 }
 
 mavenPublishingConfig {

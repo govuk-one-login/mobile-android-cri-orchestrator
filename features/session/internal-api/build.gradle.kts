@@ -2,8 +2,9 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
 }
 dependencies {
-    implementation(project(":libraries:di"))
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.uk.gov.networking)
+    implementation(project(":libraries:di"))
 }
 
 mavenPublishingConfig {
