@@ -5,7 +5,6 @@ import com.squareup.anvil.annotations.ContributesBinding
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.SessionApi
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
