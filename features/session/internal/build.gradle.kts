@@ -14,9 +14,10 @@ mavenPublishingConfig {
         name.set(
             "GOV.UK One Login CRI Orchestrator Session Internal",
         )
-        // TODO: write meaningful description
         description.set(
             """
+            The CRI Orchestrator Session Internal module contains implementations used for 
+            ID Check session logic that are Dagger injected where requested.
             """.trimIndent(),
         )
     }
