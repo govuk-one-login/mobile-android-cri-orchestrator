@@ -3,15 +3,21 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel2
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel3
 import uk.gov.logging.api.v3dot1.logger.logEventV3Dot1
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.GetActiveSessionUseCase
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.ResourceProvider
+import javax.inject.Inject
 
 internal class ProveYourIdentityViewModel(
+    private val getActiveSessionUseCase: GetActiveSessionUseCase,
     private val analyticsLogger: AnalyticsLogger,
     private val resourceProvider: ResourceProvider,
 ) : ViewModel() {
@@ -41,8 +47,10 @@ internal class ProveYourIdentityViewModel(
     }
 
     private fun checkActiveSession() {
-        // TODO DCMAW-10105
-        val hasActiveSession = true
-        _state.value = _state.value.copy(shouldDisplay = hasActiveSession)
+        CoroutineScope(Dispatchers.Default).launch {
+            var hasActiveSession = getActiveSessionUseCase.execute()
+            // TODO: remove print statement
+            println("hasActiveSession: $hasActiveSession")
+        }
     }
 }

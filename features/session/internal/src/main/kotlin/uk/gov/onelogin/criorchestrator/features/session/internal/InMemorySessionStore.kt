@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
 import javax.inject.Inject
 
 @ActivityScope
