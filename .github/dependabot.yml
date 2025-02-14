@@ -4,6 +4,12 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  github-maven:
+    type: maven-repository
+    url: https://maven.pkg.github.com
+    username: ${{ secrets.DEPENDABOT_GITHUB_USERNAME }}
+    password: ${{ secrets.DEPENDABOT_GITHUB_TOKEN }}
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -24,6 +30,8 @@ updates:
     schedule:
       # Check version catalog updates weekly
       interval: "weekly"
+    registries:
+      - github-maven
     commit-message:
       prefix: "build"
     groups:
