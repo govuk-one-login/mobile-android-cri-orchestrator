@@ -15,17 +15,18 @@ configure<PublishingExtension> {
 }
 
 dependencies {
-    listOf(
-        libs.uk.gov.networking,
-        libs.uk.gov.logging.api,
-        project(":sdk:shared-api"),
-        project(":features:resume:internal"),
-        project(":features:resume:internal-api"),
-        project(":features:resume:public-api"),
-        project(":libraries:android-utils"),
-    ).forEach {
-        implementation(it)
-    }
+    // This module should depend on every other module that contributes to the dagger dependency graph
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.uk.gov.logging.api)
+    implementation(libs.uk.gov.logging.impl)
+    implementation(libs.uk.gov.networking)
+    implementation(project(":features:resume:internal"))
+    implementation(project(":features:resume:internal-api"))
+    implementation(project(":features:resume:public-api"))
+    implementation(project(":features:session:internal"))
+    implementation(project(":features:session:internal-api"))
+    implementation(project(":libraries:android-utils"))
+    implementation(project(":sdk:shared-api"))
 }
 
 mavenPublishingConfig {

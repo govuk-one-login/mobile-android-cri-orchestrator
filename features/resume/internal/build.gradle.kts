@@ -11,14 +11,16 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
+    implementation(libs.uk.gov.networking)
+    implementation(project(":features:resume:internal-api"))
+    implementation(project(":features:resume:public-api"))
+    implementation(project(":features:session:internal-api"))
+    implementation(project(":libraries:android-utils"))
+    implementation(project(":libraries:di"))
+
     debugImplementation(libs.uk.gov.logging.testdouble)
     releaseCompileOnly(libs.uk.gov.logging.testdouble)
     debugImplementation(testFixtures(project(":libraries:android-utils")))
-
-    implementation(project(":features:resume:internal-api"))
-    implementation(project(":features:resume:public-api"))
-    implementation(project(":libraries:android-utils"))
-    implementation(project(":libraries:di"))
 }
 
 mavenPublishingConfig {
