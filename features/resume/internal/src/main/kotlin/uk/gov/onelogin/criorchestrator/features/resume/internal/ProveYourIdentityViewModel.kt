@@ -51,6 +51,7 @@ internal class ProveYourIdentityViewModel(
             var hasActiveSession = getActiveSessionUseCase.execute()
             // TODO: remove print statement
             println("hasActiveSession: $hasActiveSession")
+            _state.value = _state.value.copy(shouldDisplay = hasActiveSession)
         }
     }
 }
