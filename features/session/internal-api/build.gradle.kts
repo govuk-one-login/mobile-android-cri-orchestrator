@@ -12,9 +12,10 @@ mavenPublishingConfig {
         name.set(
             "GOV.UK One Login CRI Orchestrator Session Internal API",
         )
-        // TODO: write meaningful description
         description.set(
             """
+            The CRI Orchestrator Session Internal API module contains interfaces used for 
+            ID Check session logic.
             """.trimIndent(),
         )
     }
