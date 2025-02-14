@@ -13,23 +13,23 @@ import javax.inject.Inject
 @ActivityScope
 @ContributesBinding(CriOrchestratorScope::class)
 class InMemorySessionStore
-@Inject
-constructor(
-    private val logger: Logger,
-) : SessionStore {
-    private var isActiveSession: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    @Inject
+    constructor(
+        private val logger: Logger,
+    ) : SessionStore {
+        private var isActiveSession: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    override fun read(): StateFlow<Boolean> = isActiveSession.asStateFlow()
+        override fun read(): StateFlow<Boolean> = isActiveSession.asStateFlow()
 
-    override fun write(value: Boolean) {
-        logger.info(
-            tag = tag,
-            msg = "Writing $value to active session store",
-        )
-        isActiveSession.value = value
+        override fun write(value: Boolean) {
+            logger.info(
+                tag = tag,
+                msg = "Writing $value to active session store",
+            )
+            isActiveSession.value = value
+        }
+
+        companion object {
+            private val tag = this.javaClass.simpleName
+        }
     }
-
-    companion object {
-        private val tag = this.javaClass.simpleName
-    }
-}
