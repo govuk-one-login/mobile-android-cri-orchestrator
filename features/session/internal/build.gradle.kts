@@ -1,5 +1,6 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.local-ui-test-config")
 }
 dependencies {
     implementation(libs.kotlinx.coroutines)
@@ -7,6 +8,8 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:di"))
+
+    testImplementation(libs.uk.gov.logging.testdouble)
 }
 
 mavenPublishingConfig {
