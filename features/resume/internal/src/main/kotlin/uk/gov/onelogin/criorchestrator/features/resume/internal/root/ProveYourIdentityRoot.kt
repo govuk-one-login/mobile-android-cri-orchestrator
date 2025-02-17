@@ -1,10 +1,11 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import uk.gov.onelogin.criorchestrator.features.resume.internal.card.ProveYourIdentityUiCard
 import uk.gov.onelogin.criorchestrator.features.resume.internal.modal.ProveYourIdentityModal
 import uk.gov.onelogin.criorchestrator.features.resume.internal.modal.rememberProveYourIdentityModalState
 

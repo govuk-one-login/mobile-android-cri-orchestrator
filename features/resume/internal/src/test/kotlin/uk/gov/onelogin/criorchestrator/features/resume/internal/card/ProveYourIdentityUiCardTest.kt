@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.card
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityUiCardTest {

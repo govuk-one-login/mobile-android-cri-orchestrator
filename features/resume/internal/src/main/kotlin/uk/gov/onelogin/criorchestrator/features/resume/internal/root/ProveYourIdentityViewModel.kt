@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,6 +9,7 @@ import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel3
 import uk.gov.logging.api.v3dot1.logger.logEventV3Dot1
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
+import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.ResourceProvider
 
 internal class ProveYourIdentityViewModel(

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest

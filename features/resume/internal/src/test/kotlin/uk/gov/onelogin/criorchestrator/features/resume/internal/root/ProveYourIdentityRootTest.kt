@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
@@ -19,6 +19,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
+import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
 
 @RunWith(AndroidJUnit4::class)

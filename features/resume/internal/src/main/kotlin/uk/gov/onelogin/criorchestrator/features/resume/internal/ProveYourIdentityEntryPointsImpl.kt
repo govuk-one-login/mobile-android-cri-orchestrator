@@ -6,6 +6,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.squareup.anvil.annotations.ContributesBinding
+import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityRoot
+import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope

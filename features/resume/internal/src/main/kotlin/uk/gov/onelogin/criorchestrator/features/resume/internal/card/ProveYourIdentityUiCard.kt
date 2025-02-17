@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.card
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uk.gov.android.ui.componentsv2.GdsCard
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 
 @Composable
 internal fun ProveYourIdentityUiCard(
