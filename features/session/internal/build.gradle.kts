@@ -2,6 +2,17 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.local-ui-test-config")
 }
+
+android {
+    // https://github.com/Kotlin/dokka/issues/2956
+    tasks.matching { task ->
+        task.name.contains("javaDocReleaseGeneration", ignoreCase = true) or
+                task.name.contains("javaDocDebugGeneration")
+    }.configureEach {
+        enabled = false
+    }
+}
+
 dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.logging.api)
