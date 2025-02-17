@@ -21,7 +21,7 @@ class InMemorySessionStore
         override fun read(): StateFlow<Boolean> = isActiveSession.asStateFlow()
 
         override fun write(value: Boolean) {
-            logger.info(
+            logger.debug(
                 tag = tag,
                 msg = "Writing $value to active session store",
             )

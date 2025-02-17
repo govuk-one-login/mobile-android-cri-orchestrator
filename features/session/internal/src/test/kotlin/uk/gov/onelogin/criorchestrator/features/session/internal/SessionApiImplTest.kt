@@ -1,21 +1,17 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.StubHttpClient
+import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
 
-@RunWith(AndroidJUnit4::class)
 class SessionApiImplTest {
-    private val context: Context = ApplicationProvider.getApplicationContext()
-    private val fakeSessionApiImpl =
+    private val fakeResourceProvider = FakeResourceProvider()
+    private val sessionApiImpl =
         SessionApiImpl(
-            context,
+            fakeResourceProvider,
             StubHttpClient(
                 ApiResponse.Success<String>("Test"),
             ),
@@ -26,7 +22,7 @@ class SessionApiImplTest {
         val expected = ApiResponse.Success("Test")
         val result =
             runBlocking {
-                return@runBlocking fakeSessionApiImpl.getActiveSession()
+                return@runBlocking sessionApiImpl.getActiveSession()
             }
         assertEquals(result, expected)
     }

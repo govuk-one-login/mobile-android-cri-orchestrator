@@ -1,6 +1,5 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
-    id("uk.gov.onelogin.criorchestrator.local-ui-test-config")
 }
 
 android {
@@ -19,9 +18,11 @@ dependencies {
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
     implementation(project(":features:session:internal-api"))
+    implementation(project(":libraries:android-utils"))
     implementation(project(":libraries:di"))
 
     testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(testFixtures(project(":libraries:android-utils")))
 }
 
 mavenPublishingConfig {

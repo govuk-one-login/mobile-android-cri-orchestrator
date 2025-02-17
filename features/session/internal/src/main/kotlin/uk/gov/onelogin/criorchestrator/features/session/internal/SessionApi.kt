@@ -8,6 +8,6 @@ fun interface SessionApi {
     sealed class Endpoints(
         val endpoint: String,
     ) {
-        data object ActiveSession : Endpoints("/activeSession")
+        data object ActiveSession : Endpoints("async/activeSession")
     }
 }
