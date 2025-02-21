@@ -53,10 +53,12 @@ abstract class BaseScreenshotTest(
                 true -> NightMode.NIGHT
                 false -> NightMode.NOTNIGHT
             }
+        val locale = preview.previewInfo.locale
         return Paparazzi(
             deviceConfig =
                 DeviceConfig(
                     nightMode = nightMode,
+                    locale = locale.ifEmpty { null },
                 ),
         )
     }

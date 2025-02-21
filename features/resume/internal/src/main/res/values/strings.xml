@@ -3,4 +3,7 @@
     <string name="start_id_check_title">Prove your identity</string>
     <string name="start_id_check_content">You need to prove your identity to access the service you’re trying to use.</string>
     <string name="start_id_check_primary_button">Continue proving your identity</string>
+    <string name="continue_to_prove_your_identity_screen_title">Continue to prove your identity</string>
+    <string name="continue_to_prove_your_identity_screen_body">Make sure you have your photo ID with you. You’ll be asked to take a photo of it with your phone.</string>
+    <string name="continue_to_prove_your_identity_screen_button">Continue</string>
 </resources>

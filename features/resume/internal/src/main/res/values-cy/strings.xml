@@ -3,4 +3,7 @@
     <string name="start_id_check_title">Profi eich hunaniaeth</string>
     <string name="start_id_check_content">Mae angen i chi brofi pwy ydych chi i gael mynediad i’r gwasanaeth rydych yn ceisio’i ddefnyddio.</string>
     <string name="start_id_check_primary_button">Parhau i brofi eich hunaniaeth</string>
+    <string name="continue_to_prove_your_identity_screen_title">Parhau i brofi eich hunaniaeth</string>
+    <string name="continue_to_prove_your_identity_screen_body">Gwnewch yn siŵr bod eich ID gyda Llun gyda chi. Gofynnir i chi dynnu llun ohono gyda’ch ffôn.</string>
+    <string name="continue_to_prove_your_identity_screen_button">Parhau</string>
 </resources>

@@ -36,7 +36,7 @@ testparameterinjector = "1.18"
 turbine = "1.2.0"
 uk-gov-logging = "0.15.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.3.4"
-uk-gov-ui = "7.0.0"
+uk-gov-ui = "7.7.1"
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -96,9 +96,8 @@ uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version
 uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
 uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
-uk-gov-components = { group = "uk.gov.android", name = "components", version.ref = "uk-gov-ui" }
-uk-gov-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
-uk-gov-ui-pages = { group = "uk.gov.android", name = "pages", version.ref = "uk-gov-ui" }
+uk-gov-ui-componentsv2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
+uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
 
 [plugins]
@@ -115,4 +114,4 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
 
 [bundles]
-gov-uk = ["uk-gov-components", "uk-gov-components-v2", "uk-gov-ui-pages", "uk-gov-ui-theme"]
+uk-gov-ui = ["uk-gov-ui-componentsv2", "uk-gov-ui-patterns", "uk-gov-ui-theme"]
