@@ -64,7 +64,7 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
     libs.androidx.ui.graphics,
     libs.androidx.ui.tooling.preview,
     libs.androidx.material3,
-    libs.bundles.gov.uk,
+    libs.bundles.uk.gov.ui,
 ).forEach {
     implementation(it)
 }
