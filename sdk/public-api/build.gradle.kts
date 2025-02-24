@@ -25,7 +25,7 @@ dependencies {
     implementation(project(":sdk:internal"))
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(project(":features:config:internal"))
+    testImplementation(project(":features:config:public-api"))
 }
 
 mavenPublishingConfig {

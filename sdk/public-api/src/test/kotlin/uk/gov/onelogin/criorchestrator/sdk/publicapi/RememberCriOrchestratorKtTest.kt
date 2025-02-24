@@ -15,7 +15,7 @@ import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.StubHttpClient
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.internal.store.InMemoryConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 
 class RememberCriOrchestratorKtTest {

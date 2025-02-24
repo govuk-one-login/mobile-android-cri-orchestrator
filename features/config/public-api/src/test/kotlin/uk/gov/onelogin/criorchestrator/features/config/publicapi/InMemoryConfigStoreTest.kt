@@ -1,12 +1,10 @@
-package uk.gov.onelogin.criorchestrator.features.config.internal
+package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.internal.store.InMemoryConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.StubConfigProvider
 
 class InMemoryConfigStoreTest {
     private val logger = SystemLogger()

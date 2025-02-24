@@ -28,7 +28,7 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(project(":features:session:internal-api"))
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(project(":features:config:internal"))
+    testImplementation(project(":features:config:public-api"))
     testImplementation(testFixtures(project(":features:config:public-api")))
     testImplementation(testFixtures(project(":libraries:android-utils")))
 }

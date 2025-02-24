@@ -16,8 +16,8 @@ import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.internal.store.InMemoryConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuRoot

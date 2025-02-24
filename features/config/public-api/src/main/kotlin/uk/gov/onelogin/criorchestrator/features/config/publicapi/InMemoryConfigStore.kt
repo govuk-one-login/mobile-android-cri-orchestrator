@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.config.internal.store
+package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigProvider
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 
 class InMemoryConfigStore(
     private val logger: Logger,
