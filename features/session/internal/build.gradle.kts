@@ -19,15 +19,18 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
+    implementation(project(":features:config:public-api"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:android-utils"))
     implementation(project(":libraries:di"))
 
-    testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(testFixtures(project(":libraries:android-utils")))
     testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(project(":features:session:internal-api"))
+    testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(project(":features:config:public-api"))
+    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(project(":libraries:android-utils")))
 }
 
 mavenPublishingConfig {
