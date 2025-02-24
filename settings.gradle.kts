@@ -48,6 +48,8 @@ fun fetchGithubCredentials(): Pair<String, String> {
 rootProject.name = "mobile-android-cri-orchestrator"
 
 include(
+    ":features:config:internal",
+    ":features:config:public-api",
     ":features:resume:internal",
     ":features:resume:internal-api",
     ":features:resume:public-api",
