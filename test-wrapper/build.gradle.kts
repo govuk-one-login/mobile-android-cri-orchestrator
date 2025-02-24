@@ -19,22 +19,17 @@ configure<ApplicationExtension> {
 }
 
 dependencies {
-    listOf(
-        libs.firebase.analytics,
-        libs.firebase.crashlytics,
-        libs.uk.gov.logging.api,
-        libs.uk.gov.logging.impl,
-        libs.uk.gov.logging.testdouble,
-        libs.uk.gov.networking,
-        libs.androidx.activity.compose,
-        project(":sdk:public-api"),
-        project(":sdk:shared-api"),
-        platform(libs.firebase.bom),
-    ).forEach {
-        implementation(it)
-    }
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.uk.gov.logging.api)
+    implementation(libs.uk.gov.logging.impl)
+    implementation(libs.uk.gov.logging.testdouble)
+    implementation(libs.uk.gov.networking)
+    implementation(platform(libs.firebase.bom))
+    implementation(project(":features:config:internal"))
+    implementation(project(":sdk:public-api"))
+    implementation(project(":sdk:shared-api"))
 
-    listOf(
-        platform(libs.org.junit.bom),
-    ).forEach(::testImplementation)
+    testImplementation(platform(libs.org.junit.bom))
 }
