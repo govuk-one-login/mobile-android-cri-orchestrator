@@ -17,8 +17,7 @@ import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.StubConfig
+import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
@@ -34,8 +33,7 @@ class RemoteSessionReaderTest {
 
     @BeforeEach
     fun setUp() {
-        val configStore = InMemoryConfigStore(logger)
-        configStore.write(StubConfig.provideConfig())
+        val configStore = FakeConfigStore()
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = configStore,

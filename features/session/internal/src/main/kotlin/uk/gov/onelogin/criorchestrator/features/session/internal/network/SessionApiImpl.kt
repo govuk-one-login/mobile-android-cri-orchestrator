@@ -1,13 +1,14 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
+import kotlinx.coroutines.flow.first
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigField
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class SessionApiImpl
     ) : SessionApi,
         LogTagProvider {
         override suspend fun getActiveSession(): ApiResponse {
-            val baseUrl = configStore.read(ConfigField.BackendAsyncUrl).value as String
+            val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value
             logger.debug(
                 tag,
                 "Session API making call with base URL of $baseUrl",

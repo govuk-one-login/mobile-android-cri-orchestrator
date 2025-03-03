@@ -67,6 +67,7 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
     listOf(
+        libs.app.cash.turbine,
         libs.kotlinx.coroutines.test,
         libs.org.junit.jupiter.api,
         libs.org.junit.jupiter.engine,

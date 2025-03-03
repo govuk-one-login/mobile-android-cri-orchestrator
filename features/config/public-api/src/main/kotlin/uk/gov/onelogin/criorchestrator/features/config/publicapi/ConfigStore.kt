@@ -1,16 +1,38 @@
 package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 /**
- * Interface for configuration store, storing feature flags and any properties that need to be
- * configured for testing or mocking purposes.
- * Reading from the configuration store returns a [StateFlow] of associated type. This enables
- * reading from the [ConfigStore] proactively via [StateFlow.value], while also being able to read
- * from the [ConfigStore] reactively via [StateFlow.collect] within a coroutine.
+ * Interface for reading and writing configuration and feature flags.
  */
 interface ConfigStore {
-    fun read(key: ConfigField): StateFlow<Any>
+    /**
+     * Get a value for the given key which which updates when the value changes.
+     *
+     * @param key The configuration key.
+     */
+    fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T>
 
-    fun write(config: ConfigProvider)
+    /**
+     * Get the whole configuration.
+     */
+    fun readAll(): Flow<Config>
+
+    /**
+     * Write a single entry of configuration.
+     *
+     * If the entry already exists, it is overwritten.
+     *
+     * @param entry the entry to write.
+     */
+    fun <T : Config.Value> write(entry: Config.Entry<T>)
+
+    /**
+     * Write multiple entries of configuration.
+     *
+     * If any entries already exist, they are overwritten.
+     *
+     * @param config The configuration to add.
+     */
+    fun writeAll(config: Config)
 }

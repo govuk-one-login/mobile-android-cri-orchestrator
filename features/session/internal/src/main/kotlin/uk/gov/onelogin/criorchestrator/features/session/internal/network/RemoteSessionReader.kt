@@ -12,8 +12,8 @@ import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigField
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.response.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -44,7 +44,7 @@ class RemoteSessionReader
 
         override fun handleUpdatedSessionResponse() {
             CoroutineScope(dispatcher).launch {
-                configStore.read(ConfigField.BackendAsyncUrl).collect { url ->
+                configStore.read(IdCheckAsyncBackendBaseUrl).collect { url ->
                     logger.debug(
                         tag,
                         "Collected URL of $url",
