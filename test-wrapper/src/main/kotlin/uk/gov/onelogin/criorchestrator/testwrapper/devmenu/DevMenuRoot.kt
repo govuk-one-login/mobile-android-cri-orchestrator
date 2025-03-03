@@ -1,29 +1,29 @@
 package uk.gov.onelogin.criorchestrator.testwrapper.devmenu
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 
 @Composable
 internal fun DevMenuRoot(
-    configStore: ConfigStore,
-    logger: Logger,
+    initialConfig: Config,
     modifier: Modifier = Modifier,
 ) {
-    val devMenuState =
-        rememberDevMenuState(
-            initiallyAllowedToShow = false,
-        )
+    var showDevMenu by remember { mutableStateOf(false) }
 
     DevMenuOpenButton(
-        onClick = { devMenuState.allowToShow() },
+        onClick = { showDevMenu = true },
         modifier = modifier,
     )
 
-    DevMenu(
-        state = devMenuState,
-        configStore = configStore,
-        logger = logger,
-    )
+    if (showDevMenu) {
+        DevMenu(
+            onDismissRequest = { showDevMenu = false },
+            initialConfig = initialConfig,
+        )
+    }
 }

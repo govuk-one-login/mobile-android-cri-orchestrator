@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuRoot
@@ -20,7 +20,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuRoot
 fun MainContent(
     httpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
-    configStore: ConfigStore,
+    config: Config,
     logger: Logger,
     modifier: Modifier = Modifier,
 ) {
@@ -28,7 +28,7 @@ fun MainContent(
         rememberCriOrchestrator(
             authenticatedHttpClient = httpClient,
             analyticsLogger = analyticsLogger,
-            configStore = configStore,
+            initialConfig = config,
             logger = logger,
         )
     Column(
@@ -49,9 +49,7 @@ fun MainContent(
             verticalAlignment = Alignment.Bottom,
         ) {
             DevMenuRoot(
-                configStore = configStore,
-                logger = logger,
-                modifier = Modifier,
+                initialConfig = config,
             )
         }
     }

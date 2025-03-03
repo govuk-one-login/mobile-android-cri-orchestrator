@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
+    implementation(project(":features:config:internal"))
     implementation(project(":features:config:public-api"))
     implementation(project(":features:resume:internal"))
     implementation(project(":features:resume:internal-api"))
