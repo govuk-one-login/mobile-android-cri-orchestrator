@@ -18,47 +18,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.pages.dialog.FullScreenDialog
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.smallPadding
-import uk.gov.logging.api.Logger
-import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigField
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigProvider
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 
 @Composable
 @Suppress("LongMethod")
 internal fun DevMenu(
-    state: DevMenuState,
-    configStore: ConfigStore,
-    logger: Logger,
+    initialConfig: Config,
+    onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (!state.allowedToShow) {
-        return
-    }
-
-    var config =
+    var config by
         remember {
-            mutableStateOf<ConfigProvider>(
-                ConfigProvider(
-                    backendAsyncUrl = configStore.read(ConfigField.BackendAsyncUrl).value as String,
-                ),
+            mutableStateOf<Config>(
+                initialConfig,
             )
         }
 
-    var text by remember {
-        mutableStateOf(
-            configStore.read(ConfigField.BackendAsyncUrl).value as String,
-        )
-    }
-
     FullScreenDialog(
         modifier = modifier,
-        onDismissRequest = state::onDismissRequest,
+        onDismissRequest = onDismissRequest,
     ) {
         Column(
             modifier =
@@ -67,19 +51,25 @@ internal fun DevMenu(
                     .fillMaxHeight(),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            TextField(
-                value = text,
-                onValueChange = { updatedValue ->
-                    text = updatedValue
-                    config.value =
-                        ConfigProvider(
-                            backendAsyncUrl = updatedValue,
-                        )
-                },
-                label = { Text("Backend Async URL") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-            )
+            config.entries.forEach { field ->
+                field.value.let {
+                    when (it) {
+                        is Config.Value.StringValue -> {
+                            TextField(
+                                value = it.value,
+                                onValueChange = { updatedValue ->
+                                    // TODO
+                                },
+                                label = { Text(text = field.key.name) },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+
+                        else -> TODO()
+                    }
+                }
+            }
 
             Row(
                 modifier =
@@ -92,11 +82,7 @@ internal fun DevMenu(
                         Modifier
                             .padding(smallPadding),
                     onClick = {
-                        configStore.write(config.value)
-                        logger.debug(
-                            "Dev Menu",
-                            "New value for Backend Async URL is $text",
-                        )
+                        // TODO
                     },
                 ) {
                     Text("Update Config")
@@ -109,21 +95,26 @@ internal fun DevMenu(
 @Composable
 @PreviewLightDark
 internal fun DevMenuPreview() {
-    val logger = SystemLogger()
-    val configStore = InMemoryConfigStore(logger)
-    configStore.write(
-        ConfigProvider(
-            backendAsyncUrl =
-                LocalContext.current.resources.getString(
-                    R.string.backendAsyncUrl,
+    val initialConfig =
+        Config(
+            entries =
+                persistentListOf(
+                    Config.Entry(
+                        key = IdCheckAsyncBackendBaseUrl,
+                        value =
+                            Config.Value.StringValue(
+                                value =
+                                    LocalContext.current.resources.getString(
+                                        R.string.backendAsyncUrl,
+                                    ),
+                            ),
+                    ),
                 ),
-        ),
-    )
+        )
     GdsTheme {
         DevMenu(
-            state = DevMenuState(true),
-            configStore = configStore,
-            logger = logger,
+            initialConfig = initialConfig,
+            onDismissRequest = {},
             modifier = Modifier,
         )
     }

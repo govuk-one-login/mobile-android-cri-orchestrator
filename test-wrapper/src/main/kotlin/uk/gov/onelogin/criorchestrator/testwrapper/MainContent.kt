@@ -16,8 +16,7 @@ import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuRoot
@@ -27,7 +26,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
 fun MainContent(
     httpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
-    configStore: ConfigStore,
+    config: Config,
     logger: Logger,
     modifier: Modifier = Modifier,
 ) {
@@ -35,7 +34,7 @@ fun MainContent(
         rememberCriOrchestrator(
             authenticatedHttpClient = httpClient,
             analyticsLogger = analyticsLogger,
-            configStore = configStore,
+            initialConfig = config,
             logger = logger,
         )
     Column(
@@ -56,9 +55,7 @@ fun MainContent(
             verticalAlignment = Alignment.Bottom,
         ) {
             DevMenuRoot(
-                configStore = configStore,
-                logger = logger,
-                modifier = Modifier,
+                initialConfig = config,
             )
         }
     }
@@ -67,13 +64,12 @@ fun MainContent(
 @Composable
 @PreviewLightDark
 internal fun MainContentPreview() {
-    val configStore = InMemoryConfigStore(SystemLogger())
-    configStore.write(TestWrapperConfig.provideConfig(LocalContext.current.resources))
+    val config = TestWrapperConfig.provideConfig(LocalContext.current.resources)
     GdsTheme {
         MainContent(
             httpClient = createHttpClient(),
             analyticsLogger = FakeAnalyticsLogger(),
-            configStore = configStore,
+            config = config,
             logger = SystemLogger(),
             modifier = Modifier,
         )

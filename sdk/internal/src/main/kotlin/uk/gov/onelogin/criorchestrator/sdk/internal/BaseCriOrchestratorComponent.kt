@@ -6,7 +6,7 @@ import dagger.BindsInstance
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
 
@@ -21,7 +21,7 @@ interface BaseCriOrchestratorComponent {
         fun create(
             @BindsInstance authenticatedHttpClient: GenericHttpClient,
             @BindsInstance analyticsLogger: AnalyticsLogger,
-            @BindsInstance configStore: ConfigStore,
+            @BindsInstance initialConfig: Config,
             @BindsInstance logger: Logger,
             @BindsInstance context: Context,
         ): BaseCriOrchestratorComponent

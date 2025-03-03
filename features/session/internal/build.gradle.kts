@@ -32,7 +32,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(project(":features:config:public-api"))
-    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(project(":features:config:internal")))
     testImplementation(testFixtures(project(":libraries:android-utils")))
 }
 

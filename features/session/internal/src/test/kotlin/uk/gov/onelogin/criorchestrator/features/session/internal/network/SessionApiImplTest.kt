@@ -6,12 +6,10 @@ import org.junit.jupiter.api.Test
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.StubHttpClient
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.InMemoryConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.StubConfig
+import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
 
 class SessionApiImplTest {
     private val logger = SystemLogger()
-    private val configStore = InMemoryConfigStore(logger)
     private val sessionApiImpl =
         SessionApiImpl(
             StubHttpClient(
@@ -25,13 +23,12 @@ class SessionApiImplTest {
                     """.trimIndent(),
                 ),
             ),
-            configStore = configStore,
+            configStore = FakeConfigStore(),
             logger = logger,
         )
 
     @Test
     fun `session API implementation returns stubbed API response`() {
-        configStore.write(StubConfig.provideConfig())
         runTest {
             val expected =
                 ApiResponse.Success<String>(
