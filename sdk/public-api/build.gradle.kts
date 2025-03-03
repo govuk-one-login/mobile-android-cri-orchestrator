@@ -17,6 +17,7 @@ configure<PublishingExtension> {
 
 dependencies {
     api(project(":features:config:public-api"))
+    api(project(":features:dev:public-api"))
     api(project(":features:resume:public-api"))
     api(project(":sdk:shared-api"))
 

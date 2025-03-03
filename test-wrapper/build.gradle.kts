@@ -28,6 +28,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(platform(libs.firebase.bom))
     implementation(project(":features:config:public-api"))
+    implementation(project(":features:dev:public-api"))
     implementation(project(":sdk:public-api"))
     implementation(project(":sdk:shared-api"))
 
