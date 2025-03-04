@@ -9,14 +9,10 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 class InMemorySessionStoreTest {
     private val logger = SystemLogger()
     private val sessionStore = InMemorySessionStore(logger)
-    private val initialSession =
-        Session(
-            sessionId = "",
-            state = "",
-        )
+    private val initialSession = null
 
     @Test
-    fun `session store returns default blank session if no session written`() {
+    fun `session store returns null session if no session written`() {
         assertEquals(initialSession, sessionStore.read().value)
     }
 
