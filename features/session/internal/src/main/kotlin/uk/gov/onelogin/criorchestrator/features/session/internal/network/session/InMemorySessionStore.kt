@@ -19,19 +19,14 @@ class InMemorySessionStore
         private val logger: Logger,
     ) : SessionStore,
         LogTagProvider {
-        private val initialSession =
-            Session(
-                sessionId = "",
-                state = "",
-            )
-        private var activeSession: MutableStateFlow<Session> = MutableStateFlow(initialSession)
+        private var activeSession: MutableStateFlow<Session?> = MutableStateFlow(null)
 
-        override fun read(): StateFlow<Session> {
+        override fun read(): StateFlow<Session?> {
             logger.debug(tag, "Reading session $activeSession from session store")
             return activeSession.asStateFlow()
         }
 
-        override fun write(value: Session) {
+        override fun write(value: Session?) {
             logger.debug(tag, "Writing $value to session store")
             activeSession.value = value
         }
