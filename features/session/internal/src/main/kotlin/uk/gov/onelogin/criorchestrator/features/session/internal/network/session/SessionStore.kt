@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 
 interface SessionStore {
-    fun read(): StateFlow<Session>
+    fun read(): StateFlow<Session?>
 
-    fun write(value: Session)
+    fun write(value: Session?)
 }

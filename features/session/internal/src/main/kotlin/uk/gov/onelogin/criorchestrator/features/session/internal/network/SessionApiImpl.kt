@@ -6,7 +6,6 @@ import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.LogTagProvider
-import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
@@ -22,15 +21,10 @@ class SessionApiImpl
     constructor(
         private val httpClient: GenericHttpClient,
         private val configStore: ConfigStore,
-        private val logger: Logger,
     ) : SessionApi,
         LogTagProvider {
         override suspend fun getActiveSession(): ApiResponse {
             val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value
-            logger.debug(
-                tag,
-                "Session API making call with base URL of $baseUrl",
-            )
             val request =
                 ApiRequest.Get(
                     url = baseUrl + GET_ACTIVE_SESSION_ENDPOINT,
@@ -40,10 +34,6 @@ class SessionApiImpl
                     apiRequest = request,
                     scope = SCOPE,
                 )
-            logger.debug(
-                tag,
-                "Session API received response of $response",
-            )
             return response
         }
 

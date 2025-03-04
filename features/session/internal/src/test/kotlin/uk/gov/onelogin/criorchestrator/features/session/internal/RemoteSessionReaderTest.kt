@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
+import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -49,9 +50,10 @@ class RemoteSessionReaderTest {
         expectedIsActiveSession: Boolean,
     ) = runTest {
         sessionApi.setActiveSession(apiResponse)
-        remoteSessionReader.handleUpdatedSessionResponse()
-        assertEquals(expectedIsActiveSession, remoteSessionReader.isActiveSessionStateFlow.value)
-        assertTrue(logger.contains(logEntry))
+        remoteSessionReader.isActiveSession().test {
+            assertEquals(expectedIsActiveSession, awaitItem())
+            assertTrue(logger.contains(logEntry))
+        }
     }
 
     companion object {

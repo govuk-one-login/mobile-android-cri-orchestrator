@@ -1,11 +1,11 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
@@ -33,63 +33,55 @@ class RemoteSessionReader
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
-        private val _isActiveSessionStateFlow = MutableStateFlow<Boolean>(false)
-
-        override val isActiveSessionStateFlow: StateFlow<Boolean> =
-            _isActiveSessionStateFlow.asStateFlow()
-
-        override fun handleUpdatedSessionResponse() {
-            CoroutineScope(dispatchers.io).launch {
-                configStore.read(IdCheckAsyncBackendBaseUrl).collect { url ->
-                    logger.debug(
-                        tag,
-                        "Collected URL of $url",
-                    )
-                    val response = sessionApi.getActiveSession()
-                    handleResponse(response)
+        override fun isActiveSession(): Flow<Boolean> =
+            configStore
+                .read(IdCheckAsyncBackendBaseUrl)
+                .flowOn(dispatchers.io)
+                .map {
+                    sessionApi.getActiveSession()
+                }.onEach {
+                    logResponse(it)
+                }.map {
+                    parseSession(it)
+                }.distinctUntilChanged()
+                .onEach {
+                    sessionStore.write(it)
+                }.map { session ->
+                    session != null
                 }
-            }
-        }
 
-        fun handleResponse(response: ApiResponse) {
-            when (response) {
-                is ApiResponse.Success<*> -> handleSuccessResponse(response)
-                is ApiResponse.Failure -> handleFailureResponse(response)
-                ApiResponse.Loading -> handleLoadingResponse()
-                ApiResponse.Offline -> handleOfflineResponse()
+        private fun parseSession(response: ApiResponse): Session? {
+            if (response !is ApiResponse.Success<*>) {
+                return null
             }
-        }
 
-        private fun handleSuccessResponse(response: ApiResponse.Success<*>) =
-            try {
-                logger.debug(tag, "Got active session")
+            return try {
                 val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
                     Json.decodeFromString(response.response.toString())
-                sessionStore.write(
-                    Session(
-                        sessionId = parsedResponse.sessionId,
-                        redirectUri = parsedResponse.redirectUri,
-                        state = parsedResponse.state,
-                    ),
+                Session(
+                    sessionId = parsedResponse.sessionId,
+                    redirectUri = parsedResponse.redirectUri,
+                    state = parsedResponse.state,
                 )
-                _isActiveSessionStateFlow.value = true
             } catch (e: IllegalArgumentException) {
                 logger.error(tag, "Failed to parse active session response", e)
-                _isActiveSessionStateFlow.value = false
+                null
             }
-
-        private fun handleFailureResponse(response: ApiResponse.Failure) {
-            logger.error(tag, "Failed to fetch active session", response.error)
-            _isActiveSessionStateFlow.value = false
         }
 
-        private fun handleLoadingResponse() {
-            logger.debug(tag, "Loading ... fetching active session ...")
-            _isActiveSessionStateFlow.value = false
-        }
+        private fun logResponse(response: ApiResponse) {
+            when (response) {
+                is ApiResponse.Success<*> ->
+                    logger.debug(tag, "Got active session")
 
-        private fun handleOfflineResponse() {
-            logger.debug(tag, "Failed to fetch active session - device is offline")
-            _isActiveSessionStateFlow.value = false
+                is ApiResponse.Failure ->
+                    logger.error(tag, "Failed to fetch active session", response.error)
+
+                ApiResponse.Loading ->
+                    logger.debug(tag, "Loading ... fetching active session ...")
+
+                ApiResponse.Offline ->
+                    logger.debug(tag, "Failed to fetch active session - device is offline")
+            }
         }
     }
