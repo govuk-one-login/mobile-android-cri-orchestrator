@@ -58,6 +58,7 @@ include(
     ":libraries:di",
     ":libraries:navigation",
     ":libraries:screenshot-testing",
+    ":libraries:testing",
     ":sdk:internal",
     ":sdk:public-api",
     ":sdk:shared-api",

@@ -44,7 +44,8 @@ internal fun AndroidExtension.setJavaVersion() =
 internal fun AndroidExtension.setPackagingConfig() =
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "/META-INF/{LICENSE.md,LICENSE-notice.md}"
         }
     }
 
