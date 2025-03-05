@@ -35,6 +35,10 @@ internal fun DependencyHandlerScope.lintChecks(
     dependency: Any
 ) = dependencies.add("lintChecks", dependency)
 
+internal fun DependencyHandlerScope.project(
+    path: String
+) = dependencies.project(mapOf("path" to path))
+
 internal fun DependencyHandlerScope.diDependencies(libs: LibrariesForLibs) {
     listOf(
         libs.dagger
@@ -72,6 +76,7 @@ internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
         libs.org.junit.jupiter.engine,
         libs.org.mockito.kotlin,
         platform(libs.org.junit.bom),
+        testFixtures(project(":libraries:testing"))
     ).forEach {
         testImplementation(it)
     }

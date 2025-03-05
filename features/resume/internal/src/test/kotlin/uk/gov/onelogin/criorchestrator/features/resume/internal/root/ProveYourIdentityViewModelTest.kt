@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
@@ -16,7 +17,9 @@ import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
+@ExtendWith(MainDispatcherExtension::class)
 class ProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
 
