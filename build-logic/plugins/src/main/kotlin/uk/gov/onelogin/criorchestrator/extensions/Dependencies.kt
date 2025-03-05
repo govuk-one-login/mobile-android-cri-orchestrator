@@ -47,6 +47,7 @@ internal fun DependencyHandlerScope.diDependencies(libs: LibrariesForLibs) {
 internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLibs) = listOf(
     platform(libs.androidx.compose.bom),
     libs.androidx.ui,
+    libs.kotlinx.collections.immutable,
 ).forEach {
     implementation(it)
 }
@@ -103,6 +104,7 @@ internal fun DependencyHandlerScope.uiTestDependencies(libs: LibrariesForLibs) =
         libs.androidx.espresso.core,
         libs.androidx.ui.test.junit4,
         platform(libs.androidx.compose.bom),
+        libs.androidx.compose.ui.test.manifest
     )
 
 internal fun DependencyHandlerScope.ideSupportDependencies(libs: LibrariesForLibs) {

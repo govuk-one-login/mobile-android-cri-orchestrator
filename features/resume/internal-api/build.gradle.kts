@@ -1,14 +1,12 @@
 plugins {
-    listOf(
-        "uk.gov.onelogin.criorchestrator.android-lib-config",
-        "uk.gov.onelogin.criorchestrator.base-compose-config",
-    ).forEach {
-        id(it)
-    }
+    id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.base-compose-config")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
     implementation(project(":libraries:di"))
+    implementation(project(":libraries:navigation"))
 }
 
 mavenPublishingConfig {

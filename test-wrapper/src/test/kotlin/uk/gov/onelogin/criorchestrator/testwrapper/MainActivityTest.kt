@@ -12,8 +12,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
+import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.AnalyticsLoggerFactory
+import uk.gov.onelogin.criorchestrator.testwrapper.logging.LoggerFactory
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
@@ -22,7 +24,8 @@ class MainActivityTest {
 
     @Before
     fun setUp() {
-        AnalyticsLoggerFactory.testLogger = mock<AnalyticsLogger>()
+        LoggerFactory.testLogger = mock<Logger>()
+        AnalyticsLoggerFactory.testAnalyticsLogger = mock<AnalyticsLogger>()
     }
 
     @Test

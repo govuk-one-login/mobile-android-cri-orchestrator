@@ -6,5 +6,14 @@ import uk.gov.android.network.client.StubHttpClient
 
 internal fun createHttpClient(): GenericHttpClient =
     StubHttpClient(
-        apiResponse = ApiResponse.Offline,
+        apiResponse =
+            ApiResponse.Success<String>(
+                """
+                {
+                    "sessionId": "test session ID",
+                    "redirectUri": "https://example/redirect",
+                    "state": "11112222333344445555666677778888"
+                }
+                """.trimIndent(),
+            ),
     )

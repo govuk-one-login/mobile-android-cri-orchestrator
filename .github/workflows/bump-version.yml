@@ -7,6 +7,9 @@ on:
     types: [completed]
   workflow_dispatch:
 
+env:
+  WORKFLOW_OUT_DIR: ./workflow-outputs
+
 jobs:
   bump-version:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -42,6 +45,18 @@ jobs:
           current-version: ${{ steps.versioning.outputs.current_version }}
           new-version: ${{ steps.versioning.outputs.new_version }}
           version-prefix: ''
+
+      - name: Create workflow outputs
+        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+        run: |
+          mkdir "$WORKFLOW_OUT_DIR" && touch "$WORKFLOW_OUT_DIR/bump-version.yml"
+          yq -i '.version-bumped = true' "$WORKFLOW_OUT_DIR/bump-version.yml"
+        shell: bash
+
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: bump-version-outputs
+          path: ${{env.WORKFLOW_OUT_DIR}}/**
 
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace

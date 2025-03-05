@@ -18,4 +18,4 @@ owner = "govuk-one-login"
 wip = { changelog_title = "Work in Progress", omit_from_changelog = true }
 chore = { changelog_title = "Chore", bump_patch = true }
 build = { changelog_title = "Build", bump_patch = true }
-refactor = { changelog_title = "Refactor", bump_patch = true }
+refactor = { changelog_title = "Refactor", bump_patch = false }

@@ -8,28 +8,21 @@ plugins {
 }
 
 dependencies {
-    listOf(
-        project(":libraries:android-utils"),
-        project(":libraries:di"),
-        project(":features:resume:internal-api"),
-        project(":features:resume:public-api"),
-    ).forEach {
-        implementation(it)
-    }
+    api(libs.androidx.lifecycle.viewmodel.compose)
+    api(libs.uk.gov.logging.api)
 
-    listOf(
-        libs.uk.gov.logging.testdouble,
-        testFixtures(project(":libraries:android-utils")),
-    ).forEach {
-        debugImplementation(it)
-    }
+    implementation(libs.uk.gov.networking)
+    implementation(project(":features:resume:internal-api"))
+    implementation(project(":features:resume:public-api"))
+    implementation(project(":features:session:internal-api"))
+    implementation(project(":libraries:android-utils"))
+    implementation(project(":libraries:di"))
+    implementation(project(":libraries:navigation"))
 
-    listOf(
-        libs.androidx.lifecycle.viewmodel.compose,
-        libs.uk.gov.logging.api,
-    ).forEach {
-        api(it)
-    }
+    debugImplementation(testFixtures(project(":libraries:android-utils")))
+
+    testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(testFixtures(project(":features:session:internal")))
 }
 
 mavenPublishingConfig {

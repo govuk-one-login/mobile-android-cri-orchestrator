@@ -5,12 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.AnalyticsLoggerFactory
+import uk.gov.onelogin.criorchestrator.testwrapper.logging.LoggerFactory
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.homeScreenViewEvent
 import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
 
 class MainActivity : ComponentActivity() {
+    private val logger = LoggerFactory.createLogger()
+
     private val analyticsLogger by lazy {
-        AnalyticsLoggerFactory.createAnalyticsLogger(this)
+        AnalyticsLoggerFactory.createAnalyticsLogger(this, logger)
     }
     private val httpClient = createHttpClient()
 
@@ -21,6 +24,7 @@ class MainActivity : ComponentActivity() {
                 MainContent(
                     httpClient = httpClient,
                     analyticsLogger = analyticsLogger,
+                    logger = logger,
                 )
             }
         }

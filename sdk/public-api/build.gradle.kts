@@ -16,20 +16,14 @@ configure<PublishingExtension> {
 }
 
 dependencies {
-    listOf(
-        libs.uk.gov.networking,
-        libs.uk.gov.logging.api,
-        project(":sdk:internal"),
-    ).forEach {
-        implementation(it)
-    }
+    api(project(":features:resume:public-api"))
+    api(project(":sdk:shared-api"))
 
-    listOf(
-        project(":sdk:shared-api"),
-        project(":features:resume:public-api"),
-    ).forEach {
-        api(it)
-    }
+    implementation(libs.uk.gov.logging.api)
+    implementation(libs.uk.gov.networking)
+    implementation(project(":sdk:internal"))
+
+    testImplementation(libs.uk.gov.logging.testdouble)
 }
 
 mavenPublishingConfig {
