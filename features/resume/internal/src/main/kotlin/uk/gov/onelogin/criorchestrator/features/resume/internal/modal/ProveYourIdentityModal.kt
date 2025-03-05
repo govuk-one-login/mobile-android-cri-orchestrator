@@ -6,10 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentSetOf
 import uk.gov.android.ui.pages.dialog.FullScreenDialog
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
@@ -21,12 +19,13 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
  *
  * @param state The modal UI state.
  * @param modifier See [Modifier].
+ * @param content The modal content (see [ProveYourIdentityModalNavHost])
  */
 @Composable
 internal fun ProveYourIdentityModal(
     state: ProveYourIdentityModalState,
-    navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
     modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
 ) {
     if (!state.allowedToShow) {
         return
@@ -36,12 +35,19 @@ internal fun ProveYourIdentityModal(
         modifier = modifier,
         onDismissRequest = state::onDismissRequest,
     ) {
-        CompositeNavHost(
-            startDestination = ProveYourIdentityDestinations.ContinueToProveYourIdentity,
-            navGraphProviders = navGraphProviders,
-        )
+        content()
     }
 }
+
+@Composable
+internal fun ProveYourIdentityModalNavHost(
+    navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
+    modifier: Modifier = Modifier,
+) = CompositeNavHost(
+    startDestination = ProveYourIdentityDestinations.ContinueToProveYourIdentity,
+    navGraphProviders = navGraphProviders,
+    modifier = modifier,
+)
 
 internal data class PreviewParams(
     val state: ProveYourIdentityModalState,
@@ -68,9 +74,6 @@ internal fun ProveYourIdentityModalPreview(
 ) = GdsTheme {
     ProveYourIdentityModal(
         state = parameters.state,
-        navGraphProviders =
-            persistentSetOf(
-                ContinueToProveYourIdentityNavGraphProvider(),
-            ),
-    )
+    ) {
+    }
 }

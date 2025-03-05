@@ -53,10 +53,8 @@ jobs:
             echo "should_publish=$version_bumped" >> "$GITHUB_ENV"
           fi
 
-      - name: Setup GitHub Runner workflow
-        uses: ./mobile-android-pipelines/actions/setup-runner
-        with:
-          jdk-version: 21
+      - name: Set up GitHub runner
+        uses: ./actions/setup-runner
 
       - name: Cache mobile-android-pipelines build
         uses: ./actions/cache-pipelines-build
