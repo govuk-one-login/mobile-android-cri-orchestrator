@@ -1,8 +1,15 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import app.cash.turbine.test
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -17,7 +24,9 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
 
+@ExperimentalCoroutinesApi
 class ProveYourIdentityViewModelTest {
+    private val dispatcher = UnconfinedTestDispatcher()
     private val analyticsLogger = mock<AnalyticsLogger>()
 
     private val viewModel by lazy {
@@ -34,6 +43,16 @@ class ProveYourIdentityViewModelTest {
             ProveYourIdentityRootUiState(
                 shouldDisplay = true,
             )
+    }
+
+    @BeforeEach
+    fun setUp() {
+        Dispatchers.setMain(dispatcher)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
