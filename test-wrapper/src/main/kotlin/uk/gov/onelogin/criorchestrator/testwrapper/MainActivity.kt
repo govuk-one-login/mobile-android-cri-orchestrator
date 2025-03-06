@@ -19,11 +19,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val config = TestWrapperConfig.provideConfig(resources)
         setContent {
             GdsTheme {
                 MainContent(
                     httpClient = httpClient,
                     analyticsLogger = analyticsLogger,
+                    config = config,
                     logger = logger,
                 )
             }
