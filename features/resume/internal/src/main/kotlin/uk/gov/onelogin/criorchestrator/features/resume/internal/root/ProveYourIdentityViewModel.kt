@@ -2,8 +2,6 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +18,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.ResourceProvider
 
 internal class ProveYourIdentityViewModel(
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val sessionReader: SessionReader,
     private val analyticsLogger: AnalyticsLogger,
     private val resourceProvider: ResourceProvider,
@@ -53,7 +50,7 @@ internal class ProveYourIdentityViewModel(
     }
 
     private fun checkActiveSession() {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             val hasActiveSession = sessionReader.isActiveSession()
             logger.debug(tag, "Has active session: $hasActiveSession")
             _state.value = _state.value.copy(shouldDisplay = hasActiveSession)
