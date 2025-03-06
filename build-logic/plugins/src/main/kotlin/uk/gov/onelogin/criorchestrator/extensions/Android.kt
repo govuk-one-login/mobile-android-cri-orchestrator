@@ -75,3 +75,4 @@ internal fun AndroidExtension.setInstrumentationTestingConfig() {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
+
