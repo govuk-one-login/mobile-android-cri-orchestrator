@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator
 
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import uk.gov.onelogin.criorchestrator.extensions.disableJavadocGeneration
+import uk.gov.onelogin.criorchestrator.extensions.setJavaVersion
 import kotlin.collections.forEach
 import kotlin.collections.listOf
 
@@ -15,3 +17,11 @@ listOf(
 // https://govukverify.atlassian.net/browse/DCMAW-11888
 // https://github.com/Kotlin/dokka/issues/2956
 project.disableJavadocGeneration()
+
+configure<KotlinJvmProjectExtension> {
+    setJavaVersion()
+}
+
+configure<JavaPluginExtension> {
+    setJavaVersion()
+}
