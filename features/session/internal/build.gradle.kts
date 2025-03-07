@@ -3,17 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    // https://github.com/Kotlin/dokka/issues/2956
-    tasks
-        .matching { task ->
-            task.name.contains("javaDocReleaseGeneration", ignoreCase = true) or
-                task.name.contains("javaDocDebugGeneration")
-        }.configureEach {
-            enabled = false
-        }
-}
-
 dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)

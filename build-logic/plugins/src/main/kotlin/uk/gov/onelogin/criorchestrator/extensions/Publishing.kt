@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.extensions
 
+import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.withType
@@ -15,4 +16,16 @@ fun PublishingExtension.customisePublications(config: MavenPublication.() -> Uni
     publications {
         this.withType<MavenPublication>().forEach(config)
     }
+}
+
+// https://govukverify.atlassian.net/browse/DCMAW-11888
+// https://github.com/Kotlin/dokka/issues/2956
+internal fun Project.disableJavadocGeneration() {
+    tasks
+        .matching { task ->
+            task.name.contains("javaDocReleaseGeneration") ||
+                    task.name.contains("javaDocDebugGeneration")
+        }.configureEach {
+            enabled = false
+        }
 }
