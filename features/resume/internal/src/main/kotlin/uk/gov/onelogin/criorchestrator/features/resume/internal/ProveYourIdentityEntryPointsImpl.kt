@@ -11,8 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourId
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 

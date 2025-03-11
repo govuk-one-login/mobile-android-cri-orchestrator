@@ -4,6 +4,7 @@ import android.content.Context
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 
 /**
@@ -18,12 +19,14 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 fun createCriOrchestratorComponent(
     authenticatedHttpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
+    configStore: ConfigStore,
     logger: Logger,
     context: Context,
 ): CriOrchestratorComponent =
     DaggerMergedBaseCriOrchestratorComponent.factory().create(
         authenticatedHttpClient = authenticatedHttpClient,
         analyticsLogger = analyticsLogger,
+        configStore = configStore,
         logger = logger,
         context = context,
     )

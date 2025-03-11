@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
 import javax.inject.Inject
 
 @ActivityScope

@@ -16,6 +16,7 @@ configure<PublishingExtension> {
 }
 
 dependencies {
+    api(project(":features:config:public-api"))
     api(project(":features:resume:public-api"))
     api(project(":sdk:shared-api"))
 
@@ -24,6 +25,7 @@ dependencies {
     implementation(project(":sdk:internal"))
 
     testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(project(":features:config:public-api"))
 }
 
 mavenPublishingConfig {

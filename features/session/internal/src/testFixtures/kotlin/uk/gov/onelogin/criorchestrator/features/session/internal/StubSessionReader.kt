@@ -1,9 +1,17 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 
 class StubSessionReader(
-    private val sessionActiveStatus: Boolean = true,
+    sessionActiveStatus: Boolean = true,
 ) : SessionReader {
-    override suspend fun isActiveSession(): Boolean = sessionActiveStatus
+    override var isActiveSessionStateFlow: StateFlow<Boolean> =
+        MutableStateFlow(sessionActiveStatus).asStateFlow()
+
+    override fun handleUpdatedSessionResponse() {
+        // Nothing
+    }
 }

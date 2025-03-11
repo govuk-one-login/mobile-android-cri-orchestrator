@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.sdk.internal.createCriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 
@@ -21,6 +22,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 fun rememberCriOrchestrator(
     authenticatedHttpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
+    configStore: ConfigStore,
     logger: Logger,
 ): CriOrchestratorComponent {
     val context = LocalContext.current
@@ -28,6 +30,7 @@ fun rememberCriOrchestrator(
         createCriOrchestratorComponent(
             authenticatedHttpClient = authenticatedHttpClient,
             analyticsLogger = analyticsLogger,
+            configStore = configStore,
             logger = logger,
             context = context,
         )

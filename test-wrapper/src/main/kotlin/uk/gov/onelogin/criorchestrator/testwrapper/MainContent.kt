@@ -1,17 +1,26 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
+import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuRoot
 
 @Composable
 fun MainContent(
     httpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
+    configStore: ConfigStore,
     logger: Logger,
     modifier: Modifier = Modifier,
 ) {
@@ -19,10 +28,31 @@ fun MainContent(
         rememberCriOrchestrator(
             authenticatedHttpClient = httpClient,
             analyticsLogger = analyticsLogger,
+            configStore = configStore,
             logger = logger,
         )
-    ProveYourIdentityCard(
-        component = criOrchestratorComponent,
-        modifier = modifier,
-    )
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+        verticalArrangement = Arrangement.SpaceBetween,
+    ) {
+        ProveYourIdentityCard(
+            component = criOrchestratorComponent,
+            modifier = modifier,
+        )
+        Row(
+            modifier =
+                Modifier
+                    .align(Alignment.End),
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            DevMenuRoot(
+                configStore = configStore,
+                logger = logger,
+                modifier = Modifier,
+            )
+        }
+    }
 }
