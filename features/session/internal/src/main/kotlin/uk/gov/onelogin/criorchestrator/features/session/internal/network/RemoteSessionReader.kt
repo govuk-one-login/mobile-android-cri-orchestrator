@@ -1,9 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,11 +16,10 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.respons
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
-import uk.gov.onelogin.criorchestrator.libraries.di.modules.DispatcherModule.IO_DISPATCHER_NAME
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import javax.inject.Inject
-import javax.inject.Named
 
 @ActivityScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = SessionReader::class)
@@ -30,8 +27,7 @@ class RemoteSessionReader
     @Inject
     constructor(
         private val configStore: ConfigStore,
-        @Named(IO_DISPATCHER_NAME)
-        private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        private val dispatchers: CoroutineDispatchers,
         private val sessionStore: SessionStore,
         private val sessionApi: SessionApi,
         private val logger: Logger,
@@ -43,7 +39,7 @@ class RemoteSessionReader
             _isActiveSessionStateFlow.asStateFlow()
 
         override fun handleUpdatedSessionResponse() {
-            CoroutineScope(dispatcher).launch {
+            CoroutineScope(dispatchers.io).launch {
                 configStore.read(ConfigField.BackendAsyncUrl).collect { url ->
                     logger.debug(
                         tag,

@@ -56,6 +56,7 @@ include(
     ":features:session:internal-api",
     ":konsist-test",
     ":libraries:android-utils",
+    ":libraries:kotlin-utils",
     ":libraries:di",
     ":libraries:navigation",
     ":libraries:screenshot-testing",

@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":features:session:internal"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:android-utils"))
+    implementation(project(":libraries:kotlin-utils"))
     implementation(project(":libraries:navigation"))
     implementation(project(":sdk:shared-api"))
 }

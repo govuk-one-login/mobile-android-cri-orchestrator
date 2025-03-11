@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.squareup.anvil.annotations.ContributesBinding
 import uk.gov.logging.api.analytics.extensions.getEnglishString
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
 @ContributesBinding(CriOrchestratorScope::class)

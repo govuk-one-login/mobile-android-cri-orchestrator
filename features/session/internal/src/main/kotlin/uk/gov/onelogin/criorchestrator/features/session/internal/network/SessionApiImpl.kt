@@ -8,8 +8,8 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigField
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"

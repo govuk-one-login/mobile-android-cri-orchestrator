@@ -18,11 +18,12 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.StubConfig
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import java.util.stream.Stream
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
-    private val dispatcher = UnconfinedTestDispatcher()
+    private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val sessionApi = StubSessionApiImpl()
     private val logger = SystemLogger()
 
@@ -35,7 +36,7 @@ class RemoteSessionReaderTest {
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = configStore,
-                dispatcher = dispatcher,
+                dispatchers = dispatchers,
                 sessionStore = InMemorySessionStore(logger),
                 sessionApi = sessionApi,
                 logger = logger,

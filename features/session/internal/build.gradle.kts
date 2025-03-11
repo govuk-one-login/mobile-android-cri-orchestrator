@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":features:config:public-api"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:android-utils"))
+    implementation(project(":libraries:kotlin-utils"))
     implementation(project(":libraries:di"))
 
     testFixturesImplementation(libs.kotlinx.coroutines)

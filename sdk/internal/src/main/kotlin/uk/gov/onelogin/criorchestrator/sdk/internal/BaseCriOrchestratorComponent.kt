@@ -7,8 +7,8 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.scopes.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 /**
  * The real Dagger component that other component interfaces and modules will be merged into.

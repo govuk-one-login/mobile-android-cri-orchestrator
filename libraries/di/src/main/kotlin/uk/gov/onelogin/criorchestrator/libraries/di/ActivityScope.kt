@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.libraries.di.scopes
+package uk.gov.onelogin.criorchestrator.libraries.di
 
 import javax.inject.Scope
 
