@@ -7,39 +7,50 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.spy
-import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 
 @RunWith(AndroidJUnit4::class)
-class ContinueToProveYourIdentityScreenTest {
+class ContinueToProveYourIdentityScreenAnalyticsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @get:Rule
+    val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
+    private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
+
     private lateinit var primaryButton: SemanticsMatcher
+    private val context: Context = ApplicationProvider.getApplicationContext()
+
+    private val analytics =
+        ResumeAnalytics(
+            resourceProvider =
+                AndroidResourceProvider(
+                    context = context,
+                ),
+            analyticsLogger = analyticsLogger,
+        )
 
     private val viewModel =
-        spy(
-            ContinueToProveYourIdentityViewModel(
-                analytics = mock<ResumeAnalytics>(),
-            ),
+        ContinueToProveYourIdentityViewModel(
+            analytics = analytics,
         )
 
     @Before
     fun setUp() {
-        val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
     }
 
     @Test
-    fun `when continue button is clicked, it calls the view model`() {
+    fun `when continue button is clicked, it tracks analytics`() {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
@@ -50,6 +61,6 @@ class ContinueToProveYourIdentityScreenTest {
             .onNode(primaryButton)
             .performClick()
 
-        verify(viewModel).onContinueClick()
+        assertTrue(analyticsLogger.loggedEvents.isNotEmpty())
     }
 }
