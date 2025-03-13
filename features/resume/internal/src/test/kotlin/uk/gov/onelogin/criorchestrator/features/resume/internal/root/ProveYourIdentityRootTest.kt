@@ -108,7 +108,9 @@ class ProveYourIdentityRootTest {
                 viewModel,
                 persistentSetOf(
                     ContinueToProveYourIdentityNavGraphProvider(
-                        ContinueToProveYourIdentityViewModelModule.provideFactory(),
+                        ContinueToProveYourIdentityViewModelModule.provideFactory(
+                            analytics = mock(),
+                        ),
                     ),
                 ),
             )

@@ -45,7 +45,9 @@ class ProveYourIdentityEntryPointsImplTest {
             navGraphProviders =
                 persistentSetOf(
                     ContinueToProveYourIdentityNavGraphProvider(
-                        ContinueToProveYourIdentityViewModelModule.provideFactory(),
+                        ContinueToProveYourIdentityViewModelModule.provideFactory(
+                            analytics = mock(),
+                        ),
                     ),
                 ),
         )
