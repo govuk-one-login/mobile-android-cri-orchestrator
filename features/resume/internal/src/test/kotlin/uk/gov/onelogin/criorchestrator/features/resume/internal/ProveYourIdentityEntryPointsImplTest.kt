@@ -11,13 +11,13 @@ import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
-import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {
@@ -26,8 +26,7 @@ class ProveYourIdentityEntryPointsImplTest {
 
     private val fakeProveYourIdentityViewModel =
         ProveYourIdentityViewModel(
-            analyticsLogger = FakeAnalyticsLogger(),
-            resourceProvider = FakeResourceProvider(),
+            analytics = mock<ResumeAnalytics>(),
             sessionReader = StubSessionReader(),
             logger = SystemLogger(),
         )

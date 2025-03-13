@@ -17,14 +17,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
-import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -32,12 +32,10 @@ class ProveYourIdentityRootTest {
     val composeTestRule = createComposeRule()
 
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val resourceProvider = AndroidResourceProvider(context)
     private val viewModel =
         spy(
             ProveYourIdentityViewModel(
-                analyticsLogger = FakeAnalyticsLogger(),
-                resourceProvider = resourceProvider,
+                analytics = mock<ResumeAnalytics>(),
                 sessionReader = StubSessionReader(),
                 logger = SystemLogger(),
             ),

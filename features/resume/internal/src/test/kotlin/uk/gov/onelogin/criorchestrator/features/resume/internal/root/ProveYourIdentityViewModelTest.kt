@@ -15,6 +15,7 @@ import uk.gov.logging.api.v3dot1.model.AnalyticsEvent
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
@@ -25,8 +26,11 @@ class ProveYourIdentityViewModelTest {
 
     private val viewModel by lazy {
         ProveYourIdentityViewModel(
-            analyticsLogger = analyticsLogger,
-            resourceProvider = FakeResourceProvider(),
+            analytics =
+                ResumeAnalytics(
+                    resourceProvider = FakeResourceProvider(),
+                    analyticsLogger = analyticsLogger,
+                ),
             sessionReader = StubSessionReader(),
             logger = SystemLogger(),
         )
