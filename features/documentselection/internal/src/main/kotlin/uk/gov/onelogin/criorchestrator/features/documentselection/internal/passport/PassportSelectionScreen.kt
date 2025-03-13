@@ -7,7 +7,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 
 @Composable
 fun PassportSelectionScreen(
-    @Suppress("UnusedParameter") modifier: Modifier = Modifier
+    @Suppress("UnusedParameter") modifier: Modifier = Modifier,
 ) {
     // todo: uncomment this once the LeftAlignedScreen pull request is merged
     // https://govukverify.atlassian.net/browse/DCMAW-11674
@@ -29,7 +29,7 @@ fun PassportSelectionScreen(
                 ),
                 Text(stringResource(R.string.documentselection_passport_expiry)),
                 Text(stringResource(R.string.documentselection_passport_readmore_button)),
-                Text(stringResource(R.string.documentselection_passport_selection_title)),
+                Text(stringResource(R.string.documentselection_passport_title)),
                 Text(stringResource(R.string.documentselection_passport_selection_yes)),
                 Text(stringResource(R.string.documentselection_passport_selection_no)),
             ),

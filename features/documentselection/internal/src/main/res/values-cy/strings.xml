@@ -9,7 +9,6 @@
     <string name="documentselection_passport_expiry">Ni allwch ddefnyddio’ch pasbort os yw wedi dod i ben.</string>
     <string name="documentselection_passport_readmore_button">Darllenwch fwy am y mathau o ID gyda llun y gallwch eu defnyddio</string>
 
-    <string name="documentselection_passport_selection_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
     <string name="documentselection_passport_selection_yes">Oes</string>
     <string name="documentselection_passport_selection_no">Na, defnyddiwch fath gwahanol o ID gyda llun</string>
 

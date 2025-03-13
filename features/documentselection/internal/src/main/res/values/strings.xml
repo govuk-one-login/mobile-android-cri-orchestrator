@@ -9,7 +9,6 @@
     <string name="documentselection_passport_expiry">You cannot use your passport if it has expired.</string>
     <string name="documentselection_passport_readmore_button">Read more about the types of photo ID you can use</string>
 
-    <string name="documentselection_passport_selection_title">Do you have a passport with a biometric chip?</string>
     <string name="documentselection_passport_selection_yes">Yes</string>
     <string name="documentselection_passport_selection_no">No, use a different type of photo ID</string>
 
