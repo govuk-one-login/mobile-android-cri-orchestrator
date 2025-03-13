@@ -25,6 +25,8 @@ dependencies {
     implementation(project(":features:resume:public-api"))
     implementation(project(":features:session:internal"))
     implementation(project(":features:session:internal-api"))
+    implementation(project(":features:documentselection:internal"))
+    implementation(project(":features:documentselection:internal-api"))
     implementation(project(":libraries:android-utils"))
     implementation(project(":libraries:navigation"))
     implementation(project(":sdk:shared-api"))

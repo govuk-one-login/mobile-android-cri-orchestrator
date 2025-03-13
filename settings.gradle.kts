@@ -53,6 +53,8 @@ include(
     ":features:resume:public-api",
     ":features:session:internal",
     ":features:session:internal-api",
+    ":features:documentselection:internal",
+    ":features:documentselection:internal-api",
     ":konsist-test",
     ":libraries:android-utils",
     ":libraries:di",

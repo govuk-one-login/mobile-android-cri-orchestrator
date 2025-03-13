@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="documentselection_passport_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
+    <string name="documentselection_passport_body">Mae gan bob pasbort y DU sglodyn biometrig.
+
+        Os oes gennych basbort nad yw o’r DU, rhaid iddo gael y symbol sglodyn biometrig ar y clawr.</string>
+    <string name="documentselection_passport_imagedescription">Clawr blaen pasbort gyda’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
+
+    <string name="documentselection_passport_expiry">Ni allwch ddefnyddio’ch pasbort os yw wedi dod i ben.</string>
+    <string name="documentselection_passport_readmore_button">Darllenwch fwy am y mathau o ID gyda llun y gallwch eu defnyddio</string>
+
+    <string name="documentselection_passport_selection_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
+    <string name="documentselection_passport_selection_yes">Oes</string>
+    <string name="documentselection_passport_selection_no">Na, defnyddiwch fath gwahanol o ID gyda llun</string>
+
+    <string name="documentselection_passport_continuebutton">Parhau</string>
+</resources>

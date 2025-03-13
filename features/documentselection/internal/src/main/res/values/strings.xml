@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="documentselection_passport_title">Do you have a passport with a biometric chip?</string>
+    <string name="documentselection_passport_body">All UK passports have a biometric chip.
+
+        If you have a non-UK passport, it must have the biometric chip symbol on the cover.</string>
+    <string name="documentselection_passport_imagedescription">The front cover of a passport with the biometric chip symbol. The symbol is rectangular with a circle in the middle.</string>
+
+    <string name="documentselection_passport_expiry">You cannot use your passport if it has expired.</string>
+    <string name="documentselection_passport_readmore_button">Read more about the types of photo ID you can use</string>
+
+    <string name="documentselection_passport_selection_title">Do you have a passport with a biometric chip?</string>
+    <string name="documentselection_passport_selection_yes">Yes</string>
+    <string name="documentselection_passport_selection_no">No, use a different type of photo ID</string>
+
+    <string name="documentselection_passport_continuebutton">Continue</string>
+</resources>
