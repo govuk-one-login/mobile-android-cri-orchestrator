@@ -14,29 +14,42 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 
 @Composable
-internal fun ContinueToProveYourIdentityScreen(modifier: Modifier = Modifier) =
-    CentreAlignedScreen(
-        title = stringResource(R.string.continue_to_prove_your_identity_screen_title),
-        body =
-            persistentListOf(
-                CentreAlignedScreenBodyContent.Text(
-                    stringResource(R.string.continue_to_prove_your_identity_screen_body),
-                ),
-            ),
-        modifier = modifier.fillMaxSize(),
-        primaryButton =
-            CentreAlignedScreenButton(
-                text = stringResource(R.string.continue_to_prove_your_identity_screen_button),
-                onClick = {
-                    // TODO
-                },
-            ),
+internal fun ContinueToProveYourIdentityScreen(
+    viewModel: ContinueToProveYourIdentityViewModel,
+    modifier: Modifier = Modifier,
+) {
+    ContinueToProveYourIdentityContent(
+        onContinueClick = viewModel::onContinueClick,
+        modifier = modifier,
     )
+}
+
+@Composable
+internal fun ContinueToProveYourIdentityContent(
+    onContinueClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) = CentreAlignedScreen(
+    title = stringResource(R.string.continue_to_prove_your_identity_screen_title),
+    body =
+        persistentListOf(
+            CentreAlignedScreenBodyContent.Text(
+                stringResource(R.string.continue_to_prove_your_identity_screen_body),
+            ),
+        ),
+    modifier = modifier.fillMaxSize(),
+    primaryButton =
+        CentreAlignedScreenButton(
+            text = stringResource(R.string.continue_to_prove_your_identity_screen_button),
+            onClick = onContinueClick,
+        ),
+)
 
 @PreviewLightDark
 @Preview(locale = "cy")
 @Composable
-internal fun ContinueToProveYourIdentityScreenPreview() =
+internal fun ContinueToProveYourIdentityContentPreview() =
     GdsTheme {
-        ContinueToProveYourIdentityScreen()
+        ContinueToProveYourIdentityContent(
+            onContinueClick = {},
+        )
     }

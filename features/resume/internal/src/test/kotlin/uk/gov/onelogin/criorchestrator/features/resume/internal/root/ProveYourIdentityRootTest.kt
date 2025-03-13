@@ -24,6 +24,7 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
 
 @RunWith(AndroidJUnit4::class)
@@ -105,7 +106,11 @@ class ProveYourIdentityRootTest {
         setContent {
             ProveYourIdentityRoot(
                 viewModel,
-                persistentSetOf(ContinueToProveYourIdentityNavGraphProvider()),
+                persistentSetOf(
+                    ContinueToProveYourIdentityNavGraphProvider(
+                        ContinueToProveYourIdentityViewModelModule.provideFactory(),
+                    ),
+                ),
             )
         }
 }
