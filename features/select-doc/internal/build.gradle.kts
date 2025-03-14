@@ -1,10 +1,6 @@
 plugins {
-    listOf(
-        "uk.gov.onelogin.criorchestrator.android-lib-config",
-        "uk.gov.onelogin.criorchestrator.ui-config",
-    ).forEach {
-        id(it)
-    }
+    id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.ui-config")
 }
 
 dependencies {
