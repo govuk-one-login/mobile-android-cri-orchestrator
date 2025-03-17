@@ -19,7 +19,7 @@ object TestWrapperConfig {
                     Config.Entry(
                         key = SdkConfigKey.FakeIdCheckAsyncBackend,
                         Config.Value.BooleanValue(
-                            value = true
+                            value = true,
                         ),
                     ),
                 ),

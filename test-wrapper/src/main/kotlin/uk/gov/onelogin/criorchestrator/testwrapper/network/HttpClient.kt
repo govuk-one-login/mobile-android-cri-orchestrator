@@ -6,13 +6,15 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.network.client.KtorHttpClient
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 
-internal fun createHttpClient(): GenericHttpClient = KtorHttpClient(
-    userAgentGenerator = UserAgentGeneratorStub("userAgent"),
-).apply {
-    setAuthenticationProvider(StubAuthenticationProvider())
-}
+internal fun createHttpClient(): GenericHttpClient =
+    KtorHttpClient(
+        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+    ).apply {
+        setAuthenticationProvider(StubAuthenticationProvider())
+    }
 
 private class StubAuthenticationProvider : AuthenticationProvider {
     override suspend fun fetchBearerToken(scope: String): AuthenticationResponse =
-        AuthenticationResponse.Success("token")
+        AuthenticationResponse
+            .Success("token")
 }

@@ -32,8 +32,7 @@ class InMemoryConfigStore
                     getValueFromConfig(it, key)
                 }.distinctUntilChanged()
 
-        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T =
-            getValueFromConfig(config.value, key)
+        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = getValueFromConfig(config.value, key)
 
         override fun readAll(): Flow<Config> = config
 
@@ -53,7 +52,10 @@ class InMemoryConfigStore
                 ),
             )
 
-        private fun <T: Config.Value> getValueFromConfig(config: Config, key: ConfigKey<T>): T {
+        private fun <T : Config.Value> getValueFromConfig(
+            config: Config,
+            key: ConfigKey<T>,
+        ): T {
             val entry = config.entries.find { it.key == key }
 
             if (entry == null) {
@@ -65,5 +67,4 @@ class InMemoryConfigStore
             @Suppress("UNCHECKED_CAST")
             return entry.value as T
         }
-
     }

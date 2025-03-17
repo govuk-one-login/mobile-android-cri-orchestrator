@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
-import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.first
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
@@ -9,7 +8,6 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"

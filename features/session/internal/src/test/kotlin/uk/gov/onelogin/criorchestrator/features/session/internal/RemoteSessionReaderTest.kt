@@ -29,7 +29,7 @@ class RemoteSessionReaderTest {
     private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val logger = SystemLogger()
 
-    object StubSessionApi: Provider<SessionApi> {
+    object StubSessionApi : Provider<SessionApi> {
         override fun get(): SessionApi = StubSessionApiImpl
     }
 
