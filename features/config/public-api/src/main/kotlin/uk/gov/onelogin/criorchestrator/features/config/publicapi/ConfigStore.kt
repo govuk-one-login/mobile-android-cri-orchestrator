@@ -14,7 +14,7 @@ interface ConfigStore {
     fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T>
 
     /**
-     * TODO
+     * Get value for a given key synchronously once.
      *
      * @param key The configuration key.
      */
