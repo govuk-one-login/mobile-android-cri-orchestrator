@@ -41,6 +41,19 @@ class InMemoryConfigStore
                     entry.value as T
                 }.distinctUntilChanged()
 
+        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T {
+            val entry = config.value.entries.find { it.key == key }
+
+            if (entry == null) {
+                throw NoSuchElementException("key: ${key.javaClass.simpleName}")
+            }
+
+            require(entry.key == key)
+            // The entry guarantees the value's type is consistent with the key
+            @Suppress("UNCHECKED_CAST")
+            return entry.value as T
+        }
+
         override fun readAll(): Flow<Config> = config
 
         override fun writeAll(config: Config) {

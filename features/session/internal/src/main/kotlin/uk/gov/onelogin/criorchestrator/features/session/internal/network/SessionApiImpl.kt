@@ -15,7 +15,6 @@ import javax.inject.Inject
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"
 
 @ActivityScope
-@ContributesBinding(CriOrchestratorScope::class, boundType = SessionApi::class)
 class SessionApiImpl
     @Inject
     constructor(

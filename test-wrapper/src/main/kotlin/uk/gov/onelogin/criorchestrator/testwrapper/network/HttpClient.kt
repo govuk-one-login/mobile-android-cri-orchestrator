@@ -1,19 +1,18 @@
 package uk.gov.onelogin.criorchestrator.testwrapper.network
 
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.auth.AuthenticationProvider
+import uk.gov.android.network.auth.AuthenticationResponse
 import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.android.network.client.StubHttpClient
+import uk.gov.android.network.client.KtorHttpClient
+import uk.gov.android.network.useragent.UserAgentGeneratorStub
 
-internal fun createHttpClient(): GenericHttpClient =
-    StubHttpClient(
-        apiResponse =
-            ApiResponse.Success<String>(
-                """
-                {
-                    "sessionId": "test session ID",
-                    "redirectUri": "https://example/redirect",
-                    "state": "11112222333344445555666677778888"
-                }
-                """.trimIndent(),
-            ),
-    )
+internal fun createHttpClient(): GenericHttpClient = KtorHttpClient(
+    userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+).apply {
+    setAuthenticationProvider(StubAuthenticationProvider())
+}
+
+private class StubAuthenticationProvider : AuthenticationProvider {
+    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse =
+        AuthenticationResponse.Success("token")
+}

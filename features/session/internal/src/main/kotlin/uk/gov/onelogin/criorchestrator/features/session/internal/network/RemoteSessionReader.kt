@@ -20,6 +20,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import javax.inject.Inject
+import javax.inject.Provider
 
 @ActivityScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = SessionReader::class)
@@ -29,7 +30,7 @@ class RemoteSessionReader
         private val configStore: ConfigStore,
         private val dispatchers: CoroutineDispatchers,
         private val sessionStore: SessionStore,
-        private val sessionApi: SessionApi,
+        private val sessionApi: Provider<SessionApi>,
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
@@ -38,7 +39,7 @@ class RemoteSessionReader
                 .read(IdCheckAsyncBackendBaseUrl)
                 .flowOn(dispatchers.io)
                 .map {
-                    sessionApi.getActiveSession()
+                    sessionApi.get().getActiveSession()
                 }.onEach {
                     logResponse(it)
                 }.map {

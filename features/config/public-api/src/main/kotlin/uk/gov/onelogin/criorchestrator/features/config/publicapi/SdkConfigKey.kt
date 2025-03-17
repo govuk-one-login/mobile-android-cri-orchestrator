@@ -12,4 +12,9 @@ sealed interface SdkConfigKey {
             name = "ID Check async backend base URL",
         ),
         SdkConfigKey
+    data object FakeIdCheckAsyncBackend :
+        ConfigKey<Config.Value.BooleanValue>(
+            name = "Use fake ID Check async backend",
+        ),
+        SdkConfigKey
 }
