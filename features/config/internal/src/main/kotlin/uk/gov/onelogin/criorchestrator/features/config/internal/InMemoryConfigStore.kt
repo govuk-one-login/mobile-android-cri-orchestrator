@@ -33,7 +33,7 @@ class InMemoryConfigStore
                         throw NoSuchElementException("key: ${key.javaClass.simpleName}")
                     }
 
-                    assert(entry.key == key)
+                    require(entry.key == key)
                     // The entry guarantees the value's type is consistent with the key
                     @Suppress("UNCHECKED_CAST")
                     entry.value as T
