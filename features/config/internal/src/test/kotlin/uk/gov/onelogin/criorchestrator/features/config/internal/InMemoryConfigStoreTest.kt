@@ -99,6 +99,15 @@ class InMemoryConfigStoreTest {
             }
         }
 
+    @Test
+    fun `given config, when reading value synchronously, a value is returned`() {
+        val configStore = givenConfigStore()
+        assertEquals(
+            "stub string config value",
+            configStore.readSingle(StubStringConfigKey).value,
+        )
+    }
+
     private fun ConfigStore.writeStubStringConfig(value: String) =
         write(
             stubStringConfigEntry(
