@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class SdkConfigKeyTest {
-
     @ParameterizedTest(name = "{0}")
     @MethodSource("assertCorrectKeyNames")
     fun `verify correct name for SDK config key`(
