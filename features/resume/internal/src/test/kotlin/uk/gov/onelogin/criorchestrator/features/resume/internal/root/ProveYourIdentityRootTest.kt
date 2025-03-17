@@ -24,6 +24,7 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
 
 @RunWith(AndroidJUnit4::class)
@@ -43,7 +44,10 @@ class ProveYourIdentityRootTest {
 
     private val card: SemanticsMatcher = hasTestTag(ProveYourIdentityRootTestTags.CARD)
     private val modal: SemanticsMatcher = hasTestTag(ProveYourIdentityRootTestTags.MODAL)
-    private val closeButton = hasContentDescription("Close")
+
+    // FIXME This content description should be "Cancel button"
+    //  https://govukverify.atlassian.net/browse/DCMAW-12003
+    private val closeButton = hasContentDescription("Close Button")
     private val continueButton = hasText(context.getString(R.string.start_id_check_primary_button))
 
     @Test
@@ -102,7 +106,11 @@ class ProveYourIdentityRootTest {
         setContent {
             ProveYourIdentityRoot(
                 viewModel,
-                persistentSetOf(ContinueToProveYourIdentityNavGraphProvider()),
+                persistentSetOf(
+                    ContinueToProveYourIdentityNavGraphProvider(
+                        ContinueToProveYourIdentityViewModelModule.provideFactory(),
+                    ),
+                ),
             )
         }
 }

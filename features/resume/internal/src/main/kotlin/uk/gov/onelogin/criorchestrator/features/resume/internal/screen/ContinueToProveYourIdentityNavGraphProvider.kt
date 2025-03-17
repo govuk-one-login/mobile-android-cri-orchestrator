@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -8,14 +10,20 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
+import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
 class ContinueToProveYourIdentityNavGraphProvider
     @Inject
-    constructor() : ProveYourIdentityNavGraphProvider {
+    constructor(
+        @Named(ContinueToProveYourIdentityViewModelModule.FACTORY_NAME)
+        private val viewModelFactory: ViewModelProvider.Factory,
+    ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
-                ContinueToProveYourIdentityScreen()
+                ContinueToProveYourIdentityScreen(
+                    viewModel = viewModel(factory = viewModelFactory),
+                )
             }
         }
     }
