@@ -11,9 +11,11 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
+@ActivityScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = ConfigStore::class)
 class InMemoryConfigStore
     @Inject
