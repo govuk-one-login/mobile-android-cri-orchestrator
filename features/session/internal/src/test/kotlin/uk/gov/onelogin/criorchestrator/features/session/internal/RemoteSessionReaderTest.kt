@@ -1,8 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
+import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Named.named
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -10,32 +14,45 @@ import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import java.util.stream.Stream
 
+@ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
+    private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val sessionApi = StubSessionApiImpl()
     private val logger = SystemLogger()
 
-    private val remoteSessionReader =
-        RemoteSessionReader(
-            sessionApi = sessionApi,
-            logger = logger,
-            sessionStore = InMemorySessionStore(logger),
-        )
+    private lateinit var remoteSessionReader: SessionReader
+
+    @BeforeEach
+    fun setUp() {
+        val configStore = FakeConfigStore()
+        remoteSessionReader =
+            RemoteSessionReader(
+                configStore = configStore,
+                dispatchers = dispatchers,
+                sessionStore = InMemorySessionStore(logger),
+                sessionApi = sessionApi,
+                logger = logger,
+            )
+    }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("assertCorrectApiResponseHandling")
     fun `session reader returns `(
         apiResponse: ApiResponse,
-        logEntry: String?,
+        logEntry: String,
         expectedIsActiveSession: Boolean,
     ) = runTest {
         sessionApi.setActiveSession(apiResponse)
-        assertEquals(expectedIsActiveSession, remoteSessionReader.isActiveSession())
-        logEntry?.let {
-            assertTrue(logger.contains(it))
+        remoteSessionReader.isActiveSession().test {
+            assertEquals(expectedIsActiveSession, awaitItem())
+            assertTrue(logger.contains(logEntry))
         }
     }
 
@@ -57,10 +74,10 @@ class RemoteSessionReaderTest {
                 ),
                 arguments(
                     named(
-                        "false when API response is Loading",
+                        "false with expected log entry when API response is Loading",
                         ApiResponse.Loading,
                     ),
-                    null,
+                    "Loading ... fetching active session ...",
                     false,
                 ),
                 arguments(
