@@ -5,6 +5,10 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
  *
  * If you are adding configuration that is relevant to a single feature, consider
  * creating a key within that feature instead.
+ *
+ * Current keys are:
+ * - [IdCheckAsyncBackendBaseUrl]
+ * - [FakeIdCheckAsyncBackend]
  */
 sealed interface SdkConfigKey {
     data object IdCheckAsyncBackendBaseUrl :
