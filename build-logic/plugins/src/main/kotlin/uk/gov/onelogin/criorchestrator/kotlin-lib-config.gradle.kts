@@ -25,3 +25,10 @@ configure<KotlinJvmProjectExtension> {
 configure<JavaPluginExtension> {
     setJavaVersion()
 }
+
+// Since pure Kotlin/Java modules don't have awareness of build variants, the tests for these
+// modules won't run when `testDebugUnitTest` is run from root project level. Creating this task
+// enables the tests for pure Kotlin/Java modules to run when `testDebugUnitTest` is called.
+tasks.register<Test>("testDebugUnitTest") {
+    this.dependsOn(project.tasks.getByName("test"))
+}
