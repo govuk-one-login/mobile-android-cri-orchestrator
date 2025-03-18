@@ -24,6 +24,7 @@ jobs:
       # Set permissions for ${{ secrets.GITHUB_TOKEN }}
       # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
       packages: read
+      pull-requests: write
     env:
       GITHUB_ACTOR: ${{ github.actor }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,10 +74,9 @@ jobs:
         with:
           artifact-name: unit-test-coverage
 
-      - name: Upload analytics test report
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+      - name: Publish analytics test report
+        uses: ./actions/publish-analytics-report
         with:
-          name: analytics-test-report
           path: "build/reports/analytics/*.yml"
 
       - name: Clean workspace
