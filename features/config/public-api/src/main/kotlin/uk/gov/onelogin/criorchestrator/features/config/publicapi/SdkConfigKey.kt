@@ -8,7 +8,7 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
  *
  * Current keys are:
  * - [IdCheckAsyncBackendBaseUrl]
- * - [FakeIdCheckAsyncBackend]
+ * - [BypassIdCheckAsyncBackend]
  */
 sealed interface SdkConfigKey {
     data object IdCheckAsyncBackendBaseUrl :
@@ -17,9 +17,9 @@ sealed interface SdkConfigKey {
         ),
         SdkConfigKey
 
-    data object FakeIdCheckAsyncBackend :
+    data object BypassIdCheckAsyncBackend :
         ConfigKey<Config.Value.BooleanValue>(
-            name = "Use fake ID Check async backend",
+            name = "Bypass ID Check async backend",
         ),
         SdkConfigKey
 }

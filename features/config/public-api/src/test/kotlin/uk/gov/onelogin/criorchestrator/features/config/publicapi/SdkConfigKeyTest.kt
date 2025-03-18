@@ -30,8 +30,8 @@ class SdkConfigKeyTest {
                     SdkConfigKey.IdCheckAsyncBackendBaseUrl.name,
                 ),
                 arguments(
-                    "Use fake ID Check async backend",
-                    SdkConfigKey.FakeIdCheckAsyncBackend.name,
+                    "Bypass ID Check async backend",
+                    SdkConfigKey.BypassIdCheckAsyncBackend.name,
                 ),
             )
     }

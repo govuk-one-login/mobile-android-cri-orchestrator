@@ -5,12 +5,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.response.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
@@ -35,8 +37,10 @@ class RemoteSessionReader
     ) : SessionReader,
         LogTagProvider {
         override fun isActiveSession(): Flow<Boolean> =
-            configStore
-                .read(IdCheckAsyncBackendBaseUrl)
+            merge(
+                configStore.read(IdCheckAsyncBackendBaseUrl),
+                configStore.read(SdkConfigKey.BypassIdCheckAsyncBackend)
+            )
                 .flowOn(dispatchers.io)
                 .map {
                     sessionApi.get().getActiveSession()

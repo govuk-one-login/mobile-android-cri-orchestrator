@@ -17,9 +17,9 @@ object TestWrapperConfig {
                         ),
                     ),
                     Config.Entry(
-                        key = SdkConfigKey.FakeIdCheckAsyncBackend,
+                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
                         Config.Value.BooleanValue(
-                            value = true,
+                            value = false,
                         ),
                     ),
                 ),

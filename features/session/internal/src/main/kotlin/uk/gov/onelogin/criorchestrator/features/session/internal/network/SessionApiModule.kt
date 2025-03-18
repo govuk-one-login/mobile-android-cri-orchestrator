@@ -16,7 +16,7 @@ class SessionApiModule {
         realSessionApi: SessionApiImpl,
         fakeSessionApi: FakeSessionApi,
     ): SessionApi =
-        if (config.readSingle(SdkConfigKey.FakeIdCheckAsyncBackend).value) {
+        if (config.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
             fakeSessionApi
         } else {
             realSessionApi
