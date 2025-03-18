@@ -23,6 +23,7 @@ dependencies {
 
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(project(":features:session:internal")))
+    testImplementation(kotlin("test"))
 }
 
 mavenPublishingConfig {
