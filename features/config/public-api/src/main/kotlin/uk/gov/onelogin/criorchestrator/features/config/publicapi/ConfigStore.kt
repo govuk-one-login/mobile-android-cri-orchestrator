@@ -14,6 +14,13 @@ interface ConfigStore {
     fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T>
 
     /**
+     * Get value for a given key synchronously once.
+     *
+     * @param key The configuration key.
+     */
+    fun <T : Config.Value> readSingle(key: ConfigKey<T>): T
+
+    /**
      * Get the whole configuration.
      */
     fun readAll(): Flow<Config>

@@ -29,17 +29,10 @@ class InMemoryConfigStore
         override fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T> =
             config
                 .mapNotNull {
-                    val entry = it.entries.find { it.key == key }
-
-                    if (entry == null) {
-                        throw NoSuchElementException("key: ${key.javaClass.simpleName}")
-                    }
-
-                    require(entry.key == key)
-                    // The entry guarantees the value's type is consistent with the key
-                    @Suppress("UNCHECKED_CAST")
-                    entry.value as T
+                    getValueFromConfig(it, key)
                 }.distinctUntilChanged()
+
+        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = getValueFromConfig(config.value, key)
 
         override fun readAll(): Flow<Config> = config
 
@@ -58,4 +51,20 @@ class InMemoryConfigStore
                     entries = persistentListOf(entry),
                 ),
             )
+
+        private fun <T : Config.Value> getValueFromConfig(
+            config: Config,
+            key: ConfigKey<T>,
+        ): T {
+            val entry = config.entries.find { it.key == key }
+
+            if (entry == null) {
+                throw NoSuchElementException("key: ${key.javaClass.simpleName}")
+            }
+
+            require(entry.key == key)
+            // The entry guarantees the value's type is consistent with the key
+            @Suppress("UNCHECKED_CAST")
+            return entry.value as T
+        }
     }

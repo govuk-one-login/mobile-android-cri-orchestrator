@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -16,16 +17,20 @@ import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import java.util.stream.Stream
+import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
     private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
-    private val sessionApi = StubSessionApiImpl()
     private val logger = SystemLogger()
+    private val stubSessionApiImpl = StubSessionApiImpl()
+
+    val sessionApi = Provider<SessionApi> { stubSessionApiImpl }
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -42,6 +47,11 @@ class RemoteSessionReaderTest {
             )
     }
 
+    @AfterEach
+    fun tearDown() {
+        stubSessionApiImpl.setActiveSession(ApiResponse.Offline)
+    }
+
     @ParameterizedTest(name = "{0}")
     @MethodSource("assertCorrectApiResponseHandling")
     fun `session reader returns `(
@@ -49,7 +59,7 @@ class RemoteSessionReaderTest {
         logEntry: String,
         expectedIsActiveSession: Boolean,
     ) = runTest {
-        sessionApi.setActiveSession(apiResponse)
+        stubSessionApiImpl.setActiveSession(apiResponse)
         remoteSessionReader.isActiveSession().test {
             assertEquals(expectedIsActiveSession, awaitItem())
             assertTrue(logger.contains(logEntry))

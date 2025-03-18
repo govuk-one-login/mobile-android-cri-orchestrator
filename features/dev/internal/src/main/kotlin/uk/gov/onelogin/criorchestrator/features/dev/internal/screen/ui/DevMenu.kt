@@ -42,7 +42,7 @@ internal fun DevMenu(
             )
         }
         items(
-            items = config.entries,
+            items = config.entries.sortedBy { it.key.toString() },
             key = { it.key.id },
             itemContent = { entry ->
                 ConfigEntry(
