@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.config.internal
 
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 
 object FakeConfig {
@@ -17,6 +18,11 @@ object FakeConfig {
                             Config.Value.StringValue(
                                 ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
                             ),
+                    ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                        value =
+                            Config.Value.BooleanValue(false),
                     ),
                 ),
         )

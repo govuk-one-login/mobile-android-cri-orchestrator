@@ -39,9 +39,8 @@ class RemoteSessionReader
         override fun isActiveSession(): Flow<Boolean> =
             merge(
                 configStore.read(IdCheckAsyncBackendBaseUrl),
-                configStore.read(SdkConfigKey.BypassIdCheckAsyncBackend)
-            )
-                .flowOn(dispatchers.io)
+                configStore.read(SdkConfigKey.BypassIdCheckAsyncBackend),
+            ).flowOn(dispatchers.io)
                 .map {
                     sessionApi.get().getActiveSession()
                 }.onEach {
