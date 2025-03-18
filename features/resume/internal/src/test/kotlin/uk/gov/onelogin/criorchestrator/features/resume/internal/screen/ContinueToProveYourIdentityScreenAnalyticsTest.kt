@@ -7,13 +7,14 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ScreenId
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 
@@ -50,6 +51,23 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
     }
 
     @Test
+    fun `when screen is started, it tracks analytics`() {
+        val expectedScreenName = context.getString(R.string.continue_to_prove_your_identity_screen_title)
+        val expectedScreenId = ScreenId.ContinueToProveYourIdentity.rawId
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+            )
+        }
+        val matchingEvents =
+            analyticsLogger.loggedEvents.filter {
+                it.parameters["screen_id"] == expectedScreenId &&
+                    it.parameters["screen_name"] == expectedScreenName
+            }
+        assertEquals(1, matchingEvents.size)
+    }
+
+    @Test
     fun `when continue button is clicked, it tracks analytics`() {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
@@ -61,6 +79,10 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
             .onNode(primaryButton)
             .performClick()
 
-        assertTrue(analyticsLogger.loggedEvents.isNotEmpty())
+        val matchingEvents =
+            analyticsLogger.loggedEvents.filter {
+                it.parameters["text"] == context.getString(R.string.continue_to_prove_your_identity_screen_button)
+            }
+        assertEquals(1, matchingEvents.size)
     }
 }

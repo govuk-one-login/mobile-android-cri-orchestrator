@@ -39,6 +39,17 @@ class ContinueToProveYourIdentityScreenTest {
     }
 
     @Test
+    fun `when screen started, it calls the view model`() {
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+            )
+        }
+
+        verify(viewModel).onScreenStart()
+    }
+
+    @Test
     fun `when continue button is clicked, it calls the view model`() {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
