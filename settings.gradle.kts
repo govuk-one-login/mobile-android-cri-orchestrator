@@ -19,6 +19,10 @@ dependencyResolutionManagement {
             "https://maven.pkg.github.com/govuk-one-login/mobile-android-ui",
             setupGithubCredentials()
         )
+        maven(
+            // imposter maven repository
+            "https://s3-eu-west-1.amazonaws.com/gatehillsoftware-maven/releases/"
+        )
     }
 }
 
