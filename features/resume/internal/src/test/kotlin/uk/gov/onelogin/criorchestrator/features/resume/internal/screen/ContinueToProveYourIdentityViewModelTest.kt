@@ -1,9 +1,19 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
+import junit.framework.TestCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.Before
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel2
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel3
@@ -21,6 +31,8 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 class ContinueToProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
     private val resourceProvider = FakeResourceProvider()
+    private val nfcChecker: NfcChecker = mock()
+    private val testDispatcher = StandardTestDispatcher()
 
     private val viewModel by lazy {
         ContinueToProveYourIdentityViewModel(
@@ -29,7 +41,14 @@ class ContinueToProveYourIdentityViewModelTest {
                     resourceProvider = resourceProvider,
                     analyticsLogger = analyticsLogger,
                 ),
+            nfcChecker = nfcChecker,
         )
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
     }
 
     @Test
@@ -64,4 +83,28 @@ class ContinueToProveYourIdentityViewModelTest {
             )
         verify(analyticsLogger).logEventV3Dot1(expectedEvent)
     }
+
+    @Test
+    fun `when continue clicked and nfc available`() =
+        runTest {
+            whenever(nfcChecker.hasNfc()).thenReturn(true)
+
+            viewModel.onContinueClick()
+
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            TestCase.assertEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
+        }
+
+    @Test
+    fun `when continue clicked and nfc not available`() =
+        runTest {
+            whenever(nfcChecker.hasNfc()).thenReturn(false)
+
+            viewModel.onContinueClick()
+
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            TestCase.assertEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
+        }
 }

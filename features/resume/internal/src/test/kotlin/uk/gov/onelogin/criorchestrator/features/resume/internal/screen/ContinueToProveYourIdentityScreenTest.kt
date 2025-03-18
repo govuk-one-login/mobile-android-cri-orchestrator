@@ -5,13 +5,14 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -19,6 +20,7 @@ import org.mockito.kotlin.whenever
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenTest {
@@ -26,6 +28,8 @@ class ContinueToProveYourIdentityScreenTest {
     val composeTestRule = createComposeRule()
 
     private val nfcChecker: NfcChecker = mock()
+    private val navController: NavController = mock()
+    private val stateFlow = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
     private lateinit var primaryButton: SemanticsMatcher
     private val viewModel =
         spy(
@@ -40,6 +44,8 @@ class ContinueToProveYourIdentityScreenTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
+
+        whenever(viewModel.state).thenReturn(stateFlow)
     }
 
     @Test
@@ -47,27 +53,39 @@ class ContinueToProveYourIdentityScreenTest {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
+                navController = navController,
             )
         }
 
         verify(viewModel).onScreenStart()
     }
 
-    fun `when continue clicked and nfc available`() {
-        whenever(nfcChecker.hasNfc()).thenReturn(true)
+    @Test
+    fun `when nfc is available navigate to passport journey`() {
+        stateFlow.value = ProveYourIdentityState.NfcAvailable
 
-        viewModel.onContinueClick()
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
 
-        verify(viewModel).navigateToPassportJourney()
+        verify(navController).navigate(ProveYourIdentityDestinations.PassportJourney)
     }
 
     @Test
-    fun `when continue clicked and nfc not available`() {
-        whenever(nfcChecker.hasNfc()).thenReturn(false)
+    fun `when nfc is available navigate to driving licence journey`() {
+        stateFlow.value = ProveYourIdentityState.NfcNotAvailable
 
-        viewModel.onContinueClick()
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
 
-        verify(viewModel).navigateToDlJourney()
+        verify(navController).navigate(ProveYourIdentityDestinations.DrivingLicenceJourney)
     }
 
     @Test
@@ -75,6 +93,7 @@ class ContinueToProveYourIdentityScreenTest {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
+                navController = navController,
             )
         }
 
