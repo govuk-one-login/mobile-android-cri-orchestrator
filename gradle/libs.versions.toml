@@ -38,6 +38,9 @@ turbine = "1.2.0"
 uk-gov-logging = "0.19.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.3.4"
 uk-gov-ui = "7.12.0"
+gov-uk-idcheck = "0.6.73"
+iproov = "10.2.1"
+code-scanner = "2.3.2"
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -104,6 +107,9 @@ uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", ver
 uk-gov-ui-pages = { group = "uk.gov.android", name = "pages", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
+uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
+com-iproov-sdk = { module = "com.iproov.sdk:iproov", version.ref = "iproov" }
+com-github-yuriy-budiyev-code-scanner = { module = "com.github.yuriy-budiyev:code-scanner", version.ref = "code-scanner" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
