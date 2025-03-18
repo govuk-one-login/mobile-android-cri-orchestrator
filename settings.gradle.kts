@@ -23,6 +23,8 @@ dependencyResolutionManagement {
             // imposter maven repository
             "https://s3-eu-west-1.amazonaws.com/gatehillsoftware-maven/releases/"
         )
+        maven("https://raw.githubusercontent.com/iProov/android/master/maven/")
+        maven("https://jitpack.io")
     }
 }
 
