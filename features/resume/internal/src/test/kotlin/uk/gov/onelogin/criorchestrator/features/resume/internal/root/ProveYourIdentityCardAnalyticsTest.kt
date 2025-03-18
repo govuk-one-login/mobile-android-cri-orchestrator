@@ -86,6 +86,7 @@ class ProveYourIdentityCardAnalyticsTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
+                            nfcChecker = mock(),
                         ),
                     ),
                 ),
