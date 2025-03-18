@@ -28,10 +28,9 @@ import javax.inject.Provider
 class RemoteSessionReaderTest {
     private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val logger = SystemLogger()
+    private val stubSessionApiImpl = StubSessionApiImpl()
 
-    object StubSessionApi : Provider<SessionApi> {
-        override fun get(): SessionApi = StubSessionApiImpl
-    }
+    val sessionApi = Provider<SessionApi> { stubSessionApiImpl }
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -43,14 +42,14 @@ class RemoteSessionReaderTest {
                 configStore = configStore,
                 dispatchers = dispatchers,
                 sessionStore = InMemorySessionStore(logger),
-                sessionApi = StubSessionApi,
+                sessionApi = sessionApi,
                 logger = logger,
             )
     }
 
     @AfterEach
     fun tearDown() {
-        StubSessionApiImpl.setActiveSession(ApiResponse.Offline)
+        stubSessionApiImpl.setActiveSession(ApiResponse.Offline)
     }
 
     @ParameterizedTest(name = "{0}")
@@ -60,7 +59,7 @@ class RemoteSessionReaderTest {
         logEntry: String,
         expectedIsActiveSession: Boolean,
     ) = runTest {
-        StubSessionApiImpl.setActiveSession(apiResponse)
+        stubSessionApiImpl.setActiveSession(apiResponse)
         remoteSessionReader.isActiveSession().test {
             assertEquals(expectedIsActiveSession, awaitItem())
             assertTrue(logger.contains(logEntry))
