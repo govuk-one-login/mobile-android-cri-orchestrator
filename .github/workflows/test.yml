@@ -24,6 +24,7 @@ jobs:
       # Set permissions for ${{ secrets.GITHUB_TOKEN }}
       # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
       packages: read
+      pull-requests: write
     env:
       GITHUB_ACTOR: ${{ github.actor }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -72,6 +73,11 @@ jobs:
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
         with:
           artifact-name: unit-test-coverage
+
+      - name: Publish analytics test report
+        uses: ./actions/publish-analytics-report
+        with:
+          path: "build/reports/analytics/*.yml"
 
       - name: Clean workspace
         if: ${{ always() }}
