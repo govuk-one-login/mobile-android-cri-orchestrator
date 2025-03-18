@@ -13,7 +13,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 
@@ -22,12 +25,13 @@ class ContinueToProveYourIdentityScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val nfcChecker: NfcChecker = mock()
     private lateinit var primaryButton: SemanticsMatcher
-
     private val viewModel =
         spy(
             ContinueToProveYourIdentityViewModel(
                 analytics = mock<ResumeAnalytics>(),
+                nfcChecker = nfcChecker,
             ),
         )
 
@@ -47,6 +51,23 @@ class ContinueToProveYourIdentityScreenTest {
         }
 
         verify(viewModel).onScreenStart()
+    }
+
+    fun `when continue clicked and nfc available`() {
+        whenever(nfcChecker.hasNfc()).thenReturn(true)
+
+        viewModel.onContinueClick()
+
+        verify(viewModel).navigateToPassportJourney()
+    }
+
+    @Test
+    fun `when continue clicked and nfc not available`() {
+        whenever(nfcChecker.hasNfc()).thenReturn(false)
+
+        viewModel.onContinueClick()
+
+        verify(viewModel).navigateToDlJourney()
     }
 
     @Test
