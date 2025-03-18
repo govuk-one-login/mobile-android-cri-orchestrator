@@ -4,6 +4,14 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.org.junit.jupiter.api)
+    testImplementation(platform(libs.org.junit.bom))
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 mavenPublishingConfig {
