@@ -1,12 +1,13 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
-import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -26,6 +27,8 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 @ExtendWith(MainDispatcherExtension::class)
 class ContinueToProveYourIdentityViewModelTest {
@@ -49,6 +52,12 @@ class ContinueToProveYourIdentityViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -93,7 +102,7 @@ class ContinueToProveYourIdentityViewModelTest {
 
             testDispatcher.scheduler.advanceUntilIdle()
 
-            TestCase.assertEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
+            assertEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
         }
 
     @Test
@@ -105,6 +114,30 @@ class ContinueToProveYourIdentityViewModelTest {
 
             testDispatcher.scheduler.advanceUntilIdle()
 
-            TestCase.assertEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
+            assertEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
+        }
+
+    @Test
+    fun `when continue clicked and nfc not available don't emmit NfcAvailable`() =
+        runTest {
+            whenever(nfcChecker.hasNfc()).thenReturn(false)
+
+            viewModel.onContinueClick()
+
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertNotEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
+        }
+
+    @Test
+    fun `when continue clicked and nfc is available don't emmit NfcNotAvailable`() =
+        runTest {
+            whenever(nfcChecker.hasNfc()).thenReturn(true)
+
+            viewModel.onContinueClick()
+
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertNotEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
         }
 }
