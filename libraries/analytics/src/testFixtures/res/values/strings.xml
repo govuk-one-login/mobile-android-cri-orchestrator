@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="test_string">test string</string>
+
+    <string name="test_button_text">Continue</string>
+    <string name="test_screen_title">Welcome to this app</string>
+
+
 </resources>
