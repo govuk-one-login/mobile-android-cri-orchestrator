@@ -13,8 +13,8 @@ import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ScreenId
-import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.FakeResourceProvider
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -54,7 +54,7 @@ class ContinueToProveYourIdentityViewModelTest {
 
         val expectedEvent: AnalyticsEvent =
             ViewEvent.Screen(
-                id = ScreenId.ContinueToProveYourIdentity.rawId,
+                id = ResumeScreenId.ContinueToProveYourIdentity.rawId,
                 name = resourceProvider.defaultEnglishString,
                 params =
                     RequiredParameters(

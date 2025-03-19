@@ -17,7 +17,7 @@ import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 
 @RunWith(AndroidJUnit4::class)
 class ResumeAnalyticsTest {
@@ -35,7 +35,7 @@ class ResumeAnalyticsTest {
         @StringRes
         val buttonText = R.string.start_id_check_primary_button
 
-        val screenId = ScreenId.ContinueToProveYourIdentity
+        val screenId = ResumeScreenId.ContinueToProveYourIdentity
 
         @StringRes
         val screenTitle = R.string.start_id_check_title
