@@ -11,9 +11,9 @@ import dagger.Provides
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcCheckerImpl
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
@@ -21,11 +21,11 @@ object ContinueToProveYourIdentityViewModelModule {
     const val FACTORY_NAME = "ContinueToProveYourIdentityViewModelFactory"
 
     @Provides
-    @Singleton
+    @ActivityScope
     fun providesNfcManager(context: Context): NfcManager = context.getSystemService(Context.NFC_SERVICE) as NfcManager
 
     @Provides
-    @Singleton
+    @ActivityScope
     fun provideNfcChecker(nfcManager: NfcManager): NfcChecker = NfcCheckerImpl(nfcManager)
 
     @Provides
