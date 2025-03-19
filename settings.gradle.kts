@@ -61,7 +61,7 @@ include(
     ":features:select-doc:internal",
     ":features:select-doc:internal-api",
     ":konsist-test",
-    ":libraries:android-utils",
+    ":libraries:analytics",
     ":libraries:kotlin-utils",
     ":libraries:di",
     ":libraries:navigation",
