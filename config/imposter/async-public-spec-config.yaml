@@ -1,0 +1,19 @@
+plugin: openapi
+resources:
+- method: POST
+  path: /async/finishBiometricSession
+  response:
+    statusCode: 200
+- method: GET
+  path: /.well-known/jwks.json
+  response:
+    statusCode: 200
+- method: GET
+  path: /async/activeSession
+  response:
+    statusCode: 200
+- method: POST
+  path: /async/biometricToken
+  response:
+    statusCode: 200
+specFile: async-public-spec.yaml
