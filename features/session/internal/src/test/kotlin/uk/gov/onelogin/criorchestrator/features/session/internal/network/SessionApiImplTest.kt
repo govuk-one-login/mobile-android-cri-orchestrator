@@ -36,7 +36,7 @@ class SessionApiImplTest {
     }
 
     @Test
-    fun `session API implementation returns stubbed API response`() {
+    fun `session API implementation returns stubbed API response`() =
         runTest {
             val expected =
                 ApiResponse.Success<String>(
@@ -48,5 +48,4 @@ class SessionApiImplTest {
             val result = sessionApiImpl.getActiveSession()
             assertEquals(expected, result)
         }
-    }
 }
