@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +19,9 @@ internal fun ContinueToProveYourIdentityScreen(
     viewModel: ContinueToProveYourIdentityViewModel,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+    }
     ContinueToProveYourIdentityContent(
         onContinueClick = viewModel::onContinueClick,
         modifier = modifier,

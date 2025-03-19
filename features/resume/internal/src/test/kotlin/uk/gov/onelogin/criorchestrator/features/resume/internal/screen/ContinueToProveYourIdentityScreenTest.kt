@@ -11,9 +11,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenTest {
@@ -24,7 +26,9 @@ class ContinueToProveYourIdentityScreenTest {
 
     private val viewModel =
         spy(
-            ContinueToProveYourIdentityViewModel(),
+            ContinueToProveYourIdentityViewModel(
+                analytics = mock<ResumeAnalytics>(),
+            ),
         )
 
     @Before
@@ -32,6 +36,17 @@ class ContinueToProveYourIdentityScreenTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
+    }
+
+    @Test
+    fun `when screen started, it calls the view model`() {
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+            )
+        }
+
+        verify(viewModel).onScreenStart()
     }
 
     @Test

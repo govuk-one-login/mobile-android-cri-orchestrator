@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
+import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -16,10 +17,12 @@ object ContinueToProveYourIdentityViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(): ViewModelProvider.Factory =
+    fun provideFactory(analytics: ResumeAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                ContinueToProveYourIdentityViewModel()
+                ContinueToProveYourIdentityViewModel(
+                    analytics = analytics,
+                )
             }
         }
 }
