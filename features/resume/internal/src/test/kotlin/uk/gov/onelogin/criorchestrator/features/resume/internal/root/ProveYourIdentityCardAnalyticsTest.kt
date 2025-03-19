@@ -16,7 +16,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
@@ -28,6 +29,8 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLogge
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityCardAnalyticsTest {
+    private val nfcChecker: NfcChecker = mock()
+
     @get:Rule
     val composeTestRule = createComposeRule()
 

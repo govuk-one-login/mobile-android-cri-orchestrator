@@ -16,8 +16,6 @@ dependencies {
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
     implementation(libs.uk.gov.idcheck.sdk)
-    implementation(libs.com.github.yuriy.budiyev.code.scanner)
-    implementation(libs.com.iproov.sdk)
 
     testImplementation(testFixtures(project(":libraries:analytics")))
 
