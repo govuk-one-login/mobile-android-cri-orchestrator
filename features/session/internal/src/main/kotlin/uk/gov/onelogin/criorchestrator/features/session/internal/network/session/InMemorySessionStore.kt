@@ -22,7 +22,7 @@ class InMemorySessionStore
         private var activeSession: MutableStateFlow<Session?> = MutableStateFlow(null)
 
         override fun read(): StateFlow<Session?> {
-            logger.debug(tag, "Reading session $activeSession from session store")
+            logger.debug(tag, "Reading session ${activeSession.value} from session store")
             return activeSession.asStateFlow()
         }
 

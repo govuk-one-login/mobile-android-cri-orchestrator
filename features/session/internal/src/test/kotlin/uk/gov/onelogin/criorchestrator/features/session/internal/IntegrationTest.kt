@@ -66,23 +66,25 @@ class IntegrationTest {
     }
 
     @Test
-    fun `remote session reader returns active session details from mocked backend`() =
+    fun `remote session reader active session check returns true from mocked backend`() =
         runTest {
             remoteSessionReader.isActiveSession().test {
-                assertTrue(awaitItem())
+                awaitItem().also {
+                    val expectedSession =
+                        Session(
+                            sessionId = "37aae92b-a51e-4f68-b571-8e455fb0ec34",
+                            redirectUri = "https://example/redirect",
+                            state = "11112222333344445555666677778888",
+                        )
+                    sessionStore.read().test {
+                        assertEquals(
+                            expectedSession,
+                            awaitItem(),
+                        )
+                    }
+                    assertTrue(it)
+                }
                 assertTrue(logger.contains("Got active session"))
-
-                val expected =
-                    Session(
-                        sessionId = "37aae92b-a51e-4f68-b571-8e455fb0ec34",
-                        redirectUri = "https://example/redirect",
-                        state = "11112222333344445555666677778888",
-                    )
-
-                assertEquals(
-                    expected,
-                    sessionStore.read().value,
-                )
             }
         }
 }
