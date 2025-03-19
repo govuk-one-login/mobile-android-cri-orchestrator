@@ -26,6 +26,17 @@ abstract class Analytics(
         ),
     )
 
+    fun trackFormSubmission(
+        @StringRes buttonText: Int,
+        @StringRes response: Int,
+    ) = analyticsLogger.logEventV3Dot1(
+        TrackEvent.Form(
+            text = resourceProvider.getEnglishString(buttonText),
+            response = resourceProvider.getEnglishString(response),
+            params = requiredParameters,
+        ),
+    )
+
     fun trackScreen(
         id: ScreenId,
         @StringRes title: Int,
