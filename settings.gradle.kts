@@ -16,7 +16,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(
-            url = uri("https://maven.pkg.github.com/govuk-one-login/*"),
+            "https://maven.pkg.github.com/govuk-one-login/mobile-android-ui",
+            setupGithubCredentials()
+        )
+        maven(
+            "https://maven.pkg.github.com/govuk-one-login/mobile-id-check-android-sdk",
             setupGithubCredentials()
         )
         maven(
