@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(project(":features:resume:internal-api"))
     implementation(project(":features:resume:public-api"))
+    implementation(project(":features:select-doc:internal-api"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))

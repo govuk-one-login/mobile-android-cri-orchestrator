@@ -16,7 +16,7 @@ import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreenBodyCon
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreenButton
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
-import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.ContinueToProveYourIdentityDestinations
 
 @Composable
 internal fun ContinueToProveYourIdentityScreen(
@@ -40,12 +40,12 @@ internal fun ContinueToProveYourIdentityScreen(
 
         ProveYourIdentityState.NfcAvailable ->
             navController.navigate(
-                ProveYourIdentityDestinations.PassportJourney,
+                ContinueToProveYourIdentityDestinations.PassportJourney,
             )
 
         ProveYourIdentityState.NfcNotAvailable ->
             navController.navigate(
-                ProveYourIdentityDestinations.DrivingLicenceJourney,
+                ContinueToProveYourIdentityDestinations.DrivingLicenceJourney,
             )
     }
 }
