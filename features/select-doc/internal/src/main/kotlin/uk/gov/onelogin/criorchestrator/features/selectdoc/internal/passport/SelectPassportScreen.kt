@@ -10,6 +10,7 @@ import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.Image
+import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.SecondaryButton
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.Selection
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.Text
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenButton
@@ -31,8 +32,14 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
                     contentDescription = stringResource(R.string.selectdocument_passport_imagedescription),
                     Modifier.fillMaxWidth(),
                 ),
+
                 Text(stringResource(R.string.selectdocument_passport_expiry)),
-                Text(stringResource(R.string.selectdocument_passport_readmore_button)),
+
+                SecondaryButton(
+                    text = stringResource(R.string.selectdocument_passport_readmore_button),
+                    onClick = { }
+                ),
+
                 Selection(
                     title =
                         RadioSelectionTitle(
