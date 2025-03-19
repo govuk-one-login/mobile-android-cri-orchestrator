@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.ContinueToProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
@@ -27,10 +28,10 @@ class ContinueToProveYourIdentityNavGraphProvider
                 )
             }
 
-            composable<ProveYourIdentityDestinations.PassportJourney> {
+            composable<ContinueToProveYourIdentityDestinations.PassportJourney> {
             }
 
-            composable<ProveYourIdentityDestinations.DrivingLicenceJourney> {
+            composable<ContinueToProveYourIdentityDestinations.DrivingLicenceJourney> {
             }
         }
     }

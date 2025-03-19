@@ -6,10 +6,4 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestinatio
 sealed interface ProveYourIdentityDestinations : NavigationDestination {
     @Serializable
     data object ContinueToProveYourIdentity : ProveYourIdentityDestinations
-
-    @Serializable
-    data object PassportJourney : ProveYourIdentityDestinations
-
-    @Serializable
-    data object DrivingLicenceJourney : ProveYourIdentityDestinations
 }

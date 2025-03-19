@@ -20,7 +20,7 @@ import org.mockito.kotlin.whenever
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.ContinueToProveYourIdentityDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenTest {
@@ -71,7 +71,7 @@ class ContinueToProveYourIdentityScreenTest {
             )
         }
 
-        verify(navController).navigate(ProveYourIdentityDestinations.PassportJourney)
+        verify(navController).navigate(ContinueToProveYourIdentityDestinations.PassportJourney)
     }
 
     @Test
@@ -85,7 +85,7 @@ class ContinueToProveYourIdentityScreenTest {
             )
         }
 
-        verify(navController).navigate(ProveYourIdentityDestinations.DrivingLicenceJourney)
+        verify(navController).navigate(ContinueToProveYourIdentityDestinations.DrivingLicenceJourney)
     }
 
     @Test
