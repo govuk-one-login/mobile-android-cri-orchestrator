@@ -23,12 +23,12 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 @ExtendWith(MainDispatcherExtension::class)
 class ProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
-
+    private val resourceProvider = FakeResourceProvider()
     private val viewModel by lazy {
         ProveYourIdentityViewModel(
             analytics =
                 ResumeAnalytics(
-                    resourceProvider = FakeResourceProvider(),
+                    resourceProvider = resourceProvider,
                     analyticsLogger = analyticsLogger,
                 ),
             sessionReader = StubSessionReader(),
@@ -57,7 +57,23 @@ class ProveYourIdentityViewModelTest {
 
         val expectedEvent: AnalyticsEvent =
             TrackEvent.Button(
-                text = "dummy string",
+                text = resourceProvider.defaultEnglishString,
+                params =
+                    RequiredParameters(
+                        taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
+                        taxonomyLevel3 = TaxonomyLevel3.RESUME,
+                    ),
+            )
+        verify(analyticsLogger).logEventV3Dot1(expectedEvent)
+    }
+
+    @Test
+    fun `when modal close button is clicked, it sends analytics`() {
+        viewModel.start()
+
+        val expectedEvent: AnalyticsEvent =
+            TrackEvent.Button(
+                text = resourceProvider.defaultEnglishString,
                 params =
                     RequiredParameters(
                         taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,

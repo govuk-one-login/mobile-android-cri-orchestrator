@@ -40,6 +40,7 @@ internal fun ProveYourIdentityRoot(
     ProveYourIdentityRootContent(
         state = state,
         onCardStartClick = onCardStartClick,
+        onModalCancelClick = viewModel::onModalCancelClick,
         modalState = modalState,
         modifier = modifier,
         modalContent = {
@@ -50,12 +51,14 @@ internal fun ProveYourIdentityRoot(
     )
 }
 
+@Suppress("LongParameterList")
 @Composable
 internal fun ProveYourIdentityRootContent(
     state: ProveYourIdentityRootUiState,
     onCardStartClick: () -> Unit,
     modalState: ProveYourIdentityModalState,
     modifier: Modifier = Modifier,
+    onModalCancelClick: () -> Unit = {},
     // Suppress naming rule for clarity
     @SuppressLint("ComposableLambdaParameterNaming")
     modalContent: @Composable () -> Unit,
@@ -71,6 +74,7 @@ internal fun ProveYourIdentityRootContent(
 
     ProveYourIdentityModal(
         state = modalState,
+        onCancelClick = onModalCancelClick,
         modifier = Modifier.testTag(ProveYourIdentityRootTestTags.MODAL),
     ) {
         modalContent()
