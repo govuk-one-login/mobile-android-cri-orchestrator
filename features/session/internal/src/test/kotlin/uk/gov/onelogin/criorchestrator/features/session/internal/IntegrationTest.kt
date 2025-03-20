@@ -72,6 +72,7 @@ class IntegrationTest {
         runTest {
             remoteSessionReader.isActiveSession().test {
                 awaitItem().also {
+                    assertTrue(it)
                     val expectedSession =
                         Session(
                             sessionId = "37aae92b-a51e-4f68-b571-8e455fb0ec34",
@@ -84,9 +85,9 @@ class IntegrationTest {
                             awaitItem(),
                         )
                     }
-                    assertTrue(it)
                 }
                 assertTrue(logger.contains("Got active session"))
+                cancelAndIgnoreRemainingEvents()
             }
         }
 }
