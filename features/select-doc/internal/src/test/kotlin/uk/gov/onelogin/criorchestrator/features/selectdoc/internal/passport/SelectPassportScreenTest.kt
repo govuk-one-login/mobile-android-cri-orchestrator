@@ -62,7 +62,7 @@ class SelectPassportScreenTest {
             .onNode(readMoreButton)
             .performClick()
 
-        verify(viewModel).readMoreButtonAction()
+        verify(viewModel).onReadMoreClick()
     }
 
     @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")

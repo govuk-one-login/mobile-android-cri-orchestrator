@@ -69,7 +69,7 @@ class SelectPassportViewModelTest {
 
     @Test
     fun `when the read more button is pressed, it sends analytics`() {
-        viewModel.readMoreButtonAction()
+        viewModel.onReadMoreClick()
 
         verify(analyticsLogger)
             .trackButtonEvent(R.string.selectdocument_passport_readmore_button)
@@ -79,7 +79,7 @@ class SelectPassportViewModelTest {
     @Disabled("This AC has not yet been implemented")
     @Test
     fun `when the read more button is pressed, the user sees the types of photo ID screen`() {
-        viewModel.readMoreButtonAction()
+        viewModel.onReadMoreClick()
 
         assertTrue(false)
     }

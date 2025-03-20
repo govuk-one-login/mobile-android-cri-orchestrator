@@ -32,7 +32,7 @@ internal fun SelectPassportScreen(
         title = stringResource(viewModel.titleId),
         modifier = modifier,
         readMoreButtonTitle = stringResource(viewModel.readMoreButtonTextId),
-        readMoreButtonAction = viewModel::readMoreButtonAction,
+        onReadMoreClick = viewModel::onReadMoreClick,
         items =
             viewModel.options
                 .map { stringResource(it) }
@@ -48,7 +48,7 @@ internal fun SelectPassportScreen(
 internal fun SelectPassportScreenContent(
     title: String,
     readMoreButtonTitle: String,
-    readMoreButtonAction: () -> Unit,
+    onReadMoreClick: () -> Unit,
     items: PersistentList<String>,
     selectedItem: Int?,
     onItemSelected: (Int) -> Unit,
@@ -72,7 +72,7 @@ internal fun SelectPassportScreenContent(
                 Text(stringResource(R.string.selectdocument_passport_expiry)),
                 SecondaryButton(
                     text = readMoreButtonTitle,
-                    onClick = readMoreButtonAction,
+                    onClick = onReadMoreClick,
                 ),
                 Selection(
                     title =
@@ -101,7 +101,7 @@ internal fun PreviewPassportSelectionScreen() {
         SelectPassportScreenContent(
             title = stringResource(R.string.selectdocument_passport_title),
             readMoreButtonTitle = stringResource(R.string.selectdocument_passport_readmore_button),
-            readMoreButtonAction = { },
+            onReadMoreClick = { },
             items =
                 listOf(
                     R.string.selectdocument_passport_selection_yes,
