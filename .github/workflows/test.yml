@@ -51,22 +51,16 @@ jobs:
           ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
           ./gradlew testBuildDebugUnitTest
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
-          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Verify screenshots
         run: |
           ./gradlew verifyPaparazziDebug
           ./gradlew verifyPaparazziBuildDebug
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
-          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
@@ -123,11 +117,8 @@ jobs:
         # Keep this step so that it is simple to add device tests when needed.
         run: ./gradlew assembleAndroidTest
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
-          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
