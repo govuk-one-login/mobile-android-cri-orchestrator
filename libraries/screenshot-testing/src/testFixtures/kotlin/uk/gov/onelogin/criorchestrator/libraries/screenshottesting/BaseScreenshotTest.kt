@@ -57,6 +57,7 @@ abstract class BaseScreenshotTest(
         return Paparazzi(
             deviceConfig =
                 DeviceConfig(
+                    screenHeight = 1500,
                     nightMode = nightMode,
                     locale = locale.ifEmpty { null },
                 ),
