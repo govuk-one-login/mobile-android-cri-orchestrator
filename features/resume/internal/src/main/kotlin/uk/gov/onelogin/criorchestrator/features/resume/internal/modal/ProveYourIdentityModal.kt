@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.modal
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -7,6 +8,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.ImmutableSet
 import uk.gov.android.ui.patterns.dialog.FullScreenDialog
+import uk.gov.android.ui.patterns.dialog.FullScreenDialogTopAppBar
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
@@ -21,9 +23,11 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
  * @param modifier See [Modifier].
  * @param content The modal content (see [ProveYourIdentityModalNavHost])
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ProveYourIdentityModal(
     state: ProveYourIdentityModalState,
+    onCancelClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -33,6 +37,14 @@ internal fun ProveYourIdentityModal(
 
     FullScreenDialog(
         modifier = modifier,
+        topAppBar = {
+            FullScreenDialogTopAppBar(
+                onCloseClick = {
+                    onCancelClick()
+                    state.onDismissRequest()
+                },
+            )
+        },
         onDismissRequest = state::onDismissRequest,
     ) {
         content()
@@ -74,6 +86,7 @@ internal fun ProveYourIdentityModalPreview(
 ) = GdsTheme {
     ProveYourIdentityModal(
         state = parameters.state,
+        onCancelClick = {},
     ) {
     }
 }

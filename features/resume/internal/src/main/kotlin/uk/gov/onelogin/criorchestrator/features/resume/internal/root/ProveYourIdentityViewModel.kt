@@ -35,6 +35,12 @@ internal class ProveYourIdentityViewModel(
         )
     }
 
+    fun onModalCancelClick() {
+        analytics.trackButtonEvent(
+            buttonText = R.string.cancel_button_analytics_text,
+        )
+    }
+
     private fun checkActiveSession() {
         viewModelScope.launch {
             sessionReader.isActiveSession().collect { isActiveSession ->
