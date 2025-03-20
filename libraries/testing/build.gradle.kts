@@ -22,18 +22,19 @@ dependencies {
 
 android {
     packaging {
-        resources.excludes += setOf (
-            "META-INF/ASL-2.0.txt",
-            "META-INF/INDEX.LIST",
-            "META-INF/LGPL-3.0.txt",
-            "META-INF/NOTICE.md",
-            "META-INF/config-resolver.properties",
-            "META-INF/groovy-release-info.properties",
-            "META-INF/io.netty.versions.properties",
-            "META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat",
-            "draftv3/schema",
-            "draftv4/schema",
-        )
+        resources.excludes +=
+            setOf(
+                "META-INF/ASL-2.0.txt",
+                "META-INF/INDEX.LIST",
+                "META-INF/LGPL-3.0.txt",
+                "META-INF/NOTICE.md",
+                "META-INF/config-resolver.properties",
+                "META-INF/groovy-release-info.properties",
+                "META-INF/io.netty.versions.properties",
+                "META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat",
+                "draftv3/schema",
+                "draftv4/schema",
+            )
     }
 }
 
