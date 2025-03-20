@@ -16,24 +16,24 @@ import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
 class ContinueToProveYourIdentityNavGraphProvider
-@Inject
-constructor(
-    @Named(ContinueToProveYourIdentityViewModelModule.FACTORY_NAME)
-    private val viewModelFactory: ViewModelProvider.Factory,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-        composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
-            ContinueToProveYourIdentityScreen(
-                viewModel = viewModel(factory = viewModelFactory),
-                navController = navController,
-            )
-        }
+    @Inject
+    constructor(
+        @Named(ContinueToProveYourIdentityViewModelModule.FACTORY_NAME)
+        private val viewModelFactory: ViewModelProvider.Factory,
+    ) : ProveYourIdentityNavGraphProvider {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+            composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
+                ContinueToProveYourIdentityScreen(
+                    viewModel = viewModel(factory = viewModelFactory),
+                    navController = navController,
+                )
+            }
 
-        composable<ContinueToProveYourIdentityDestinations.PassportJourney> {
-            SelectPassportScreen()
-        }
+            composable<ContinueToProveYourIdentityDestinations.PassportJourney> {
+                SelectPassportScreen()
+            }
 
-        composable<ContinueToProveYourIdentityDestinations.DrivingLicenceJourney> {
+            composable<ContinueToProveYourIdentityDestinations.DrivingLicenceJourney> {
+            }
         }
     }
-}
