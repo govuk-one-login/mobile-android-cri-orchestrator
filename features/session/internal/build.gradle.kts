@@ -30,6 +30,22 @@ dependencies {
     testImplementation(project(":features:config:public-api"))
     testImplementation(testFixtures(project(":features:config:internal")))
     testImplementation(testFixtures(project(":libraries:analytics")))
+    testImplementation(testFixtures(project(":libraries:android-utils")))
+
+    listOf(
+        libs.imposter.config.parser,
+        libs.imposter.main,
+        libs.imposter.openapi.plugin,
+    ).forEach {
+        testImplementation(it) {
+            exclude(group = "javax.validation", module = "validation-api")
+            exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
+        }
+        testFixturesImplementation(it) {
+            exclude(group = "javax.validation", module = "validation-api")
+            exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
+        }
+    }
 }
 
 mavenPublishingConfig {
