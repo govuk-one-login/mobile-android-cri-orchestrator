@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.10.1"
-agp = "8.8.2"
+agp = "8.9.0"
 androidXCoreKtx = "1.15.0"
 androidXTest = "1.6.1"
 androidXTestRunner = "1.6.2"
@@ -12,7 +12,7 @@ bouncycastle-jdk18on = "1.80"
 composeBom = "2025.03.00"
 composable-preview-scanner = "0.5.1"
 compose-lint-checks = "1.4.2"
-dagger = "2.55"
+dagger = "2.56"
 espressoCore = "3.6.1"
 firebase-bom = "33.10.0" # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics-gradle = "3.0.3" # https://firebase.google.com/support/release-notes/android
