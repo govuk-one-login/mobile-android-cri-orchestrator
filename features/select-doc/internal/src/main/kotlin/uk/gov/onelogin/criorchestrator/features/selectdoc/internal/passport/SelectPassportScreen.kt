@@ -32,14 +32,11 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
                     contentDescription = stringResource(R.string.selectdocument_passport_imagedescription),
                     Modifier.fillMaxWidth(),
                 ),
-
                 Text(stringResource(R.string.selectdocument_passport_expiry)),
-
                 SecondaryButton(
                     text = stringResource(R.string.selectdocument_passport_readmore_button),
-                    onClick = { }
+                    onClick = { },
                 ),
-
                 Selection(
                     title =
                         RadioSelectionTitle(
