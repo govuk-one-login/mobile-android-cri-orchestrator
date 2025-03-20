@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download bump-version outputs
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 #v4.1.9
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e #v4.2.1
         if: ${{ github.event.workflow_run.conclusion == 'success' }}
         with:
           name: bump-version-outputs
@@ -76,7 +76,9 @@ jobs:
             uk.gov.onelogin.criorchestrator.features:resume-internal,
             uk.gov.onelogin.criorchestrator.features:resume-internal-api,
             uk.gov.onelogin.criorchestrator.features:resume-public-api,
-            uk.gov.onelogin.criorchestrator.libraries:android-utils,
+            uk.gov.onelogin.criorchestrator.features:select-doc-internal,
+            uk.gov.onelogin.criorchestrator.features:select-doc-internal-api,
+            uk.gov.onelogin.criorchestrator.libraries:analytics,
             uk.gov.onelogin.criorchestrator.libraries:di,
             uk.gov.onelogin.criorchestrator.libraries:screenshot-testing,
             uk.gov.onelogin.criorchestrator.sdk:sdk,

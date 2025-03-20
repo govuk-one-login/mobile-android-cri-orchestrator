@@ -19,7 +19,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
-import uk.gov.onelogin.criorchestrator.libraries.androidutils.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 
 @RunWith(AndroidJUnit4::class)

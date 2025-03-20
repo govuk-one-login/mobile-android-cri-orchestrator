@@ -12,11 +12,11 @@ dependencies {
     implementation(project(":features:resume:internal-api"))
     implementation(project(":features:resume:public-api"))
     implementation(project(":features:session:internal-api"))
-    implementation(project(":libraries:android-utils"))
+    implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
 
-    debugImplementation(testFixtures(project(":libraries:android-utils")))
+    debugImplementation(testFixtures(project(":libraries:analytics")))
 
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(project(":features:session:internal")))
