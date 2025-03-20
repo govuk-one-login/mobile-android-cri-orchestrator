@@ -30,7 +30,6 @@ dependencies {
     testImplementation(project(":features:config:public-api"))
     testImplementation(testFixtures(project(":features:config:internal")))
     testImplementation(testFixtures(project(":libraries:analytics")))
-    testImplementation(testFixtures(project(":libraries:android-utils")))
 
     listOf(
         libs.imposter.config.parser,
