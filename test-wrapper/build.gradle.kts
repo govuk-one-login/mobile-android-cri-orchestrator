@@ -26,7 +26,6 @@ dependencies {
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.logging.testdouble)
     implementation(libs.uk.gov.networking)
-    implementation(libs.uk.gov.idcheck.sdk)
     implementation(platform(libs.firebase.bom))
     implementation(project(":features:config:public-api"))
     implementation(project(":features:dev:public-api"))

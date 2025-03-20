@@ -17,7 +17,6 @@ import org.mockito.Mockito.spy
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.ContinueToProveYourIdentityDestinations
@@ -27,7 +26,6 @@ class ContinueToProveYourIdentityScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val nfcChecker: NfcChecker = mock()
     private val navController: NavController = mock()
     private val stateFlow = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
     private lateinit var primaryButton: SemanticsMatcher
@@ -35,7 +33,7 @@ class ContinueToProveYourIdentityScreenTest {
         spy(
             ContinueToProveYourIdentityViewModel(
                 analytics = mock<ResumeAnalytics>(),
-                nfcChecker = nfcChecker,
+                nfcChecker = mock(),
             ),
         )
 

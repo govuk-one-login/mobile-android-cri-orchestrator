@@ -20,7 +20,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
@@ -30,8 +29,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionRead
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
-    private val nfcChecker: NfcChecker = mock()
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -113,7 +110,7 @@ class ProveYourIdentityRootTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
-                            nfcChecker = nfcChecker,
+                            nfcChecker = mock(),
                         ),
                     ),
                 ),
