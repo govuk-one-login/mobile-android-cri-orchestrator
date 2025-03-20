@@ -96,7 +96,6 @@ uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version
 uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
 uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
-uk-gov-ui-components = { group = "uk.gov.android", name = "components", version.ref = "uk-gov-ui" }
 uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
 uk-gov-ui-pages = { group = "uk.gov.android", name = "pages", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
@@ -116,4 +115,4 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
 
 [bundles]
-uk-gov-ui = ["uk-gov-ui-components", "uk-gov-ui-components-v2", "uk-gov-ui-pages", "uk-gov-ui-theme", "uk-gov-ui-patterns"]
+uk-gov-ui = ["uk-gov-ui-components-v2", "uk-gov-ui-pages", "uk-gov-ui-theme", "uk-gov-ui-patterns"]
