@@ -43,6 +43,7 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Unit test
+        id: unit-tests
         # Exclude Konsist unit tests which are actually lint checks
         # Build all unit tests so that jars are available for Sonar
         run: |
@@ -60,6 +61,13 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload test report
+        if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: unit-test-reports
+          path: "**/build/reports/tests/**/*"
 
       # Sonar analyzers must have access to the bytecode to perform an accurate analysis.
       # https://community.sonarsource.com/t/sonarscanner-for-gradle-you-can-now-decide-when-to-compile/102069
