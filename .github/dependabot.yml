@@ -8,8 +8,8 @@ registries:
   github-maven:
     type: maven-repository
     url: https://maven.pkg.github.com
-    username: ${{ secrets.DEPENDABOT_GITHUB_USERNAME }}
-    password: ${{ secrets.DEPENDABOT_GITHUB_TOKEN }}
+    username: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+    password: ${{ secrets.MODULE_FETCH_TOKEN }}
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
