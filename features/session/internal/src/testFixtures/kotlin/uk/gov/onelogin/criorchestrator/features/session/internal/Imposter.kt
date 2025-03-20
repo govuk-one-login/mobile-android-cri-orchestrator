@@ -4,13 +4,14 @@ import io.gatehill.imposter.openapi.embedded.OpenApiImposterBuilder
 import io.gatehill.imposter.openapi.embedded.OpenApiMockEngine
 
 class Imposter {
+    val currentDir: String? = System.getProperty("user.dir")
+    val rootSubstring = "mobile-android-cri-orchestrator"
     val path =
-        System
-            .getProperty("user.dir")
+        currentDir
             ?.substring(
                 0,
-                System.getProperty("user.dir")!!.indexOf("mobile-android-cri-orchestrator"),
-            ) + "mobile-android-cri-orchestrator/config/imposter"
+                currentDir.lastIndexOf(rootSubstring) + rootSubstring.length,
+            ) + "/config/imposter"
 
     class OpenApiImposterBuilderImpl : OpenApiImposterBuilder<OpenApiMockEngine, OpenApiImposterBuilderImpl>()
 
