@@ -3,12 +3,14 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsSelected
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onSiblings
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.printToString
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -40,29 +42,21 @@ class SelectPassportScreenTest {
     fun setUp() {
         val context: Context = ApplicationProvider.getApplicationContext()
         readMoreButton = hasText(context.getString(R.string.selectdocument_passport_readmore_button))
-        yesOption = hasContentDescription(context.getString(R.string.selectdocument_passport_selection_yes))
-        noOption = hasContentDescription(context.getString(R.string.selectdocument_passport_selection_no))
+        yesOption = hasText(context.getString(R.string.selectdocument_passport_selection_yes))
+        noOption = hasText(context.getString(R.string.selectdocument_passport_selection_no))
         confirmButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
     }
 
     @Test
     fun `when screen started, it calls the view model`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        setupContent()
 
         verify(viewModel).onScreenStart()
     }
 
     @Test
     fun `when read more is selected, it calls the view model`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        setupContent()
 
         composeTestRule
             .onNode(readMoreButton)
@@ -77,16 +71,13 @@ class SelectPassportScreenTest {
         // `@ParameterizedTest` is not supported in JUnit 4
         (0..1).forEach { selectedItem ->
             viewModel.onItemSelected(selectedItem)
+            setupContent()
 
-            composeTestRule.setContent {
-                SelectPassportScreen(
-                    viewModel = viewModel,
-                )
-            }
-
-            val expectedSelectedComponent = listOf(
-                yesOption, noOption
-            )[selectedItem]
+            val expectedSelectedComponent =
+                listOf(
+                    yesOption,
+                    noOption,
+                )[selectedItem]
 
             composeTestRule
                 .onNode(expectedSelectedComponent)
@@ -97,14 +88,18 @@ class SelectPassportScreenTest {
     @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")
     @Test
     fun `when yes is selected, it calls the view model`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        setupContent()
+
+        assertEquals(
+            "",
+            composeTestRule
+                .onNode(readMoreButton)
+                .onSiblings()
+                .printToString(maxDepth = 6),
+        )
 
         composeTestRule
-            .onNode(yesOption)
+            .onNode(yesOption, useUnmergedTree = true)
             .performClick()
 
         verify(viewModel).onItemSelected(0)
@@ -113,11 +108,7 @@ class SelectPassportScreenTest {
     @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")
     @Test
     fun `when no is selected, it calls the view model`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        setupContent()
 
         composeTestRule
             .onNode(noOption)
@@ -128,16 +119,20 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when confirm is selected, it calls the view model`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        setupContent()
 
         composeTestRule
             .onNode(confirmButton)
             .performClick()
 
         verify(viewModel).onConfirmSelection()
+    }
+
+    private fun setupContent() {
+        composeTestRule.setContent {
+            SelectPassportScreen(
+                viewModel = viewModel,
+            )
+        }
     }
 }
