@@ -14,17 +14,11 @@ dependencies {
     implementation(project(":libraries:kotlin-utils"))
     implementation(project(":libraries:di"))
 
-    testFixturesImplementation(libs.imposter.config.parser)
-    testFixturesImplementation(libs.imposter.main)
-    testFixturesImplementation(libs.imposter.openapi.plugin)
     testFixturesImplementation(libs.kotlinx.coroutines)
     testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(project(":features:session:internal-api"))
 
-    testImplementation(libs.imposter.config.parser)
-    testImplementation(libs.imposter.main)
-    testImplementation(libs.imposter.openapi.plugin)
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(project(":features:config:public-api"))
