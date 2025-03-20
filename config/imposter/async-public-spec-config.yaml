@@ -1,3 +1,5 @@
+# Imposter config generated from the OpenAPI spec.
+# Generated via CLI command `imposter scaffold` inside this directory containing the desired OpenAPI spec.
 plugin: openapi
 resources:
 - method: POST

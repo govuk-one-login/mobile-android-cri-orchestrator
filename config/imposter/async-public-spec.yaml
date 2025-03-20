@@ -1,3 +1,4 @@
+# OpenAPI spec for ID Check Async Backend, used for creating the required Imposter config
 openapi: 3.0.0
 info:
   title: GOV.UK One Login mobile app - API for asynchronous issuing of credentials
