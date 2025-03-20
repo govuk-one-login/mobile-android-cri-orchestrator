@@ -33,6 +33,7 @@ dependencies {
     implementation(project(":features:select-doc:internal"))
     implementation(project(":features:select-doc:internal-api"))
     implementation(project(":libraries:analytics"))
+    implementation(project(":libraries:compose-utils"))
     implementation(project(":libraries:kotlin-utils"))
     implementation(project(":libraries:navigation"))
     implementation(project(":sdk:shared-api"))

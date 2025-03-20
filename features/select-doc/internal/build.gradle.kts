@@ -10,6 +10,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(project(":features:select-doc:internal-api"))
     implementation(project(":libraries:analytics"))
+    implementation(project(":libraries:compose-utils"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
 
