@@ -95,6 +95,7 @@ internal fun SelectPassportScreenContent(
 
 @LightDarkBothLocalesPreview
 @Composable
+// DCMAW-8054 | AC5: Welsh translation
 internal fun PreviewPassportSelectionScreen() {
     GdsTheme {
         SelectPassportScreenContent(
