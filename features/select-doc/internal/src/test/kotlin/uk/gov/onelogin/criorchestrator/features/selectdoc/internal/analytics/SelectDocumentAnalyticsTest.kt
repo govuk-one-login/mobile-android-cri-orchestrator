@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -41,7 +40,6 @@ class SelectDocumentAnalyticsTest {
     fun `given english locale, track button tracks correctly`() {
         analytics.trackButtonEvent(buttonText = buttonText)
         verifyTrackButtonEvent()
-        fail("Just for testing")
     }
 
     @Test
