@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.libraries.testing.networking
 
 import io.gatehill.imposter.openapi.embedded.OpenApiImposterBuilder
 import io.gatehill.imposter.openapi.embedded.OpenApiMockEngine
@@ -15,7 +15,7 @@ class Imposter {
 
     class OpenApiImposterBuilderImpl : OpenApiImposterBuilder<OpenApiMockEngine, OpenApiImposterBuilderImpl>()
 
-    fun createImposter(): OpenApiMockEngine =
+    fun createImposterBackend(): OpenApiMockEngine =
         OpenApiImposterBuilderImpl()
             .withConfigurationDir(path)
             .startBlocking()

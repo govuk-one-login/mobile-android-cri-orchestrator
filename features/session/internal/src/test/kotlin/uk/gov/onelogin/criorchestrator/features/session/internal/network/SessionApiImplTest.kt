@@ -8,8 +8,8 @@ import uk.gov.android.network.api.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.features.session.internal.Imposter
-import uk.gov.onelogin.criorchestrator.features.session.internal.createTestHttpClient
+import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
+import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 
 class SessionApiImplTest {
     private val fakeConfigStore = FakeConfigStore()
@@ -18,7 +18,7 @@ class SessionApiImplTest {
 
     @BeforeEach
     fun setup() {
-        val imposter = Imposter().createImposter()
+        val imposter = Imposter().createImposterBackend()
         fakeConfigStore.write(
             Config.Entry(
                 key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,

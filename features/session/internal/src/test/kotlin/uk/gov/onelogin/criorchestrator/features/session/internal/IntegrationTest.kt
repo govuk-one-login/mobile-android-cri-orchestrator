@@ -19,6 +19,8 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.session
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
+import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
+import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
@@ -33,7 +35,7 @@ class IntegrationTest {
 
     @BeforeEach
     fun setup() {
-        val imposter = Imposter().createImposter()
+        val imposter = Imposter().createImposterBackend()
         sessionStore = InMemorySessionStore(logger)
         fakeConfigStore.write(
             Config.Entry(

@@ -1,5 +1,6 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.imposter-test-config")
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -15,7 +16,6 @@ dependencies {
     implementation(project(":libraries:di"))
 
     testFixturesImplementation(libs.kotlinx.coroutines)
-    testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(project(":features:session:internal-api"))
 
@@ -24,23 +24,6 @@ dependencies {
     testImplementation(project(":features:config:public-api"))
     testImplementation(testFixtures(project(":features:config:internal")))
     testImplementation(testFixtures(project(":libraries:analytics")))
-
-    listOf(
-        libs.imposter.config.parser,
-        libs.imposter.main,
-        libs.imposter.openapi.plugin,
-    ).forEach {
-        testImplementation(it) {
-            exclude(group = "javax.validation", module = "validation-api")
-            exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
-            exclude(group = "org.apache.groovy", module = "groovy")
-        }
-        testFixturesImplementation(it) {
-            exclude(group = "javax.validation", module = "validation-api")
-            exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
-            exclude(group = "org.apache.groovy", module = "groovy")
-        }
-    }
 }
 
 mavenPublishingConfig {

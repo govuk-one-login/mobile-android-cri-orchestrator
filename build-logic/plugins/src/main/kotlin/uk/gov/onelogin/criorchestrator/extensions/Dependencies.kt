@@ -1,7 +1,11 @@
 package uk.gov.onelogin.criorchestrator.extensions
 
+import groovy.lang.Closure
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.api.artifacts.ModuleDependency
+import org.gradle.kotlin.dsl.closureOf
+import org.gradle.kotlin.dsl.exclude
 
 internal fun DependencyHandlerScope.implementation(
     dependency: Any,
@@ -115,4 +119,16 @@ internal fun DependencyHandlerScope.uiTestDependencies(libs: LibrariesForLibs) =
 
 internal fun DependencyHandlerScope.ideSupportDependencies(libs: LibrariesForLibs) {
     debugImplementation(libs.androidx.ui.tooling)
+}
+
+internal fun DependencyHandlerScope.imposterTestDependencies(libs: LibrariesForLibs) {
+    val config = closureOf<ModuleDependency> {
+        // Imposter seems to use dependencies and dependency versions that conflict with existing dependencies in the project.
+        // This is resolved by excluding the relevant dependencies.
+        exclude(group = "jakarta.validation", module = "jakarta.validation-api")
+        exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
+        // This groovy dependency is causing issues with Jacoco transforms. Resolved by excluding.
+        exclude(group = "org.apache.groovy", module = "groovy")
+    } as Closure<Any>
+    add("testImplementation", libs.bundles.imposter, config)
 }
