@@ -33,10 +33,12 @@ dependencies {
         testImplementation(it) {
             exclude(group = "javax.validation", module = "validation-api")
             exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
+            exclude(group = "org.apache.groovy", module = "groovy")
         }
         testFixturesImplementation(it) {
             exclude(group = "javax.validation", module = "validation-api")
             exclude(group = "io.swagger", module = "swagger-parser-safe-url-resolver")
+            exclude(group = "org.apache.groovy", module = "groovy")
         }
     }
 }
