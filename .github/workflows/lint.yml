@@ -69,3 +69,6 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}

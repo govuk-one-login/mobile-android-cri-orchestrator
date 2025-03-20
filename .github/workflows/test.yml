@@ -53,6 +53,9 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
 
       - name: Verify screenshots
         run: |
@@ -61,6 +64,9 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
@@ -119,6 +125,9 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
 
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
