@@ -66,7 +66,7 @@ class IntegrationTest {
     }
 
     @Test
-    fun `remote session reader active session check returns true from mocked backend`() =
+    fun `active session check returns true with correct session details from mocked backend`() =
         runTest {
             remoteSessionReader.isActiveSession().test {
                 awaitItem().also {
