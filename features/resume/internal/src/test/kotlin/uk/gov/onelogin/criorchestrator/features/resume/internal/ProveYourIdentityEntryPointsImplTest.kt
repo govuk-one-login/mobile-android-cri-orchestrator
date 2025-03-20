@@ -13,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
@@ -23,8 +22,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionRead
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {
-    private val nfcChecker: NfcChecker = mock()
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -35,14 +32,14 @@ class ProveYourIdentityEntryPointsImplTest {
             logger = SystemLogger(),
         )
 
-    val fakeViewModelProviderFactory =
+    private val fakeViewModelProviderFactory =
         viewModelFactory {
             initializer {
                 fakeProveYourIdentityViewModel
             }
         }
 
-    val entryPoints =
+    private val entryPoints =
         ProveYourIdentityEntryPointsImpl(
             viewModelProviderFactory = fakeViewModelProviderFactory,
             navGraphProviders =
@@ -50,7 +47,7 @@ class ProveYourIdentityEntryPointsImplTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
-                            nfcChecker = nfcChecker,
+                            nfcChecker = mock(),
                         ),
                     ),
                 ),
