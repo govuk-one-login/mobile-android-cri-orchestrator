@@ -29,7 +29,7 @@ internal class SelectPassportViewModel(
         )
     }
 
-    fun readMoreButtonAction() {
+    fun onReadMoreClick() {
         analytics.trackButtonEvent(readMoreButtonTextId)
     }
 
