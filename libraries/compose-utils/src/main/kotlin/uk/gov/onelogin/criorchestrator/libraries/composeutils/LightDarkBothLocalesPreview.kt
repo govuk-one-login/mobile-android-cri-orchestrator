@@ -7,9 +7,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 
 @Preview(locale = "cy")
 @PreviewLightDark
-annotation class LightDarkBothLocalesPreviews
+annotation class LightDarkBothLocalesPreview
 
-@LightDarkBothLocalesPreviews
+@LightDarkBothLocalesPreview
 @Composable
 internal fun ExampleBothLocalesPreview() {
     Text("Hello World")

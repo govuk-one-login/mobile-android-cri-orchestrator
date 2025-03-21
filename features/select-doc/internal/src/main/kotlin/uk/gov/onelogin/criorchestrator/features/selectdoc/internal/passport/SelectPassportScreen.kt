@@ -15,7 +15,7 @@ import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.Text
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenButton
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 fun SelectPassportScreen(modifier: Modifier = Modifier) {
@@ -61,7 +61,7 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@LightDarkBothLocalesPreviews
+@LightDarkBothLocalesPreview
 @Composable
 internal fun PreviewPassportSelectionScreen() {
     GdsTheme {
