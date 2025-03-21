@@ -1,5 +1,5 @@
-# Imposter config generated from the OpenAPI spec.
-# Generated via CLI command `imposter scaffold` inside this directory containing the desired OpenAPI spec.
+# Imposter config generated from the ID Check Async Backend OpenAPI spec.
+# Generated via CLI command `imposter scaffold` inside this directory containing the desired OpenAPI specs.
 plugin: openapi
 resources:
 - method: POST
