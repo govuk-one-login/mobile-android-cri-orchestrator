@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.extensions
 
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.kotlin.dsl.DependencyHandlerScope
+import org.gradle.kotlin.dsl.project
 
 internal fun DependencyHandlerScope.implementation(
     dependency: Any,
@@ -65,6 +66,7 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
     libs.androidx.ui.tooling.preview,
     libs.androidx.material3,
     libs.bundles.uk.gov.ui,
+    project(":libraries:compose-utils"),
 ).forEach {
     implementation(it)
 }

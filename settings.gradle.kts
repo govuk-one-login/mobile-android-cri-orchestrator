@@ -66,6 +66,7 @@ include(
     ":features:select-doc:internal-api",
     ":konsist-test",
     ":libraries:analytics",
+    ":libraries:compose-utils",
     ":libraries:kotlin-utils",
     ":libraries:di",
     ":libraries:navigation",

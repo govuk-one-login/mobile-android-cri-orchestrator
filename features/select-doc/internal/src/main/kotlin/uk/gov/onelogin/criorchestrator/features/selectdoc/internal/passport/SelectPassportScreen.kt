@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
@@ -16,6 +15,7 @@ import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenBody.Text
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreenButton
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 fun SelectPassportScreen(modifier: Modifier = Modifier) {
@@ -61,7 +61,7 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@PreviewLightDark
+@LightDarkBothLocalesPreview
 @Composable
 internal fun PreviewPassportSelectionScreen() {
     GdsTheme {

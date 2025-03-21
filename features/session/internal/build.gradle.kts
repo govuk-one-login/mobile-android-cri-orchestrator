@@ -12,6 +12,7 @@ dependencies {
     implementation(project(":features:config:public-api"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:analytics"))
+    implementation(project(":libraries:compose-utils"))
     implementation(project(":libraries:kotlin-utils"))
     implementation(project(":libraries:di"))
 
