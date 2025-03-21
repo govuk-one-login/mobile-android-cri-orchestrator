@@ -43,6 +43,7 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Unit test
+        id: unit-tests
         # Exclude Konsist unit tests which are actually lint checks
         # Build all unit tests so that jars are available for Sonar
         run: |
