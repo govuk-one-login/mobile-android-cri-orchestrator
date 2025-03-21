@@ -5,6 +5,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,6 +29,7 @@ class IntegrationTest {
     private val fakeConfigStore = FakeConfigStore()
     private val logger = SystemLogger()
     private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
+    private val imposter = Imposter().createImposterBackend()
 
     private lateinit var sessionApiImpl: SessionApi
     private lateinit var remoteSessionReader: RemoteSessionReader
@@ -35,14 +37,13 @@ class IntegrationTest {
 
     @BeforeEach
     fun setup() {
-        val imposter = Imposter().createImposterBackend()
         sessionStore = InMemorySessionStore(logger)
         fakeConfigStore.write(
             Config.Entry(
                 key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
                 value =
                     Config.Value.StringValue(
-                        imposter.baseUrl.toString(),
+                        "",
                     ),
             ),
         )
@@ -68,7 +69,16 @@ class IntegrationTest {
     }
 
     @Test
-    fun `active session check returns true with correct session details from mocked backend`() =
+    fun `active session check returns true with correct session details following mocked backend success`() {
+        fakeConfigStore.write(
+            Config.Entry(
+                key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                value =
+                    Config.Value.StringValue(
+                        imposter.baseUrl.toString(),
+                    ),
+            ),
+        )
         runTest {
             remoteSessionReader.isActiveSession().test {
                 assertTrue(awaitItem())
@@ -89,4 +99,24 @@ class IntegrationTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
+    }
+
+    @Test
+    fun `active session check returns false following mocked backend failure with correct log`() {
+        fakeConfigStore.write(
+            Config.Entry(
+                key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                value =
+                    Config.Value.StringValue(
+                        imposter.baseUrl.toString() + "/badRequest",
+                    ),
+            ),
+        )
+        runTest {
+            remoteSessionReader.isActiveSession().test {
+                assertFalse(awaitItem())
+                assertTrue(logger.contains("Failed to fetch active session"))
+            }
+        }
+    }
 }
