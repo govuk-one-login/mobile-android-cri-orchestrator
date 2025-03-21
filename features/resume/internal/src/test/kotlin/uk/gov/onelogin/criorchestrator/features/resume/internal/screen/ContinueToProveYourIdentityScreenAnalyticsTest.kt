@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
@@ -27,7 +28,7 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
     @get:Rule
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
-
+    private val configStore: ConfigStore = mock()
     private lateinit var primaryButton: SemanticsMatcher
     private val context: Context = ApplicationProvider.getApplicationContext()
 
@@ -44,6 +45,7 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
         ContinueToProveYourIdentityViewModel(
             analytics = analytics,
             nfcChecker = mock(),
+            configStore = configStore,
         )
 
     @Before

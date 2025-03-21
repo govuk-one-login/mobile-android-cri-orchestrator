@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal
 
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -20,6 +22,10 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
+                @Composable
+                fun Test() {
+                    Text("Driving License check")
+                }
             }
         }
     }

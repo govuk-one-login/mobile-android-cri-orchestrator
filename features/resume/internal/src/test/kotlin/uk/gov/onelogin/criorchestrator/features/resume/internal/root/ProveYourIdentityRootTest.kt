@@ -111,6 +111,7 @@ class ProveYourIdentityRootTest {
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
                             nfcChecker = mock(),
+                            configStore = mock(),
                         ),
                     ),
                 ),
