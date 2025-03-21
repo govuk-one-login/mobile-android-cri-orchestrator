@@ -1,5 +1,6 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.imposter-test-config")
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -15,7 +16,6 @@ dependencies {
     implementation(project(":libraries:di"))
 
     testFixturesImplementation(libs.kotlinx.coroutines)
-    testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(project(":features:session:internal-api"))
 

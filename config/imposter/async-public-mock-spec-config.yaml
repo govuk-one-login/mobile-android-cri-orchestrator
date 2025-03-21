@@ -1,0 +1,81 @@
+# Imposter config generated from the mock ID Check Async Backend OpenAPI spec.
+# Generated via CLI command `imposter scaffold` inside this directory containing the desired OpenAPI specs.
+plugin: openapi
+resources:
+- method: GET
+  path: /connectionClosed/async/activeSession
+  response:
+    fail: CloseConnection
+- method: POST
+  path: /unauthorized/async/biometricToken
+  response:
+    statusCode: 401
+- method: POST
+  path: /internalServerError/async/biometricToken
+  response:
+    statusCode: 500
+- method: GET
+  path: /emptyResponse/async/biometricToken
+  response:
+    fail: EmptyResponse
+- method: GET
+  path: /connectionClosed/async/biometricToken
+  response:
+    fail: CloseConnection
+- method: GET
+  path: /emptyResponse/.well-known/jwks.json
+  response:
+    fail: EmptyResponse
+- method: GET
+  path: /connectionClosed/.well-known/jwks.json
+  response:
+    fail: CloseConnection
+- method: GET
+  path: /badRequest/async/activeSession
+  response:
+    statusCode: 400
+- method: GET
+  path: /unauthorized/async/activeSession
+  response:
+    statusCode: 401
+- method: GET
+  path: /internalServerError/async/activeSession
+  response:
+    statusCode: 500
+- method: POST
+  path: /unauthorized/async/finishBiometricSession
+  response:
+    statusCode: 401
+- method: GET
+  path: /sessionNotFound/async/activeSession
+  response:
+    statusCode: 404
+- method: GET
+  path: /emptyResponse/async/activeSession
+  response:
+    fail: EmptyResponse
+- method: POST
+  path: /badRequest/async/finishBiometricSession
+  response:
+    statusCode: 400
+- method: POST
+  path: /badRequest/async/biometricToken
+  response:
+    statusCode: 400
+- method: POST
+  path: /internalServerError/async/finishBiometricSession
+  response:
+    statusCode: 500
+- method: GET
+  path: /emptyResponse/async/finishBiometricSession
+  response:
+    fail: EmptyResponse
+- method: GET
+  path: /connectionClosed/async/finishBiometricSession
+  response:
+    fail: CloseConnection
+- method: GET
+  path: /internalServerError/.well-known/jwks.json
+  response:
+    statusCode: 500
+specFile: async-public-mock-spec.yaml

@@ -1,7 +1,7 @@
 package uk.gov.onelogin.criorchestrator.extensions
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 internal fun DependencyHandlerScope.implementation(
     dependency: Any,
@@ -115,4 +115,8 @@ internal fun DependencyHandlerScope.uiTestDependencies(libs: LibrariesForLibs) =
 
 internal fun DependencyHandlerScope.ideSupportDependencies(libs: LibrariesForLibs) {
     debugImplementation(libs.androidx.ui.tooling)
+}
+
+internal fun DependencyHandlerScope.imposterTestDependencies(libs: LibrariesForLibs) {
+    testImplementation(libs.bundles.imposter)
 }

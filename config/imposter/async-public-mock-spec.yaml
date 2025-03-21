@@ -1,0 +1,621 @@
+# Mock OpenAPI spec for ID Check Async Backend, with different endpoints for each failure response type.
+# Used for creating an Imposter config containing testable failure responses.
+openapi: 3.0.0
+info:
+  title: GOV.UK One Login mobile app - API for asynchronous issuing of credentials
+  version: 1.0.0
+  description: GOV.UK One Login mobile app - API for asynchronous issuing of credentials
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: |
+            The error code.
+          enum:
+            - server_error
+            - invalid_session
+            - session_not_found
+            - invalid_request
+        error_description:
+          type: string
+          description: |
+            A description of the error.
+      required:
+        - error
+        - error_description
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+            - server_error
+          description: |
+            The error code.
+        error_description:
+          type: string
+          description: |
+            A description of the error.
+      required:
+        - error
+        - error_description
+
+paths:
+  /badRequest/async/activeSession:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns a `Bad request` response from active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                invalidServiceToken:
+                  description: |
+                    The service token could not be decrypted OR the service token signature could not be verified OR the service token payload is invalid.
+                  value:
+                    {
+                      "error": "invalid_request",
+                      "error_description": "Failed decrypting service token"
+                    }
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum:
+                      - invalid_request
+                    description: |
+                      The error code.
+                  error_description:
+                    type: string
+                    description: |
+                      A description of the error.
+                required:
+                  - error
+                  - error_description
+
+  /unauthorized/async/activeSession:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns an `Unauthorized` response from active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalidAuthorizationHeader:
+                  description: |
+                    Unauthorized, usually signifies the authorization bearer access token is missing or is malformed.
+                  value:
+                    {
+                      "error": "unauthorized",
+                      "error_description": "Invalid authorization header"
+                    }
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum:
+                      - unauthorized
+                    description: |
+                      The error code.
+                  error_description:
+                    type: string
+                    description: |
+                      A description of the error.
+                required:
+                  - error
+                  - error_description
+
+  /sessionNotFound/async/activeSession:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns a `Session not found` response from active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              examples:
+                sessionNotFound:
+                  description: |
+                    The active session with correct state is not found for given sub identifier.
+                  value:
+                    {
+                      "error": "session_not_found",
+                      "error_description": "No active session found for the given sub identifier"
+                    }
+              schema:
+                type: object
+                enum:
+                  - session_not_found
+                properties:
+                  error:
+                    type: string
+                    description: |
+                      The error code.
+                  error_description:
+                    type: string
+                    description: |
+                      A description of the error.
+                required:
+                  - error
+                  - error_description
+
+  /internalServerError/async/activeSession:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Returns an `Internal server error` response from active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              examples:
+                serverError:
+                  description: |
+                    The service encountered an unrecoverable error when trying to access its internal resources.
+                  value:
+                    {
+                      "error": "server_error",
+                      "error_description": "Server Error"
+                    }
+              schema:
+                $ref: "#/components/schemas/ServerError"
+
+  /emptyResponse/async/activeSession:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns no content in response from active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+
+  /connectionClosed/async/activeSession:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Connection closed when trying to call active session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '503':
+          description: Connection closed
+
+  /badRequest/async/biometricToken:
+    post:
+      description: Returns a `Bad request` response from biometric token endpoint.
+      requestBody:
+        required: true
+        description: A JSON object that contains the session ID and the document selected by the user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  description: Id for an auth session
+                  type: string
+                documentType:
+                  description: Document selected by user for identity check
+                  type: string
+                  enum:
+                    - NFC_PASSPORT
+                    - UK_DRIVING_LICENCE
+                    - UK_NFC_BRP
+              required:
+                - sessionId
+                - documentType
+      responses:
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                errorInvalidRequest:
+                  description: |
+                    Request body is invalid json and unable to parse
+                  value:
+                    {
+                      "error": "invalid_request",
+                      "error_description": "Request body is invalid json"
+                    }
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /unauthorized/async/biometricToken:
+    post:
+      description: Returns an `Unauthorized` response from biometric token endpoint.
+      requestBody:
+        required: true
+        description: A JSON object that contains the session ID and the document selected by the user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  description: Id for an auth session
+                  type: string
+                documentType:
+                  description: Document selected by user for identity check
+                  type: string
+                  enum:
+                    - NFC_PASSPORT
+                    - UK_DRIVING_LICENCE
+                    - UK_NFC_BRP
+              required:
+                - sessionId
+                - documentType
+      responses:
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                errorInvalidSession:
+                  description: |
+                    Session does not exist or in incorrect state
+                  value:
+                    {
+                      "error": "invalid_session",
+                      "error_description": "Session does not exist or in incorrect state"
+                    }
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /internalServerError/async/biometricToken:
+    post:
+      description: Returns an `Internal server error` response from biometric token endpoint.
+      requestBody:
+        required: true
+        description: A JSON object that contains the session ID and the document selected by the user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  description: Id for an auth session
+                  type: string
+                documentType:
+                  description: Document selected by user for identity check
+                  type: string
+                  enum:
+                    - NFC_PASSPORT
+                    - UK_DRIVING_LICENCE
+                    - UK_NFC_BRP
+              required:
+                - sessionId
+                - documentType
+      responses:
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                internalServerError:
+                  description: |
+                    The server has encountered an unexpected condition or configuration problem that prevents
+                    it from fulfilling the request made by the browser or client.
+                  value:
+                    {
+                      "error": "server_error",
+                      "error_description": "Internal server error"
+                    }
+              schema:
+                $ref: "#/components/schemas/ServerError"
+
+  /emptyResponse/async/biometricToken:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Returns no content in response from biometric token endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+
+  /connectionClosed/async/biometricToken:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Connection closed when trying to call biometric token endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '503':
+          description: Connection closed
+
+  /badRequest/async/finishBiometricSession:
+    post:
+      summary: Returns a `Bad request` response from finish biometric session endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authSessionId:
+                  type: string
+                  format: uuid
+                  example: 11111111-1111-1111-1111-111111111111
+                  description: |
+                    authSessionId for the active session. Note this is effectively a short-lived bearer token
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                biometricSessionId:
+                  type: string
+                  format: uuid
+                  example: 22222222-2222-2222-2222-222222222222
+                  description: |
+                    biometricSessionId for the READID session that the user has just completed
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              required:
+                - authSessionId
+                - biometricSessionId
+      responses:
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                errorInvalidRequest:
+                  description: |
+                    Invalid request body
+                  value:
+                    {
+                      "error": "invalid_request",
+                      "error_description": "Invalid request body"
+                    }
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /unauthorized/async/finishBiometricSession:
+    post:
+      summary: Returns an `Unauthorized` response from finish biometric session endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authSessionId:
+                  type: string
+                  format: uuid
+                  example: 11111111-1111-1111-1111-111111111111
+                  description: |
+                    authSessionId for the active session. Note this is effectively a short-lived bearer token
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                biometricSessionId:
+                  type: string
+                  format: uuid
+                  example: 22222222-2222-2222-2222-222222222222
+                  description: |
+                    biometricSessionId for the READID session that the user has just completed
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              required:
+                - authSessionId
+                - biometricSessionId
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                errorInvalidSession:
+                  description: |
+                    Invalid session
+                  value:
+                    {
+                      "error": "invalid_session",
+                      "error_description": "authSessionId not recognised or not in a valid state"
+                    }
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /internalServerError/async/finishBiometricSession:
+    post:
+      summary: Returns an `Internal server error` response from finish biometric session endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authSessionId:
+                  type: string
+                  format: uuid
+                  example: 11111111-1111-1111-1111-111111111111
+                  description: |
+                    authSessionId for the active session. Note this is effectively a short-lived bearer token
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                biometricSessionId:
+                  type: string
+                  format: uuid
+                  example: 22222222-2222-2222-2222-222222222222
+                  description: |
+                    biometricSessionId for the READID session that the user has just completed
+                  pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              required:
+                - authSessionId
+                - biometricSessionId
+      responses:
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                internalServerError:
+                  description: |
+                    The server has encountered an unexpected condition or configuration problem that prevents
+                    it from fulfilling the request made by the browser or client.
+                  value:
+                    {
+                      "error": "server_error",
+                      "error_description": "Internal server error"
+                    }
+              schema:
+                $ref: "#/components/schemas/ServerError"
+
+  /emptyResponse/async/finishBiometricSession:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns no content in response from finish biometric session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+
+  /connectionClosed/async/finishBiometricSession:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Connection closed when trying to call finish biometric session endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '503':
+          description: Connection closed
+
+  /internalServerError/.well-known/jwks.json:
+    get:
+      operationId: getWellKnownJwks
+      summary: Returns an `Internal server error` from .well-known jwks.json endpoint.
+      description: >-
+        Return the current valid public keys used to encrypt JWTs issued by the service as a JSON Web Key Set.
+      tags:
+        - Static
+      responses:
+        "500":
+          description: "Internal Server Error"
+          headers:
+            Cache-Control:
+              schema:
+                type: "string"
+            Content-Type:
+              schema:
+                type: "string"
+            Strict-Transport-Security:
+              schema:
+                type: "string"
+            X-Content-Type-Options:
+              schema:
+                type: "string"
+            X-Frame-Options:
+              schema:
+                type: "string"
+
+  /emptyResponse/.well-known/jwks.json:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Returns no content in response from .well-known jwks.json endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+
+  /connectionClosed/.well-known/jwks.json:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Connection closed when trying to call .well-known jwks.json endpoint.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "A valid service token (e.g.: Authorization:Bearer <service-token-value>)"
+          schema:
+            type: string
+      responses:
+        '503':
+          description: Connection closed

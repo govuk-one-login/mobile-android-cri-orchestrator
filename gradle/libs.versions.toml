@@ -3,9 +3,9 @@ activityCompose = "1.10.1"
 agp = "8.8.2"
 androidXCoreKtx = "1.15.0"
 androidXTest = "1.6.1"
-androidXTestRunner = "1.6.2"
 androidXTestJUnit = "1.2.1"
 androidXTestOrchestrator = "1.5.1"
+androidXTestRunner = "1.6.2"
 anvil = "0.4.1"
 appcompat = "1.7.0"
 bouncycastle-jdk18on = "1.80"
@@ -17,12 +17,13 @@ espressoCore = "3.6.1"
 firebase-bom = "33.10.0" # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics-gradle = "3.0.3" # https://firebase.google.com/support/release-notes/android
 google-services = "4.4.2" # https://developers.google.com/android/guides/releases
+imposter = "4.6.2" # https://github.com/imposter-project/imposter-jvm-engine/releases/tag/v4.6.2
 junit = "5.12.1"
 junit4 = "4.13.2"
 konsist = "0.17.3"
 kotlin = "2.1.10"
-kotlinx-coroutines = "1.10.1"
 kotlinx-collections-immutable = "0.3.8"
+kotlinx-coroutines = "1.10.1"
 kotlinx-serialization-json = "1.8.0"
 ksp = "2.1.10-1.0.31"
 lifecycleRuntimeKtx = "2.8.7"
@@ -51,12 +52,12 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidXTestJUnit" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidXTest" }
 androidx-test-espresso-accessibility = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "espressoCore" }
-androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidXTestRunner" }
 androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "androidXTestOrchestrator" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidXTestRunner" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
@@ -64,18 +65,21 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 anvil-gradle-plugin = { module = "dev.zacsweers.anvil:gradle-plugin", version.ref = "anvil" }
 app-cash-molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule" }
-app-cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 app-cash-paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
+app-cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 com-lemonappdev-konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 com-slack-lint-compose = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "compose-lint-checks" }
+composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composable-preview-scanner" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composable-preview-scanner" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testparameterinjector" }
+imposter-config-parser = { group = "io.gatehill.imposter", name = "config-dynamic", version.ref = "imposter" }
+imposter-main = { group = "io.gatehill.imposter", name = "distro-embedded", version.ref = "imposter" }
+imposter-openapi-plugin = { group = "io.gatehill.imposter", name = "mock-openapi", version.ref = "imposter" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -84,18 +88,18 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 org-bouncycastle-bcutil-jdk18on = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle-jdk18on" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+org-junit-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 org-junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter" }
 org-junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine" }
-org-junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine" }
-org-junit-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 org-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+org-junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine" }
 org-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito" }
 org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 uk-gov-logging-api = { group = "uk.gov.logging", name = "logging-api", version.ref = "uk-gov-logging" }
 uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version.ref = "uk-gov-logging" }
 uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
-uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
+uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
 uk-gov-ui-pages = { group = "uk.gov.android", name = "pages", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
@@ -107,12 +111,13 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 anvil = { id = "dev.zacsweers.anvil", version.ref = "anvil" }
 app-cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
 
 [bundles]
 uk-gov-ui = ["uk-gov-ui-components-v2", "uk-gov-ui-pages", "uk-gov-ui-theme", "uk-gov-ui-patterns"]
+imposter = ["imposter-config-parser", "imposter-main", "imposter-openapi-plugin"]
