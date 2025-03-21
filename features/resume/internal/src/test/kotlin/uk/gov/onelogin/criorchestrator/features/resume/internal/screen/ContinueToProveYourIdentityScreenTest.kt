@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -17,9 +18,12 @@ import org.mockito.Mockito.spy
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.ContinueToProveYourIdentityDestinations
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenTest {
@@ -27,6 +31,7 @@ class ContinueToProveYourIdentityScreenTest {
     val composeTestRule = createComposeRule()
 
     private val navController: NavController = mock()
+    private val configStore: ConfigStore = mock()
     private val stateFlow = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
     private lateinit var primaryButton: SemanticsMatcher
     private val viewModel =
@@ -34,6 +39,7 @@ class ContinueToProveYourIdentityScreenTest {
             ContinueToProveYourIdentityViewModel(
                 analytics = mock<ResumeAnalytics>(),
                 nfcChecker = mock(),
+                configStore = configStore,
             ),
         )
 
@@ -69,7 +75,7 @@ class ContinueToProveYourIdentityScreenTest {
             )
         }
 
-        verify(navController).navigate(ContinueToProveYourIdentityDestinations.PassportJourney)
+        verify(navController).navigate(SelectDocumentDestinations.Passport)
     }
 
     @Test
@@ -83,7 +89,7 @@ class ContinueToProveYourIdentityScreenTest {
             )
         }
 
-        verify(navController).navigate(ContinueToProveYourIdentityDestinations.DrivingLicenceJourney)
+        verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
     }
 
     @Test
@@ -94,6 +100,10 @@ class ContinueToProveYourIdentityScreenTest {
                 navController = navController,
             )
         }
+
+        whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
+            flowOf(Config.Value.BooleanValue(false)),
+        )
 
         composeTestRule
             .onNode(primaryButton)

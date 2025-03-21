@@ -11,6 +11,7 @@ dependencies {
     listOf(
         project(":sdk:shared-api"),
         project(":features:resume:internal-api"),
+        project(":features:config:public-api"),
     ).forEach {
         implementation(it)
     }
