@@ -2,9 +2,16 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
@@ -18,9 +25,41 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-fun SelectPassportScreen(modifier: Modifier = Modifier) {
+internal fun SelectPassportScreen(
+    viewModel: SelectPassportViewModel,
+    modifier: Modifier = Modifier,
+) {
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+    }
+    SelectPassportScreenContent(
+        title = stringResource(viewModel.titleId),
+        modifier = modifier,
+        readMoreButtonTitle = stringResource(viewModel.readMoreButtonTextId),
+        onReadMoreClick = viewModel::onReadMoreClick,
+        items =
+            viewModel.options
+                .map { stringResource(it) }
+                .toPersistentList(),
+        confirmButtonText = stringResource(viewModel.buttonTextId),
+        onConfirmSelection = viewModel::onConfirmSelection,
+    )
+}
+
+@Composable
+@Suppress("LongParameterList")
+internal fun SelectPassportScreenContent(
+    title: String,
+    readMoreButtonTitle: String,
+    onReadMoreClick: () -> Unit,
+    items: PersistentList<String>,
+    confirmButtonText: String,
+    onConfirmSelection: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var selectedItem by remember { mutableStateOf<Int?>(null) }
     LeftAlignedScreen(
-        title = stringResource(R.string.selectdocument_passport_title),
+        title = title,
         modifier = modifier,
         body =
             persistentListOf(
@@ -34,8 +73,8 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
                 ),
                 Text(stringResource(R.string.selectdocument_passport_expiry)),
                 SecondaryButton(
-                    text = stringResource(R.string.selectdocument_passport_readmore_button),
-                    onClick = { },
+                    text = readMoreButtonTitle,
+                    onClick = onReadMoreClick,
                 ),
                 Selection(
                     title =
@@ -43,19 +82,20 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
                             stringResource(R.string.selectdocument_passport_title),
                             TitleType.Heading,
                         ),
-                    items =
-                        persistentListOf(
-                            stringResource(R.string.selectdocument_passport_selection_yes),
-                            stringResource(R.string.selectdocument_passport_selection_no),
-                        ),
-                    selectedItem = null,
-                    onItemSelected = { },
+                    items = items,
+                    selectedItem = selectedItem,
+                    onItemSelected = {
+                        selectedItem = it
+                    },
                 ),
             ),
         primaryButton =
             LeftAlignedScreenButton(
-                text = stringResource(R.string.selectdocument_passport_continuebutton),
+                text = confirmButtonText,
                 onClick = {
+                    selectedItem?.let {
+                        onConfirmSelection(it)
+                    }
                 },
             ),
     )
@@ -63,8 +103,20 @@ fun SelectPassportScreen(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
+// DCMAW-8054 | AC5: Welsh translation
 internal fun PreviewPassportSelectionScreen() {
     GdsTheme {
-        SelectPassportScreen()
+        SelectPassportScreenContent(
+            title = stringResource(R.string.selectdocument_passport_title),
+            readMoreButtonTitle = stringResource(R.string.selectdocument_passport_readmore_button),
+            onReadMoreClick = { },
+            items =
+                listOf(
+                    R.string.selectdocument_passport_selection_yes,
+                    R.string.selectdocument_passport_selection_no,
+                ).map { stringResource(it) }.toPersistentList(),
+            confirmButtonText = stringResource(R.string.selectdocument_passport_continuebutton),
+            onConfirmSelection = { },
+        )
     }
 }
