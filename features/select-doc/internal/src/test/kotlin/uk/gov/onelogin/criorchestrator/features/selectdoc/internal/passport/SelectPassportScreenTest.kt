@@ -5,14 +5,14 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onSiblings
+import androidx.compose.ui.test.onParent
+import androidx.compose.ui.test.onSibling
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.printToString
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -65,38 +65,34 @@ class SelectPassportScreenTest {
         verify(viewModel).onReadMoreClick()
     }
 
-    @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")
     @Test
-    fun `selected item is present in the view`() {
-        // `@ParameterizedTest` is not supported in JUnit 4
-        (0..1).forEach { selectedItem ->
-            viewModel.onItemSelected(selectedItem)
-            setupContent()
+    fun `when view model selected item is yes, it is selected in the view`() {
+        viewModel.onItemSelected(0)
+        setupContent()
+        swipeToAdditionalContent()
 
-            val expectedSelectedComponent =
-                listOf(
-                    yesOption,
-                    noOption,
-                )[selectedItem]
-
-            composeTestRule
-                .onNode(expectedSelectedComponent)
-                .assertIsSelected()
-        }
+        composeTestRule
+            .onNode(yesOption, useUnmergedTree = true)
+            .onSibling()
+            .assertIsSelected()
     }
 
-    @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")
+    @Test
+    fun `when view model selected item is no, it is selected in the view`() {
+        viewModel.onItemSelected(1)
+        setupContent()
+        swipeToAdditionalContent()
+
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .onSibling()
+            .assertIsSelected()
+    }
+
     @Test
     fun `when yes is selected, it calls the view model`() {
         setupContent()
-
-        assertEquals(
-            "",
-            composeTestRule
-                .onNode(readMoreButton)
-                .onSiblings()
-                .printToString(maxDepth = 6),
-        )
+        swipeToAdditionalContent()
 
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
@@ -105,13 +101,13 @@ class SelectPassportScreenTest {
         verify(viewModel).onItemSelected(0)
     }
 
-    @Ignore("Radio buttons are not appearing in node hierarchy - further investigation required")
     @Test
     fun `when no is selected, it calls the view model`() {
         setupContent()
+        swipeToAdditionalContent()
 
         composeTestRule
-            .onNode(noOption)
+            .onNode(noOption, useUnmergedTree = true)
             .performClick()
 
         verify(viewModel).onItemSelected(1)
@@ -134,5 +130,15 @@ class SelectPassportScreenTest {
                 viewModel = viewModel,
             )
         }
+    }
+
+    private fun swipeToAdditionalContent() {
+        composeTestRule
+            .onNode(
+                readMoreButton,
+            ).onParent()
+            .performTouchInput {
+                swipeUp()
+            }
     }
 }
