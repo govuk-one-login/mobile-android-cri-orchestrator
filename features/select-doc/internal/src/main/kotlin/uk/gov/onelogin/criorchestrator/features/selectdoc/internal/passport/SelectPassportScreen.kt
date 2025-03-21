@@ -3,6 +3,10 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.PersistentList
@@ -37,8 +41,6 @@ internal fun SelectPassportScreen(
             viewModel.options
                 .map { stringResource(it) }
                 .toPersistentList(),
-        selectedItem = viewModel.selectedIndex,
-        onItemSelected = viewModel::onItemSelected,
         confirmButtonText = stringResource(viewModel.buttonTextId),
         onConfirmSelection = viewModel::onConfirmSelection,
     )
@@ -50,12 +52,11 @@ internal fun SelectPassportScreenContent(
     readMoreButtonTitle: String,
     onReadMoreClick: () -> Unit,
     items: PersistentList<String>,
-    selectedItem: Int?,
-    onItemSelected: (Int) -> Unit,
     confirmButtonText: String,
-    onConfirmSelection: () -> Unit,
+    onConfirmSelection: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var selectedItem by remember { mutableStateOf<Int?>(null) }
     LeftAlignedScreen(
         title = title,
         modifier = modifier,
@@ -82,13 +83,19 @@ internal fun SelectPassportScreenContent(
                         ),
                     items = items,
                     selectedItem = selectedItem,
-                    onItemSelected = onItemSelected,
+                    onItemSelected = {
+                        selectedItem = it
+                    },
                 ),
             ),
         primaryButton =
             LeftAlignedScreenButton(
                 text = confirmButtonText,
-                onClick = onConfirmSelection,
+                onClick = {
+                    selectedItem?.let {
+                        onConfirmSelection(it)
+                    }
+                },
             ),
     )
 }
@@ -107,8 +114,6 @@ internal fun PreviewPassportSelectionScreen() {
                     R.string.selectdocument_passport_selection_yes,
                     R.string.selectdocument_passport_selection_no,
                 ).map { stringResource(it) }.toPersistentList(),
-            selectedItem = null,
-            onItemSelected = { },
             confirmButtonText = stringResource(R.string.selectdocument_passport_continuebutton),
             onConfirmSelection = { },
         )
