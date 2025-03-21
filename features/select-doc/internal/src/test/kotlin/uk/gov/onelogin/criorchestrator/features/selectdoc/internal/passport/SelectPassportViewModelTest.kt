@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -42,8 +41,7 @@ class SelectPassportViewModelTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 1])
     fun `when selection is confirmed, it sends analytics`(selection: Int) {
-        viewModel.onItemSelected(selection)
-        viewModel.onConfirmSelection()
+        viewModel.onConfirmSelection(selection)
 
         val item =
             listOf(
@@ -56,15 +54,6 @@ class SelectPassportViewModelTest {
                 R.string.selectdocument_passport_continuebutton,
                 item,
             )
-    }
-
-    // DCMAW-8054 | AC4: User doesn’t select an option
-    @Disabled("This AC has not yet been implemented")
-    @Test
-    fun `when selection is confirmed, it sends analytics`() {
-        viewModel.onConfirmSelection()
-
-        assertTrue(false)
     }
 
     @Test
@@ -82,18 +71,5 @@ class SelectPassportViewModelTest {
         viewModel.onReadMoreClick()
 
         assertTrue(false)
-    }
-
-    @Test
-    fun `when the screen loads, no item is selected`() {
-        assertEquals(viewModel.selectedIndex, null)
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [0, 1])
-    fun `when item selected, selectedItem is updated`(selection: Int) {
-        viewModel.onItemSelected(selection)
-
-        assertEquals(viewModel.selectedIndex, selection)
     }
 }

@@ -17,8 +17,6 @@ internal class SelectPassportViewModel(
             R.string.selectdocument_passport_selection_yes,
             R.string.selectdocument_passport_selection_no,
         )
-    var selectedIndex: Int? = null
-        private set
 
     val buttonTextId = R.string.selectdocument_passport_continuebutton
 
@@ -33,13 +31,7 @@ internal class SelectPassportViewModel(
         analytics.trackButtonEvent(readMoreButtonTextId)
     }
 
-    fun onItemSelected(item: Int) {
-        selectedIndex = item
-    }
-
-    fun onConfirmSelection() {
-        val selectedIndex = selectedIndex ?: return
-
+    fun onConfirmSelection(selectedIndex: Int) {
         analytics.trackFormSubmission(
             buttonText = buttonTextId,
             response = options[selectedIndex],
