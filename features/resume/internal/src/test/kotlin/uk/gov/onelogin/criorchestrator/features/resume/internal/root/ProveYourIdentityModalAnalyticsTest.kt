@@ -71,6 +71,8 @@ class ProveYourIdentityModalAnalyticsTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
+                            nfcChecker = mock(),
+                            configStore = mock(),
                         ),
                     ),
                 ),

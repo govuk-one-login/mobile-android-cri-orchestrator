@@ -16,7 +16,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
@@ -86,6 +86,8 @@ class ProveYourIdentityCardAnalyticsTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
+                            nfcChecker = mock(),
+                            configStore = mock(),
                         ),
                     ),
                 ),

@@ -11,7 +11,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
@@ -32,14 +32,14 @@ class ProveYourIdentityEntryPointsImplTest {
             logger = SystemLogger(),
         )
 
-    val fakeViewModelProviderFactory =
+    private val fakeViewModelProviderFactory =
         viewModelFactory {
             initializer {
                 fakeProveYourIdentityViewModel
             }
         }
 
-    val entryPoints =
+    private val entryPoints =
         ProveYourIdentityEntryPointsImpl(
             viewModelProviderFactory = fakeViewModelProviderFactory,
             navGraphProviders =
@@ -47,6 +47,8 @@ class ProveYourIdentityEntryPointsImplTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
+                            nfcChecker = mock(),
+                            configStore = mock(),
                         ),
                     ),
                 ),

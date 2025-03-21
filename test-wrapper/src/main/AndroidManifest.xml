@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CRIOrchestratorTemplate"
+        tools:replace="android:fullBackupContent, android:dataExtractionRules, android:theme"
         tools:targetApi="34">
         <activity
             android:name=".MainActivity"
@@ -28,7 +29,8 @@
             </intent-filter>
         </activity>
         <!-- Firebase Analytics can be enabled by DEFAULT for test-apps ONLY -->
-        <meta-data android:name="firebase_analytics_collection_enabled"
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
             android:value="true" />
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"

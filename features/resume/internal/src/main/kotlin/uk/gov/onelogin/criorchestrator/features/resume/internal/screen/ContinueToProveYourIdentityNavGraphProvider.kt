@@ -23,6 +23,7 @@ class ContinueToProveYourIdentityNavGraphProvider
             composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
                 ContinueToProveYourIdentityScreen(
                     viewModel = viewModel(factory = viewModelFactory),
+                    navController = navController,
                 )
             }
         }

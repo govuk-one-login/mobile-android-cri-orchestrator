@@ -26,8 +26,8 @@ jobs:
       packages: read
       pull-requests: write
     env:
-      GITHUB_ACTOR: ${{ github.actor }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
+      GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
     steps:
       - name: Run checkout github action
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -51,16 +51,16 @@ jobs:
           ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
           ./gradlew testBuildDebugUnitTest
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Verify screenshots
         run: |
           ./gradlew verifyPaparazziDebug
           ./gradlew verifyPaparazziBuildDebug
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
@@ -117,8 +117,8 @@ jobs:
         # Keep this step so that it is simple to add device tests when needed.
         run: ./gradlew assembleAndroidTest
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
@@ -163,8 +163,8 @@ jobs:
         with:
           sonar-token: ${{ secrets.SONAR_TOKEN }}
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Clean workspace
         if: ${{ always() }}
