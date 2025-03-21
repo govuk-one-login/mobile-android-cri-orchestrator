@@ -1,11 +1,7 @@
 package uk.gov.onelogin.criorchestrator.extensions
 
-import groovy.lang.Closure
-import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.api.artifacts.ModuleDependency
-import org.gradle.kotlin.dsl.closureOf
-import org.gradle.kotlin.dsl.exclude
+import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 internal fun DependencyHandlerScope.implementation(
     dependency: Any,
