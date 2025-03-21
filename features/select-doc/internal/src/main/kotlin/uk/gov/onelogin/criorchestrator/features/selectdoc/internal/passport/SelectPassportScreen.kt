@@ -47,6 +47,7 @@ internal fun SelectPassportScreen(
 }
 
 @Composable
+@Suppress("LongParameterList")
 internal fun SelectPassportScreenContent(
     title: String,
     readMoreButtonTitle: String,
