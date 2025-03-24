@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -28,6 +29,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 @Composable
 internal fun SelectPassportScreen(
     viewModel: SelectPassportViewModel,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -35,18 +37,29 @@ internal fun SelectPassportScreen(
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
-    SelectPassportScreenContent(
-        title = stringResource(state.titleId),
-        modifier = modifier,
-        readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
-        onReadMoreClick = viewModel::onReadMoreClick,
-        items =
-            state.options
-                .map { stringResource(it) }
-                .toPersistentList(),
-        confirmButtonText = stringResource(state.buttonTextId),
-        onConfirmSelection = viewModel::onConfirmSelection,
-    )
+
+    when (state.selection) {
+        PassportSelection.Unselected -> {
+            SelectPassportScreenContent(
+                title = stringResource(state.titleId),
+                modifier = modifier,
+                readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
+                onReadMoreClick = viewModel::onReadMoreClick,
+                items =
+                    state.options
+                        .map { stringResource(it) }
+                        .toPersistentList(),
+                confirmButtonText = stringResource(state.buttonTextId),
+                onConfirmSelection = viewModel::onConfirmSelection,
+            )
+        }
+
+        PassportSelection.Selected ->
+            navController.navigate()
+
+        PassportSelection.NotSelected ->
+            navController.navigate()
+    }
 }
 
 @Composable

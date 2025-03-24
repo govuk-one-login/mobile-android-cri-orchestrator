@@ -44,6 +44,4 @@ class SelectPassportScreenAnalyticsTest {
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
     }
-
-
 }

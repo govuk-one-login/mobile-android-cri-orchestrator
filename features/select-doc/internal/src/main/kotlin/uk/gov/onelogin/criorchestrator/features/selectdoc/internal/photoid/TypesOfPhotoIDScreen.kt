@@ -7,9 +7,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun TypesOfPhotoIDScreen(
-    modifier: Modifier = Modifier,
-) {
+internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
     Text(
         text = "DCMAW-8796 | Android | Document Selection | NFC enabled Photo ID Information Screen",
         modifier = modifier,

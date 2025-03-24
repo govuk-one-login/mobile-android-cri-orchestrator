@@ -7,9 +7,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun SelectBRPScreen(
-    modifier: Modifier = Modifier,
-) {
+internal fun SelectBRPScreen(modifier: Modifier = Modifier) {
     Text(
         text = "DCMAW-10690 | Android | Document Selection | Do you have a BRP screen",
         modifier = modifier,

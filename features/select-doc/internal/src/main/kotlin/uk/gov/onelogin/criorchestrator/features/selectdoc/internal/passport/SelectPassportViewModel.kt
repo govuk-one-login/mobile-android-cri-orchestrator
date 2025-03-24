@@ -1,10 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
 import androidx.lifecycle.ViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 
@@ -14,14 +12,6 @@ internal class SelectPassportViewModel(
     private val _state =
         MutableStateFlow(
             SelectPassportState(
-                titleId = R.string.selectdocument_passport_title,
-                readMoreButtonTextId = R.string.selectdocument_passport_readmore_button,
-                options =
-                    persistentListOf(
-                        R.string.selectdocument_passport_selection_yes,
-                        R.string.selectdocument_passport_selection_no,
-                    ),
-                buttonTextId = R.string.selectdocument_passport_continuebutton,
                 selection = PassportSelection.Unselected,
             ),
         )
