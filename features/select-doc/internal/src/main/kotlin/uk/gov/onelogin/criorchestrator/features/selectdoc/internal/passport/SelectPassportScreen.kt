@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -29,19 +30,21 @@ internal fun SelectPassportScreen(
     viewModel: SelectPassportViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
     SelectPassportScreenContent(
-        title = stringResource(viewModel.titleId),
+        title = stringResource(state.titleId),
         modifier = modifier,
-        readMoreButtonTitle = stringResource(viewModel.readMoreButtonTextId),
+        readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
         onReadMoreClick = viewModel::onReadMoreClick,
         items =
-            viewModel.options
+            state.options
                 .map { stringResource(it) }
                 .toPersistentList(),
-        confirmButtonText = stringResource(viewModel.buttonTextId),
+        confirmButtonText = stringResource(state.buttonTextId),
         onConfirmSelection = viewModel::onConfirmSelection,
     )
 }

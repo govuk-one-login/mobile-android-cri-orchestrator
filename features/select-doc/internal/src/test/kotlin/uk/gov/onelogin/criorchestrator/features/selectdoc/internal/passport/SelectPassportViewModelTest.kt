@@ -1,5 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -54,6 +57,22 @@ class SelectPassportViewModelTest {
                 R.string.selectdocument_passport_continuebutton,
                 item,
             )
+    }
+
+    @Test
+    fun `when passport is selected, the state is updated`() {
+        runTest {
+            viewModel.onConfirmSelection(0)
+            assertEquals(PassportSelection.Selected, viewModel.state.first().selection)
+        }
+    }
+
+    @Test
+    fun `when passport is not selected, the state is updated`() {
+        runTest {
+            viewModel.onConfirmSelection(1)
+            assertEquals(PassportSelection.NotSelected, viewModel.state.first().selection)
+        }
     }
 
     @Test
