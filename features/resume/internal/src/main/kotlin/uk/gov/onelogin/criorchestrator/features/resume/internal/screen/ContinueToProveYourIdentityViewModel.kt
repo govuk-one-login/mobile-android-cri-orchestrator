@@ -29,9 +29,7 @@ internal class ContinueToProveYourIdentityViewModel(
             buttonText = R.string.continue_to_prove_your_identity_screen_button,
         )
 
-        runBlocking {
-            checkNfc()
-        }
+        viewModelScope.launch { checkNfc() }
     }
 
     private suspend fun checkNfc() {
