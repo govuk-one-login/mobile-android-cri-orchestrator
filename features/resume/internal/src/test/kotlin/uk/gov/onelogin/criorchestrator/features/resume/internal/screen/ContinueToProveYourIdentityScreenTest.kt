@@ -8,8 +8,8 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,6 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel.ContinueToProveYourIdentityAction
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
@@ -32,7 +33,7 @@ class ContinueToProveYourIdentityScreenTest {
 
     private val navController: NavController = mock()
     private val configStore: ConfigStore = mock()
-    private val stateFlow = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
+    private val actions = MutableSharedFlow<ContinueToProveYourIdentityAction>()
     private lateinit var primaryButton: SemanticsMatcher
     private val viewModel =
         spy(
@@ -48,8 +49,10 @@ class ContinueToProveYourIdentityScreenTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
-
-        whenever(viewModel.state).thenReturn(stateFlow)
+        whenever(viewModel.actions).thenReturn(actions)
+        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+            Config.Value.BooleanValue(false),
+        )
     }
 
     @Test
@@ -65,32 +68,34 @@ class ContinueToProveYourIdentityScreenTest {
     }
 
     @Test
-    fun `when nfc is available navigate to passport journey`() {
-        stateFlow.value = ProveYourIdentityState.NfcAvailable
+    fun `when nfc is available, navigate to passport journey`() =
+        runTest {
+            composeTestRule.setContent {
+                ContinueToProveYourIdentityScreen(
+                    viewModel = viewModel,
+                    navController = navController,
+                )
+            }
 
-        composeTestRule.setContent {
-            ContinueToProveYourIdentityScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
+            actions.emit(ContinueToProveYourIdentityAction.NavigateToPassport)
+
+            verify(navController).navigate(SelectDocumentDestinations.Passport)
         }
-
-        verify(navController).navigate(SelectDocumentDestinations.Passport)
-    }
 
     @Test
-    fun `when nfc is available navigate to driving licence journey`() {
-        stateFlow.value = ProveYourIdentityState.NfcNotAvailable
+    fun `when nfc is not available, navigate to driving licence journey`() =
+        runTest {
+            composeTestRule.setContent {
+                ContinueToProveYourIdentityScreen(
+                    viewModel = viewModel,
+                    navController = navController,
+                )
+            }
 
-        composeTestRule.setContent {
-            ContinueToProveYourIdentityScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
+            actions.emit(ContinueToProveYourIdentityAction.NavigateToDrivingLicense)
+
+            verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
         }
-
-        verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
-    }
 
     @Test
     fun `when continue button is clicked, it calls the view model`() {
@@ -100,10 +105,6 @@ class ContinueToProveYourIdentityScreenTest {
                 navController = navController,
             )
         }
-
-        whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-            flowOf(Config.Value.BooleanValue(false)),
-        )
 
         composeTestRule
             .onNode(primaryButton)

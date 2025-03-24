@@ -2,9 +2,8 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.api.LogTagProvider
@@ -20,30 +19,22 @@ internal class ContinueToProveYourIdentityViewModel(
     private val configStore: ConfigStore,
 ) : ViewModel(),
     LogTagProvider {
-    private val _state = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
-    val state: StateFlow<ProveYourIdentityState> = _state
+    private val _actions = MutableSharedFlow<ContinueToProveYourIdentityAction>()
+    val actions: Flow<ContinueToProveYourIdentityAction> = _actions
 
     fun onContinueClick() {
         analytics.trackButtonEvent(
             buttonText = R.string.continue_to_prove_your_identity_screen_button,
         )
 
-        viewModelScope.launch { checkNfc() }
-    }
-
-    private suspend fun checkNfc() {
-        if (configStore.read(NfcConfigKey.StubNcfCheck).first().value) {
-            if (configStore.read(NfcConfigKey.IsNfcAvailable).first().value) {
-                _state.value = ProveYourIdentityState.NfcAvailable
-            } else {
-                _state.value = ProveYourIdentityState.NfcNotAvailable
-            }
-        } else {
-            if (nfcChecker.hasNfc()) {
-                _state.value = ProveYourIdentityState.NfcAvailable
-            } else {
-                _state.value = ProveYourIdentityState.NfcNotAvailable
-            }
+        viewModelScope.launch {
+            _actions.emit(
+                if (isNfcEnabled()) {
+                    ContinueToProveYourIdentityAction.NavigateToPassport
+                } else {
+                    ContinueToProveYourIdentityAction.NavigateToDrivingLicense
+                },
+            )
         }
     }
 
@@ -53,12 +44,17 @@ internal class ContinueToProveYourIdentityViewModel(
             title = R.string.continue_to_prove_your_identity_screen_title,
         )
     }
-}
 
-sealed class ProveYourIdentityState {
-    data object Idle : ProveYourIdentityState()
+    private fun isNfcEnabled() =
+        if (configStore.readSingle(NfcConfigKey.StubNcfCheck).value) {
+            configStore.readSingle(NfcConfigKey.IsNfcAvailable).value
+        } else {
+            nfcChecker.hasNfc()
+        }
 
-    data object NfcAvailable : ProveYourIdentityState()
+    sealed class ContinueToProveYourIdentityAction {
+        data object NavigateToPassport : ContinueToProveYourIdentityAction()
 
-    data object NfcNotAvailable : ProveYourIdentityState()
+        data object NavigateToDrivingLicense : ContinueToProveYourIdentityAction()
+    }
 }
