@@ -97,6 +97,7 @@ internal fun SelectPassportScreenContent(
                         onConfirmSelection(it)
                     }
                 },
+                enabled = selectedItem != null,
             ),
     )
 }

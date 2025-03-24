@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
@@ -15,7 +16,6 @@ import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -112,18 +112,17 @@ class SelectPassportScreenTest {
     }
 
     // DCMAW-8054 | AC4: User doesn’t select an option
-    @Ignore("This AC has not yet been implemented")
     @Test
     fun `when user has not made choice yet, the confirm button is disabled`() {
         composeTestRule
             .onNode(confirmButton)
             .performClick()
 
-        verify(viewModel, never()).onConfirmSelection(any())
-
         composeTestRule
             .onNode(confirmButton)
             .assertIsNotEnabled()
+
+        verify(viewModel, never()).onConfirmSelection(any())
     }
 
     @Test
@@ -136,6 +135,7 @@ class SelectPassportScreenTest {
 
         composeTestRule
             .onNode(confirmButton)
+            .assertIsEnabled()
             .performClick()
 
         verify(viewModel).onConfirmSelection(0)
@@ -151,6 +151,7 @@ class SelectPassportScreenTest {
 
         composeTestRule
             .onNode(confirmButton)
+            .assertIsEnabled()
             .performClick()
 
         verify(viewModel).onConfirmSelection(1)
