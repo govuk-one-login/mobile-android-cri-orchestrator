@@ -17,12 +17,16 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenAnalyticsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    @get:Rule
+    val mainStandardDispatcherRule = MainStandardDispatcherRule()
 
     @get:Rule
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
@@ -54,7 +58,8 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
 
     @Test
     fun `when screen is started, it tracks analytics`() {
-        val expectedScreenName = context.getString(R.string.continue_to_prove_your_identity_screen_title)
+        val expectedScreenName =
+            context.getString(R.string.continue_to_prove_your_identity_screen_title)
         val expectedScreenId = ResumeScreenId.ContinueToProveYourIdentity.rawId
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
@@ -65,7 +70,7 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
         val matchingEvents =
             analyticsLogger.loggedEvents.filter {
                 it.parameters["screen_id"] == expectedScreenId &&
-                    it.parameters["screen_name"] == expectedScreenName
+                        it.parameters["screen_name"] == expectedScreenName
             }
         assertEquals(1, matchingEvents.size)
     }
