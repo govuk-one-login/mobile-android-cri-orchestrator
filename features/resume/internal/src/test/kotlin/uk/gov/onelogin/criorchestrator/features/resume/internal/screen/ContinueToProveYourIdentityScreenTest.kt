@@ -8,16 +8,16 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.spy
+import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
@@ -32,13 +32,13 @@ class ContinueToProveYourIdentityScreenTest {
 
     private val navController: NavController = mock()
     private val configStore: ConfigStore = mock()
-    private val stateFlow = MutableStateFlow<ProveYourIdentityState>(ProveYourIdentityState.Idle)
     private lateinit var primaryButton: SemanticsMatcher
+    private val nfcChecker: NfcChecker = mock()
     private val viewModel =
         spy(
             ContinueToProveYourIdentityViewModel(
                 analytics = mock<ResumeAnalytics>(),
-                nfcChecker = mock(),
+                nfcChecker = nfcChecker,
                 configStore = configStore,
             ),
         )
@@ -48,8 +48,10 @@ class ContinueToProveYourIdentityScreenTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
-
-        whenever(viewModel.state).thenReturn(stateFlow)
+        given(nfcChecker.hasNfc()).willReturn(true)
+        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+            Config.Value.BooleanValue(false),
+        )
     }
 
     @Test
@@ -65,8 +67,8 @@ class ContinueToProveYourIdentityScreenTest {
     }
 
     @Test
-    fun `when nfc is available navigate to passport journey`() {
-        stateFlow.value = ProveYourIdentityState.NfcAvailable
+    fun `given nfc is available, when click continue, navigate to passport journey`() {
+        whenever(nfcChecker.hasNfc()).thenReturn(true)
 
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
@@ -74,41 +76,29 @@ class ContinueToProveYourIdentityScreenTest {
                 navController = navController,
             )
         }
-
-        verify(navController).navigate(SelectDocumentDestinations.Passport)
-    }
-
-    @Test
-    fun `when nfc is available navigate to driving licence journey`() {
-        stateFlow.value = ProveYourIdentityState.NfcNotAvailable
-
-        composeTestRule.setContent {
-            ContinueToProveYourIdentityScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
-        }
-
-        verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
-    }
-
-    @Test
-    fun `when continue button is clicked, it calls the view model`() {
-        composeTestRule.setContent {
-            ContinueToProveYourIdentityScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
-        }
-
-        whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-            flowOf(Config.Value.BooleanValue(false)),
-        )
 
         composeTestRule
             .onNode(primaryButton)
             .performClick()
 
-        verify(viewModel).onContinueClick()
+        verify(navController).navigate(SelectDocumentDestinations.Passport)
+    }
+
+    @Test
+    fun `given nfc is not available, when click continue, navigate to driving licence journey`() {
+        whenever(nfcChecker.hasNfc()).thenReturn(false)
+
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
+
+        composeTestRule
+            .onNode(primaryButton)
+            .performClick()
+
+        verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
     }
 }

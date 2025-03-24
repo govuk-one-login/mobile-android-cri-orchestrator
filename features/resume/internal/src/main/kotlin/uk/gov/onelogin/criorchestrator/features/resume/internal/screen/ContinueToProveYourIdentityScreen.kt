@@ -3,12 +3,10 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
@@ -24,30 +22,30 @@ internal fun ContinueToProveYourIdentityScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
 
-    when (state) {
-        ProveYourIdentityState.Idle -> {
-            ContinueToProveYourIdentityContent(
-                onContinueClick = viewModel::onContinueClick,
-                modifier = modifier,
-            )
+    LaunchedEffect(Unit) {
+        viewModel.actions.collect { action ->
+            when (action) {
+                ContinueToProveYourIdentityAction.NavigateToPassport ->
+                    navController.navigate(
+                        SelectDocumentDestinations.Passport,
+                    )
+
+                ContinueToProveYourIdentityAction.NavigateToDrivingLicense ->
+                    navController.navigate(
+                        SelectDocumentDestinations.DrivingLicence,
+                    )
+            }
         }
-
-        ProveYourIdentityState.NfcAvailable ->
-            navController.navigate(
-                SelectDocumentDestinations.Passport,
-            )
-
-        ProveYourIdentityState.NfcNotAvailable ->
-            navController.navigate(
-                SelectDocumentDestinations.DrivingLicence,
-            )
     }
+
+    ContinueToProveYourIdentityContent(
+        onContinueClick = viewModel::onContinueClick,
+        modifier = modifier,
+    )
 }
 
 @Composable

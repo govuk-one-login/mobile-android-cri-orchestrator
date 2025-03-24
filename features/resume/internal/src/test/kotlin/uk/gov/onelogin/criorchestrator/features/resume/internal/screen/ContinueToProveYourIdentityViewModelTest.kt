@@ -1,12 +1,11 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
+import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.RegisterExtension
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
@@ -24,10 +23,10 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
-import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherExtension
+import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
+@ExtendWith(MainDispatcherExtension::class)
 class ContinueToProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
     private val resourceProvider = FakeResourceProvider()
@@ -45,8 +44,12 @@ class ContinueToProveYourIdentityViewModelTest {
         )
     }
 
-    @RegisterExtension
-    val dispatcherExtension = MainStandardDispatcherExtension()
+    @BeforeEach
+    fun setUp() {
+        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+            Config.Value.BooleanValue(false),
+        )
+    }
 
     @Test
     fun `when continue button is clicked, it sends analytics`() {
@@ -82,116 +85,69 @@ class ContinueToProveYourIdentityViewModelTest {
     }
 
     @Test
-    fun `when continue clicked and nfc available, NfcAvailable is emitted`() =
+    fun `given nfc available, when continue clicked, navigate to passport`() =
         runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
+            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+                Config.Value.BooleanValue(false),
             )
 
             whenever(nfcChecker.hasNfc()).thenReturn(true)
 
-            viewModel.onContinueClick()
+            viewModel.actions.test {
+                viewModel.onContinueClick()
 
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
+                assertEquals(ContinueToProveYourIdentityAction.NavigateToPassport, awaitItem())
+            }
         }
 
     @Test
-    fun `when continue clicked and nfc not available, NfcNotAvailable is emitted`() =
+    fun `given nfc not available, when continue clicked, navigate to driving license`() =
         runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
+            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+                Config.Value.BooleanValue(false),
             )
 
             whenever(nfcChecker.hasNfc()).thenReturn(false)
 
-            viewModel.onContinueClick()
+            viewModel.actions.test {
+                viewModel.onContinueClick()
 
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
+                assertEquals(ContinueToProveYourIdentityAction.NavigateToDrivingLicense, awaitItem())
+            }
         }
 
     @Test
-    fun `when continue clicked and nfc not available, NfcAvailable not emitted`() =
+    fun `given stub nfc check and nfc available, when continue, navigate to passport`() =
         runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
+            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+                Config.Value.BooleanValue(true),
             )
 
-            whenever(nfcChecker.hasNfc()).thenReturn(false)
+            whenever(configStore.readSingle(NfcConfigKey.IsNfcAvailable)).thenReturn(
+                Config.Value.BooleanValue(true),
+            )
 
-            viewModel.onContinueClick()
+            viewModel.actions.test {
+                viewModel.onContinueClick()
 
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertNotEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
+                assertEquals(ContinueToProveYourIdentityAction.NavigateToPassport, awaitItem())
+            }
         }
 
     @Test
-    fun `when continue clicked and nfc is available, NfcNotAvailable not emitted`() =
+    fun `given nfc check is and nfc not available, when continue, navigate to driving license`() =
         runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
+            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
+                Config.Value.BooleanValue(true),
             )
 
-            whenever(nfcChecker.hasNfc()).thenReturn(true)
-
-            viewModel.onContinueClick()
-
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertNotEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
-        }
-
-    @Test
-    fun `when continue clicked and stub nfc check is enabled and nfc config is set to available`() =
-        runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(true)),
+            whenever(configStore.readSingle(NfcConfigKey.IsNfcAvailable)).thenReturn(
+                Config.Value.BooleanValue(false),
             )
+            viewModel.actions.test {
+                viewModel.onContinueClick()
 
-            whenever(configStore.read(NfcConfigKey.IsNfcAvailable)).thenReturn(
-                flowOf(Config.Value.BooleanValue(true)),
-            )
-
-            viewModel.onContinueClick()
-
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertEquals(ProveYourIdentityState.NfcAvailable, viewModel.state.first())
-
-            verify(nfcChecker, never()).hasNfc()
-        }
-
-    @Test
-    fun `when continue clicked and stub nfc check is enabled and nfc config is set to not available`() =
-        runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(true)),
-            )
-
-            whenever(configStore.read(NfcConfigKey.IsNfcAvailable)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
-            )
-
-            viewModel.onContinueClick()
-
-            dispatcherExtension.mainDispatcher.scheduler.advanceUntilIdle()
-
-            assertEquals(ProveYourIdentityState.NfcNotAvailable, viewModel.state.first())
-
-            verify(nfcChecker, never()).hasNfc()
-        }
-
-    @Test
-    fun `when continue clicked and stub nfc check is not enabled`() =
-        runTest {
-            whenever(configStore.read(NfcConfigKey.StubNcfCheck)).thenReturn(
-                flowOf(Config.Value.BooleanValue(false)),
-            )
-
-            verify(configStore, never()).read(NfcConfigKey.IsNfcAvailable)
+                assertEquals(ContinueToProveYourIdentityAction.NavigateToDrivingLicense, awaitItem())
+            }
         }
 }
