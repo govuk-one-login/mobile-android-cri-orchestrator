@@ -7,7 +7,7 @@ plugins {
 dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
-    api(libs.uk.gov.idcheck.sdk)
+//    api(libs.uk.gov.idcheck.sdk)
 
     implementation(libs.uk.gov.networking)
     implementation(project(":features:resume:internal-api"))
@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
+    implementation(project(":libraries:idchecksdk"))
 
     debugImplementation(testFixtures(project(":libraries:analytics")))
 

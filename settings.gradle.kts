@@ -78,4 +78,5 @@ include(
     ":sdk:public-api",
     ":sdk:shared-api",
     ":test-wrapper",
+    ":libraries:idchecksdk"
 )

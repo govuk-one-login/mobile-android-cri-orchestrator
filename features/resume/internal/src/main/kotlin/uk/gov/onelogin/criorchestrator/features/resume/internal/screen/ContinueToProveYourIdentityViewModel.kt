@@ -6,17 +6,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.libraries.idchecksdk.nfc.IdCheckNfcCheckProvider
 
 internal class ContinueToProveYourIdentityViewModel(
     private val analytics: ResumeAnalytics,
-    private val nfcChecker: NfcChecker,
+    private val nfcChecker: IdCheckNfcCheckProvider,
     private val configStore: ConfigStore,
 ) : ViewModel(),
     LogTagProvider {
@@ -41,7 +41,7 @@ internal class ContinueToProveYourIdentityViewModel(
                 _state.value = ProveYourIdentityState.NfcNotAvailable
             }
         } else {
-            if (nfcChecker.hasNfc()) {
+            if (nfcChecker.getNfcChecker().hasNfc()) {
                 _state.value = ProveYourIdentityState.NfcAvailable
             } else {
                 _state.value = ProveYourIdentityState.NfcNotAvailable

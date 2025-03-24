@@ -6,10 +6,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.idchecksdk.nfc.IdCheckNfcCheckProvider
 import javax.inject.Named
 
 @Module
@@ -21,7 +21,7 @@ object ContinueToProveYourIdentityViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         analytics: ResumeAnalytics,
-        nfcChecker: NfcChecker,
+        nfcChecker: IdCheckNfcCheckProvider,
         configStore: ConfigStore,
     ): ViewModelProvider.Factory =
         viewModelFactory {
