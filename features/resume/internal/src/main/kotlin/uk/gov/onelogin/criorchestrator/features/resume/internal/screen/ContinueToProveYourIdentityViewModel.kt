@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
@@ -28,7 +29,7 @@ internal class ContinueToProveYourIdentityViewModel(
             buttonText = R.string.continue_to_prove_your_identity_screen_button,
         )
 
-        viewModelScope.launch {
+        runBlocking {
             checkNfc()
         }
     }
