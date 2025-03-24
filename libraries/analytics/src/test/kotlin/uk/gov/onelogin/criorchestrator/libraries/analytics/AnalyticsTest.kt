@@ -48,6 +48,9 @@ class AnalyticsTest {
         @StringRes
         private val buttonText = R.string.test_button_text
 
+        @StringRes
+        private val formResponse = R.string.test_form_response
+
         private val screenId = TestScreenId.ExampleScreen
 
         @StringRes
@@ -58,6 +61,20 @@ class AnalyticsTest {
         TestAnalytics(
             resourceProvider = AndroidResourceProvider(context = context),
             analyticsLogger = analyticsLogger,
+        )
+    }
+
+    private fun verifyTrackFormEvent() {
+        verify(analyticsLogger).logEventV3Dot1(
+            TrackEvent.Form(
+                text = "Continue",
+                response = "Yes",
+                params =
+                    RequiredParameters(
+                        taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
+                        taxonomyLevel3 = TaxonomyLevel3.UNDEFINED,
+                    ),
+            ),
         )
     }
 
@@ -100,6 +117,26 @@ class AnalyticsTest {
     fun `given welsh locale, track button tracks correctly`() {
         analytics.trackButtonEvent(buttonText = buttonText)
         verifyTrackButtonEvent()
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `given english locale, track form tracks correctly`() {
+        analytics.trackFormSubmission(
+            buttonText = buttonText,
+            response = formResponse,
+        )
+        verifyTrackFormEvent()
+    }
+
+    @Test
+    @Config(qualifiers = "cy")
+    fun `given welsh locale, track form tracks correctly`() {
+        analytics.trackFormSubmission(
+            buttonText = buttonText,
+            response = formResponse,
+        )
+        verifyTrackFormEvent()
     }
 
     @Test
