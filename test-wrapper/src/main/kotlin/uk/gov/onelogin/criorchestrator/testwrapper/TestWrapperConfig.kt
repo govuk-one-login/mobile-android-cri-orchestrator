@@ -24,13 +24,13 @@ object TestWrapperConfig {
                         ),
                     ),
                     Config.Entry(
-                        key = NfcConfigKey.IsNfcAvailable,
+                        key = NfcConfigKey.StubNcfCheck,
                         Config.Value.BooleanValue(
                             value = false,
                         ),
                     ),
                     Config.Entry(
-                        key = NfcConfigKey.StubNcfCheck,
+                        key = NfcConfigKey.IsNfcAvailable,
                         Config.Value.BooleanValue(
                             value = false,
                         ),

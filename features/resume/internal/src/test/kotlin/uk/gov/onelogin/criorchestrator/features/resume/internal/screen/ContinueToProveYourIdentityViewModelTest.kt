@@ -26,7 +26,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueT
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
-import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherExtension
 import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)

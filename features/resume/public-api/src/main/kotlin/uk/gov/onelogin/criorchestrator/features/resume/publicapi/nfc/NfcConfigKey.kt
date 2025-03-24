@@ -4,15 +4,15 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
 
 sealed interface NfcConfigKey {
-    data object IsNfcAvailable :
+    data object StubNcfCheck :
         ConfigKey<Config.Value.BooleanValue>(
-            name = "NFC Available",
+            name = "Stub NFC enabled",
         ),
         NfcConfigKey
 
-    data object StubNcfCheck :
+    data object IsNfcAvailable :
         ConfigKey<Config.Value.BooleanValue>(
-            name = "Stub NFC Check",
+            name = "Stub NFC available",
         ),
         NfcConfigKey
 }
