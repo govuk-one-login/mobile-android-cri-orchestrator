@@ -28,6 +28,7 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
 @RunWith(AndroidJUnit4::class)
 class SelectPassportScreenTest {
@@ -179,7 +180,7 @@ class SelectPassportScreenTest {
 
         setUpContent()
 
-        verify(navController).navigate(SelectDocumentDestinations.Confirmation)
+        verify(navController).navigate(SelectDocumentDestinations.Confirm)
     }
 
     @Test
@@ -191,7 +192,7 @@ class SelectPassportScreenTest {
 
         setUpContent()
 
-        verify(navController).navigate(SelectDocumentDestinations.SelectBRP)
+        verify(navController).navigate(SelectDocumentDestinations.BRP)
     }
 
     private fun setUpContent() {
