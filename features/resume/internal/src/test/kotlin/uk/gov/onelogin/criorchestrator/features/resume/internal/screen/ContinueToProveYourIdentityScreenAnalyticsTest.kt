@@ -70,7 +70,7 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
         val matchingEvents =
             analyticsLogger.loggedEvents.filter {
                 it.parameters["screen_id"] == expectedScreenId &&
-                        it.parameters["screen_name"] == expectedScreenName
+                    it.parameters["screen_name"] == expectedScreenName
             }
         assertEquals(1, matchingEvents.size)
     }
