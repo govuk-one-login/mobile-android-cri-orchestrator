@@ -74,7 +74,7 @@ class SelectPassportViewModelTest {
             viewModel.actions.test {
                 viewModel.onConfirmSelection(1)
 
-                assertEquals(SelectPassportAction.NavigateToBRP, awaitItem())
+                assertEquals(SelectPassportAction.NavigateToBrp, awaitItem())
             }
         }
     }

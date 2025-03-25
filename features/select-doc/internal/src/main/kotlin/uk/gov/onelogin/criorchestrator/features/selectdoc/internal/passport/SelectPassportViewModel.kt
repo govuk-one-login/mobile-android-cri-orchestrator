@@ -56,7 +56,7 @@ internal class SelectPassportViewModel(
         viewModelScope.launch {
             when (selectedIndex) {
                 0 -> _actions.emit(SelectPassportAction.NavigateToConfirmation)
-                1 -> _actions.emit(SelectPassportAction.NavigateToBRP)
+                1 -> _actions.emit(SelectPassportAction.NavigateToBrp)
             }
         }
     }

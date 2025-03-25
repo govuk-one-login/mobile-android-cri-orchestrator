@@ -50,9 +50,9 @@ internal fun SelectPassportScreen(
                         SelectDocumentDestinations.Confirm,
                     )
 
-                SelectPassportAction.NavigateToBRP ->
+                SelectPassportAction.NavigateToBrp ->
                     navController.navigate(
-                        SelectDocumentDestinations.BRP,
+                        SelectDocumentDestinations.Brp,
                     )
             }
         }

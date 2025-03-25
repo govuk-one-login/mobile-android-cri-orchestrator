@@ -199,9 +199,9 @@ class SelectPassportScreenTest {
     @Test
     fun `when no passport is selected, navigate to BRP selection screen`() {
         runTest {
-            actions.emit(SelectPassportAction.NavigateToBRP)
+            actions.emit(SelectPassportAction.NavigateToBrp)
 
-            verify(navController).navigate(SelectDocumentDestinations.BRP)
+            verify(navController).navigate(SelectDocumentDestinations.Brp)
         }
     }
 

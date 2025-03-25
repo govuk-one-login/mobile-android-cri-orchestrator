@@ -8,7 +8,7 @@ sealed interface SelectDocumentDestinations : ProveYourIdentityDestinations {
     data object Passport : SelectDocumentDestinations
 
     @Serializable
-    data object BRP : SelectDocumentDestinations
+    data object Brp : SelectDocumentDestinations
 
     @Serializable
     data object DrivingLicence : SelectDocumentDestinations
