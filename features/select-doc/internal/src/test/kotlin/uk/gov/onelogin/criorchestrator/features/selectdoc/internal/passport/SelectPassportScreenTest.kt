@@ -60,17 +60,22 @@ class SelectPassportScreenTest {
         confirmButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
 
         whenever(viewModel.actions).thenReturn(actions)
+
+        composeTestRule.setContent {
+            SelectPassportScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
     }
 
     @Test
     fun `when screen is started, it calls the view model`() {
-        setUpContent()
         verify(viewModel).onScreenStart()
     }
 
     @Test
     fun `when screen is started, no item is selected`() {
-        setUpContent()
         swipeToAdditionalContent()
 
         verify(viewModel).onScreenStart()
@@ -88,7 +93,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when read more is selected, it calls the view model`() {
-        setUpContent()
         composeTestRule
             .onNode(readMoreButton)
             .performClick()
@@ -98,7 +102,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when yes is tapped, it is selected`() {
-        setUpContent()
         swipeToAdditionalContent()
 
         composeTestRule
@@ -110,7 +113,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when no is tapped, it is selected`() {
-        setUpContent()
         swipeToAdditionalContent()
 
         composeTestRule
@@ -123,7 +125,6 @@ class SelectPassportScreenTest {
     // DCMAW-8054 | AC4: User doesn’t select an option
     @Test
     fun `when user has not made choice yet, the confirm button is disabled`() {
-        setUpContent()
         composeTestRule
             .onNode(confirmButton)
             .performClick()
@@ -137,7 +138,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when yes is selected and confirm is tapped, it calls the view model`() {
-        setUpContent()
         swipeToAdditionalContent()
 
         composeTestRule
@@ -154,7 +154,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when no is selected and confirm is tapped, it calls the view model`() {
-        setUpContent()
         swipeToAdditionalContent()
 
         composeTestRule
@@ -171,8 +170,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when read more is tapped, navigate to types of photo ID screen`() {
-        setUpContent()
-
         runTest {
             actions.emit(SelectPassportAction.NavigateToTypesOfPhotoID)
 
@@ -182,8 +179,6 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when passport is selected, navigate to confirmation screen`() {
-        setUpContent()
-
         runTest {
             actions.emit(SelectPassportAction.NavigateToConfirmation)
 
@@ -193,21 +188,10 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when no passport is selected, navigate to BRP selection screen`() {
-        setUpContent()
-
         runTest {
             actions.emit(SelectPassportAction.NavigateToBRP)
 
             verify(navController).navigate(SelectDocumentDestinations.BRP)
-        }
-    }
-
-    private fun setUpContent() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
         }
     }
 
