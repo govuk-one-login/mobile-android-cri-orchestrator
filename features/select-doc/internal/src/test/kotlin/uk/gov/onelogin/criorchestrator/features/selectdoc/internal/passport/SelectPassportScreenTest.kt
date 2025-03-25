@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onParent
@@ -37,6 +38,7 @@ class SelectPassportScreenTest {
     val composeTestRule = createComposeRule()
 
     private lateinit var readMoreButton: SemanticsMatcher
+    private lateinit var image: SemanticsMatcher
     private lateinit var yesOption: SemanticsMatcher
     private lateinit var noOption: SemanticsMatcher
     private lateinit var confirmButton: SemanticsMatcher
@@ -55,6 +57,7 @@ class SelectPassportScreenTest {
     fun setUp() {
         val context: Context = ApplicationProvider.getApplicationContext()
         readMoreButton = hasText(context.getString(R.string.selectdocument_passport_readmore_button))
+        image = hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
         yesOption = hasText(context.getString(R.string.selectdocument_passport_selection_yes))
         noOption = hasText(context.getString(R.string.selectdocument_passport_selection_no))
         confirmButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
@@ -72,6 +75,13 @@ class SelectPassportScreenTest {
     @Test
     fun `when screen is started, it calls the view model`() {
         verify(viewModel).onScreenStart()
+    }
+
+    @Test
+    fun `when talkback is enabled, the image description is read correctly`() {
+        composeTestRule
+            .onNode(image)
+            .assertExists()
     }
 
     @Test
