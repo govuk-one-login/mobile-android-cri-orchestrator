@@ -1,10 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
-import kotlinx.coroutines.flow.first
+import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
@@ -60,18 +58,24 @@ class SelectPassportViewModelTest {
     }
 
     @Test
-    fun `when passport is selected, the state is updated`() {
+    fun `when passport is selected, navigate to confirmation`() {
         runTest {
-            viewModel.onConfirmSelection(0)
-            assertEquals(PassportSelection.Selected, viewModel.state.first().selection)
+            viewModel.actions.test {
+                viewModel.onConfirmSelection(0)
+
+                assertEquals(SelectPassportAction.NavigateToConfirmation, awaitItem())
+            }
         }
     }
 
     @Test
-    fun `when passport is not selected, the state is updated`() {
+    fun `when passport is not selected, navigate to BRP`() {
         runTest {
-            viewModel.onConfirmSelection(1)
-            assertEquals(PassportSelection.NotSelected, viewModel.state.first().selection)
+            viewModel.actions.test {
+                viewModel.onConfirmSelection(1)
+
+                assertEquals(SelectPassportAction.NavigateToBRP, awaitItem())
+            }
         }
     }
 
@@ -84,11 +88,14 @@ class SelectPassportViewModelTest {
     }
 
     // DCMAW-8054 | AC8: User wants to learn about different document options
-    @Disabled("This AC has not yet been implemented")
     @Test
     fun `when the read more button is pressed, the user sees the types of photo ID screen`() {
-        viewModel.onReadMoreClick()
+        runTest {
+            viewModel.actions.test {
+                viewModel.onReadMoreClick()
 
-        assertTrue(false)
+                assertEquals(SelectPassportAction.NavigateToTypesOfPhotoID, awaitItem())
+            }
+        }
     }
 }

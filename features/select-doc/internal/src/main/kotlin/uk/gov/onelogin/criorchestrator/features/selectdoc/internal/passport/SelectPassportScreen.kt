@@ -37,34 +37,39 @@ internal fun SelectPassportScreen(
 
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
-    }
 
-    when (state.selection) {
-        PassportSelection.Unselected -> {
-            SelectPassportScreenContent(
-                title = stringResource(state.titleId),
-                modifier = modifier,
-                readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
-                onReadMoreClick = viewModel::onReadMoreClick,
-                items =
-                    state.options
-                        .map { stringResource(it) }
-                        .toPersistentList(),
-                confirmButtonText = stringResource(state.buttonTextId),
-                onConfirmSelection = viewModel::onConfirmSelection,
-            )
+        viewModel.actions.collect { event ->
+            when (event) {
+                SelectPassportAction.NavigateToTypesOfPhotoID ->
+                    navController.navigate(
+                        SelectDocumentDestinations.TypesOfPhotoID,
+                    )
+
+                SelectPassportAction.NavigateToConfirmation ->
+                    navController.navigate(
+                        SelectDocumentDestinations.Confirm,
+                    )
+
+                SelectPassportAction.NavigateToBRP ->
+                    navController.navigate(
+                        SelectDocumentDestinations.BRP,
+                    )
+            }
         }
-
-        PassportSelection.Selected ->
-            navController.navigate(
-                SelectDocumentDestinations.Confirm,
-            )
-
-        PassportSelection.NotSelected ->
-            navController.navigate(
-                SelectDocumentDestinations.BRP,
-            )
     }
+
+    SelectPassportScreenContent(
+        title = stringResource(state.titleId),
+        modifier = modifier,
+        readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
+        onReadMoreClick = viewModel::onReadMoreClick,
+        items =
+            state.options
+                .map { stringResource(it) }
+                .toPersistentList(),
+        confirmButtonText = stringResource(state.buttonTextId),
+        onConfirmSelection = viewModel::onConfirmSelection,
+    )
 }
 
 @Composable

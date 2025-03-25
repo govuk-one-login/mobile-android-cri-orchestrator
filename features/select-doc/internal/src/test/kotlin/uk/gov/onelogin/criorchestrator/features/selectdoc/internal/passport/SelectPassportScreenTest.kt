@@ -16,7 +16,8 @@ import androidx.compose.ui.test.swipeUp
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,10 +42,7 @@ class SelectPassportScreenTest {
     private lateinit var confirmButton: SemanticsMatcher
 
     private val navController: NavController = mock()
-    private val stateFlow =
-        MutableStateFlow(
-            SelectPassportState(selection = PassportSelection.Unselected),
-        )
+    private val actions = MutableSharedFlow<SelectPassportAction>()
 
     private val viewModel =
         spy(
@@ -61,7 +59,7 @@ class SelectPassportScreenTest {
         noOption = hasText(context.getString(R.string.selectdocument_passport_selection_no))
         confirmButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
 
-        whenever(viewModel.state).thenReturn(stateFlow)
+        whenever(viewModel.actions).thenReturn(actions)
     }
 
     @Test
@@ -172,27 +170,36 @@ class SelectPassportScreenTest {
     }
 
     @Test
-    fun `when passport is selected, navigate to confirmation screen`() {
-        stateFlow.value =
-            SelectPassportState(
-                selection = PassportSelection.Selected,
-            )
-
+    fun `when read more is tapped, navigate to types of photo ID screen`() {
         setUpContent()
 
-        verify(navController).navigate(SelectDocumentDestinations.Confirm)
+        runTest {
+            actions.emit(SelectPassportAction.NavigateToTypesOfPhotoID)
+
+            verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
+        }
+    }
+
+    @Test
+    fun `when passport is selected, navigate to confirmation screen`() {
+        setUpContent()
+
+        runTest {
+            actions.emit(SelectPassportAction.NavigateToConfirmation)
+
+            verify(navController).navigate(SelectDocumentDestinations.Confirm)
+        }
     }
 
     @Test
     fun `when no passport is selected, navigate to BRP selection screen`() {
-        stateFlow.value =
-            SelectPassportState(
-                selection = PassportSelection.NotSelected,
-            )
-
         setUpContent()
 
-        verify(navController).navigate(SelectDocumentDestinations.BRP)
+        runTest {
+            actions.emit(SelectPassportAction.NavigateToBRP)
+
+            verify(navController).navigate(SelectDocumentDestinations.BRP)
+        }
     }
 
     private fun setUpContent() {
