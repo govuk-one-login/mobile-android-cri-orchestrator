@@ -103,6 +103,8 @@ class SelectPassportScreenTest {
 
     @Test
     fun `when read more is selected, it calls the view model`() {
+        swipeToAdditionalContent()
+
         composeTestRule
             .onNode(readMoreButton)
             .performClick()
@@ -208,7 +210,7 @@ class SelectPassportScreenTest {
     private fun swipeToAdditionalContent() {
         composeTestRule
             .onNode(
-                readMoreButton,
+                image,
             ).onParent()
             .performTouchInput {
                 swipeUp()
