@@ -16,7 +16,7 @@ internal fun ConfirmDocumentScreen(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewTypesOfPhotoIDScreen() {
+internal fun PreviewConfirmDocumentScreen() {
     GdsTheme {
         ConfirmDocumentScreen()
     }

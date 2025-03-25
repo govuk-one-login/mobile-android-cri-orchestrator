@@ -1,7 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -11,6 +9,7 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBRPScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -39,10 +38,7 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
-                @Composable
-                fun Test() {
-                    Text("Driving License check")
-                }
+                SelectDrivingLicenceScreen()
             }
 
             composable<SelectDocumentDestinations.TypesOfPhotoID> {
