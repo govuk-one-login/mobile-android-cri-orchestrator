@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="InvalidPackage">
+        <ignore path="**/jj2000-5.2**" />
+        <ignore path="**/org.bouncycastle/bcpkix-jdk18on/**" />
         <ignore path="**/org.jacoco/org.jacoco.agent/0.8.12/**" />
         <ignore path="**/io.ktor/ktor-utils-jvm/**" />
         <ignore path="**/com.google.dagger/dagger-spi/**" />
+    </issue>
+
+    <!--
+        Ignored as per agreement with Read ID that this utility class is not called by their SDK
+    -->
+    <issue id="TrustAllX509TrustManager">
+        <ignore path="**/bouncycastle/**" />
+        <ignore path="**/org.bouncycastle/**" />
     </issue>
 </lint>

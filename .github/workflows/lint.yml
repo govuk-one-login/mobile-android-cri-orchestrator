@@ -36,8 +36,8 @@ jobs:
       - name: Lint
         uses: govuk-one-login/mobile-android-pipelines/actions/lint@53b3dbc27a1ce8e215a36a63365415b2bf93bda0
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Clean workspace
         if: ${{ always() }}
@@ -67,5 +67,5 @@ jobs:
       - name: Run Konsist tests
         run: ./gradlew konsist-test:testDebugUnitTest
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}

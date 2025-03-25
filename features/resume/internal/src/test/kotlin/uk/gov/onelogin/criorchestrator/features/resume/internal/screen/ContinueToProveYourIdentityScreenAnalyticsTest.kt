@@ -12,10 +12,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 
 @RunWith(AndroidJUnit4::class)
@@ -24,9 +26,11 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
+    val mainStandardDispatcherRule = MainStandardDispatcherRule()
+
+    @get:Rule
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
-
     private lateinit var primaryButton: SemanticsMatcher
     private val context: Context = ApplicationProvider.getApplicationContext()
 
@@ -42,6 +46,8 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
     private val viewModel =
         ContinueToProveYourIdentityViewModel(
             analytics = analytics,
+            nfcChecker = mock(),
+            configStore = mock(),
         )
 
     @Before
@@ -52,11 +58,13 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
 
     @Test
     fun `when screen is started, it tracks analytics`() {
-        val expectedScreenName = context.getString(R.string.continue_to_prove_your_identity_screen_title)
+        val expectedScreenName =
+            context.getString(R.string.continue_to_prove_your_identity_screen_title)
         val expectedScreenId = ResumeScreenId.ContinueToProveYourIdentity.rawId
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
+                navController = mock(),
             )
         }
         val matchingEvents =
@@ -72,6 +80,7 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
+                navController = mock(),
             )
         }
 

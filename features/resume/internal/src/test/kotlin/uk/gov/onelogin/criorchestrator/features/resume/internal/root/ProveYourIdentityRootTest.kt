@@ -110,6 +110,8 @@ class ProveYourIdentityRootTest {
                     ContinueToProveYourIdentityNavGraphProvider(
                         ContinueToProveYourIdentityViewModelModule.provideFactory(
                             analytics = mock(),
+                            nfcChecker = mock(),
+                            configStore = mock(),
                         ),
                     ),
                 ),
