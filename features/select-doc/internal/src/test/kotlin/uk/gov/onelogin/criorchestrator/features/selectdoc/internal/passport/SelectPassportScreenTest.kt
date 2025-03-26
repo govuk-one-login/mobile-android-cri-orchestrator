@@ -17,8 +17,6 @@ import androidx.compose.ui.test.swipeUp
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,7 +26,7 @@ import org.mockito.Mockito.spy
 import org.mockito.kotlin.any
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
@@ -44,7 +42,6 @@ class SelectPassportScreenTest {
     private lateinit var confirmButton: SemanticsMatcher
 
     private val navController: NavController = mock()
-    private val actions = MutableSharedFlow<SelectPassportAction>()
 
     private val viewModel =
         spy(
@@ -56,13 +53,13 @@ class SelectPassportScreenTest {
     @Before
     fun setUp() {
         val context: Context = ApplicationProvider.getApplicationContext()
-        readMoreButton = hasText(context.getString(R.string.selectdocument_passport_readmore_button))
-        image = hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
+        readMoreButton =
+            hasText(context.getString(R.string.selectdocument_passport_readmore_button))
+        image =
+            hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
         yesOption = hasText(context.getString(R.string.selectdocument_passport_selection_yes))
         noOption = hasText(context.getString(R.string.selectdocument_passport_selection_no))
         confirmButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
-
-        whenever(viewModel.actions).thenReturn(actions)
 
         composeTestRule.setContent {
             SelectPassportScreen(
@@ -70,11 +67,6 @@ class SelectPassportScreenTest {
                 navController = navController,
             )
         }
-    }
-
-    @Test
-    fun `when screen is started, it calls the view model`() {
-        verify(viewModel).onScreenStart()
     }
 
     @Test
@@ -88,8 +80,6 @@ class SelectPassportScreenTest {
     fun `when screen is started, no item is selected`() {
         swipeToAdditionalContent()
 
-        verify(viewModel).onScreenStart()
-
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
             .onSibling()
@@ -102,14 +92,13 @@ class SelectPassportScreenTest {
     }
 
     @Test
-    fun `when read more is selected, it calls the view model`() {
+    fun `when read more is selected, it navigates to types of ID`() {
         swipeToAdditionalContent()
-
         composeTestRule
             .onNode(readMoreButton)
             .performClick()
 
-        verify(viewModel).onReadMoreClick()
+        verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
     }
 
     @Test
@@ -146,10 +135,11 @@ class SelectPassportScreenTest {
             .assertIsNotEnabled()
 
         verify(viewModel, never()).onConfirmSelection(any())
+        verifyNoInteractions(navController)
     }
 
     @Test
-    fun `when yes is selected and confirm is tapped, it calls the view model`() {
+    fun `when yes is selected and confirm is tapped, it navigates to confirm document`() {
         swipeToAdditionalContent()
 
         composeTestRule
@@ -161,11 +151,11 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(viewModel).onConfirmSelection(0)
+        verify(navController).navigate(SelectDocumentDestinations.Confirm)
     }
 
     @Test
-    fun `when no is selected and confirm is tapped, it calls the view model`() {
+    fun `when no is selected and confirm is tapped, it navigates to BRP`() {
         swipeToAdditionalContent()
 
         composeTestRule
@@ -177,34 +167,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(viewModel).onConfirmSelection(1)
-    }
-
-    @Test
-    fun `when read more is tapped, navigate to types of photo ID screen`() {
-        runTest {
-            actions.emit(SelectPassportAction.NavigateToTypesOfPhotoID)
-
-            verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
-        }
-    }
-
-    @Test
-    fun `when passport is selected, navigate to confirmation screen`() {
-        runTest {
-            actions.emit(SelectPassportAction.NavigateToConfirmation)
-
-            verify(navController).navigate(SelectDocumentDestinations.Confirm)
-        }
-    }
-
-    @Test
-    fun `when no passport is selected, navigate to BRP selection screen`() {
-        runTest {
-            actions.emit(SelectPassportAction.NavigateToBrp)
-
-            verify(navController).navigate(SelectDocumentDestinations.Brp)
-        }
+        verify(navController).navigate(SelectDocumentDestinations.Brp)
     }
 
     private fun swipeToAdditionalContent() {
