@@ -2,11 +2,11 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation
 
 import androidx.lifecycle.ViewModel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.analytics.ConfirmDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.analytics.ConfirmDocumentScreenId
 
 internal class ConfirmPassportViewModel(
-    private val analytics: ConfirmDocumentAnalytics
+    private val analytics: SelectDocAnalytics
 ) : ViewModel() {
     private val title = R.string.confirmdocument_passport_title
     fun onScreenStart() {

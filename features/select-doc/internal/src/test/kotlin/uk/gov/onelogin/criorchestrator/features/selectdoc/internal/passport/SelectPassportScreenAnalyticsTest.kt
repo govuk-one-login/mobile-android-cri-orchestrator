@@ -19,7 +19,7 @@ import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModel
@@ -46,7 +46,7 @@ class SelectPassportScreenAnalyticsTest {
     private val image = hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
 
     private val analytics =
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider =
                 AndroidResourceProvider(
                     context = context,

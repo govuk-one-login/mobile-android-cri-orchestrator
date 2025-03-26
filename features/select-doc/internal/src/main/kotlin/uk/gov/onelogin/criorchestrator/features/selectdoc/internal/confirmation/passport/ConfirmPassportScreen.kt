@@ -23,6 +23,6 @@ internal fun ConfirmPassportScreen(
 @Composable
 internal fun PreviewConfirmPassportScreen() {
     GdsTheme {
-        ConfirmPassportScreen()
+//        ConfirmPassportScreen()
     }
 }

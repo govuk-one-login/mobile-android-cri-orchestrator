@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentScreenId
 
 internal class SelectPassportViewModel(
-    private val analytics: SelectDocumentAnalytics,
+    private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     private val _state =
         MutableStateFlow(

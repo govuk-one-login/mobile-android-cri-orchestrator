@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportAction
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModel
@@ -18,7 +18,7 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectPassportViewModelTest {
-    private val analyticsLogger = mock<SelectDocumentAnalytics>()
+    private val analyticsLogger = mock<SelectDocAnalytics>()
 
     private val viewModel by lazy {
         SelectPassportViewModel(

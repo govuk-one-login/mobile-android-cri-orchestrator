@@ -21,7 +21,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
-class SelectDocumentNavGraphProvider
+class SelectDocNavGraphProvider
     @Inject
     constructor(
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
@@ -48,7 +48,10 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.ConfirmPassport> {
-                ConfirmPassportScreen()
+                ConfirmPassportScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = viewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.ConfirmBrp> {
