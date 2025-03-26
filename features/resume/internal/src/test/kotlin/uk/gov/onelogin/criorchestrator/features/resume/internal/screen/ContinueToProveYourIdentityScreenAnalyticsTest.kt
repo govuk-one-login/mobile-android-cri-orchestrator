@@ -7,18 +7,21 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
+import uk.gov.logging.api.v3dot1.model.TrackEvent
+import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
+import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenAnalyticsTest {
@@ -58,21 +61,20 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
 
     @Test
     fun `when screen is started, it tracks analytics`() {
-        val expectedScreenName =
-            context.getString(R.string.continue_to_prove_your_identity_screen_title)
-        val expectedScreenId = ResumeScreenId.ContinueToProveYourIdentity.rawId
+        val expectedEvent =
+            ViewEvent
+                .Screen(
+                    id = ResumeScreenId.ContinueToProveYourIdentity.rawId,
+                    name = context.getString(R.string.continue_to_prove_your_identity_screen_title),
+                    params = ResumeAnalytics.requiredParameters,
+                ).asLegacyEvent()
         composeTestRule.setContent {
             ContinueToProveYourIdentityScreen(
                 viewModel = viewModel,
                 navController = mock(),
             )
         }
-        val matchingEvents =
-            analyticsLogger.loggedEvents.filter {
-                it.parameters["screen_id"] == expectedScreenId &&
-                    it.parameters["screen_name"] == expectedScreenName
-            }
-        assertEquals(1, matchingEvents.size)
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
@@ -88,10 +90,12 @@ class ContinueToProveYourIdentityScreenAnalyticsTest {
             .onNode(primaryButton)
             .performClick()
 
-        val matchingEvents =
-            analyticsLogger.loggedEvents.filter {
-                it.parameters["text"] == context.getString(R.string.continue_to_prove_your_identity_screen_button)
-            }
-        assertEquals(1, matchingEvents.size)
+        val expectedEvent =
+            TrackEvent
+                .Button(
+                    text = context.getString(R.string.continue_to_prove_your_identity_screen_button),
+                    params = ResumeAnalytics.requiredParameters,
+                ).asLegacyEvent()
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 }

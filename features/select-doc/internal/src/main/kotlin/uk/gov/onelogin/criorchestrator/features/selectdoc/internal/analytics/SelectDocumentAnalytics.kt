@@ -16,9 +16,13 @@ class SelectDocumentAnalytics
     ) : Analytics(
             resourceProvider,
             analyticsLogger,
-            requiredParameters =
+            requiredParameters = requiredParameters,
+        ) {
+        companion object {
+            internal val requiredParameters =
                 RequiredParameters(
                     taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
                     taxonomyLevel3 = TaxonomyLevel3.DOCUMENT_SELECTION,
-                ),
-        )
+                )
+        }
+    }
