@@ -57,7 +57,7 @@ internal fun SelectPassportScreen(
 
                 SelectPassportAction.NavigateToConfirmation ->
                     navController.navigate(
-                        SelectDocumentDestinations.Confirm,
+                        SelectDocumentDestinations.ConfirmPassport,
                     )
 
                 SelectPassportAction.NavigateToBrp ->

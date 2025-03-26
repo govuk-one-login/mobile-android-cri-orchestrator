@@ -7,7 +7,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun ConfirmDocumentScreen(modifier: Modifier = Modifier) {
+internal fun ConfirmPassportScreen(modifier: Modifier = Modifier) {
     Text(
         text = "DCMAW-8798 | Android | Document Selection |  Photo ID confirmation screen",
         modifier = modifier,
@@ -16,8 +16,8 @@ internal fun ConfirmDocumentScreen(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewConfirmDocumentScreen() {
+internal fun PreviewConfirmPassportScreen() {
     GdsTheme {
-        ConfirmDocumentScreen()
+        ConfirmPassportScreen()
     }
 }
