@@ -8,13 +8,4 @@ data class SelectPassportState(
     @StringRes val readMoreButtonTextId: Int,
     val options: PersistentList<Int>,
     @StringRes val buttonTextId: Int,
-    var selection: PassportSelection,
 )
-
-sealed class PassportSelection {
-    data object Unselected : PassportSelection()
-
-    data object Selected : PassportSelection()
-
-    data object NotSelected : PassportSelection()
-}

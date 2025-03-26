@@ -1,12 +1,15 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
 import android.content.Context
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
+import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.assertEquals
@@ -35,6 +38,7 @@ class SelectPassportScreenAnalyticsTest {
     private val readMoreButton = hasText(context.getString(R.string.selectdocument_passport_readmore_button))
     private val continueButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
     private val yesOption = hasText(context.getString(R.string.selectdocument_passport_selection_yes))
+    private val image = hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
 
     private val analytics =
         SelectDocumentAnalytics(
@@ -55,11 +59,7 @@ class SelectPassportScreenAnalyticsTest {
         val expectedScreenName =
             context.getString(R.string.selectdocument_passport_title)
         val expectedScreenId = SelectDocumentScreenId.SelectPassport.rawId
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        composeTestRule.setSelectPassportScreenContent()
         val matchingEvents =
             analyticsLogger.loggedEvents.filter {
                 it.parameters["screen_id"] == expectedScreenId &&
@@ -70,11 +70,7 @@ class SelectPassportScreenAnalyticsTest {
 
     @Test
     fun `given selection is made, when continue button is clicked, it tracks analytics`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        composeTestRule.setSelectPassportScreenContent()
 
         swipeToAdditionalContent()
 
@@ -95,11 +91,9 @@ class SelectPassportScreenAnalyticsTest {
 
     @Test
     fun `when read more is clicked, it tracks analytics`() {
-        composeTestRule.setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-            )
-        }
+        composeTestRule.setSelectPassportScreenContent()
+
+        swipeToAdditionalContent()
 
         composeTestRule
             .onNode(readMoreButton)
@@ -112,10 +106,19 @@ class SelectPassportScreenAnalyticsTest {
         assertEquals(1, matchingEvents.size)
     }
 
+    private fun ComposeContentTestRule.setSelectPassportScreenContent() {
+        setContent {
+            SelectPassportScreen(
+                viewModel = viewModel,
+                navController = rememberNavController(),
+            )
+        }
+    }
+
     private fun swipeToAdditionalContent() {
         composeTestRule
             .onNode(
-                readMoreButton,
+                image,
             ).onParent()
             .performTouchInput {
                 swipeUp()

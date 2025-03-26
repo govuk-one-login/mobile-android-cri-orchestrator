@@ -1,9 +1,13 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
@@ -22,10 +26,12 @@ internal class SelectPassportViewModel(
                         R.string.selectdocument_passport_selection_no,
                     ),
                 buttonTextId = R.string.selectdocument_passport_continuebutton,
-                selection = PassportSelection.Unselected,
             ),
         )
     val state: StateFlow<SelectPassportState> = _state
+
+    private val _actions = MutableSharedFlow<SelectPassportAction>()
+    val actions: Flow<SelectPassportAction> = _actions
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -36,6 +42,9 @@ internal class SelectPassportViewModel(
 
     fun onReadMoreClick() {
         analytics.trackButtonEvent(state.value.readMoreButtonTextId)
+        viewModelScope.launch {
+            _actions.emit(SelectPassportAction.NavigateToTypesOfPhotoID)
+        }
     }
 
     fun onConfirmSelection(selectedIndex: Int) {
@@ -44,9 +53,11 @@ internal class SelectPassportViewModel(
             response = state.value.options[selectedIndex],
         )
 
-        when (selectedIndex) {
-            0 -> _state.value = _state.value.copy(selection = PassportSelection.Selected)
-            1 -> _state.value = _state.value.copy(selection = PassportSelection.NotSelected)
+        viewModelScope.launch {
+            when (selectedIndex) {
+                0 -> _actions.emit(SelectPassportAction.NavigateToConfirmation)
+                1 -> _actions.emit(SelectPassportAction.NavigateToBrp)
+            }
         }
     }
 }
