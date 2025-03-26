@@ -11,4 +11,32 @@
     <string name="selectdocument_passport_selection_no">Na, defnyddiwch fath gwahanol o ID gyda llun</string>
 
     <string name="selectdocument_passport_continuebutton">Parhau</string>
+
+    <string name="typesofphotoid_title">Mathau o ID gyda llun</string>
+    <string name="typesofphotoid_body">Gallwch ddefnyddio unrhyw un o’r mathau canlynol o ID gyda llun i brofi eich hunaniaeth gyda’r ap GOV.UK One Login.</string>
+    <string name="typesofphotoid_ukpassport_title">Pasbort y DU</string>
+    <string name="typesofphotoid_ukpassport_body">Gallwch ddefnyddio unrhyw basbort y DU os nad yw wedi dod i ben.</string>
+    <string name="typesofphotoid_ukpassport_imagedescription">Clawr blaen Pasbort Prydeinig gyda’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
+
+    <string name="typesofphotoid_nonukpassport_title">Pasbort o’r tu allan i’r DU gyda sglodyn biometrig</string>
+    <string name="typesofphotoid_nonukpassport_bulletbody">Gallwch ddefnyddio pasbort o’r tu allan i’r DU os: </string>
+    <string name="typesofphotoid_nonukpassport_bullet1">mae ganddo sglodyn biometrig</string>
+    <string name="typesofphotoid_nonukpassport_bullet2">nid yw wedi dod i ben</string>
+    <string name="typesofphotoid_nonukpassport_body">I wirio os oes gan eich pasbort sglodyn biometrig, edrychwch am y symbol sglodyn biometrig petryal ar y clawr blaen.</string>
+    <string name="typesofphotoid_nonukpassport_imagedescription">Clawr blaen pasbort gyda’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
+
+    <string name="typesofphotoid_brp_title">Trwydded neu gerdyn biometrig y DU</string>
+    <string name="typesofphotoid_brp_bulletbody">Gall hyn fod yn:</string>
+    <string name="typesofphotoid_brp_bullet1">trwydded breswylio biometrig (BRP)</string>
+    <string name="typesofphotoid_brp_bullet2">cerdyn preswylio biometrig (BRC)</string>
+    <string name="typesofphotoid_brp_bullet3">trwydded Gweithiwr Frontier (FWP)</string>
+    <string name="typesofphotoid_brp_body">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben os oes gennych ffôn clyfar.\n\nEr enghraifft, os daeth eich BRP i ben ar 31 Hydref 2024, gallwch ei ddefnyddio i brofi eich hunaniaeth tan 30 Ebrill 2026.</string>
+    <string name="typesofphotoid_brp_imagedescription">Enghraifft o beth mae trwydded neu gerdyn biometrig y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda arwyddlun llywodraeth y DU a’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
+
+    <string name="typesofphotoid_drivinglicence_title">Trwydded yrru cerdyn llun y DU</string>
+    <string name="typesofphotoid_drivinglicence_bulletbody">Gallwch ddefnyddio trwydded yrru y DU os yw’n:</string>
+    <string name="typesofphotoid_drivinglicence_bullet1">gerdyn-llun plastig, nid trwydded bapur</string>
+    <string name="typesofphotoid_drivinglicence_bullet2">heb ddod i ben</string>
+    <string name="typesofphotoid_drivinglicence_body">Gall fod yn drwydded yrru y DU llawn neu dros dro.</string>
+    <string name="typesofphotoid_drivinglicence_imagedescription">Enghraifft o beth mae trwydded yrru cerdyn-llun y DU yn edrych fel. Mae\'n gerdyn pinc a glas gyda baner y DU.</string>
 </resources>
