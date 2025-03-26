@@ -59,15 +59,15 @@ internal fun SelectPassportScreen(
     }
 
     SelectPassportScreenContent(
-        title = stringResource(state.titleId),
+        title = stringResource(SelectPassportConstants.titleId),
         modifier = modifier,
-        readMoreButtonTitle = stringResource(state.readMoreButtonTextId),
+        readMoreButtonTitle = stringResource(SelectPassportConstants.readMoreButtonTextId),
         onReadMoreClick = viewModel::onReadMoreClick,
         items =
             state.options
                 .map { stringResource(it) }
                 .toPersistentList(),
-        confirmButtonText = stringResource(state.buttonTextId),
+        confirmButtonText = stringResource(SelectPassportConstants.buttonTextId),
         onConfirmSelection = viewModel::onConfirmSelection,
     )
 }
