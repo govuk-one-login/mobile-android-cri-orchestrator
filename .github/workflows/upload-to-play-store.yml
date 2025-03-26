@@ -48,11 +48,12 @@ jobs:
         id: bundle-release-app
         uses: ./mobile-android-pipelines/actions/bundle-release-app
         with:
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
           keystore-file-path: ${{ steps.retrieve-secrets.outputs.keystore-file-path }}
           keystore-password: ${{ secrets.KEYSTORE_PASSWORD }}
           keystore-key-alias: ${{ secrets.KEYSTORE_KEY_ALIAS }}
           keystore-key-password: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           modules: 'test-wrapper'
           flavors: 'staging,build'
           version-code: ${{ steps.generate-version-code.outputs.version-code }}
