@@ -19,8 +19,10 @@ import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModel
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport
 
 import kotlinx.collections.immutable.PersistentList
 

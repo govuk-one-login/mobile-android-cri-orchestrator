@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.brp
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

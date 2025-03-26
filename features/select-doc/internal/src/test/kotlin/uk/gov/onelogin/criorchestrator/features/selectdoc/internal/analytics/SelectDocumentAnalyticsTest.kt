@@ -16,6 +16,7 @@ import uk.gov.logging.api.v3dot1.logger.logEventV3Dot1
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 
 @RunWith(AndroidJUnit4::class)

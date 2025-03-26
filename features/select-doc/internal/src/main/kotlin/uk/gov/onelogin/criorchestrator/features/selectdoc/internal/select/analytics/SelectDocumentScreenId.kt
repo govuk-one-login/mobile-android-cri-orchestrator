@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics
 
 import uk.gov.onelogin.criorchestrator.libraries.analytics.ScreenId
 

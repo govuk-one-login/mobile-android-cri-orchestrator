@@ -28,6 +28,8 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
 @RunWith(AndroidJUnit4::class)
@@ -151,7 +153,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.Confirm)
+        verify(navController).navigate(SelectDocumentDestinations.ConfirmPassport)
     }
 
     @Test
