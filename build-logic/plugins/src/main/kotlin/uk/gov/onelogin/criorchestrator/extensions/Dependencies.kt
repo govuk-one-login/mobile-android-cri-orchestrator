@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.extensions
 
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.kotlin.dsl.DependencyHandlerScope
+import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.project
 
 internal fun DependencyHandlerScope.implementation(
@@ -72,17 +73,14 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 }
 
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
-    listOf(
-        libs.app.cash.turbine,
-        libs.kotlinx.coroutines.test,
-        libs.org.junit.jupiter.api,
-        libs.org.junit.jupiter.engine,
-        libs.org.mockito.kotlin,
-        platform(libs.org.junit.bom),
-        testFixtures(project(":libraries:testing"))
-    ).forEach {
-        testImplementation(it)
-    }
+    testImplementation(kotlin("test"))
+    testImplementation(libs.app.cash.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.org.junit.jupiter.api)
+    testImplementation(libs.org.junit.jupiter.engine)
+    testImplementation(libs.org.mockito.kotlin)
+    testImplementation(platform(libs.org.junit.bom))
+    testImplementation(testFixtures(project(":libraries:testing")))
     testRuntimeOnly(libs.org.junit.platform.launcher)
 }
 

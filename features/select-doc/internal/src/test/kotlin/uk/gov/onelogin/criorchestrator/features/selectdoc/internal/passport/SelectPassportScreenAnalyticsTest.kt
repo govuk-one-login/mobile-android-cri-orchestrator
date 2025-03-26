@@ -12,16 +12,19 @@ import androidx.compose.ui.test.swipeUp
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
+import uk.gov.logging.api.v3dot1.model.TrackEvent
+import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
+import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
 class SelectPassportScreenAnalyticsTest {
@@ -56,16 +59,15 @@ class SelectPassportScreenAnalyticsTest {
 
     @Test
     fun `when screen is started, it tracks analytics`() {
-        val expectedScreenName =
-            context.getString(R.string.selectdocument_passport_title)
-        val expectedScreenId = SelectDocumentScreenId.SelectPassport.rawId
+        val expectedEvent =
+            ViewEvent
+                .Screen(
+                    id = SelectDocumentScreenId.SelectPassport.rawId,
+                    name = context.getString(R.string.selectdocument_passport_title),
+                    params = SelectDocumentAnalytics.requiredParameters,
+                ).asLegacyEvent()
         composeTestRule.setSelectPassportScreenContent()
-        val matchingEvents =
-            analyticsLogger.loggedEvents.filter {
-                it.parameters["screen_id"] == expectedScreenId &&
-                    it.parameters["screen_name"] == expectedScreenName
-            }
-        assertEquals(1, matchingEvents.size)
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
@@ -82,11 +84,14 @@ class SelectPassportScreenAnalyticsTest {
             .onNode(continueButton)
             .performClick()
 
-        val matchingEvents =
-            analyticsLogger.loggedEvents.filter {
-                it.parameters["text"] == context.getString(R.string.selectdocument_passport_continuebutton)
-            }
-        assertEquals(1, matchingEvents.size)
+        val expectedEvent =
+            TrackEvent
+                .Form(
+                    text = context.getString(R.string.selectdocument_passport_continuebutton),
+                    params = SelectDocumentAnalytics.requiredParameters,
+                    response = context.getString(R.string.selectdocument_passport_selection_yes),
+                ).asLegacyEvent()
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
@@ -99,11 +104,13 @@ class SelectPassportScreenAnalyticsTest {
             .onNode(readMoreButton)
             .performClick()
 
-        val matchingEvents =
-            analyticsLogger.loggedEvents.filter {
-                it.parameters["text"] == context.getString(R.string.selectdocument_passport_readmore_button)
-            }
-        assertEquals(1, matchingEvents.size)
+        val expectedEvent =
+            TrackEvent
+                .Button(
+                    text = context.getString(R.string.selectdocument_passport_readmore_button),
+                    params = SelectDocumentAnalytics.requiredParameters,
+                ).asLegacyEvent()
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     private fun ComposeContentTestRule.setSelectPassportScreenContent() {
