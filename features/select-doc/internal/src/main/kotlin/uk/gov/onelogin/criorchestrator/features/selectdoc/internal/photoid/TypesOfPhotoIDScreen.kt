@@ -34,6 +34,7 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 
 @Composable
+@Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
     Surface(
@@ -61,17 +62,26 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
 
                 item {
                     PhotoIDInformation(
-                        title = R.string.typesofphotoid_ukpassport_title,
-                        body = R.string.typesofphotoid_ukpassport_body,
-                        image = R.drawable.uk_passport,
-                        imageDescription = R.string.typesofphotoid_ukpassport_imagedescription,
+                        content =
+                            PhotoIDContent(
+                                title = R.string.typesofphotoid_ukpassport_title,
+                                body = R.string.typesofphotoid_ukpassport_body,
+                                image = R.drawable.uk_passport,
+                                imageDescription = R.string.typesofphotoid_ukpassport_imagedescription,
+                            ),
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        title = R.string.typesofphotoid_nonukpassport_title,
+                        content =
+                            PhotoIDContent(
+                                title = R.string.typesofphotoid_nonukpassport_title,
+                                body = R.string.typesofphotoid_nonukpassport_body,
+                                image = R.drawable.nfc_passport_wide,
+                                imageDescription = R.string.typesofphotoid_nonukpassport_imagedescription,
+                            ),
                         bulletContent =
                             PhotoIDBulletContent(
                                 R.string.typesofphotoid_nonukpassport_bulletbody,
@@ -80,16 +90,19 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
                                     R.string.typesofphotoid_nonukpassport_bullet2,
                                 ),
                             ),
-                        body = R.string.typesofphotoid_nonukpassport_body,
-                        image = R.drawable.nfc_passport_wide,
-                        imageDescription = R.string.typesofphotoid_nonukpassport_imagedescription,
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        title = R.string.typesofphotoid_brp_title,
+                        content =
+                            PhotoIDContent(
+                                title = R.string.typesofphotoid_brp_title,
+                                body = R.string.typesofphotoid_brp_body,
+                                image = R.drawable.brp,
+                                imageDescription = R.string.typesofphotoid_brp_imagedescription,
+                            ),
                         bulletContent =
                             PhotoIDBulletContent(
                                 R.string.typesofphotoid_brp_bulletbody,
@@ -99,16 +112,19 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
                                     R.string.typesofphotoid_brp_bullet3,
                                 ),
                             ),
-                        body = R.string.typesofphotoid_brp_body,
-                        image = R.drawable.brp,
-                        imageDescription = R.string.typesofphotoid_brp_imagedescription,
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        title = R.string.typesofphotoid_drivinglicence_title,
+                        content =
+                            PhotoIDContent(
+                                title = R.string.typesofphotoid_drivinglicence_title,
+                                body = R.string.typesofphotoid_drivinglicence_body,
+                                image = R.drawable.brp,
+                                imageDescription = R.string.typesofphotoid_drivinglicence_imagedescription,
+                            ),
                         bulletContent =
                             PhotoIDBulletContent(
                                 R.string.typesofphotoid_drivinglicence_bulletbody,
@@ -117,9 +133,6 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
                                     R.string.typesofphotoid_drivinglicence_bullet2,
                                 ),
                             ),
-                        body = R.string.typesofphotoid_drivinglicence_body,
-                        image = R.drawable.brp,
-                        imageDescription = R.string.typesofphotoid_drivinglicence_imagedescription,
                         horizontalPadding = horizontalPadding,
                     )
                 }
@@ -128,6 +141,13 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
     }
 }
 
+internal data class PhotoIDContent(
+    @StringRes val title: Int,
+    @StringRes val body: Int,
+    @DrawableRes val image: Int,
+    @StringRes val imageDescription: Int,
+)
+
 internal data class PhotoIDBulletContent(
     @StringRes val body: Int,
     @StringRes val items: ImmutableList<Int>,
@@ -135,10 +155,7 @@ internal data class PhotoIDBulletContent(
 
 @Composable
 internal fun PhotoIDInformation(
-    @StringRes title: Int,
-    @StringRes body: Int,
-    @DrawableRes image: Int,
-    @StringRes imageDescription: Int,
+    content: PhotoIDContent,
     horizontalPadding: Dp,
     modifier: Modifier = Modifier,
     bulletContent: PhotoIDBulletContent? = null,
@@ -148,7 +165,7 @@ internal fun PhotoIDInformation(
         verticalArrangement = Arrangement.spacedBy(spacingSingle),
     ) {
         Text(
-            text = stringResource(title),
+            text = stringResource(content.title),
             fontWeight = FontWeight.W700,
             modifier = Modifier.padding(horizontal = horizontalPadding),
         )
@@ -169,13 +186,13 @@ internal fun PhotoIDInformation(
             }
 
             Text(
-                text = stringResource(body),
+                text = stringResource(content.body),
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             )
 
             Image(
-                painter = painterResource(image),
-                contentDescription = stringResource(imageDescription),
+                painter = painterResource(content.image),
+                contentDescription = stringResource(content.imageDescription),
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
