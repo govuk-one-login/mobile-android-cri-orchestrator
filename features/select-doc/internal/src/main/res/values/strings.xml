@@ -39,4 +39,22 @@
     <string name="typesofphotoid_drivinglicence_bullet2">has not expired</string>
     <string name="typesofphotoid_drivinglicence_body">It can be a full or provisional UK driving licence. </string>
     <string name="typesofphotoid_drivinglicence_imagedescription">An example of what a UK photocard driving licence looks like. It’s a pink and blue card with the UK flag.</string>
+
+    <string name="selectdocument_brp_title">Do you have a UK biometric residence card or permit?</string>
+
+    <string name="selectdocument_brp_bullet_title">This can be a:</string>
+    <string name="selectdocument_brp_bullet_brp">UK biometric residence permit (BRP)</string>
+    <string name="selectdocument_brp_bullet_brc">UK biometric residence card (BRC)</string>
+    <string name="selectdocument_brp_bullet_fwp">UK Frontier Worker permit (FWP)</string>
+
+    <string name="selectdocument_brp_expiry">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.</string>
+
+    <string name="selectdocument_brp_info_button">Read more about the types of photo ID you can use</string>
+
+    <string name="selectdocument_brp_selection_title">Do you have any of these types of photo ID?</string>">
+    <string name="selectdocument_brp_selection_yes">Yes</string>">
+    <string name="selectdocument_brp_selection_no">No, use a different type of photo ID</string>">
+
+    <string name="selectdocument_brp_continue">Continue</string>">
+
 </resources>
