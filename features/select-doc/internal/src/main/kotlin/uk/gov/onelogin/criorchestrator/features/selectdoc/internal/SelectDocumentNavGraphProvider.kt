@@ -7,11 +7,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NfcAbortConfirmationScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -31,6 +33,8 @@ class SelectDocumentNavGraphProvider
         private val selectPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
+        @Named(SelectDrivingLicenceViewModelModule.FACTORY_NAME)
+        private val drivinglicenceViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocumentDestinations.Passport> {
@@ -48,7 +52,10 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
-                SelectDrivingLicenceScreen()
+                SelectDrivingLicenceScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = drivinglicenceViewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.TypesOfPhotoID> {
@@ -63,6 +70,10 @@ class SelectDocumentNavGraphProvider
 
             composable<SelectDocumentDestinations.ConfirmBrp> {
                 ConfirmBrpScreen()
+            }
+
+            composable<SelectDocumentDestinations.NfcAbortConfirmationScreen> {
+                NfcAbortConfirmationScreen()
             }
         }
     }

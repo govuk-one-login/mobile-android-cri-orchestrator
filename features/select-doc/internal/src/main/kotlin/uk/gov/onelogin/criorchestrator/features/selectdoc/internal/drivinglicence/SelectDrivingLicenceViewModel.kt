@@ -1,0 +1,77 @@
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+
+internal class SelectDrivingLicenceViewModel(
+    private val analytics: SelectDocumentAnalytics,
+) : ViewModel() {
+    private val _state =
+        MutableStateFlow(
+            SelectDrivingLicenceState(
+                titleId = R.string.selectdocument_drivinglicence_title,
+                readMoreButtonTextId = R.string.selectdocument_drivinglicence_readmore_button,
+                options =
+                    persistentListOf(
+                        R.string.selectdocument_drivinglicence_selection_yes,
+                        R.string.selectdocument_drivinglicence_selection_no,
+                    ),
+                buttonTextId = R.string.selectdocument_drivinglicence_continuebutton,
+            ),
+        )
+    val state: StateFlow<SelectDrivingLicenceState> = _state
+
+    private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
+    val actions: Flow<SelectDrivingLicenceAction> = _actions
+
+    fun onScreenStart() {
+        analytics.trackScreen(
+            SelectDocumentScreenId.SelectDrivingLicence,
+            state.value.titleId,
+        )
+    }
+
+    fun onReadMoreClick() {
+        analytics.trackButtonEvent(state.value.readMoreButtonTextId)
+        viewModelScope.launch {
+            _actions.emit(SelectDrivingLicenceAction.NavigateToTypesOfPhotoID)
+        }
+    }
+
+    fun onConfirmSelection(selectedIndex: Int) {
+        analytics.trackFormSubmission(
+            buttonText = state.value.buttonTextId,
+            response = state.value.options[selectedIndex],
+        )
+
+        viewModelScope.launch {
+            when (selectedIndex) {
+                0 -> _actions.emit(SelectDrivingLicenceAction.NavigateToConfirmation)
+                1 -> _actions.emit(SelectDrivingLicenceAction.NavigateToAbort)
+            }
+        }
+    }
+
+    fun onClose() {
+        analytics.trackButtonEvent(state.value.buttonTextId)
+        viewModelScope.launch {
+            _actions.emit(SelectDrivingLicenceAction.NavigateToAbort)
+        }
+    }
+
+    fun onBack() {
+        analytics.trackButtonEvent(state.value.buttonTextId)
+        viewModelScope.launch {
+            _actions.emit(SelectDrivingLicenceAction.NavigateToHomeScreen)
+        }
+    }
+}
