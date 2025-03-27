@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,11 +45,21 @@ internal fun SelectBrpScreen(
 
         viewModel.actions.collect { event ->
             when (event) {
-                SelectBrpAction.NavigateToConfirmation -> {}
-
                 SelectBrpAction.NavigateToTypesOfPhotoID -> {
                     navController.navigate(
                         SelectDocumentDestinations.TypesOfPhotoID,
+                    )
+                }
+
+                SelectBrpAction.NavigateToBrpConfirmation -> {
+                    navController.navigate(
+                        SelectDocumentDestinations.BrpConfirmation,
+                    )
+                }
+
+                SelectBrpAction.NavigateToDrivingLicence -> {
+                    navController.navigate(
+                        SelectDocumentDestinations.DrivingLicence,
                     )
                 }
             }
@@ -53,23 +67,22 @@ internal fun SelectBrpScreen(
     }
 
     SelectBrpScreenContent(
-        itemSelected = state.value.idTypeSelected,
         onReadMoreClicked = viewModel::onReadMoreClicked,
-        onItemSelected = viewModel::onItemSelected,
-        onContinueClicked = viewModel::onContinueClick,
+        onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
     )
 }
 
+@Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun SelectBrpScreenContent(
-    itemSelected: Int?,
     onReadMoreClicked: () -> Unit,
-    onItemSelected: (Int) -> Unit,
-    onContinueClicked: () -> Unit,
+    onContinueClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var selectedItem by remember { mutableStateOf<Int?>(null) }
+
     LeftAlignedScreen(
         modifier = modifier,
         title = {
@@ -86,10 +99,11 @@ internal fun SelectBrpScreenContent(
                         stringResource(R.string.selectdocument_brp_bullet_brc),
                         stringResource(R.string.selectdocument_brp_bullet_fwp),
                     ),
-                    title = BulletedListTitle(
-                        text = stringResource(R.string.selectdocument_brp_bullet_title),
-                        titleType = Text,
-                    ),
+                    title =
+                        BulletedListTitle(
+                            text = stringResource(R.string.selectdocument_brp_bullet_title),
+                            titleType = Text,
+                        ),
                     modifier = Modifier.padding(horizontal = spacingDouble),
                 )
             }
@@ -103,7 +117,7 @@ internal fun SelectBrpScreenContent(
 
             item {
                 GdsButton(
-                    text = stringResource(R.string.selectdocument_brp_info_button),
+                    text = stringResource(R.string.selectdocument_brp_read_more_button),
                     buttonType = ButtonType.Secondary,
                     onClick = onReadMoreClicked,
                     modifier = Modifier.padding(horizontal = 4.dp),
@@ -113,28 +127,34 @@ internal fun SelectBrpScreenContent(
 
             item {
                 GdsSelection(
-                    items = persistentListOf(
-                        stringResource(R.string.selectdocument_brp_selection_yes),
-                        stringResource(R.string.selectdocument_brp_selection_no),
-                    ),
-                    selectedItem = itemSelected,
-                    onItemSelected = onItemSelected,
-                    title = RadioSelectionTitle(
-                        stringResource(R.string.selectdocument_brp_selection_title),
-                        uk.gov.android.ui.componentsv2.inputs.radio.TitleType.BoldText,
-                    )
+                    items =
+                        persistentListOf(
+                            stringResource(R.string.selectdocument_brp_selection_yes),
+                            stringResource(R.string.selectdocument_brp_selection_no),
+                        ),
+                    selectedItem = selectedItem,
+                    onItemSelected = { selectedItem = it },
+                    title =
+                        RadioSelectionTitle(
+                            stringResource(R.string.selectdocument_brp_selection_title),
+                            uk.gov.android.ui.componentsv2.inputs.radio.TitleType.BoldText,
+                        ),
                 )
             }
         },
         primaryButton = {
             GdsButton(
-                stringResource(R.string.selectdocument_brp_continue),
+                stringResource(R.string.selectdocument_brp_continue_button),
                 buttonType = ButtonType.Primary,
-                onClick = onContinueClicked,
-                enabled = itemSelected != null,
+                onClick = {
+                    selectedItem?.let {
+                        onContinueClicked(it)
+                    }
+                },
+                enabled = selectedItem != null,
                 modifier = Modifier.fillMaxWidth(),
             )
-        }
+        },
     )
 }
 
@@ -143,8 +163,6 @@ internal fun SelectBrpScreenContent(
 internal fun PreviewSelectBrpScreen() {
     GdsTheme {
         SelectBrpScreenContent(
-            0,
-            {},
             {},
             {},
         )

@@ -12,20 +12,21 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourcePro
 import javax.inject.Inject
 
 class SelectBrpAnalytics
-@Inject
-constructor(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
-    resourceProvider,
-    analyticsLogger,
-    requiredParameters = RequiredParameters(
-        organisation = Organisation.OT1056,
-        taxonomyLevel1 = TaxonomyLevel1.ONE_LOGIN,
-        taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
-        taxonomyLevel3 = TaxonomyLevel3.DOCUMENT_SELECTION,
-    ),
-)
+    @Inject
+    constructor(
+        resourceProvider: ResourceProvider,
+        analyticsLogger: AnalyticsLogger,
+    ) : Analytics(
+            resourceProvider,
+            analyticsLogger,
+            requiredParameters =
+                RequiredParameters(
+                    organisation = Organisation.OT1056,
+                    taxonomyLevel1 = TaxonomyLevel1.ONE_LOGIN,
+                    taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
+                    taxonomyLevel3 = TaxonomyLevel3.DOCUMENT_SELECTION,
+                ),
+        )
 
 enum class SelectBrpScreenId(
     override val rawId: String,
