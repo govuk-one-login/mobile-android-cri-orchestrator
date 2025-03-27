@@ -47,9 +47,14 @@ internal fun SelectDrivingLicenceScreen(
 
         viewModel.actions.collect { event ->
             when (event) {
-                SelectDrivingLicenceAction.NavigateToAbort ->
+                SelectDrivingLicenceAction.NavigateToNfcAbort ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
+                    )
+
+                SelectDrivingLicenceAction.NavigateToNoNfcAbort ->
+                    navController.navigate(
+                        SelectDocumentDestinations.NoNfcAbortConfirmationScreen,
                     )
 
                 SelectDrivingLicenceAction.NavigateToConfirmation ->

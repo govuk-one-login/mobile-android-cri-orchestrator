@@ -24,4 +24,7 @@ sealed interface SelectDocumentDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object NfcAbortConfirmationScreen : SelectDocumentDestinations
+
+    @Serializable
+    data object NoNfcAbortConfirmationScreen : SelectDocumentDestinations
 }
