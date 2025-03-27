@@ -34,7 +34,6 @@ import uk.gov.android.ui.theme.spacingSingle
 import uk.gov.android.ui.theme.spacingTriple
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun TypesOfPhotoIDScreen(
@@ -215,7 +214,6 @@ internal fun PhotoIDInformation(
     }
 }
 
-@LightDarkBothLocalesPreview
 @Preview(heightDp = 1600, uiMode = UI_MODE_NIGHT_YES)
 @Preview(heightDp = 1600)
 @Preview(heightDp = 1600, locale = "cy")
