@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import uk.gov.android.ui.theme.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun BrpConfirmationScreen(modifier: Modifier = Modifier) {
@@ -16,7 +16,7 @@ internal fun BrpConfirmationScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
+@LightDarkBothLocalesPreview
 @Composable
 internal fun PreviewBrpConfirmation() {
     GdsTheme {
