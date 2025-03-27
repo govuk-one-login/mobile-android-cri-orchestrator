@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
 import com.lemonappdev.konsist.api.Konsist
+import com.lemonappdev.konsist.api.declaration.KoArgumentDeclaration
+import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
 import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Test
@@ -26,7 +28,22 @@ class ComposePreviewsKonsistTest {
             .functions()
             .withComposablePreviewAnnotations()
             .assertTrue {
-                it.hasAnnotationWithName("PreviewLightDark") || it.hasAnnotationWithName("LightDarkBothLocalesPreview")
+                it.hasAnnotationWithName("PreviewLightDark") ||
+                    it.hasAnnotationWithName("LightDarkBothLocalesPreview") ||
+                    it.hasCustomLightDarkPreviewAnnotations()
             }
     }
+}
+
+private fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations() =
+    hasAnnotation {
+        it.name == "Preview" && it.hasArgument { it.hasUiModeNightEnabled() }
+    } &&
+        hasAnnotation {
+            it.name == "Preview" && it.hasArgument { !it.hasUiModeNightEnabled() }
+        }
+
+@Suppress("ktlint:standard:function-expression-body")
+private fun KoArgumentDeclaration.hasUiModeNightEnabled(): Boolean {
+    return name == "uiMode" && value!!.contains("UI_MODE_NIGHT_YES")
 }
