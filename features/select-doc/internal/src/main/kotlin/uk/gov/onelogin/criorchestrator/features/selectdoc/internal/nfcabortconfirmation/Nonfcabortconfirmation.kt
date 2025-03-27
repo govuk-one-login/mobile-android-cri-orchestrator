@@ -12,7 +12,6 @@ internal fun NoNfcAbortConfirmationScreen(modifier: Modifier = Modifier) {
         text = "DCMAW-10678 | Android | Document Selection | No NFC Abort Confirmation Screen",
         modifier = modifier,
     )
-
 }
 
 @LightDarkBothLocalesPreview
