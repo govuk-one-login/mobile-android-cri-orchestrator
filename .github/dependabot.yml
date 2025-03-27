@@ -7,7 +7,7 @@ version: 2
 registries:
   github-maven:
     type: maven-repository
-    url: https://maven.pkg.github.com
+    url: https://maven.pkg.github.com/govuk-one-login
     username: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
     password: ${{ secrets.MODULE_FETCH_TOKEN }}
 updates:
