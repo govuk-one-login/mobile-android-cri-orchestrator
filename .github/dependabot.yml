@@ -39,6 +39,9 @@ updates:
         patterns:
           - "org.jetbrains.kotlin*"
           - "com.google.devtools.ksp*"
+      govuk:
+        patterns:
+          - "uk.gov*"
       gradle:
         update-types:
           - "minor"
