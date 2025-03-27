@@ -7,7 +7,7 @@ version: 2
 registries:
   github-maven:
     type: maven-repository
-    url: https://maven.pkg.github.com
+    url: https://maven.pkg.github.com/govuk-one-login
     username: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
     password: ${{ secrets.MODULE_FETCH_TOKEN }}
 updates:
@@ -39,6 +39,9 @@ updates:
         patterns:
           - "org.jetbrains.kotlin*"
           - "com.google.devtools.ksp*"
+      govuk:
+        patterns:
+          - "uk.gov*"
       gradle:
         update-types:
           - "minor"
