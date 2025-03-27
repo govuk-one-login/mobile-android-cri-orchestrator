@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -34,9 +35,21 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 
 @Composable
+internal fun TypesOfPhotoIDScreen(
+    viewModel: TypesOfPhotoIDViewModel,
+    modifier: Modifier = Modifier,
+) {
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+    }
+
+    TypesOfPhotoIDScreenContent(modifier)
+}
+
+@Composable
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
-internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
+internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
@@ -44,7 +57,7 @@ internal fun TypesOfPhotoIDScreen(modifier: Modifier = Modifier) {
         LeftAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(R.string.typesofphotoid_title),
+                    text = stringResource(TypesOfPhotoIDConstants.titleId),
                     modifier =
                         Modifier.padding(
                             horizontal = horizontalPadding,
@@ -204,6 +217,6 @@ internal fun PhotoIDInformation(
 @Composable
 internal fun PreviewTypesOfPhotoIDScreen() {
     GdsTheme {
-        TypesOfPhotoIDScreen()
+        TypesOfPhotoIDScreenContent()
     }
 }

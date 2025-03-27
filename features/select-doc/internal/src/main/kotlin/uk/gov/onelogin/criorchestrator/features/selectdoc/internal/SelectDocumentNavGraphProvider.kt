@@ -13,6 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicenc
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -23,13 +24,15 @@ class SelectDocumentNavGraphProvider
     @Inject
     constructor(
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
-        private val viewModelFactory: ViewModelProvider.Factory,
+        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
+        private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocumentDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = viewModelFactory),
+                    viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
 
@@ -42,7 +45,9 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.TypesOfPhotoID> {
-                TypesOfPhotoIDScreen()
+                TypesOfPhotoIDScreen(
+                    viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.Confirm> {
