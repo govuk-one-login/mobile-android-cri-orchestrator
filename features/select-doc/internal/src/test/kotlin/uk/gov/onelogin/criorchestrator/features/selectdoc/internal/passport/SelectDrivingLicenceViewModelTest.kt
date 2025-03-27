@@ -15,7 +15,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
-class SelectPassportViewModelTest {
+class SelectDrivingLicenceViewModelTest {
     private val analyticsLogger = mock<SelectDocumentAnalytics>()
 
     private val viewModel by lazy {
