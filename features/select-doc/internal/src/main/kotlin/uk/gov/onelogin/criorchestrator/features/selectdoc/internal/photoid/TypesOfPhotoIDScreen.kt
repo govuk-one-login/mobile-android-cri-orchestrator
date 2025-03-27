@@ -137,7 +137,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                             PhotoIDContent(
                                 title = R.string.typesofphotoid_drivinglicence_title,
                                 body = R.string.typesofphotoid_drivinglicence_body,
-                                image = R.drawable.brp,
+                                image = R.drawable.driving_licence,
                                 imageDescription = R.string.typesofphotoid_drivinglicence_imagedescription,
                             ),
                         bulletContent =
