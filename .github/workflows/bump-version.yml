@@ -47,10 +47,11 @@ jobs:
           version-prefix: ''
 
       - name: Create workflow outputs
-        if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+        env:
+          VERSION_BUMPED: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         run: |
           mkdir "$WORKFLOW_OUT_DIR" && touch "$WORKFLOW_OUT_DIR/bump-version.yml"
-          yq -i '.version-bumped = true' "$WORKFLOW_OUT_DIR/bump-version.yml"
+          yq -i ".version-bumped = $VERSION_BUMPED" "$WORKFLOW_OUT_DIR/bump-version.yml"
         shell: bash
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
