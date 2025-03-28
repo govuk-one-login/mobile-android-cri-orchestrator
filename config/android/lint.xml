@@ -15,4 +15,7 @@
         <ignore path="**/bouncycastle/**" />
         <ignore path="**/org.bouncycastle/**" />
     </issue>
+
+    <!-- Duplicate Strings are prefered across different screens to limit the impact of change -->
+    <issue id="DuplicateStrings" severity="ignore" />
 </lint>
