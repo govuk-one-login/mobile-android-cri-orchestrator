@@ -31,7 +31,6 @@ import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.android.ui.theme.spacingSingle
-import uk.gov.android.ui.theme.spacingTriple
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 
@@ -65,7 +64,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                         ),
                 )
             },
-            arrangement = Arrangement.spacedBy(spacingTriple),
+            arrangement = Arrangement.spacedBy(spacingDouble),
             body = { horizontalPadding ->
                 item {
                     Text(
@@ -181,7 +180,10 @@ internal fun PhotoIDInformation(
         Text(
             text = stringResource(content.title),
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(horizontal = horizontalPadding),
+            modifier =
+                Modifier
+                    .padding(horizontal = horizontalPadding)
+                    .padding(top = spacingSingle),
         )
 
         Column(
