@@ -30,7 +30,7 @@
     <string name="typesofphotoid_brp_bullet1">biometric residence permit (BRP)</string>
     <string name="typesofphotoid_brp_bullet2">biometric residence card (BRC)</string>
     <string name="typesofphotoid_brp_bullet3">Frontier Worker permit (FWP)</string>
-    <string name="typesofphotoid_brp_body">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date if you have a smartphone.\n\nFor example, if your BRP expired on 31 October 2024, you can use it to prove your identity until 30 April 2026.</string>
+    <string name="typesofphotoid_brp_body">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.\n\nFor example, if your BRP expired on 31 October 2024, you can use it to prove your identity until 30 April 2026.</string>
     <string name="typesofphotoid_brp_imagedescription">An example of what a UK biometric permit or card looks like. It’s a pink and blue card with the UK government crest and the biometric chip symbol. The symbol is rectangular with a circle in the middle</string>
 
     <string name="typesofphotoid_drivinglicence_title">UK photocard driving licence</string>

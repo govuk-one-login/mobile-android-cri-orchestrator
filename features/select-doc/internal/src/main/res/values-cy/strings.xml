@@ -30,7 +30,7 @@
     <string name="typesofphotoid_brp_bullet1">trwydded breswylio biometrig (BRP)</string>
     <string name="typesofphotoid_brp_bullet2">cerdyn preswylio biometrig (BRC)</string>
     <string name="typesofphotoid_brp_bullet3">trwydded Gweithiwr Frontier (FWP)</string>
-    <string name="typesofphotoid_brp_body">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben os oes gennych ffôn clyfar.\n\nEr enghraifft, os daeth eich BRP i ben ar 31 Hydref 2024, gallwch ei ddefnyddio i brofi eich hunaniaeth tan 30 Ebrill 2026.</string>
+    <string name="typesofphotoid_brp_body">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben.\n\nEr enghraifft, os daeth eich BRP i ben ar 31 Hydref 2024, gallwch ei ddefnyddio i brofi eich hunaniaeth tan 30 Ebrill 2026.</string>
     <string name="typesofphotoid_brp_imagedescription">Enghraifft o beth mae trwydded neu gerdyn biometrig y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda arwyddlun llywodraeth y DU a’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
 
     <string name="typesofphotoid_drivinglicence_title">Trwydded yrru cerdyn llun y DU</string>

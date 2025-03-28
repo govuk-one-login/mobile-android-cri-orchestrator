@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.Context
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,6 +45,15 @@ class TypesOfPhotoIDScreenAnalyticsTest {
             analytics = analytics,
         )
 
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            TypesOfPhotoIDScreen(
+                viewModel = viewModel,
+            )
+        }
+    }
+
     @Test
     fun `when screen is started, it tracks analytics`() {
         val expectedEvent =
@@ -54,15 +63,6 @@ class TypesOfPhotoIDScreenAnalyticsTest {
                     name = context.getString(R.string.typesofphotoid_title),
                     params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()
-        composeTestRule.setTypesOfPhotoIDScreenContent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
-    }
-
-    private fun ComposeContentTestRule.setTypesOfPhotoIDScreenContent() {
-        setContent {
-            TypesOfPhotoIDScreen(
-                viewModel = viewModel,
-            )
-        }
     }
 }
