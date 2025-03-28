@@ -18,7 +18,7 @@ class SessionApiImplTest {
 
     @BeforeEach
     fun setup() {
-        val imposter = Imposter().createImposterBackend()
+        val imposter = Imposter.createMockEngine()
         fakeConfigStore.write(
             Config.Entry(
                 key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
