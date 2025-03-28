@@ -15,7 +15,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.drivin
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
@@ -28,37 +28,37 @@ class SelectDocNavGraphProvider
         private val viewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-            composable<SelectDocumentDestinations.Passport> {
+            composable<SelectDocDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
                     viewModel = viewModel(factory = viewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.Brp> {
+            composable<SelectDocDestinations.Brp> {
                 SelectBrpScreen()
             }
 
-            composable<SelectDocumentDestinations.DrivingLicence> {
+            composable<SelectDocDestinations.DrivingLicence> {
                 SelectDrivingLicenceScreen()
             }
 
-            composable<SelectDocumentDestinations.TypesOfPhotoID> {
+            composable<SelectDocDestinations.TypesOfPhotoID> {
                 TypesOfPhotoIDScreen()
             }
 
-            composable<SelectDocumentDestinations.ConfirmPassport> {
+            composable<SelectDocDestinations.ConfirmPassport> {
                 ConfirmPassportScreen(
                     navController = navController,
                     viewModel = viewModel(factory = viewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.ConfirmBrp> {
+            composable<SelectDocDestinations.ConfirmBrp> {
                 ConfirmBrpScreen()
             }
 
-            composable<SelectDocumentDestinations.ConfirmDrivingLicence> {
+            composable<SelectDocDestinations.ConfirmDrivingLicence> {
                 ConfirmDrivingLicenceScreen()
             }
         }

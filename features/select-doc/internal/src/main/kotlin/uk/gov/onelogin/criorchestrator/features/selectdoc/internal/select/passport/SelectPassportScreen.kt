@@ -1,6 +1,6 @@
 @file:OptIn(UnstableDesignSystemAPI::class)
 
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
@@ -52,17 +52,17 @@ internal fun SelectPassportScreen(
             when (event) {
                 SelectPassportAction.NavigateToTypesOfPhotoID ->
                     navController.navigate(
-                        SelectDocumentDestinations.TypesOfPhotoID,
+                        SelectDocDestinations.TypesOfPhotoID,
                     )
 
                 SelectPassportAction.NavigateToConfirmation ->
                     navController.navigate(
-                        SelectDocumentDestinations.ConfirmPassport,
+                        SelectDocDestinations.ConfirmPassport,
                     )
 
                 SelectPassportAction.NavigateToBrp ->
                     navController.navigate(
-                        SelectDocumentDestinations.Brp,
+                        SelectDocDestinations.Brp,
                     )
             }
         }

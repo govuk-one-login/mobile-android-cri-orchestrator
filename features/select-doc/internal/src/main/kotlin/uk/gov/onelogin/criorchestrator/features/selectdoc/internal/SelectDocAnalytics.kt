@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.analytics
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal
 
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel2
@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import javax.inject.Inject
 
-class SelectDocumentAnalytics
+class SelectDocAnalytics
     @Inject
     constructor(
         resourceProvider: ResourceProvider,
