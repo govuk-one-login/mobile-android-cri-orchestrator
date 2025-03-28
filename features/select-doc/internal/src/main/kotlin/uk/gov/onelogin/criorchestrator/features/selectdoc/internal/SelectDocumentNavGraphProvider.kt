@@ -10,6 +10,9 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NfcAbortConfirmationScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NoNfcAbortConfirmationScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -24,6 +27,8 @@ class SelectDocumentNavGraphProvider
     constructor(
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
         private val viewModelFactory: ViewModelProvider.Factory,
+        @Named(SelectDrivingLicenceViewModelModule.FACTORY_NAME)
+        private val drivinglicenceViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocumentDestinations.Passport> {
@@ -38,7 +43,10 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
-                SelectDrivingLicenceScreen()
+                SelectDrivingLicenceScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = drivinglicenceViewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.TypesOfPhotoID> {
@@ -47,6 +55,14 @@ class SelectDocumentNavGraphProvider
 
             composable<SelectDocumentDestinations.Confirm> {
                 ConfirmDocumentScreen()
+            }
+
+            composable<SelectDocumentDestinations.NfcAbortConfirmationScreen> {
+                NfcAbortConfirmationScreen()
+            }
+
+            composable<SelectDocumentDestinations.NoNfcAbortConfirmationScreen> {
+                NoNfcAbortConfirmationScreen()
             }
         }
     }
