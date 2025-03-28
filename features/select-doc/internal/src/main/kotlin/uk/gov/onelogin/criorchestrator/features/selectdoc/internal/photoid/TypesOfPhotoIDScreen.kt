@@ -165,7 +165,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
 
 @Composable
 @Suppress("LongParameterList")
-internal fun PhotoIDInformation(
+private fun PhotoIDInformation(
     title: String,
     body: String,
     horizontalPadding: Dp,
@@ -202,7 +202,7 @@ internal fun PhotoIDInformation(
 }
 
 @Composable
-internal fun PhotoIDBulletedList(
+private fun PhotoIDBulletedList(
     title: String,
     items: ImmutableList<String>,
     modifier: Modifier = Modifier,
