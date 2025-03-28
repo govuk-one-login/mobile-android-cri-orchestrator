@@ -19,14 +19,18 @@ class SelectBrpAnalytics
     ) : Analytics(
             resourceProvider,
             analyticsLogger,
-            requiredParameters =
+            requiredParameters = requiredParameters,
+        ) {
+        companion object {
+            internal val requiredParameters =
                 RequiredParameters(
                     organisation = Organisation.OT1056,
                     taxonomyLevel1 = TaxonomyLevel1.ONE_LOGIN,
                     taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
                     taxonomyLevel3 = TaxonomyLevel3.DOCUMENT_SELECTION,
-                ),
-        )
+                )
+        }
+    }
 
 enum class SelectBrpScreenId(
     override val rawId: String,
