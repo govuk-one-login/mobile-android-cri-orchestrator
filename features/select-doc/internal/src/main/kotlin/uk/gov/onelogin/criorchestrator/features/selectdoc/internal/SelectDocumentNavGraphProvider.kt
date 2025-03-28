@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpViewModelModule
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brpconfirmation.BrpConfirmationScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
@@ -23,18 +25,23 @@ class SelectDocumentNavGraphProvider
     @Inject
     constructor(
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
-        private val viewModelFactory: ViewModelProvider.Factory,
+        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(SelectBrpViewModelModule.FACTORY_NAME)
+        private val selectBrpViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocumentDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = viewModelFactory),
+                    viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
 
             composable<SelectDocumentDestinations.Brp> {
-                SelectBrpScreen()
+                SelectBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectBrpViewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
@@ -47,6 +54,10 @@ class SelectDocumentNavGraphProvider
 
             composable<SelectDocumentDestinations.Confirm> {
                 ConfirmDocumentScreen()
+            }
+
+            composable<SelectDocumentDestinations.BrpConfirmation> {
+                BrpConfirmationScreen()
             }
         }
     }
