@@ -51,10 +51,10 @@
 
     <string name="selectdocument_brp_read_more_button">Read more about the types of photo ID you can use</string>
 
-    <string name="selectdocument_brp_selection_title">Do you have any of these types of photo ID?</string>">
-    <string name="selectdocument_brp_selection_yes">Yes</string>">
-    <string name="selectdocument_brp_selection_no">No, use a different type of photo ID</string>">
+    <string name="selectdocument_brp_selection_title">Do you have any of these types of photo ID?</string>
+    <string name="selectdocument_brp_selection_yes">Yes</string>
+    <string name="selectdocument_brp_selection_no">No, use a different type of photo ID</string>
 
-    <string name="selectdocument_brp_continue_button">Continue</string>">
+    <string name="selectdocument_brp_continue_button">Continue</string>
 
 </resources>
