@@ -31,7 +31,7 @@ class SelectBrpViewModelTest {
 
         verify(analytics).trackScreen(
             id = SelectBrpScreenId.SelectBrp,
-            title = R.string.selectdocument_brp_title,
+            title = SelectBrpConstants.titleId,
         )
     }
 
@@ -44,8 +44,8 @@ class SelectBrpViewModelTest {
 
         val item =
             listOf(
-                R.string.selectdocument_brp_selection_yes,
-                R.string.selectdocument_brp_selection_no,
+                SelectBrpConstants.selectionItems[0],
+                SelectBrpConstants.selectionItems[1],
             )[selection]
 
         verify(analytics).trackFormSubmission(
