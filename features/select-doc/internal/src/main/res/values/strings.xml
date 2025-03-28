@@ -2,6 +2,8 @@
 <resources>
     <!--  Confirmation  -->
     <string name="confirmdocument_passport_title">Confirm you want to continue with your passport</string>
+    <string name="confirmdocument_confirmbutton">Confirm</string>
+
     <!--  Select  -->
     <string name="selectdocument_passport_title">Do you have a passport with a biometric chip?</string>
     <string name="selectdocument_passport_body">All UK passports have a biometric chip.\n\nIf you have a non-UK passport, it must have the biometric chip symbol on the cover.</string>

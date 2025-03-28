@@ -2,9 +2,15 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportAction
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreenContent
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
@@ -13,10 +19,28 @@ internal fun ConfirmPassportScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = "DCMAW-8798 | Android | Document Selection |  Photo ID confirmation screen",
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+
+        viewModel.actions.collect {
+
+        }
+    }
+
+    ConfirmPassportScreenContent(
+        title = stringResource(viewModel.titleId),
+        confirmButtonText = stringResource(viewModel.buttonTextId),
         modifier = modifier,
     )
+}
+
+@Composable
+internal fun ConfirmPassportScreenContent(
+    title: String,
+    confirmButtonText: String,
+    modifier: Modifier = Modifier,
+) {
+
 }
 
 @LightDarkBothLocalesPreview

@@ -2,6 +2,7 @@
 <resources>
     <!--  Confirmation  -->
     <string name="confirmdocument_passport_title">Cadarnhau eich bod am barhau gyda’ch pasbort</string>
+    <string name="confirmdocument_confirmbutton">Cadarnhau</string>
 
     <!--  Select  -->
     <string name="selectdocument_passport_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
