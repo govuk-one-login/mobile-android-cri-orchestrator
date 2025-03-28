@@ -14,7 +14,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.bulletedlist.BulletedListTitle
 import uk.gov.android.ui.componentsv2.bulletedlist.GdsBulletedList
 import uk.gov.android.ui.componentsv2.bulletedlist.TitleType.Text
@@ -33,7 +35,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.Select
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun SelectBrpScreen(
+fun SelectBrpScreen(
     viewModel: SelectBrpViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -67,16 +69,27 @@ internal fun SelectBrpScreen(
     }
 
     SelectBrpScreenContent(
+        title = stringResource(state.value.titleId),
+        selectionItems =
+            state.value.selectionItems
+                .map { stringResource(it) }
+                .toPersistentList(),
+        readMoreButtonText = stringResource(state.value.readMoreButtonTextId),
+        continueButtonText = stringResource(state.value.continueButtonTextId),
         onReadMoreClicked = viewModel::onReadMoreClicked,
         onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
     )
 }
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "LongParameterList")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun SelectBrpScreenContent(
+    title: String,
+    selectionItems: ImmutableList<String>,
+    readMoreButtonText: String,
+    continueButtonText: String,
     onReadMoreClicked: () -> Unit,
     onContinueClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -87,7 +100,7 @@ internal fun SelectBrpScreenContent(
         modifier = modifier,
         title = {
             GdsHeading(
-                stringResource(R.string.selectdocument_brp_title),
+                title,
                 modifier = Modifier.padding(horizontal = spacingDouble),
             )
         },
@@ -117,7 +130,7 @@ internal fun SelectBrpScreenContent(
 
             item {
                 GdsButton(
-                    text = stringResource(R.string.selectdocument_brp_read_more_button),
+                    text = readMoreButtonText,
                     buttonType = ButtonType.Secondary,
                     onClick = onReadMoreClicked,
                     modifier = Modifier.padding(horizontal = 4.dp),
@@ -127,11 +140,7 @@ internal fun SelectBrpScreenContent(
 
             item {
                 GdsSelection(
-                    items =
-                        persistentListOf(
-                            stringResource(R.string.selectdocument_brp_selection_yes),
-                            stringResource(R.string.selectdocument_brp_selection_no),
-                        ),
+                    items = selectionItems,
                     selectedItem = selectedItem,
                     onItemSelected = { selectedItem = it },
                     title =
@@ -144,7 +153,7 @@ internal fun SelectBrpScreenContent(
         },
         primaryButton = {
             GdsButton(
-                stringResource(R.string.selectdocument_brp_continue_button),
+                continueButtonText,
                 buttonType = ButtonType.Primary,
                 onClick = {
                     selectedItem?.let {
@@ -163,6 +172,14 @@ internal fun SelectBrpScreenContent(
 internal fun PreviewSelectBrpScreen() {
     GdsTheme {
         SelectBrpScreenContent(
+            title = stringResource(R.string.selectdocument_brp_title),
+            selectionItems =
+                persistentListOf(
+                    stringResource(R.string.selectdocument_brp_selection_yes),
+                    stringResource(R.string.selectdocument_brp_selection_no),
+                ),
+            readMoreButtonText = stringResource(R.string.selectdocument_brp_read_more_button),
+            continueButtonText = stringResource(R.string.selectdocument_brp_continue_button),
             {},
             {},
         )
