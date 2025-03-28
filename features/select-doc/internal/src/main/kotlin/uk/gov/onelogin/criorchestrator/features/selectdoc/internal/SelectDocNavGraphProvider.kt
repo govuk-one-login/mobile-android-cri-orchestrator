@@ -11,6 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.brp.Se
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.brp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.drivinglicence.ConfirmDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.passport.ConfirmPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.passport.ConfirmPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.select.passport.SelectPassportViewModelModule
@@ -25,13 +26,15 @@ class SelectDocNavGraphProvider
     @Inject
     constructor(
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
-        private val viewModelFactory: ViewModelProvider.Factory,
+        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmPassportViewModelModule.FACTORY_NAME)
+        private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = viewModelFactory),
+                    viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
 
@@ -50,7 +53,7 @@ class SelectDocNavGraphProvider
             composable<SelectDocDestinations.ConfirmPassport> {
                 ConfirmPassportScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = viewModelFactory),
+                    viewModel = viewModel(factory = confirmPassportViewModelFactory),
                 )
             }
 
