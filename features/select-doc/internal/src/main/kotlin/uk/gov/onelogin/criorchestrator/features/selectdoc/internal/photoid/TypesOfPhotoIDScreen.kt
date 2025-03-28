@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -164,6 +165,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
+@OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongParameterList")
 private fun PhotoIDInformation(
     title: String,
@@ -177,9 +179,10 @@ private fun PhotoIDInformation(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacingSingle),
     ) {
-        Text(
+        GdsHeading(
             text = title,
             fontWeight = FontWeight.W700,
+            style = LocalTextStyle.current,
             modifier =
                 Modifier
                     .padding(horizontal = horizontalPadding)
