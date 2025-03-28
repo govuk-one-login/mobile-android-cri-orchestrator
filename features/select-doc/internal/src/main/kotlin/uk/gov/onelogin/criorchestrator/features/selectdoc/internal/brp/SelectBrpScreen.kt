@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -40,8 +39,6 @@ fun SelectBrpScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -69,14 +66,14 @@ fun SelectBrpScreen(
     }
 
     SelectBrpScreenContent(
-        title = stringResource(state.value.titleId),
+        title = stringResource(SelectBrpConstants.titleId),
+        readMoreButtonText = stringResource(SelectBrpConstants.readMoreButtonTextId),
+        onReadMoreClicked = viewModel::onReadMoreClicked,
         selectionItems =
-            state.value.selectionItems
+            SelectBrpConstants.selectionItems
                 .map { stringResource(it) }
                 .toPersistentList(),
-        readMoreButtonText = stringResource(state.value.readMoreButtonTextId),
-        continueButtonText = stringResource(state.value.continueButtonTextId),
-        onReadMoreClicked = viewModel::onReadMoreClicked,
+        continueButtonText = stringResource(SelectBrpConstants.continueButtonTextId),
         onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
     )
@@ -87,10 +84,10 @@ fun SelectBrpScreen(
 @Composable
 internal fun SelectBrpScreenContent(
     title: String,
-    selectionItems: ImmutableList<String>,
     readMoreButtonText: String,
-    continueButtonText: String,
     onReadMoreClicked: () -> Unit,
+    selectionItems: ImmutableList<String>,
+    continueButtonText: String,
     onContinueClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -172,15 +169,15 @@ internal fun SelectBrpScreenContent(
 internal fun PreviewSelectBrpScreen() {
     GdsTheme {
         SelectBrpScreenContent(
-            title = stringResource(R.string.selectdocument_brp_title),
+            title = stringResource(SelectBrpConstants.titleId),
+            readMoreButtonText = stringResource(SelectBrpConstants.readMoreButtonTextId),
+            {},
             selectionItems =
                 persistentListOf(
-                    stringResource(R.string.selectdocument_brp_selection_yes),
-                    stringResource(R.string.selectdocument_brp_selection_no),
+                    stringResource(SelectBrpConstants.selectionItems[0]),
+                    stringResource(SelectBrpConstants.selectionItems[1]),
                 ),
-            readMoreButtonText = stringResource(R.string.selectdocument_brp_read_more_button),
-            continueButtonText = stringResource(R.string.selectdocument_brp_continue_button),
-            {},
+            continueButtonText = stringResource(SelectBrpConstants.continueButtonTextId),
             {},
         )
     }

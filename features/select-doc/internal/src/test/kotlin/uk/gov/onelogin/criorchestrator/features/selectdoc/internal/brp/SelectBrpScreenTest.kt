@@ -20,7 +20,6 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 
 @RunWith(AndroidJUnit4::class)
@@ -39,11 +38,10 @@ class SelectBrpScreenTest {
     @Before
     fun setUp() {
         val context: Context = ApplicationProvider.getApplicationContext()
-
-        yesOption = hasText(context.getString(R.string.selectdocument_brp_selection_yes))
-        noOption = hasText(context.getString(R.string.selectdocument_brp_selection_no))
-        continueButton = hasText(context.getString(R.string.selectdocument_brp_continue_button))
-        readMore = hasText(context.getString(R.string.selectdocument_brp_read_more_button))
+        yesOption = hasText(context.getString(SelectBrpConstants.selectionItems[0]))
+        noOption = hasText(context.getString(SelectBrpConstants.selectionItems[1]))
+        continueButton = hasText(context.getString(SelectBrpConstants.continueButtonTextId))
+        readMore = hasText(context.getString(SelectBrpConstants.readMoreButtonTextId))
 
         composeTestRule.setContent {
             SelectBrpScreen(

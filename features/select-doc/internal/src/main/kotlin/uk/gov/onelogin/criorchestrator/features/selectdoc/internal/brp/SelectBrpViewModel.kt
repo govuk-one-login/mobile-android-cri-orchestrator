@@ -2,34 +2,27 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
 
 class SelectBrpViewModel(
     private val analytics: SelectBrpAnalytics,
 ) : ViewModel() {
-    private val _state = MutableStateFlow(SelectBrpState())
-    val state: StateFlow<SelectBrpState> = _state
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
 
     fun onScreenStart() {
         analytics.trackScreen(
             SelectBrpScreenId.SelectBrp,
-            state.value.titleId,
+            SelectBrpConstants.titleId,
         )
     }
 
     fun onReadMoreClicked() {
-        analytics.trackButtonEvent(state.value.readMoreButtonTextId)
+        analytics.trackButtonEvent(SelectBrpConstants.readMoreButtonTextId)
         viewModelScope.launch {
             _actions.emit(SelectBrpAction.NavigateToTypesOfPhotoID)
         }
@@ -37,8 +30,8 @@ class SelectBrpViewModel(
 
     fun onContinueClicked(selectedItem: Int) {
         analytics.trackFormSubmission(
-            buttonText = state.value.continueButtonTextId,
-            response = state.value.selectionItems[selectedItem],
+            buttonText = SelectBrpConstants.continueButtonTextId,
+            response = SelectBrpConstants.selectionItems[selectedItem],
         )
 
         viewModelScope.launch {
@@ -57,14 +50,3 @@ sealed class SelectBrpAction {
 
     data object NavigateToTypesOfPhotoID : SelectBrpAction()
 }
-
-data class SelectBrpState(
-    val titleId: Int = R.string.selectdocument_brp_title,
-    val readMoreButtonTextId: Int = R.string.selectdocument_brp_read_more_button,
-    val selectionItems: ImmutableList<Int> =
-        persistentListOf(
-            R.string.selectdocument_brp_selection_yes,
-            R.string.selectdocument_brp_selection_no,
-        ),
-    val continueButtonTextId: Int = R.string.selectdocument_brp_continue_button,
-)
