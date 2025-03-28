@@ -29,7 +29,7 @@ class IntegrationTest {
     private val fakeConfigStore = FakeConfigStore()
     private val logger = SystemLogger()
     private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
-    private val imposter = Imposter().createImposterBackend()
+    private val imposter = Imposter.createMockEngine()
 
     private lateinit var sessionApiImpl: SessionApi
     private lateinit var remoteSessionReader: RemoteSessionReader
