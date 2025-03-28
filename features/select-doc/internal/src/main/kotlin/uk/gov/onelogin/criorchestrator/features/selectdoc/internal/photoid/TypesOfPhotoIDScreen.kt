@@ -1,12 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.bulletedlist.BulletedListTitle
 import uk.gov.android.ui.componentsv2.bulletedlist.GdsBulletedList
 import uk.gov.android.ui.componentsv2.bulletedlist.TitleType.Text
@@ -33,6 +28,7 @@ import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.android.ui.theme.spacingSingle
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.components.FullWidthImage
 
 @Composable
 internal fun TypesOfPhotoIDScreen(
@@ -75,77 +71,90 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
 
                 item {
                     PhotoIDInformation(
-                        content =
-                            PhotoIDContent(
-                                title = R.string.typesofphotoid_ukpassport_title,
-                                body = R.string.typesofphotoid_ukpassport_body,
-                                image = R.drawable.uk_passport,
-                                imageDescription = R.string.typesofphotoid_ukpassport_imagedescription,
-                            ),
+                        title = stringResource(R.string.typesofphotoid_ukpassport_title),
+                        body = stringResource(R.string.typesofphotoid_ukpassport_body),
+                        image = {
+                            FullWidthImage(
+                                painter = painterResource(R.drawable.uk_passport),
+                                contentDescription =
+                                    stringResource(R.string.typesofphotoid_ukpassport_imagedescription),
+                            )
+                        },
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        content =
-                            PhotoIDContent(
-                                title = R.string.typesofphotoid_nonukpassport_title,
-                                body = R.string.typesofphotoid_nonukpassport_body,
-                                image = R.drawable.nfc_passport_wide,
-                                imageDescription = R.string.typesofphotoid_nonukpassport_imagedescription,
-                            ),
-                        bulletContent =
-                            PhotoIDBulletContent(
-                                R.string.typesofphotoid_nonukpassport_bulletbody,
-                                persistentListOf(
+                        title = stringResource(R.string.typesofphotoid_nonukpassport_title),
+                        body = stringResource(R.string.typesofphotoid_nonukpassport_body),
+                        image = {
+                            FullWidthImage(
+                                painter = painterResource(R.drawable.nfc_passport_wide),
+                                contentDescription =
+                                    stringResource(R.string.typesofphotoid_nonukpassport_imagedescription),
+                            )
+                        },
+                        bulletedList = {
+                            PhotoIDBulletedList(
+                                stringResource(R.string.typesofphotoid_nonukpassport_bulletbody),
+                                listOf(
                                     R.string.typesofphotoid_nonukpassport_bullet1,
                                     R.string.typesofphotoid_nonukpassport_bullet2,
-                                ),
-                            ),
+                                ).map { stringResource(it) }.toPersistentList(),
+                                Modifier.padding(horizontal = horizontalPadding),
+                            )
+                        },
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        content =
-                            PhotoIDContent(
-                                title = R.string.typesofphotoid_brp_title,
-                                body = R.string.typesofphotoid_brp_body,
-                                image = R.drawable.brp,
-                                imageDescription = R.string.typesofphotoid_brp_imagedescription,
-                            ),
-                        bulletContent =
-                            PhotoIDBulletContent(
-                                R.string.typesofphotoid_brp_bulletbody,
-                                persistentListOf(
+                        title = stringResource(R.string.typesofphotoid_brp_title),
+                        body = stringResource(R.string.typesofphotoid_brp_body),
+                        image = {
+                            FullWidthImage(
+                                painter = painterResource(R.drawable.brp),
+                                contentDescription = stringResource(R.string.typesofphotoid_brp_imagedescription),
+                            )
+                        },
+                        bulletedList = {
+                            PhotoIDBulletedList(
+                                stringResource(R.string.typesofphotoid_brp_bulletbody),
+                                listOf(
                                     R.string.typesofphotoid_brp_bullet1,
                                     R.string.typesofphotoid_brp_bullet2,
                                     R.string.typesofphotoid_brp_bullet3,
-                                ),
-                            ),
+                                ).map { stringResource(it) }.toPersistentList(),
+                                Modifier.padding(horizontal = horizontalPadding),
+                            )
+                        },
                         horizontalPadding = horizontalPadding,
                     )
                 }
 
                 item {
                     PhotoIDInformation(
-                        content =
-                            PhotoIDContent(
-                                title = R.string.typesofphotoid_drivinglicence_title,
-                                body = R.string.typesofphotoid_drivinglicence_body,
-                                image = R.drawable.driving_licence,
-                                imageDescription = R.string.typesofphotoid_drivinglicence_imagedescription,
-                            ),
-                        bulletContent =
-                            PhotoIDBulletContent(
-                                R.string.typesofphotoid_drivinglicence_bulletbody,
+                        title = stringResource(R.string.typesofphotoid_drivinglicence_title),
+                        body = stringResource(R.string.typesofphotoid_drivinglicence_body),
+                        image = {
+                            FullWidthImage(
+                                painter = painterResource(R.drawable.driving_licence),
+                                contentDescription =
+                                    stringResource(R.string.typesofphotoid_drivinglicence_imagedescription),
+                            )
+                        },
+                        bulletedList = {
+                            PhotoIDBulletedList(
+                                stringResource(R.string.typesofphotoid_drivinglicence_bulletbody),
                                 persistentListOf(
-                                    R.string.typesofphotoid_drivinglicence_bullet1,
-                                    R.string.typesofphotoid_drivinglicence_bullet2,
+                                    stringResource(R.string.typesofphotoid_drivinglicence_bullet1),
+                                    stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
                                 ),
-                            ),
+                                Modifier.padding(horizontal = horizontalPadding),
+                            )
+                        },
                         horizontalPadding = horizontalPadding,
                     )
                 }
@@ -154,31 +163,22 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
     }
 }
 
-internal data class PhotoIDContent(
-    @StringRes val title: Int,
-    @StringRes val body: Int,
-    @DrawableRes val image: Int,
-    @StringRes val imageDescription: Int,
-)
-
-internal data class PhotoIDBulletContent(
-    @StringRes val body: Int,
-    @StringRes val items: ImmutableList<Int>,
-)
-
 @Composable
+@Suppress("LongParameterList")
 internal fun PhotoIDInformation(
-    content: PhotoIDContent,
+    title: String,
+    body: String,
     horizontalPadding: Dp,
     modifier: Modifier = Modifier,
-    bulletContent: PhotoIDBulletContent? = null,
+    image: @Composable () -> Unit = { },
+    bulletedList: @Composable () -> Unit = { },
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacingSingle),
     ) {
         Text(
-            text = stringResource(content.title),
+            text = title,
             fontWeight = FontWeight.W700,
             modifier =
                 Modifier
@@ -189,31 +189,33 @@ internal fun PhotoIDInformation(
         Column(
             verticalArrangement = Arrangement.spacedBy(spacingDouble),
         ) {
-            bulletContent?.let { content ->
-                GdsBulletedList(
-                    title =
-                        BulletedListTitle(
-                            stringResource(content.body),
-                            Text,
-                        ),
-                    bulletListItems = content.items.map { stringResource(it) }.toImmutableList(),
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
-                )
-            }
+            bulletedList()
 
             Text(
-                text = stringResource(content.body),
+                text = body,
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             )
 
-            Image(
-                painter = painterResource(content.image),
-                contentDescription = stringResource(content.imageDescription),
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.FillWidth,
-            )
+            image()
         }
     }
+}
+
+@Composable
+internal fun PhotoIDBulletedList(
+    title: String,
+    items: ImmutableList<String>,
+    modifier: Modifier = Modifier,
+) {
+    GdsBulletedList(
+        title =
+            BulletedListTitle(
+                title,
+                Text,
+            ),
+        bulletListItems = items,
+        modifier = modifier,
+    )
 }
 
 @Preview(heightDp = 1600, uiMode = UI_MODE_NIGHT_YES)
