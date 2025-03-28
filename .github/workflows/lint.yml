@@ -34,7 +34,7 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Lint
-        uses: govuk-one-login/mobile-android-pipelines/actions/lint@53b3dbc27a1ce8e215a36a63365415b2bf93bda0
+        uses: govuk-one-login/mobile-android-pipelines/actions/lint@4bae5f390135e3f7d60fcd646376b198de8c467e
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
