@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="handback_problemerror_title">Mae’n ddrwg gennym, mae yna broblem</string>
+    <string name="handback_problemerror_body1">Ni allwch ddefnyddio’r ap hwn i brofi pwy ydych chi ar hyn o bryd.</string>
+    <string name="handback_problemerror_body2">Gallwch roi cynnig arall yn nes ymlaen, neu wirio a allwch brofi pwy ydych chi mewn ffordd arall.</string>
+    <string name="handback_problemerror_button">Gwiriwch a allwch brofi eich hunaniaeth mewn ffordd arall</string>
+</resources>
