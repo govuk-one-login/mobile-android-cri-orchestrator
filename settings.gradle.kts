@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -10,10 +13,20 @@ pluginManagement {
     }
 }
 
+val localProperties = Properties()
+val localPropertiesFile = File("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        val idCheckSdkPackagesDir = localProperties.getProperty("idCheckSdkPackages.dir")
+        if (idCheckSdkPackagesDir != null) {
+            maven { url = uri(idCheckSdkPackagesDir) }
+        }
         mavenCentral()
         maven(
             url = uri("https://maven.pkg.github.com/govuk-one-login/*"),
