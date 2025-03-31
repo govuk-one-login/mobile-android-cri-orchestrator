@@ -23,52 +23,52 @@ import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
 class SelectDocumentNavGraphProvider
-@Inject
-constructor(
-    @Named(SelectBrpViewModelModule.FACTORY_NAME)
-    private val selectBrpViewModelFactory: ViewModelProvider.Factory,
-    @Named(SelectPassportViewModelModule.FACTORY_NAME)
-    private val selectPassportViewModelFactory: ViewModelProvider.Factory,
-    @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
-    private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-        composable<SelectDocumentDestinations.Passport> {
-            SelectPassportScreen(
-                navController = navController,
-                viewModel = viewModel(factory = selectPassportViewModelFactory),
-            )
-        }
-        composable<SelectDocumentDestinations.Brp> {
-            SelectBrpScreen(
-                navController = navController,
-                viewModel = viewModel(factory = selectBrpViewModelFactory)
-            )
-        }
-        
-        composable<SelectDocumentDestinations.Brp> {
-            SelectBrpScreen(
-                navController = navController,
-                viewModel = viewModel(factory = selectBrpViewModelFactory),
-            )
-        }
+    @Inject
+    constructor(
+        @Named(SelectBrpViewModelModule.FACTORY_NAME)
+        private val selectBrpViewModelFactory: ViewModelProvider.Factory,
+        @Named(SelectPassportViewModelModule.FACTORY_NAME)
+        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
+        private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
+    ) : ProveYourIdentityNavGraphProvider {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+            composable<SelectDocumentDestinations.Passport> {
+                SelectPassportScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectPassportViewModelFactory),
+                )
+            }
+            composable<SelectDocumentDestinations.Brp> {
+                SelectBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectBrpViewModelFactory),
+                )
+            }
 
-        composable<SelectDocumentDestinations.DrivingLicence> {
-            SelectDrivingLicenceScreen()
-        }
+            composable<SelectDocumentDestinations.Brp> {
+                SelectBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectBrpViewModelFactory),
+                )
+            }
 
-        composable<SelectDocumentDestinations.TypesOfPhotoID> {
-            TypesOfPhotoIDScreen(
-                viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
-            )
-        }
+            composable<SelectDocumentDestinations.DrivingLicence> {
+                SelectDrivingLicenceScreen()
+            }
 
-        composable<SelectDocumentDestinations.Confirm> {
-            ConfirmDocumentScreen()
-        }
+            composable<SelectDocumentDestinations.TypesOfPhotoID> {
+                TypesOfPhotoIDScreen(
+                    viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
+                )
+            }
 
-        composable<SelectDocumentDestinations.BrpConfirmation> {
-            BrpConfirmationScreen()
+            composable<SelectDocumentDestinations.Confirm> {
+                ConfirmDocumentScreen()
+            }
+
+            composable<SelectDocumentDestinations.BrpConfirmation> {
+                BrpConfirmationScreen()
+            }
         }
     }
-}
