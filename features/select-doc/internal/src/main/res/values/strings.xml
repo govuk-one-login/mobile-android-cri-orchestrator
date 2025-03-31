@@ -11,4 +11,32 @@
     <string name="selectdocument_passport_selection_no">No, use a different type of photo ID</string>
 
     <string name="selectdocument_passport_continuebutton">Continue</string>
+
+    <string name="typesofphotoid_title">Types of photo ID</string>
+    <string name="typesofphotoid_body">You can use any of the following types of photo ID to prove your identity with the GOV.UK One Login app.</string>
+    <string name="typesofphotoid_ukpassport_title">UK passport</string>
+    <string name="typesofphotoid_ukpassport_body">You can use any UK passport if it has not expired.</string>
+    <string name="typesofphotoid_ukpassport_imagedescription">The front cover of a British Passport with the biometric chip symbol. The symbol is rectangular with a circle in the middle.</string>
+
+    <string name="typesofphotoid_nonukpassport_title">Non-UK passport with a biometric chip</string>
+    <string name="typesofphotoid_nonukpassport_bulletbody">You can use a non-UK passport if it:</string>
+    <string name="typesofphotoid_nonukpassport_bullet1">has a biometric chip</string>
+    <string name="typesofphotoid_nonukpassport_bullet2">has not expired</string>
+    <string name="typesofphotoid_nonukpassport_body">To check if your passport has a biometric chip, look for the rectangular biometric chip symbol on the front cover.</string>
+    <string name="typesofphotoid_nonukpassport_imagedescription">The front cover of a passport with the biometric chip symbol. The symbol is rectangular with a circle in the middle.</string>
+
+    <string name="typesofphotoid_brp_title">UK biometric permit or card</string>
+    <string name="typesofphotoid_brp_bulletbody">This can be a:</string>
+    <string name="typesofphotoid_brp_bullet1">biometric residence permit (BRP)</string>
+    <string name="typesofphotoid_brp_bullet2">biometric residence card (BRC)</string>
+    <string name="typesofphotoid_brp_bullet3">Frontier Worker permit (FWP)</string>
+    <string name="typesofphotoid_brp_body">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.\n\nFor example, if your BRP expired on 31 October 2024, you can use it to prove your identity until 30 April 2026.</string>
+    <string name="typesofphotoid_brp_imagedescription">An example of what a UK biometric permit or card looks like. It’s a pink and blue card with the UK government crest and the biometric chip symbol. The symbol is rectangular with a circle in the middle</string>
+
+    <string name="typesofphotoid_drivinglicence_title">UK photocard driving licence</string>
+    <string name="typesofphotoid_drivinglicence_bulletbody">You can use a UK driving licence if it:</string>
+    <string name="typesofphotoid_drivinglicence_bullet1">is a plastic photocard, not a paper licence</string>
+    <string name="typesofphotoid_drivinglicence_bullet2">has not expired</string>
+    <string name="typesofphotoid_drivinglicence_body">It can be a full or provisional UK driving licence. </string>
+    <string name="typesofphotoid_drivinglicence_imagedescription">An example of what a UK photocard driving licence looks like. It’s a pink and blue card with the UK flag.</string>
 </resources>
