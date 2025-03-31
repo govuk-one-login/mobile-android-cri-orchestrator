@@ -1,9 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -20,6 +23,7 @@ internal fun SyncIdCheckScreen(
         Text(
             text = "DCMAW-8798 | Android | Confirm Document | Take a photo screen",
         )
+        Spacer(modifier = Modifier.padding(largePadding))
         Text(
             text = "Document Type: ${idCheckSdkParameters.document}",
         )
