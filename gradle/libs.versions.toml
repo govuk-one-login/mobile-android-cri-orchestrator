@@ -35,9 +35,9 @@ paparazzi = "1.3.5"
 robolectric = "4.14.1"
 testparameterinjector = "1.18"
 turbine = "1.2.0"
-uk-gov-logging = "0.20.1" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
-uk-gov-networking = "0.5.0"
-uk-gov-ui = "7.14.0"
+uk-gov-logging = "0.20.3" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
+uk-gov-networking = "0.6.0"
+uk-gov-ui = "7.16.0"
 gov-uk-idcheck = "0.6.74"
 
 [libraries]
