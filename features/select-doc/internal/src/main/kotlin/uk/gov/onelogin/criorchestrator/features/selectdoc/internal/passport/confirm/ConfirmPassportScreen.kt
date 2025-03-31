@@ -25,7 +25,7 @@ import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.idcheck.sdk.IdCheckSdkParameters
-import uk.gov.onelogin.criorchestrator.features.idchecksdk.internalapi.IdCheckDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
@@ -45,9 +45,7 @@ internal fun ConfirmPassportScreen(
                 IdCheckDestinations.SyncIdCheck(
                     IdCheckSdkParameters(
                         document = DocumentType.NFC_PASSPORT,
-                        journey = if (
-                            session.redirectUri.isNullOrBlank()
-                        ) JourneyType.DESKTOP_APP_DESKTOP else JourneyType.MOBILE_APP_MOBILE,
+                        journey = JourneyType.MOBILE_APP_MOBILE,
                         sessionId = session.sessionId,
                         bioToken = BiometricToken(
                             accessToken = "Fake Access Token",
