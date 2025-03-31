@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select
 
 import androidx.annotation.StringRes
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
