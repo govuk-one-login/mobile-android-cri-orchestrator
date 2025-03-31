@@ -104,7 +104,9 @@ uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
+uk-gov-idcheck-repositories-api = { module = "uk.gov.onelogin.idcheck:repositories-api", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -115,6 +117,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

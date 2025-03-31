@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network.session
+package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -18,7 +19,7 @@ class InMemorySessionStore
     constructor(
         private val logger: Logger,
     ) : SessionStore,
-        LogTagProvider {
+    LogTagProvider {
         private var activeSession: MutableStateFlow<Session?> = MutableStateFlow(null)
 
         override fun read(): StateFlow<Session?> {

@@ -21,12 +21,18 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
+import uk.gov.idcheck.repositories.api.vendor.BiometricToken
+import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
+import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.idcheck.sdk.IdCheckSdkParameters
+import uk.gov.onelogin.criorchestrator.features.idchecksdk.internalapi.IdCheckDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun ConfirmPassportScreen(
+    session: Session,
     viewModel: ConfirmPassportViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -36,7 +42,19 @@ internal fun ConfirmPassportScreen(
 
         viewModel.actions.collect {
             navController.navigate(
-                SelectDocDestinations.Passport,
+                IdCheckDestinations.SyncIdCheck(
+                    IdCheckSdkParameters(
+                        document = DocumentType.NFC_PASSPORT,
+                        journey = if (
+                            session.redirectUri.isNullOrBlank()
+                        ) JourneyType.DESKTOP_APP_DESKTOP else JourneyType.MOBILE_APP_MOBILE,
+                        sessionId = session.sessionId,
+                        bioToken = BiometricToken(
+                            accessToken = "Fake Access Token",
+                            opaqueId = "Fake Opaque ID",
+                        )
+                    )
+                ),
             )
         }
     }

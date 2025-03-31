@@ -18,10 +18,4 @@ sealed interface SelectDocDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object ConfirmPassport : SelectDocDestinations
-
-    @Serializable
-    data object ConfirmBrp : SelectDocDestinations
-
-    @Serializable
-    data object ConfirmDrivingLicence : SelectDocDestinations
 }
