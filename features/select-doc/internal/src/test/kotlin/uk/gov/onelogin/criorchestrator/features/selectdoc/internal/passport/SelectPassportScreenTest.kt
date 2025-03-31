@@ -30,7 +30,7 @@ import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class SelectPassportScreenTest {
@@ -100,7 +100,7 @@ class SelectPassportScreenTest {
             .onNode(readMoreButton)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
+        verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
     }
 
     @Test
@@ -153,7 +153,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.Confirm)
+        verify(navController).navigate(SelectDocDestinations.Confirm)
     }
 
     @Test
@@ -169,7 +169,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.Brp)
+        verify(navController).navigate(SelectDocDestinations.Brp)
     }
 
     private fun swipeToAdditionalContent() {

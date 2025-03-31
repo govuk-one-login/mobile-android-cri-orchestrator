@@ -13,8 +13,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicenc
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
@@ -29,28 +29,28 @@ class SelectDocNavGraphProvider
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-            composable<SelectDocumentDestinations.Passport> {
+            composable<SelectDocDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
                     viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.Brp> {
+            composable<SelectDocDestinations.Brp> {
                 SelectBrpScreen()
             }
 
-            composable<SelectDocumentDestinations.DrivingLicence> {
+            composable<SelectDocDestinations.DrivingLicence> {
                 SelectDrivingLicenceScreen()
             }
 
-            composable<SelectDocumentDestinations.TypesOfPhotoID> {
+            composable<SelectDoctDestinations.TypesOfPhotoID> {
                 TypesOfPhotoIDScreen(
                     viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.Confirm> {
+            composable<SelectDocDestinations.Confirm> {
                 ConfirmDocumentScreen()
             }
         }

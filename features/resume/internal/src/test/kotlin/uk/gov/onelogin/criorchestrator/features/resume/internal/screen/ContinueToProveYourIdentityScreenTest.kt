@@ -23,7 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ContinueToProveYourIdentityScreenTest {
@@ -66,7 +66,7 @@ class ContinueToProveYourIdentityScreenTest {
                 .onNode(primaryButton)
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.Passport)
+            verify(navController).navigate(SelectDocDestinations.Passport)
         }
 
     @Test
@@ -84,6 +84,6 @@ class ContinueToProveYourIdentityScreenTest {
                 .onNode(primaryButton)
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
+            verify(navController).navigate(SelectDocDestinations.DrivingLicence)
         }
 }
