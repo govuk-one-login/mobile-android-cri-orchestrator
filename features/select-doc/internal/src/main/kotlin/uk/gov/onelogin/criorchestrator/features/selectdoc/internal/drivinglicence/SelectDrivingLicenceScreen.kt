@@ -47,32 +47,27 @@ internal fun SelectDrivingLicenceScreen(
 
         viewModel.actions.collect { event ->
             when (event) {
-                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToNfcAbort ->
+                SelectDrivingLicenceAction.NavigateToNfcAbort ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
                     )
 
-                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToNoNfcAbort ->
+                SelectDrivingLicenceAction.NavigateToNoNfcAbort ->
                     navController.navigate(
                         SelectDocumentDestinations.NoNfcAbortConfirmationScreen,
                     )
 
-                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToConfirmation ->
+                SelectDrivingLicenceAction.NavigateToConfirmation ->
                     navController.navigate(
                         SelectDocumentDestinations.Confirm,
                     )
-//
-//                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToBrp ->
+
+//                SelectDrivingLicenceAction.NavigateToBrp ->
 //                    navController.navigate(
 //                        SelectDocumentDestinations.Brp,
 //                    )
-//
-//                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToHomeScreen ->
-//                    navController.navigate(
-//                        SelectDocumentDestinations.HomeScreen,
-//                    )
 
-                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
+                SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
                     )
