@@ -9,7 +9,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 @Composable
 internal fun NoNfcAbortConfirmationScreen(modifier: Modifier = Modifier) {
     Text(
-        text = "DCMAW-10678 | Android | Document Selection | No NFC Abort Confirmation Screen",
+        text = "DCMAW-10678 | Android | Document Selection | No NFC enabled Abort Confirmation Screen",
         modifier = modifier,
     )
 }
@@ -18,6 +18,6 @@ internal fun NoNfcAbortConfirmationScreen(modifier: Modifier = Modifier) {
 @Composable
 internal fun PreviewNoNfcAbortConfirmationScreen() {
     GdsTheme {
-        NoNfcAbortConfirmationScreen()
+        NfcAbortConfirmationScreen()
     }
 }

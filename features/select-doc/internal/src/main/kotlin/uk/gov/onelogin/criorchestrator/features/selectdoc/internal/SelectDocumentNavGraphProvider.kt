@@ -14,6 +14,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.Co
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NfcAbortConfirmationScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NoNfcAbortConfirmationScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -74,6 +75,10 @@ class SelectDocumentNavGraphProvider
 
             composable<SelectDocumentDestinations.NfcAbortConfirmationScreen> {
                 NfcAbortConfirmationScreen()
+            }
+
+            composable<SelectDocumentDestinations.NoNfcAbortConfirmationScreen> {
+               NoNfcAbortConfirmationScreen()
             }
         }
     }

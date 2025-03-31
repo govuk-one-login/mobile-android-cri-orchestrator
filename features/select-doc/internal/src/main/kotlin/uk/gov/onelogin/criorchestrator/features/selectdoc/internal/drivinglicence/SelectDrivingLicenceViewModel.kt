@@ -8,12 +8,17 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 
 internal class SelectDrivingLicenceViewModel(
     private val analytics: SelectDocumentAnalytics,
+    private val nfcChecker: NfcChecker,
+    private val configStore: ConfigStore,
 ) : ViewModel() {
     private val _state =
         MutableStateFlow(
@@ -56,22 +61,22 @@ internal class SelectDrivingLicenceViewModel(
         viewModelScope.launch {
             when (selectedIndex) {
                 0 -> _actions.emit(SelectDrivingLicenceAction.NavigateToConfirmation)
-                1 -> _actions.emit(SelectDrivingLicenceAction.NavigateToAbort)
+                1 -> _actions.emit(
+                    if (isNfcEnabled()) {
+                        SelectDrivingLicenceAction.NavigateToNfcAbort
+                    } else {
+                        SelectDrivingLicenceAction.NavigateToNoNfcAbort
+                    }
+                )
             }
         }
     }
 
-    fun onClose() {
-        analytics.trackButtonEvent(state.value.buttonTextId)
-        viewModelScope.launch {
-            _actions.emit(SelectDrivingLicenceAction.NavigateToAbort)
+    private fun isNfcEnabled() =
+        if (configStore.readSingle(NfcConfigKey.StubNcfCheck).value) {
+            configStore.readSingle(NfcConfigKey.IsNfcAvailable).value
+        } else {
+            nfcChecker.hasNfc()
         }
-    }
 
-    fun onBack() {
-        analytics.trackButtonEvent(state.value.buttonTextId)
-        viewModelScope.launch {
-            _actions.emit(SelectDrivingLicenceAction.NavigateToHomeScreen)
-        }
-    }
 }

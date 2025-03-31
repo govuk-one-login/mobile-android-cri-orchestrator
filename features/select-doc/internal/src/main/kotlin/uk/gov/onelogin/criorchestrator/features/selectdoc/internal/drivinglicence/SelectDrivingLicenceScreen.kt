@@ -47,27 +47,32 @@ internal fun SelectDrivingLicenceScreen(
 
         viewModel.actions.collect { event ->
             when (event) {
-                SelectDrivingLicenceAction.NavigateToAbort ->
+                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToNfcAbort ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
                     )
 
-                SelectDrivingLicenceAction.NavigateToConfirmation ->
+                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToNoNfcAbort ->
+                    navController.navigate(
+                        SelectDocumentDestinations.NoNfcAbortConfirmationScreen,
+                    )
+
+                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToConfirmation ->
                     navController.navigate(
                         SelectDocumentDestinations.Confirm,
                     )
+//
+//                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToBrp ->
+//                    navController.navigate(
+//                        SelectDocumentDestinations.Brp,
+//                    )
+//
+//                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToHomeScreen ->
+//                    navController.navigate(
+//                        SelectDocumentDestinations.HomeScreen,
+//                    )
 
-                SelectDrivingLicenceAction.NavigateToBrp ->
-                    navController.navigate(
-                        SelectDocumentDestinations.Brp,
-                    )
-
-                SelectDrivingLicenceAction.NavigateToHomeScreen ->
-                    navController.navigate(
-                        SelectDocumentDestinations.HomeScreen,
-                    )
-
-                SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
+                SelectDrivingLicenceViewModel.SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
                     )

@@ -6,6 +6,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
+import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -17,10 +19,18 @@ object SelectDrivingLicenceViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(analytics: SelectDocumentAnalytics): ViewModelProvider.Factory =
+    fun provideFactory(
+        analytics: SelectDocumentAnalytics,
+        nfcChecker: NfcChecker,
+        configStore: ConfigStore,
+        ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                SelectDrivingLicenceViewModel(analytics)
+                SelectDrivingLicenceViewModel(
+                    analytics,
+                    nfcChecker,
+                    configStore,
+                )
             }
         }
 }
