@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brpconfirmation
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text

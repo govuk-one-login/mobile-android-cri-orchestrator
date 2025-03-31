@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 
 class SelectBrpViewModel(
-    private val analytics: SelectBrpAnalytics,
+    private val analytics: SelectDocumentAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
@@ -41,12 +41,4 @@ class SelectBrpViewModel(
             }
         }
     }
-}
-
-sealed class SelectBrpAction {
-    data object NavigateToBrpConfirmation : SelectBrpAction()
-
-    data object NavigateToDrivingLicence : SelectBrpAction()
-
-    data object NavigateToTypesOfPhotoID : SelectBrpAction()
 }

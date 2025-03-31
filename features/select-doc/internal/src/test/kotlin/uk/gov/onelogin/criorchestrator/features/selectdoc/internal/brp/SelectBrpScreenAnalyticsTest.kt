@@ -17,8 +17,8 @@ import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -43,7 +43,7 @@ class SelectBrpScreenAnalyticsTest {
     private val continueButton = hasText(context.getString(SelectBrpConstants.continueButtonTextId))
 
     private val analytics =
-        SelectBrpAnalytics(
+        SelectDocumentAnalytics(
             resourceProvider = resourceProvider,
             analyticsLogger = analyticsLogger,
         )
@@ -67,7 +67,7 @@ class SelectBrpScreenAnalyticsTest {
                 .Screen(
                     id = SelectBrpScreenId.SelectBrp.rawId,
                     name = context.getString(SelectBrpConstants.titleId),
-                    params = SelectBrpAnalytics.requiredParameters,
+                    params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
@@ -84,14 +84,14 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Button(
                     text = context.getString(SelectBrpConstants.readMoreButtonTextId),
-                    params = SelectBrpAnalytics.requiredParameters,
+                    params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
-    fun `given selection is made, when continue is clicked, it tracks analytics`() {
+    fun `given yes is selected, when continue is clicked, it tracks analytics`() {
         swipeToAdditionalContent()
 
         composeTestRule
@@ -106,7 +106,7 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Form(
                     text = context.getString(SelectBrpConstants.continueButtonTextId),
-                    params = SelectBrpAnalytics.requiredParameters,
+                    params = SelectDocumentAnalytics.requiredParameters,
                     response = context.getString(SelectBrpConstants.selectionItems[0]),
                 ).asLegacyEvent()
 
@@ -114,7 +114,7 @@ class SelectBrpScreenAnalyticsTest {
     }
 
     @Test
-    fun `given no selection is made, when continue is clicked, it tracks analytics`() {
+    fun `given no is selected, when continue is clicked, it tracks analytics`() {
         swipeToAdditionalContent()
 
         composeTestRule
@@ -129,7 +129,7 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Form(
                     text = context.getString(SelectBrpConstants.continueButtonTextId),
-                    params = SelectBrpAnalytics.requiredParameters,
+                    params = SelectDocumentAnalytics.requiredParameters,
                     response = context.getString(SelectBrpConstants.selectionItems[1]),
                 ).asLegacyEvent()
 
