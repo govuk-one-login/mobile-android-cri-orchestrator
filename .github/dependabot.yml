@@ -37,9 +37,9 @@ updates:
     groups:
       agp:
         patterns:
-          - "com.android.tools.build"
-          - "com.android.application"
-          - "com.android.library"
+          - "com.android.tools.build*"
+          - "com.android.application*"
+          - "com.android.library*"
       kotlin:
         patterns:
           - "org.jetbrains.kotlin*"
