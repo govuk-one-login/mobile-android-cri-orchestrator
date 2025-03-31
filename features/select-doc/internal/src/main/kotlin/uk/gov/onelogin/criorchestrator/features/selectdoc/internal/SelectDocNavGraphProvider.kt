@@ -15,6 +15,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicenc
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmDocumentScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation.ConfirmDocumentScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation.ConfirmPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation.ConfirmPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
@@ -29,24 +31,26 @@ import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
 class SelectDocNavGraphProvider
-    @Inject
-    constructor(
-        @Named(SelectBrpViewModelModule.FACTORY_NAME)
-        private val selectBrpViewModelFactory: ViewModelProvider.Factory,
-        @Named(SelectPassportViewModelModule.FACTORY_NAME)
-        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
-        @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
-        private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
-        @Named(SelectDrivingLicenceViewModelModule.FACTORY_NAME)
-        private val selectDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
-    ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-            composable<SelectDocDestinations.Passport> {
-                SelectPassportScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = selectPassportViewModelFactory),
-                )
-            }
+@Inject
+constructor(
+    @Named(SelectPassportViewModelModule.FACTORY_NAME)
+    private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+    @Named(SelectBrpViewModelModule.FACTORY_NAME)
+    private val selectBrpViewModelFactory: ViewModelProvider.Factory,
+    @Named(ConfirmPassportViewModelModule.FACTORY_NAME)
+    private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
+    @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
+    private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
+    @Named(SelectDrivingLicenceViewModelModule.FACTORY_NAME)
+    private val selectDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
+) : ProveYourIdentityNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        composable<SelectDocDestinations.Passport> {
+            SelectPassportScreen(
+                navController = navController,
+                viewModel = viewModel(factory = selectPassportViewModelFactory),
+            )
+        }
 
             composable<SelectDocDestinations.Brp> {
                 SelectBrpScreen(
@@ -62,15 +66,18 @@ class SelectDocNavGraphProvider
                 )
             }
 
-            composable<SelectDocDestinations.TypesOfPhotoID> {
-                TypesOfPhotoIDScreen(
-                    viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
-                )
-            }
+        composable<SelectDocDestinations.TypesOfPhotoID> {
+            TypesOfPhotoIDScreen(
+                viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmPassport> {
-                ConfirmDocumentScreen()
-            }
+        composable<SelectDocDestinations.ConfirmPassport> {
+            ConfirmPassportScreen(
+                navController = navController,
+                viewModel = viewModel(factory = confirmPassportViewModelFactory),
+            )
+        }
 
             composable<SelectDocDestinations.ConfirmDrivingLicence> {
                 ConfirmDocumentScreen()

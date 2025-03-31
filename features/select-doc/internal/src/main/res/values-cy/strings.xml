@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Confirmation  -->
+    <string name="confirmdocument_passport_title">Cadarnhau eich bod am barhau gyda’ch pasbort</string>
+    <string name="confirmdocument_passport_body_1">Gwnewch yn siwr bod gennych eich pasbort gwreiddiol gyda chi. Ni allwch ddefnyddio copi digidol neu lungopi.</string>
+    <string name="confirmdocument_passport_body_2">Ni fyddwch yn gallu dewis math gwahanol o ID gyda llun ar ôl cadarnhau.</string>
+
+    <string name="confirmdocument_confirmbutton">Cadarnhau</string>
+
+    <!--  Select  -->
     <string name="selectdocument_passport_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
     <string name="selectdocument_passport_body">Mae gan bob pasbort y DU sglodyn biometrig.\n\nOs oes gennych basbort nad yw o’r DU, rhaid iddo gael y symbol sglodyn biometrig ar y clawr.</string>
     <string name="selectdocument_passport_imagedescription">Clawr blaen pasbort gyda’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
