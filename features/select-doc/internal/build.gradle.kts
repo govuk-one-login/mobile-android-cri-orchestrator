@@ -8,6 +8,8 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
+    implementation(libs.uk.gov.idcheck.repositories.api)
+    implementation(libs.uk.gov.idcheck.ui.presentation)
     implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(project(":features:config:public-api"))
@@ -18,6 +20,8 @@ dependencies {
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
+    implementation(projects.features.idcheckWrapper.internalApi)
+    implementation(projects.features.session.internalApi)
 
     testImplementation(testFixtures(project(":libraries:analytics")))
 
