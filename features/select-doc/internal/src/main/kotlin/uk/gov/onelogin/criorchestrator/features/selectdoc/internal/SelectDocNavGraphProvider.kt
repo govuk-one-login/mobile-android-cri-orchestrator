@@ -25,6 +25,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicenc
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
@@ -76,6 +77,11 @@ constructor(
             ConfirmPassportScreen(
                 navController = navController,
                 viewModel = viewModel(factory = confirmPassportViewModelFactory),
+                session = Session(
+                    sessionId = "test session id",
+                    redirectUri = "",
+                    state = "123456"
+                )
             )
         }
 
