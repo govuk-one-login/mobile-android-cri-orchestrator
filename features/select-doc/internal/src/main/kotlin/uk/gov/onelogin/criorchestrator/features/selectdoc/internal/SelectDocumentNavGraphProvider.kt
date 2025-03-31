@@ -78,7 +78,7 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.NoNfcAbortConfirmationScreen> {
-               NoNfcAbortConfirmationScreen()
+                NoNfcAbortConfirmationScreen()
             }
         }
     }

@@ -70,13 +70,14 @@ internal class SelectDrivingLicenceViewModel(
         viewModelScope.launch {
             when (selectedIndex) {
                 0 -> _actions.emit(SelectDrivingLicenceAction.NavigateToConfirmation)
-                1 -> _actions.emit(
-                    if (isNfcEnabled()) {
-                        SelectDrivingLicenceAction.NavigateToNfcAbort
-                    } else {
-                        SelectDrivingLicenceAction.NavigateToNoNfcAbort
-                    }
-                )
+                1 ->
+                    _actions.emit(
+                        if (isNfcEnabled()) {
+                            SelectDrivingLicenceAction.NavigateToNfcAbort
+                        } else {
+                            SelectDrivingLicenceAction.NavigateToNoNfcAbort
+                        },
+                    )
             }
         }
     }
@@ -87,5 +88,4 @@ internal class SelectDrivingLicenceViewModel(
         } else {
             nfcChecker.hasNfc()
         }
-
 }

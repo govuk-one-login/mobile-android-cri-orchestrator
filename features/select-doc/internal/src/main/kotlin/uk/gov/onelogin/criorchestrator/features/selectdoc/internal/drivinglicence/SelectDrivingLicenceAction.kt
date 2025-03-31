@@ -7,6 +7,5 @@ sealed class SelectDrivingLicenceAction {
 
     data object NavigateToNoNfcAbort : SelectDrivingLicenceAction()
 
-
     data object NavigateToTypesOfPhotoID : SelectDrivingLicenceAction()
 }

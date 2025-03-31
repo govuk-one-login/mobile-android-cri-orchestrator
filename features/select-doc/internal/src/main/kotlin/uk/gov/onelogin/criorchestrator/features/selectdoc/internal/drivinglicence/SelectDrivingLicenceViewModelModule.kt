@@ -23,7 +23,7 @@ object SelectDrivingLicenceViewModelModule {
         analytics: SelectDocumentAnalytics,
         nfcChecker: NfcChecker,
         configStore: ConfigStore,
-        ): ViewModelProvider.Factory =
+    ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 SelectDrivingLicenceViewModel(
