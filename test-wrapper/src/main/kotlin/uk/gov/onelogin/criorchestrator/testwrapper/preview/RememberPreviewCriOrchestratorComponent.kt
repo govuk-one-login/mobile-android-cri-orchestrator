@@ -11,7 +11,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
 @Composable
 internal fun rememberPreviewCriOrchestratorComponent() =
     rememberCriOrchestrator(
-        authenticatedHttpClient = createHttpClient(),
+        authenticatedHttpClient = createHttpClient(LocalContext.current.resources, "mock_subject_token"),
         analyticsLogger = FakeAnalyticsLogger(),
         initialConfig = TestWrapperConfig.provideConfig(LocalContext.current.resources),
         logger = SystemLogger(),

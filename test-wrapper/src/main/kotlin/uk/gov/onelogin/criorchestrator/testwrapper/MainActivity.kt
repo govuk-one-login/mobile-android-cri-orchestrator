@@ -15,7 +15,12 @@ class MainActivity : ComponentActivity() {
     private val analyticsLogger by lazy {
         AnalyticsLoggerFactory.createAnalyticsLogger(this, logger)
     }
-    private val httpClient = createHttpClient()
+    private val httpClient by lazy {
+        createHttpClient(
+            resources,
+            "android-test",
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

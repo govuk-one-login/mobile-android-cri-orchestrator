@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="backendAsyncUrl" translatable="false">https://sessions.review-b-async.build.account.gov.uk</string>
+    <string name="stsUrl" translatable="false">https://sts-mock.review-b-async.build.account.gov.uk</string>
 </resources>

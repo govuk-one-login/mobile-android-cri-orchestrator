@@ -42,12 +42,18 @@ class MainContentTest {
     private fun ComposeContentTestRule.setMainContent() =
         setContent {
             GdsTheme {
+                val resources = ApplicationProvider.getApplicationContext<Application>().resources
+
                 MainContent(
-                    httpClient = createHttpClient(),
+                    httpClient =
+                        createHttpClient(
+                            resources,
+                            "mock_subject_token",
+                        ),
                     analyticsLogger = mock<AnalyticsLogger>(),
                     config =
                         TestWrapperConfig.provideConfig(
-                            resources = ApplicationProvider.getApplicationContext<Application>().resources,
+                            resources = resources,
                         ),
                     logger = mock<Logger>(),
                 )
