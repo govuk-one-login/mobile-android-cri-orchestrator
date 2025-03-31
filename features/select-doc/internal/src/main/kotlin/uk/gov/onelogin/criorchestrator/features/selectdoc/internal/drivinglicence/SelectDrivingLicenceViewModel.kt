@@ -38,11 +38,20 @@ internal class SelectDrivingLicenceViewModel(
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
 
+    private val _isNfcEnabled = MutableStateFlow(false)
+    val isNfcEnabled: StateFlow<Boolean> = _isNfcEnabled
+
+    init {
+        _isNfcEnabled.value = isNfcEnabled()
+    }
+
     fun onScreenStart() {
         analytics.trackScreen(
             SelectDocumentScreenId.SelectDrivingLicence,
             state.value.titleId,
         )
+
+        _isNfcEnabled.value = isNfcEnabled()
     }
 
     fun onReadMoreClick() {

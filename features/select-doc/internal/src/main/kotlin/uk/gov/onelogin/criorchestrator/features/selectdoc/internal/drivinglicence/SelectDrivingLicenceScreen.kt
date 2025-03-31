@@ -41,6 +41,7 @@ internal fun SelectDrivingLicenceScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val isNfcEnabled by viewModel.isNfcEnabled.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
@@ -62,11 +63,6 @@ internal fun SelectDrivingLicenceScreen(
                         SelectDocumentDestinations.Confirm,
                     )
 
-//                SelectDrivingLicenceAction.NavigateToBrp ->
-//                    navController.navigate(
-//                        SelectDocumentDestinations.Brp,
-//                    )
-
                 SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
                     navController.navigate(
                         SelectDocumentDestinations.NfcAbortConfirmationScreen,
@@ -86,6 +82,7 @@ internal fun SelectDrivingLicenceScreen(
                 .toPersistentList(),
         confirmButtonText = stringResource(state.buttonTextId),
         onConfirmSelection = viewModel::onConfirmSelection,
+        isNfcEnabled = isNfcEnabled,
     )
 }
 
@@ -99,6 +96,7 @@ internal fun SelectDrivingLicenceScreenContent(
     items: PersistentList<String>,
     confirmButtonText: String,
     onConfirmSelection: (Int) -> Unit,
+    isNfcEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var selectedItem by remember { mutableStateOf<Int?>(null) }
@@ -121,16 +119,18 @@ internal fun SelectDrivingLicenceScreenContent(
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
-                item {
-                    GdsButton(
-                        text = readMoreButtonTitle,
-                        buttonType = ButtonType.Secondary,
-                        onClick = onReadMoreClick,
-                        modifier = Modifier.padding(horizontal = horizontalPadding),
-                        contentModifier = Modifier,
-                        textAlign = TextAlign.Left,
-                        contentPosition = Arrangement.Start,
-                    )
+                if (isNfcEnabled) {
+                    item {
+                        GdsButton(
+                            text = readMoreButtonTitle,
+                            buttonType = ButtonType.Secondary,
+                            onClick = onReadMoreClick,
+                            modifier = Modifier.padding(horizontal = horizontalPadding),
+                            contentModifier = Modifier,
+                            textAlign = TextAlign.Left,
+                            contentPosition = Arrangement.Start,
+                        )
+                    }
                 }
                 item {
                     GdsSelection(
@@ -167,6 +167,8 @@ internal fun SelectDrivingLicenceScreenContent(
 @LightDarkBothLocalesPreview
 @Composable
 internal fun PreviewDrivingLicenceSelectionScreen() {
+    val isNfcEnabled = remember { true }
+
     GdsTheme {
         SelectDrivingLicenceScreenContent(
             title = stringResource(R.string.selectdocument_drivinglicence_title),
@@ -179,6 +181,7 @@ internal fun PreviewDrivingLicenceSelectionScreen() {
                 ).map { stringResource(it) }.toPersistentList(),
             confirmButtonText = stringResource(R.string.selectdocument_drivinglicence_continuebutton),
             onConfirmSelection = { },
+            isNfcEnabled = isNfcEnabled,
         )
     }
 }
