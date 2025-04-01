@@ -102,12 +102,46 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "true with expected log entry when API response is Success with correct" +
-                            "response format",
+                            "response format - with redirectUri (mobile journey)",
                         ApiResponse.Success<String>(
                             """
                             {
                                 "sessionId": "test session ID",
                                 "redirectUri": "https://example/redirect",
+                                "state": "11112222333344445555666677778888"
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    "Got active session",
+                    true,
+                ),
+                arguments(
+                    named(
+                        "true with expected log entry when API response is Success with correct" +
+                            "response format - with new parameters",
+                        ApiResponse.Success<String>(
+                            """
+                            {
+                                "sessionId": "test session ID",
+                                "redirectUri": "https://example/redirect",
+                                "additionalParameter": true,
+                                "state": "11112222333344445555666677778888"
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    "Got active session",
+                    true,
+                ),
+                arguments(
+                    named(
+                        "true with expected log entry when API response is Success with correct" +
+                            "response format - no redirectUri (desktop journey)",
+                        ApiResponse.Success<String>(
+                            """
+                            {
+                                "sessionId": "test session ID",
                                 "state": "11112222333344445555666677778888"
                             }
                             """.trimIndent(),
