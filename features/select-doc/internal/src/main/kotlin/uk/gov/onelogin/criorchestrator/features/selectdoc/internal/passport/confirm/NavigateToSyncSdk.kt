@@ -1,7 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
 
-import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 data object NavigateToSyncSdk {
-    val documentType: DocumentType = DocumentType.NFC_PASSPORT
+    val documentVariety: DocumentVariety = DocumentVariety.NFC_PASSPORT
 }
