@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
-import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 
@@ -69,7 +69,7 @@ class ConfirmPassportScreenTest {
 
         verify(navController).navigate(
             IdCheckWrapperDestinations.SyncIdCheckScreen(
-                DocumentType.NFC_PASSPORT,
+                DocumentVariety.NFC_PASSPORT,
             ),
         )
     }
