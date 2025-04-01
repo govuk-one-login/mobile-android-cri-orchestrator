@@ -9,15 +9,12 @@ dependencies {
     api(libs.uk.gov.logging.api)
 
     implementation(libs.uk.gov.idcheck.repositories.api)
-    implementation(libs.uk.gov.idcheck.ui.presentation)
-    implementation(libs.uk.gov.networking)
     implementation(project(":features:resume:internal-api"))
     implementation(project(":features:select-doc:internal-api"))
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
     implementation(projects.features.idcheckWrapper.internalApi)
-    implementation(projects.features.session.internalApi)
 
     testImplementation(testFixtures(project(":libraries:analytics")))
 
