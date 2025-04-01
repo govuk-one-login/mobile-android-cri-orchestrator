@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
@@ -28,7 +28,7 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class SelectPassportScreenTest {
@@ -98,7 +98,7 @@ class SelectPassportScreenTest {
             .onNode(readMoreButton)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
+        verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
     }
 
     @Test
@@ -151,7 +151,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.ConfirmPassport)
+        verify(navController).navigate(SelectDocDestinations.ConfirmPassport)
     }
 
     @Test
@@ -167,7 +167,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.Brp)
+        verify(navController).navigate(SelectDocDestinations.Brp)
     }
 
     private fun swipeToAdditionalContent() {

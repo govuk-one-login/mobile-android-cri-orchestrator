@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
