@@ -14,7 +14,7 @@ dependencies {
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
-    implementation(projects.features.idcheckWrapper.internalApi)
+    implementation(projects.features.idCheckWrapper.internalApi)
 
     testImplementation(testFixtures(project(":libraries:analytics")))
 

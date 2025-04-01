@@ -34,10 +34,10 @@ internal fun ConfirmPassportScreen(
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
-        viewModel.actionDetails.collect { documentType ->
+        viewModel.action.collect { event ->
             navController.navigate(
                 IdCheckWrapperDestinations.SyncIdCheckScreen(
-                    documentType,
+                    event.documentType,
                 ),
             )
         }

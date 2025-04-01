@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
 
 import android.content.Context
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -38,8 +37,6 @@ class ConfirmPassportScreenAnalyticsTest {
 
     private val continueButton =
         hasText(context.getString(R.string.confirmdocument_confirmbutton))
-    private val image =
-        hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
 
     private val analytics =
         SelectDocAnalytics(
