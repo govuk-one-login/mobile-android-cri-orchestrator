@@ -21,7 +21,6 @@ dependencies {
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
     implementation(projects.features.idcheckWrapper.internalApi)
-    implementation(projects.features.session.internalApi)
 
     testImplementation(testFixtures(project(":libraries:analytics")))
 

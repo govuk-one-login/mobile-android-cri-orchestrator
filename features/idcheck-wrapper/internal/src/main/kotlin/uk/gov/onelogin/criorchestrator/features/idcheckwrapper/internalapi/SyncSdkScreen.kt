@@ -8,16 +8,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
-import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun SyncIdCheckScreen(
-    idCheckSdkParameters: IdCheckSdkParameters,
-    modifier: Modifier = Modifier
+    documentType: DocumentType,
+    viewModel: SyncSdkViewModel,
+    modifier: Modifier = Modifier,
+) {
+    SyncIdCheckContent(
+        documentType = documentType,
+        journeyType = viewModel.journeyType,
+        sessionId = viewModel.session.sessionId,
+        accessToken = viewModel.biometricToken.accessToken,
+        opaqueId = viewModel.biometricToken.opaqueId,
+        modifier = modifier,
+    )
+}
+
+@Suppress("LongParameterList")
+@Composable
+private fun SyncIdCheckContent(
+    documentType: DocumentType,
+    journeyType: JourneyType,
+    sessionId: String,
+    accessToken: String,
+    opaqueId: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -25,19 +44,19 @@ internal fun SyncIdCheckScreen(
         )
         Spacer(modifier = Modifier.padding(largePadding))
         Text(
-            text = "Document Type: ${idCheckSdkParameters.document}",
+            text = "Document Type: $documentType",
         )
         Text(
-            text = "Journey Type: ${idCheckSdkParameters.journey}",
+            text = "Journey Type: $journeyType",
         )
         Text(
-            text = "Session ID: ${idCheckSdkParameters.sessionId}",
+            text = "Session ID: $sessionId",
         )
         Text(
-            text = "Biometric Token Access Token: ${idCheckSdkParameters.bioToken?.accessToken}",
+            text = "Biometric Token Access Token: $accessToken",
         )
         Text(
-            text = "Biometric Token Opaque ID: ${idCheckSdkParameters.bioToken?.opaqueId}",
+            text = "Biometric Token Opaque ID: $opaqueId",
         )
     }
 }
@@ -46,16 +65,12 @@ internal fun SyncIdCheckScreen(
 @Composable
 internal fun PreviewSyncIdCheckScreen() {
     GdsTheme {
-        SyncIdCheckScreen(
-            IdCheckSdkParameters(
-                document = DocumentType.NFC_PASSPORT,
-                journey = JourneyType.MOBILE_APP_MOBILE,
-                sessionId = "Test Session ID",
-                bioToken = BiometricToken(
-                    accessToken = "Test Access Token",
-                    opaqueId = "Test Opaque ID",
-                ),
-            )
+        SyncIdCheckContent(
+            documentType = DocumentType.NFC_PASSPORT,
+            journeyType = JourneyType.MOBILE_APP_MOBILE,
+            sessionId = "test session ID",
+            accessToken = "test access token",
+            opaqueId = "test opaque ID",
         )
     }
 }

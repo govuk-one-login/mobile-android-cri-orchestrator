@@ -23,7 +23,7 @@ class SelectPassportViewModelTest {
     private val viewModel by lazy {
         SelectPassportViewModel(
             analytics =
-                analyticsLogger,
+            analyticsLogger,
         )
     }
 

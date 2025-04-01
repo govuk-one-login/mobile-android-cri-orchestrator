@@ -5,15 +5,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.ConfirmDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 
 internal class ConfirmPassportViewModel(
-    private val analytics: SelectDocAnalytics
+    private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
-    private val _actions = MutableSharedFlow<ConfirmPassportAction>()
-    val actions: Flow<ConfirmPassportAction> = _actions
+    private val _actionDetails = MutableSharedFlow<DocumentType>()
+    val actionDetails: Flow<DocumentType> = _actionDetails
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -26,7 +26,9 @@ internal class ConfirmPassportViewModel(
         analytics.trackButtonEvent(buttonText = ConfirmPassportConstants.buttonTextId)
 
         viewModelScope.launch {
-            _actions.emit(ConfirmPassportAction.NavigateToPassportPhotoScanner)
+            _actionDetails.emit(
+                DocumentType.NFC_PASSPORT,
+            )
         }
     }
 }

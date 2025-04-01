@@ -19,7 +19,7 @@ class InMemorySessionStore
     constructor(
         private val logger: Logger,
     ) : SessionStore,
-    LogTagProvider {
+        LogTagProvider {
         private var activeSession: MutableStateFlow<Session?> = MutableStateFlow(null)
 
         override fun read(): StateFlow<Session?> {
