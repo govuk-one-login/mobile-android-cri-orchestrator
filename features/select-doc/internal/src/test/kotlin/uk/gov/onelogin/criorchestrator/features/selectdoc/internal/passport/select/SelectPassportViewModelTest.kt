@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
@@ -12,8 +12,6 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportAction
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
