@@ -39,12 +39,6 @@ class SelectDocumentNavGraphProvider
                     viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
-            composable<SelectDocumentDestinations.Brp> {
-                SelectBrpScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = selectBrpViewModelFactory),
-                )
-            }
 
             composable<SelectDocumentDestinations.Brp> {
                 SelectBrpScreen(
@@ -63,7 +57,7 @@ class SelectDocumentNavGraphProvider
                 )
             }
 
-            composable<SelectDocumentDestinations.Confirm> {
+            composable<SelectDocumentDestinations.ConfirmPassport> {
                 ConfirmDocumentScreen()
             }
 

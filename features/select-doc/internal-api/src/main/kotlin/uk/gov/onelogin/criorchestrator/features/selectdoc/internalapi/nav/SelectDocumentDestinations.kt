@@ -17,7 +17,7 @@ sealed interface SelectDocumentDestinations : ProveYourIdentityDestinations {
     data object TypesOfPhotoID : SelectDocumentDestinations
 
     @Serializable
-    data object Confirm : SelectDocumentDestinations
+    data object ConfirmPassport : SelectDocumentDestinations
 
     @Serializable
     data object ConfirmBrp : SelectDocumentDestinations
