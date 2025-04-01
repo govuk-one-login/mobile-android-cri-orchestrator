@@ -10,9 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
-import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreenBodyContent
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreenButton
+import uk.gov.android.ui.patterns.errorscreen.ErrorScreen
+import uk.gov.android.ui.patterns.errorscreen.ErrorScreenIcon
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
@@ -56,7 +57,7 @@ internal fun ProblemErrorScreenContent(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
     ) {
-        CentreAlignedScreen(
+        ErrorScreen(
             title = stringResource(ProblemErrorConstants.titleId),
             body =
                 persistentListOf(
@@ -67,6 +68,7 @@ internal fun ProblemErrorScreenContent(
                         bodyText = stringResource(R.string.handback_problemerror_body2),
                     ),
                 ),
+            icon = ErrorScreenIcon.ErrorIcon,
             secondaryButton =
                 CentreAlignedScreenButton(
                     text = stringResource(ProblemErrorConstants.buttonTextId),
