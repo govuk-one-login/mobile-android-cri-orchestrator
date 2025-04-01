@@ -5,18 +5,19 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 
 internal class SelectPassportViewModel(
-    private val analytics: SelectDocumentAnalytics,
+    private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectPassportAction>()
     val actions: Flow<SelectPassportAction> = _actions
 
     fun onScreenStart() {
         analytics.trackScreen(
-            id = SelectDocumentScreenId.SelectPassport,
+            id = SelectDocScreenId.SelectPassport,
             title = SelectPassportConstants.titleId,
         )
     }

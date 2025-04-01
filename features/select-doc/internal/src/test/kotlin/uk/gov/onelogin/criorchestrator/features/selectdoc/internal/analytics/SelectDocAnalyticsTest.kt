@@ -24,7 +24,7 @@ class SelectDocAnalyticsTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     private val analytics by lazy {
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider = AndroidResourceProvider(context = context),
             analyticsLogger = analyticsLogger,
         )
