@@ -12,8 +12,6 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportAction
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -23,7 +21,7 @@ class SelectPassportViewModelTest {
     private val viewModel by lazy {
         SelectPassportViewModel(
             analytics =
-            analyticsLogger,
+                analyticsLogger,
         )
     }
 
