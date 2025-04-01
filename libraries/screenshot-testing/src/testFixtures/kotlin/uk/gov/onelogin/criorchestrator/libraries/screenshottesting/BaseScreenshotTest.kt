@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.libraries.screenshottesting
 import android.content.res.Configuration
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import app.cash.paparazzi.TestName
 import com.android.resources.Density
 import com.android.resources.NightMode
 import org.junit.Rule
@@ -44,8 +45,8 @@ abstract class BaseScreenshotTest(
 
     @Test
     fun screenshot() {
-        val name = preview.screenshotId()
-        paparazzi.snapshot(name = name) {
+        updateScreenshotName(paparazzi, preview)
+        paparazzi.snapshot {
             ProvidesContentWithFakeViewModelStoreOwner {
                 preview()
             }
@@ -94,4 +95,38 @@ abstract class BaseScreenshotTest(
             .ignoreClassName()
             .ignoreMethodName()
             .build()
+
+    /**
+     * Set the screenshot name based on the preview under test rather than the test class.
+     *
+     * This is needed because there is only one screenshot test per module so the screenshot test
+     * name is unnecessary noise in the screenshot names. It also ensures that when new screenshots
+     * are added, screenshots from different packages do not need their names updating.
+     */
+    private fun updateScreenshotName(
+        paparazzi: Paparazzi,
+        preview: ComposablePreview<AndroidPreviewInfo>,
+    ) {
+        val packageName =
+            preview.declaringClass
+                .replace("uk.gov.onelogin.criorchestrator.", "")
+                .split(".")
+                .dropLast(1)
+                .joinToString(".")
+        val className = preview.declaringClass.split(".").last()
+        val methodName = "${preview.methodName}_${preview.screenshotId()}"
+
+        Paparazzi::class.java
+            .getDeclaredField("testName")
+            .apply {
+                isAccessible = true
+            }.set(
+                paparazzi,
+                TestName(
+                    packageName = packageName,
+                    className = className,
+                    methodName = methodName,
+                ),
+            )
+    }
 }
