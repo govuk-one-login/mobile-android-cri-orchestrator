@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import uk.gov.android.network.client.GenericHttpClient
@@ -9,7 +8,6 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.AnalyticsLoggerFactory
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.LoggerFactory
 import uk.gov.onelogin.criorchestrator.testwrapper.logging.homeScreenViewEvent
-import uk.gov.onelogin.criorchestrator.testwrapper.network.StubAuthenticationProvider
 import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
 
 class MainActivity : ComponentActivity() {
@@ -23,10 +21,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        httpClient = createHttpClient(
-            resources,
-            "mock_subject_token"
-        )
+        httpClient =
+            createHttpClient(
+                resources,
+                "mock_subject_token",
+            )
 
         val config = TestWrapperConfig.provideConfig(resources)
         setContent {
@@ -38,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     logger = logger,
                     didUpdateSub = { sub ->
                         httpClient = createHttpClient(resources, sub)
-                    }
+                    },
                 )
             }
         }

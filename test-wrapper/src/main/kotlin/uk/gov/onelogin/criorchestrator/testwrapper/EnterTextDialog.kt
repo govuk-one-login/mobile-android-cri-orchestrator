@@ -45,9 +45,10 @@ fun EnterTextDialog(
             },
             content = {
                 Card(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(spacingDouble),
+                    modifier =
+                        modifier
+                            .fillMaxWidth()
+                            .padding(spacingDouble),
                     shape = RoundedCornerShape(spacingDouble),
                 ) {
                     var text: String by remember { mutableStateOf("") }
@@ -57,7 +58,7 @@ fun EnterTextDialog(
                         onValueChange = { text = it },
                         label = {
                             Text("Enter sub value: ")
-                        }
+                        },
                     )
 
                     Row(

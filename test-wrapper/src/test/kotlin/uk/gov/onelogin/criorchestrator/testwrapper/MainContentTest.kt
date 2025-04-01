@@ -56,6 +56,7 @@ class MainContentTest {
                             resources = resources,
                         ),
                     logger = mock<Logger>(),
+                    didUpdateSub = { },
                 )
             }
         }
