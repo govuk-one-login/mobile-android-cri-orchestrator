@@ -21,7 +21,7 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
@@ -36,7 +36,7 @@ internal fun ConfirmPassportScreen(
 
         viewModel.actionDetails.collect { documentType ->
             navController.navigate(
-                IdCheckDestinations.SyncIdCheck(
+                IdCheckWrapperDestinations.SyncIdCheckScreen(
                     documentType,
                 ),
             )
