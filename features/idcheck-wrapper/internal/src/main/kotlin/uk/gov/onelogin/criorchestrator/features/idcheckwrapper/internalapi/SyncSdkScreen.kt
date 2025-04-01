@@ -28,6 +28,7 @@ internal fun SyncIdCheckScreen(
     )
 }
 
+// DCMAW-11490: Actually call ID Check SDK and build bypass
 @Suppress("LongParameterList")
 @Composable
 private fun SyncIdCheckContent(

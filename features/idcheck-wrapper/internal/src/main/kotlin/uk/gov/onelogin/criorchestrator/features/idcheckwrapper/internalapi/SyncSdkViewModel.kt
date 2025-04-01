@@ -18,12 +18,13 @@ class SyncSdkViewModel(
     init {
         viewModelScope.launch {
             session = sessionStore.read().value!!
-            biometricToken = stubCallToBiometricToken()
+            biometricToken = stubCallToBiometricTokenEndpoint()
             journeyType = getJourneyTypeFromRedirectUri(session)
         }
     }
 
-    private suspend fun stubCallToBiometricToken(): BiometricToken =
+    // DCMAW-12468: Actually call and properly stub the Biometric Token endpoint call
+    private suspend fun stubCallToBiometricTokenEndpoint(): BiometricToken =
         BiometricToken(
             accessToken = "Stub Access Token",
             opaqueId = "Stub Opaque ID",
