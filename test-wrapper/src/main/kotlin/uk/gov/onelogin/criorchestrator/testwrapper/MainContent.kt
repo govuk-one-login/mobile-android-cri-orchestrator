@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
@@ -17,18 +18,28 @@ import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdenti
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuDialog
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuFloatingActionButton
+import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
 
 @Composable
 fun MainContent(
-    httpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
     config: Config,
     logger: Logger,
-    didUpdateSub: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val resources = LocalContext.current.resources
+    var sub by remember { mutableStateOf("") }
+    val httpClient: GenericHttpClient =
+        remember(sub) {
+            createHttpClient(
+                resources = resources,
+                sub,
+            )
+        }
+
     val criOrchestratorComponent =
         rememberCriOrchestrator(
+            key = sub,
             authenticatedHttpClient = httpClient,
             analyticsLogger = analyticsLogger,
             initialConfig = config,
@@ -49,8 +60,8 @@ fun MainContent(
             modifier = modifier.padding(innerPadding),
         )
 
-        EnterTextDialog { sub ->
-            didUpdateSub(sub)
+        EnterTextDialog {
+            sub = it
         }
 
         if (showDevMenu) {
