@@ -181,8 +181,6 @@ private fun PhotoIDInformation(
     ) {
         GdsHeading(
             text = title,
-            fontWeight = FontWeight.W700,
-            style = LocalTextStyle.current,
             modifier =
                 Modifier
                     .padding(horizontal = horizontalPadding)
