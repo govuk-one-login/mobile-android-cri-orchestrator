@@ -8,9 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.SyncIdCheckScreen
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.SyncSdkViewModelModule
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.ConfirmDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
@@ -38,13 +37,13 @@ class ConfirmPassportViewModelTest {
     @Test
     fun `when confirm is pressed, send analytics and `() =
         runTest {
-            viewModel.actionDetails.test {
+            viewModel.action.test {
                 viewModel.onPrimary()
                 verify(analyticsLogger)
                     .trackButtonEvent(
                         buttonText = R.string.confirmdocument_confirmbutton,
                     )
-                assertEquals(DocumentType.NFC_PASSPORT, awaitItem())
+                assertEquals(NavigateToSyncSdk, awaitItem())
             }
         }
 }
