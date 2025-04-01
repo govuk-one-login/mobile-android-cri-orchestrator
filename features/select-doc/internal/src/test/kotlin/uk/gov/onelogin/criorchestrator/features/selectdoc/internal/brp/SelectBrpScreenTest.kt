@@ -88,7 +88,7 @@ class SelectBrpScreenTest {
             .onNode(continueButton, useUnmergedTree = true)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.BrpConfirmation)
+        verify(navController).navigate(SelectDocumentDestinations.ConfirmBrp)
     }
 
     // DCMAW-10690 | AC3: User doesn’t have a biometric document

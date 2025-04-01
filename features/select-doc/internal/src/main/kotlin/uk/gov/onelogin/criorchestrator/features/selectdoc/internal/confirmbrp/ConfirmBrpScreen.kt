@@ -9,7 +9,7 @@ import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun BrpConfirmationScreen(modifier: Modifier = Modifier) {
+internal fun ConfirmBrpScreen(modifier: Modifier = Modifier) {
     Text(
         "Confirm you want to continue with your BRP, BRC or FWP",
         modifier = modifier.padding(spacingDouble),
@@ -18,8 +18,8 @@ internal fun BrpConfirmationScreen(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewBrpConfirmation() {
+internal fun ConfirmBrpPreview() {
     GdsTheme {
-        BrpConfirmationScreen()
+        ConfirmBrpScreen()
     }
 }

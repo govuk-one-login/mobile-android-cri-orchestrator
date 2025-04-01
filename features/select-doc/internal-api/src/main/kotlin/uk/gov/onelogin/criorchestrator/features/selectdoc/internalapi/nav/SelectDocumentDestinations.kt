@@ -20,5 +20,5 @@ sealed interface SelectDocumentDestinations : ProveYourIdentityDestinations {
     data object Confirm : SelectDocumentDestinations
 
     @Serializable
-    data object BrpConfirmation : SelectDocumentDestinations
+    data object ConfirmBrp : SelectDocumentDestinations
 }

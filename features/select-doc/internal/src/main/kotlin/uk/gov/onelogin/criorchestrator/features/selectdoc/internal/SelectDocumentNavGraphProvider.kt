@@ -10,7 +10,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.BrpConfirmationScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
@@ -67,8 +67,8 @@ class SelectDocumentNavGraphProvider
                 ConfirmDocumentScreen()
             }
 
-            composable<SelectDocumentDestinations.BrpConfirmation> {
-                BrpConfirmationScreen()
+            composable<SelectDocumentDestinations.ConfirmBrp> {
+                ConfirmBrpScreen()
             }
         }
     }

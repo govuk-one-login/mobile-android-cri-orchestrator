@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 
 class SelectBrpViewModel(
     private val analytics: SelectDocumentAnalytics,
@@ -16,7 +16,7 @@ class SelectBrpViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            SelectBrpScreenId.SelectBrp,
+            SelectDocumentScreenId.SelectBrp,
             SelectBrpConstants.titleId,
         )
     }

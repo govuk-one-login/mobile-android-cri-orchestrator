@@ -50,7 +50,7 @@ fun SelectBrpScreen(
 
                 SelectBrpAction.NavigateToBrpConfirmation -> {
                     navController.navigate(
-                        SelectDocumentDestinations.BrpConfirmation,
+                        SelectDocumentDestinations.ConfirmBrp,
                     )
                 }
 

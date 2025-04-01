@@ -17,8 +17,8 @@ import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -65,7 +65,7 @@ class SelectBrpScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = SelectBrpScreenId.SelectBrp.rawId,
+                    id = SelectDocumentScreenId.SelectBrp.rawId,
                     name = context.getString(SelectBrpConstants.titleId),
                     params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()

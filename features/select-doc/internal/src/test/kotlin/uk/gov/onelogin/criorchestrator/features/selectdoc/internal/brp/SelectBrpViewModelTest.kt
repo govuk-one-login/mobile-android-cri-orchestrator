@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectBrpScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -30,7 +30,7 @@ class SelectBrpViewModelTest {
         viewModel.onScreenStart()
 
         verify(analytics).trackScreen(
-            id = SelectBrpScreenId.SelectBrp,
+            id = SelectDocumentScreenId.SelectBrp,
             title = SelectBrpConstants.titleId,
         )
     }
