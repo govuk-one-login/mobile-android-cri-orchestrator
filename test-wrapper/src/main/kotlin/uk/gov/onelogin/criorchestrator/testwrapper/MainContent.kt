@@ -24,6 +24,7 @@ fun MainContent(
     analyticsLogger: AnalyticsLogger,
     config: Config,
     logger: Logger,
+    didUpdateSub: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val criOrchestratorComponent =
@@ -34,6 +35,7 @@ fun MainContent(
             logger = logger,
         )
     var showDevMenu by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -46,6 +48,10 @@ fun MainContent(
             component = criOrchestratorComponent,
             modifier = modifier.padding(innerPadding),
         )
+
+        EnterTextDialog { sub ->
+            didUpdateSub(sub)
+        }
 
         if (showDevMenu) {
             DevMenuDialog(
