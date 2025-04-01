@@ -36,6 +36,12 @@ class RemoteSessionReader
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
+        private val json: Json by lazy {
+            Json {
+                ignoreUnknownKeys = true
+            }
+        }
+
         override fun isActiveSession(): Flow<Boolean> =
             merge(
                 configStore.read(IdCheckAsyncBackendBaseUrl),
@@ -61,7 +67,7 @@ class RemoteSessionReader
 
             return try {
                 val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
-                    Json.decodeFromString(response.response.toString())
+                    json.decodeFromString(response.response.toString())
                 Session(
                     sessionId = parsedResponse.sessionId,
                     redirectUri = parsedResponse.redirectUri,
