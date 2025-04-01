@@ -1,6 +1,6 @@
 @file:OptIn(UnstableDesignSystemAPI::class)
 
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth

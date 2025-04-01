@@ -7,25 +7,24 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoChippedID
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoNonChippedID
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation.ConfirmDocumentScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModelModule
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirmation.ConfirmBrpScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
-class SelectDocumentNavGraphProvider
+class SelectDocNavGraphProvider
     @Inject
     constructor(
         @Named(SelectBrpViewModelModule.FACTORY_NAME)
@@ -38,50 +37,50 @@ class SelectDocumentNavGraphProvider
         private val selectDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-            composable<SelectDocumentDestinations.Passport> {
+            composable<SelectDocDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,
                     viewModel = viewModel(factory = selectPassportViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.Brp> {
+            composable<SelectDocDestinations.Brp> {
                 SelectBrpScreen(
                     navController = navController,
                     viewModel = viewModel(factory = selectBrpViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.DrivingLicence> {
+            composable<SelectDocDestinations.DrivingLicence> {
                 SelectDrivingLicenceScreen(
                     navController = navController,
                     viewModel = viewModel(factory = selectDrivingLicenceViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.TypesOfPhotoID> {
+            composable<SelectDocDestinations.TypesOfPhotoID> {
                 TypesOfPhotoIDScreen(
                     viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
                 )
             }
 
-            composable<SelectDocumentDestinations.ConfirmPassport> {
+            composable<SelectDocDestinations.ConfirmPassport> {
                 ConfirmDocumentScreen()
             }
 
-            composable<SelectDocumentDestinations.ConfirmDrivingLicence> {
+            composable<SelectDocestinations.ConfirmDrivingLicence> {
                 ConfirmDocumentScreen()
             }
 
-            composable<SelectDocumentDestinations.ConfirmBrp> {
+            composable<SelectDocDestinations.ConfirmBrp> {
                 ConfirmBrpScreen()
             }
 
-            composable<SelectDocumentDestinations.ConfirmNoChippedID> {
+            composable<SelectDocDestinations.ConfirmNoChippedID> {
                 ConfirmNoChippedID()
             }
 
-            composable<SelectDocumentDestinations.ConfirmNoNonChippedID> {
+            composable<SelectDocDestinations.ConfirmNoNonChippedID> {
                 ConfirmNoNonChippedID()
             }
         }

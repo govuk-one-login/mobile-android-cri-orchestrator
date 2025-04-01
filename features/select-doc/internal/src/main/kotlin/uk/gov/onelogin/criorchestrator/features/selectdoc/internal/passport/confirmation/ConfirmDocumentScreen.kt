@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
