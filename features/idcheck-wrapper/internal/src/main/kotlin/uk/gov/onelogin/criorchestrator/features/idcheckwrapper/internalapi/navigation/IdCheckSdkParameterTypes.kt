@@ -3,28 +3,28 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.navi
 import android.os.Bundle
 import androidx.navigation.NavType
 import kotlinx.serialization.json.Json
-import uk.gov.idcheck.sdk.IdCheckSdkParameters
+import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 
 /**
- * This is required to serialize [IdCheckSdkParameters] into navigation arguments.
+ * This is required to serialize [DocumentType] into navigation arguments.
  */
-internal val IdCheckSdkParameterType = object : NavType<IdCheckSdkParameters>(
-    isNullableAllowed = false,
-) {
-    override fun get(
-        bundle: Bundle,
-        key: String
-    ): IdCheckSdkParameters? = bundle.getString(key)?.let { parseValue(it) }
+@Suppress("MaxLineLength") // Conflict between KtLint formatting and Detekt rule
+internal val DocumentTypeNavType =
+    object : NavType<DocumentType>(
+        isNullableAllowed = false,
+    ) {
+        override fun get(
+            bundle: Bundle,
+            key: String,
+        ): DocumentType? = bundle.getString(key)?.let { parseValue(it) }
 
-    override fun put(
-        bundle: Bundle,
-        key: String,
-        value: IdCheckSdkParameters
-    ) = bundle.putString(key, serializeAsValue(value))
+        override fun put(
+            bundle: Bundle,
+            key: String,
+            value: DocumentType,
+        ) = bundle.putString(key, serializeAsValue(value))
 
-    override fun parseValue(value: String): IdCheckSdkParameters =
-        Json.decodeFromString<IdCheckSdkParameters>(value)
+        override fun parseValue(value: String): DocumentType = Json.decodeFromString<DocumentType>(value)
 
-    override fun serializeAsValue(value: IdCheckSdkParameters): String =
-        Json.encodeToString(value)
-}
+        override fun serializeAsValue(value: DocumentType): String = Json.encodeToString(value)
+    }

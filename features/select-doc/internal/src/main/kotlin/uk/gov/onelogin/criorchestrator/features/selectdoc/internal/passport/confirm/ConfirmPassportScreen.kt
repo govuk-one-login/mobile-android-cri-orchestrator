@@ -21,18 +21,12 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
-import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
-import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
-import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun ConfirmPassportScreen(
-    session: Session,
     viewModel: ConfirmPassportViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -40,18 +34,10 @@ internal fun ConfirmPassportScreen(
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
-        viewModel.actions.collect {
+        viewModel.actionDetails.collect { documentType ->
             navController.navigate(
                 IdCheckDestinations.SyncIdCheck(
-                    IdCheckSdkParameters(
-                        document = DocumentType.NFC_PASSPORT,
-                        journey = JourneyType.MOBILE_APP_MOBILE,
-                        sessionId = session.sessionId,
-                        bioToken = BiometricToken(
-                            accessToken = "Fake Access Token",
-                            opaqueId = "Fake Opaque ID",
-                        )
-                    )
+                    documentType,
                 ),
             )
         }
@@ -123,6 +109,10 @@ internal fun ConfirmPassportScreenContent(
 @Composable
 internal fun PreviewConfirmPassportScreen() {
     GdsTheme {
-//        ConfirmPassportScreen()
+        ConfirmPassportScreenContent(
+            title = stringResource(ConfirmPassportConstants.titleId),
+            confirmButtonText = stringResource(ConfirmPassportConstants.buttonTextId),
+            onPrimaryClick = { },
+        )
     }
 }

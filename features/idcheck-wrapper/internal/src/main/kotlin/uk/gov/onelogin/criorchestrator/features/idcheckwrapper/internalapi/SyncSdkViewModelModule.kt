@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -6,22 +6,22 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object ConfirmPassportViewModelModule {
-    const val FACTORY_NAME = "ConfirmPassportViewModelModuleFactory"
+object SyncSdkViewModelModule {
+    const val FACTORY_NAME = "SyncSdkViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(analytics: SelectDocAnalytics): ViewModelProvider.Factory =
+    fun provideFactory(sessionStore: SessionStore): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                ConfirmPassportViewModel(
-                    analytics,
+                SyncSdkViewModel(
+                    sessionStore,
                 )
             }
         }

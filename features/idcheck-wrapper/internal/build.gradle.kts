@@ -8,6 +8,7 @@ dependencies {
     implementation(libs.uk.gov.idcheck.repositories.api)
     implementation(libs.uk.gov.idcheck.ui.presentation)
     implementation(projects.features.idcheckWrapper.internalApi)
+    implementation(projects.features.session.internalApi)
     implementation(project(":features:resume:internal-api"))
     implementation(project(":libraries:di"))
     implementation(project(":libraries:navigation"))
