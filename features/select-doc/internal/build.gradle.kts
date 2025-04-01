@@ -8,7 +8,6 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
-    implementation(libs.uk.gov.idcheck.repositories.api)
     implementation(project(":features:resume:internal-api"))
     implementation(project(":features:select-doc:internal-api"))
     implementation(project(":libraries:analytics"))

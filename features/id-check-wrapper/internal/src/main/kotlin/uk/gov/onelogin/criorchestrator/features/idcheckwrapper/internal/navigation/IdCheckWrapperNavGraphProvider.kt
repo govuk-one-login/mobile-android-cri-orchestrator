@@ -30,7 +30,7 @@ class IdCheckWrapperNavGraphProvider
             ) {
                 val args = it.toRoute<IdCheckWrapperDestinations.SyncIdCheckScreen>()
                 SyncIdCheckScreen(
-                    documentType = args.documentType,
+                    documentType = args.toDocumentType(),
                     viewModel = viewModel(factory = syncSdkViewModelFactory),
                 )
             }

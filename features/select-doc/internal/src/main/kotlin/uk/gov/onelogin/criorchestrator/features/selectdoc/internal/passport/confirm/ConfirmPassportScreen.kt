@@ -37,7 +37,7 @@ internal fun ConfirmPassportScreen(
         viewModel.action.collect { event ->
             navController.navigate(
                 IdCheckWrapperDestinations.SyncIdCheckScreen(
-                    event.documentType,
+                    event.documentVariety,
                 ),
             )
         }
