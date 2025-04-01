@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
@@ -42,8 +40,6 @@ internal fun SelectPassportScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -56,7 +52,7 @@ internal fun SelectPassportScreen(
 
                 SelectPassportAction.NavigateToConfirmation ->
                     navController.navigate(
-                        SelectDocumentDestinations.Confirm,
+                        SelectDocumentDestinations.ConfirmPassport,
                     )
 
                 SelectPassportAction.NavigateToBrp ->
@@ -68,15 +64,8 @@ internal fun SelectPassportScreen(
     }
 
     SelectPassportScreenContent(
-        title = stringResource(SelectPassportConstants.titleId),
         modifier = modifier,
-        readMoreButtonTitle = stringResource(SelectPassportConstants.readMoreButtonTextId),
         onReadMoreClick = viewModel::onReadMoreClick,
-        items =
-            state.options
-                .map { stringResource(it) }
-                .toPersistentList(),
-        confirmButtonText = stringResource(SelectPassportConstants.buttonTextId),
         onConfirmSelection = viewModel::onConfirmSelection,
     )
 }
@@ -85,11 +74,7 @@ internal fun SelectPassportScreen(
 @Suppress("LongMethod", "LongParameterList")
 @Composable
 internal fun SelectPassportScreenContent(
-    title: String,
-    readMoreButtonTitle: String,
     onReadMoreClick: () -> Unit,
-    items: PersistentList<String>,
-    confirmButtonText: String,
     onConfirmSelection: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -101,7 +86,7 @@ internal fun SelectPassportScreenContent(
         LeftAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = title,
+                    text = stringResource(SelectPassportConstants.titleId),
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },
@@ -128,7 +113,7 @@ internal fun SelectPassportScreenContent(
                 }
                 item {
                     GdsButton(
-                        text = readMoreButtonTitle,
+                        text = stringResource(SelectPassportConstants.readMoreButtonTextId),
                         buttonType = ButtonType.Secondary,
                         onClick = onReadMoreClick,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
@@ -144,7 +129,10 @@ internal fun SelectPassportScreenContent(
                                 stringResource(R.string.selectdocument_passport_title),
                                 TitleType.Heading,
                             ),
-                        items = items,
+                        items =
+                            SelectPassportConstants.options
+                                .map { stringResource(it) }
+                                .toPersistentList(),
                         selectedItem = selectedItem,
                         onItemSelected = {
                             selectedItem = it
@@ -154,7 +142,7 @@ internal fun SelectPassportScreenContent(
             },
             primaryButton = {
                 GdsButton(
-                    text = confirmButtonText,
+                    text = stringResource(SelectPassportConstants.buttonTextId),
                     buttonType = ButtonType.Primary,
                     onClick = {
                         selectedItem?.let {
@@ -175,15 +163,7 @@ internal fun SelectPassportScreenContent(
 internal fun PreviewPassportSelectionScreen() {
     GdsTheme {
         SelectPassportScreenContent(
-            title = stringResource(R.string.selectdocument_passport_title),
-            readMoreButtonTitle = stringResource(R.string.selectdocument_passport_readmore_button),
             onReadMoreClick = { },
-            items =
-                listOf(
-                    R.string.selectdocument_passport_selection_yes,
-                    R.string.selectdocument_passport_selection_no,
-                ).map { stringResource(it) }.toPersistentList(),
-            confirmButtonText = stringResource(R.string.selectdocument_passport_continuebutton),
             onConfirmSelection = { },
         )
     }

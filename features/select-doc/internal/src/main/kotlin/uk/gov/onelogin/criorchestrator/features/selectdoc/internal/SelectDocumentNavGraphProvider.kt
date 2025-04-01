@@ -50,7 +50,7 @@ class SelectDocumentNavGraphProvider
                 )
             }
 
-            composable<SelectDocumentDestinations.Confirm> {
+            composable<SelectDocumentDestinations.ConfirmPassport> {
                 ConfirmDocumentScreen()
             }
         }
