@@ -45,7 +45,7 @@ class StubAuthenticationProviderTest {
 
             verify(mockClient).makeRequest(
                 ApiRequest.FormUrlEncoded(
-                    "www.example.com",
+                    "www.example.com/token",
                     params =
                         listOf(
                             Pair("grant_type", GRANT_TYPE),

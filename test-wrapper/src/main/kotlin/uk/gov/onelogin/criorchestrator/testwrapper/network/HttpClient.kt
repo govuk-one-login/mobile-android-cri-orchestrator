@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.testwrapper.network
 
 import android.content.res.Resources
-import android.util.Log
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse.Success
@@ -34,14 +33,11 @@ internal class StubAuthenticationProvider(
     val subjectToken: String,
 ) : AuthenticationProvider {
     override suspend fun fetchBearerToken(scope: String): AuthenticationResponse {
-        val url = resources.getString(R.string.stsUrl) + "/token"
-
-        Log.w("token exchange", "requesting scope: $scope")
-        Log.w("token exchange", "from url: $url")
+        val tokenEndpoint = resources.getString(R.string.stsUrl) + "/token"
 
         val request =
             ApiRequest.FormUrlEncoded(
-                url = url,
+                url = tokenEndpoint,
                 params =
                     listOf(
                         Pair("grant_type", GRANT_TYPE),
@@ -53,7 +49,6 @@ internal class StubAuthenticationProvider(
 
         val response = client.makeRequest(request)
         if (response !is Success<*>) {
-            Log.w("token exchange", "received response: $response")
             return AuthenticationResponse.Failure(Exception("Could not exchange token with STS mock"))
         }
 
