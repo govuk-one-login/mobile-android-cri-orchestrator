@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -37,6 +35,8 @@ fun SelectBrpScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -64,7 +64,10 @@ fun SelectBrpScreen(
     }
 
     SelectBrpScreenContent(
+        selectedItem = state.selectedItem,
+        onSelectedItemChanged = viewModel::onItemSelected,
         onReadMoreClicked = viewModel::onReadMoreClicked,
+        continueButtonEnabled = state.continueButtonEnabled,
         onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
     )
@@ -75,11 +78,12 @@ fun SelectBrpScreen(
 @Composable
 internal fun SelectBrpScreenContent(
     onReadMoreClicked: () -> Unit,
+    selectedItem: Int?,
+    onSelectedItemChanged: (Int) -> Unit,
+    continueButtonEnabled: Boolean,
     onContinueClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedItem by remember { mutableStateOf<Int?>(null) }
-
     LeftAlignedScreen(
         modifier = modifier,
         title = { horizontalPadding ->
@@ -131,7 +135,7 @@ internal fun SelectBrpScreenContent(
                             .map { stringResource(it) }
                             .toPersistentList(),
                     selectedItem = selectedItem,
-                    onItemSelected = { selectedItem = it },
+                    onItemSelected = onSelectedItemChanged,
                     title =
                         RadioSelectionTitle(
                             stringResource(R.string.selectdocument_brp_selection_title),
@@ -146,10 +150,10 @@ internal fun SelectBrpScreenContent(
                 buttonType = ButtonType.Primary,
                 onClick = {
                     selectedItem?.let {
-                        onContinueClicked(it)
+                        onContinueClicked(selectedItem)
                     }
                 },
-                enabled = selectedItem != null,
+                enabled = continueButtonEnabled,
                 modifier = Modifier.fillMaxWidth(),
             )
         },
@@ -161,8 +165,11 @@ internal fun SelectBrpScreenContent(
 internal fun PreviewSelectBrpScreen() {
     GdsTheme {
         SelectBrpScreenContent(
-            {},
-            {},
+            onReadMoreClicked = {},
+            selectedItem = null,
+            onSelectedItemChanged = {},
+            continueButtonEnabled = false,
+            onContinueClicked = {},
         )
     }
 }
