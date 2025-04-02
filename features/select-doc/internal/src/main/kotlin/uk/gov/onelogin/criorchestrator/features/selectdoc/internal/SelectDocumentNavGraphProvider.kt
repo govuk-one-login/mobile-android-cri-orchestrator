@@ -69,6 +69,10 @@ class SelectDocumentNavGraphProvider
                 ConfirmDocumentScreen()
             }
 
+            composable<SelectDocumentDestinations.ConfirmDrivingLicence> {
+                ConfirmDocumentScreen()
+            }
+
             composable<SelectDocumentDestinations.ConfirmBrp> {
                 ConfirmBrpScreen()
             }

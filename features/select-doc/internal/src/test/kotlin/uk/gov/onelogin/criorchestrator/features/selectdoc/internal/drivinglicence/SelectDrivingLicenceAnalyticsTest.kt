@@ -128,9 +128,9 @@ class SelectDrivingLicenceAnalyticsTest {
         val expectedEvent =
             TrackEvent
                 .Form(
-                    text = context.getString(R.string.selectdocument_passport_continuebutton),
+                    text = context.getString(R.string.selectdocument_drivinglicence_continuebutton),
                     params = SelectDocumentAnalytics.requiredParameters,
-                    response = context.getString(R.string.selectdocument_passport_selection_yes),
+                    response = context.getString(R.string.selectdocument_drivinglicence_selection_yes),
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }

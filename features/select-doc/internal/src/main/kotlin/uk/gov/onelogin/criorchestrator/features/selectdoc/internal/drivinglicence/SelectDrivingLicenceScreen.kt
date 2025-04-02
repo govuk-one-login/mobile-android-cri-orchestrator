@@ -58,10 +58,8 @@ internal fun SelectDrivingLicenceScreen(
                     )
 
                 SelectDrivingLicenceAction.NavigateToConfirmation ->
-                    // DCMAW-8798: update SelectDocumentDestinations.ConfirmPassport
-                    // to SelectDocumentDestinations.ConfirmDrivingLicence
                     navController.navigate(
-                        SelectDocumentDestinations.ConfirmPassport,
+                        SelectDocumentDestinations.ConfirmDrivingLicence
                     )
 
                 SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->

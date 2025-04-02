@@ -248,9 +248,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            // DCMAW-8798: update SelectDocumentDestinations.ConfirmPassport
-            // to SelectDocumentDestinations.ConfirmDrivingLicence
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmPassport)
+            verify(navController).navigate(SelectDocumentDestinations.ConfirmDrivingLicence)
         }
 
     @Test
@@ -268,9 +266,8 @@ class SelectDrivingLicenceScreenTest {
                 .onNode(continueButton)
                 .assertIsEnabled()
                 .performClick()
-            // DCMAW-8798: update SelectDocumentDestinations.ConfirmPassport
-            // to SelectDocumentDestinations.ConfirmDrivingLicence
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmPassport)
+
+            verify(navController).navigate(SelectDocumentDestinations.ConfirmDrivingLicence)
         }
 
     @Test
