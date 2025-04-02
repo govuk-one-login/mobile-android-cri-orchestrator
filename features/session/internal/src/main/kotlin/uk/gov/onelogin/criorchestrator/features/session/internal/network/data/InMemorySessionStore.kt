@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network
+package uk.gov.onelogin.criorchestrator.features.session.internal.network.data
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.MutableStateFlow
