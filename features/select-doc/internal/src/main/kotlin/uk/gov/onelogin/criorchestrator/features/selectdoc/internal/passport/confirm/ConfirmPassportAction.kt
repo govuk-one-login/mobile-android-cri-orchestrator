@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.con
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 sealed class ConfirmPassportAction {
-    data object NavigateToSyncSdk: ConfirmPassportAction() {
+    data object NavigateToSyncSdk : ConfirmPassportAction() {
         val documentVariety: DocumentVariety = DocumentVariety.NFC_PASSPORT
     }
 }
