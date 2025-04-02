@@ -12,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
@@ -38,7 +41,6 @@ internal fun SelectDrivingLicenceScreen(
     modifier: Modifier = Modifier,
 ) {
     val isNfcEnabled by viewModel.isNfcEnabled.collectAsStateWithLifecycle()
-    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
@@ -72,8 +74,6 @@ internal fun SelectDrivingLicenceScreen(
 
     SelectDrivingLicenceScreenContent(
         modifier = modifier,
-        selectedItem = state.selectedItem,
-        onSelectedItemChanged = viewModel::onItemSelected,
         onContinueClicked = viewModel::onContinueClicked,
         onReadMoreClick = viewModel::onReadMoreClick,
         isNfcEnabled = isNfcEnabled,
@@ -84,13 +84,13 @@ internal fun SelectDrivingLicenceScreen(
 @Suppress("LongMethod", "LongParameterList")
 @Composable
 internal fun SelectDrivingLicenceScreenContent(
-    selectedItem: Int?,
-    onSelectedItemChanged: (Int) -> Unit,
     onContinueClicked: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     isNfcEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
+
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
@@ -135,7 +135,7 @@ internal fun SelectDrivingLicenceScreenContent(
                                 .map { stringResource(it) }
                                 .toPersistentList(),
                         selectedItem = selectedItem,
-                        onItemSelected = onSelectedItemChanged
+                        onItemSelected = { selectedItem = it},
                     )
                 }
             },
@@ -145,7 +145,7 @@ internal fun SelectDrivingLicenceScreenContent(
                     buttonType = ButtonType.Primary,
                     onClick = {
                         selectedItem?.let {
-                            onContinueClicked(selectedItem)
+                            onContinueClicked(it)
                         }
                     },
                     enabled = selectedItem != null,
@@ -165,9 +165,7 @@ internal fun PreviewDrivingLicenceSelectionScreen() {
         SelectDrivingLicenceScreenContent(
             onReadMoreClick = { },
             isNfcEnabled = isNfcEnabled,
-            onSelectedItemChanged = {},
             onContinueClicked = {},
-            selectedItem = null,
         )
     }
 }

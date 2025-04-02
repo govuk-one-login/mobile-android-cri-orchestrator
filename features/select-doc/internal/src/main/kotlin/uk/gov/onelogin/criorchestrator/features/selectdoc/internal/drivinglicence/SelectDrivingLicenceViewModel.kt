@@ -25,9 +25,6 @@ internal class SelectDrivingLicenceViewModel(
     private val _isNfcEnabled = MutableStateFlow(false)
     val isNfcEnabled: StateFlow<Boolean> = _isNfcEnabled
 
-    private val _state = MutableStateFlow(SelectedDrivingLicenceState())
-    val state: StateFlow<SelectedDrivingLicenceState> = _state
-
     init {
         _isNfcEnabled.value = isNfcEnabled()
     }
@@ -45,14 +42,6 @@ internal class SelectDrivingLicenceViewModel(
         analytics.trackButtonEvent(SelectDrivingLicenceConstants.readMoreButtonTextId)
         viewModelScope.launch {
             _actions.emit(SelectDrivingLicenceAction.NavigateToTypesOfPhotoID)
-        }
-    }
-
-    fun onItemSelected(selectedItem: Int) {
-        _state.update {
-            it.copy(
-                selectedItem = selectedItem,
-            )
         }
     }
 
