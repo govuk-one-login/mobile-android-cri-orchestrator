@@ -1,22 +1,22 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 
 class SelectBrpViewModel(
-    private val analytics: SelectDocumentAnalytics,
+    private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
 
     fun onScreenStart() {
         analytics.trackScreen(
-            SelectDocumentScreenId.SelectBrp,
+            SelectDocScreenId.SelectBrp,
             SelectBrpConstants.titleId,
         )
     }
