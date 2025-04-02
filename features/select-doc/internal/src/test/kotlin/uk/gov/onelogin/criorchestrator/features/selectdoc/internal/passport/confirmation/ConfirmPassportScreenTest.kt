@@ -18,7 +18,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 
 @RunWith(AndroidJUnit4::class)

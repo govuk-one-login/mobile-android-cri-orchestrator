@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.navigation
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,7 +10,7 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.SyncIdCheckScreen
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.SyncSdkViewModelModule
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject

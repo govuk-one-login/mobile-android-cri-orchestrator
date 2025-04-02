@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.navigation
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav
 
 import android.os.Bundle
 import androidx.navigation.NavType
