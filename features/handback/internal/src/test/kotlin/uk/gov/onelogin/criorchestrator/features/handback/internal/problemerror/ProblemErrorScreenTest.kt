@@ -2,12 +2,12 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,22 +31,22 @@ class ProblemErrorScreenTest {
             analytics = mock(),
         )
 
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            ProblemErrorScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
+    }
+
     @Test
     fun `when button is clicked, it navigates to abort flow`() {
-        composeTestRule.setProblemErrorScreenContent()
-
         composeTestRule
             .onNode(button)
             .performClick()
 
         verify(navController).navigate(HandbackDestinations.Abort)
     }
-
-    private fun ComposeContentTestRule.setProblemErrorScreenContent() =
-        setContent {
-            ProblemErrorScreen(
-                viewModel = viewModel,
-                navController = navController,
-            )
-        }
 }

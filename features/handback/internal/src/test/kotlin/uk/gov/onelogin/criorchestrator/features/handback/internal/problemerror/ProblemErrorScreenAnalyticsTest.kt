@@ -2,12 +2,12 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -50,6 +50,16 @@ class ProblemErrorScreenAnalyticsTest {
             analytics = analytics,
         )
 
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            ProblemErrorScreen(
+                viewModel = viewModel,
+                navController = rememberNavController(),
+            )
+        }
+    }
+
     @Test
     fun `when screen is started, it tracks analytics`() {
         val expectedEvent =
@@ -59,14 +69,11 @@ class ProblemErrorScreenAnalyticsTest {
                     name = context.getString(R.string.handback_problemerror_title),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
-        composeTestRule.setProblemErrorScreenContent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
     fun `when read more is clicked, it tracks analytics`() {
-        composeTestRule.setProblemErrorScreenContent()
-
         composeTestRule
             .onNode(button)
             .performClick()
@@ -78,14 +85,5 @@ class ProblemErrorScreenAnalyticsTest {
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
-    }
-
-    private fun ComposeContentTestRule.setProblemErrorScreenContent() {
-        setContent {
-            ProblemErrorScreen(
-                viewModel = viewModel,
-                navController = rememberNavController(),
-            )
-        }
     }
 }
