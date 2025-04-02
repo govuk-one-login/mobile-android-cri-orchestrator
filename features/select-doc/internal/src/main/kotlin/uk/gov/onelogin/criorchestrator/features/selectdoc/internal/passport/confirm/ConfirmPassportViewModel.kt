@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.ConfirmDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 
 internal class ConfirmPassportViewModel(
     private val analytics: SelectDocAnalytics,
@@ -16,7 +16,7 @@ internal class ConfirmPassportViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            ConfirmDocumentScreenId.ConfirmPassport,
+            SelectDocScreenId.ConfirmPassport,
             ConfirmPassportConstants.titleId,
         )
     }
