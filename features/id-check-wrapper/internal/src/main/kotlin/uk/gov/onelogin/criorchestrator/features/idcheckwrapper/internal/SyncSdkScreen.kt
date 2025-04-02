@@ -10,16 +10,18 @@ import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun SyncIdCheckScreen(
-    documentType: DocumentType,
+    documentVariety: DocumentVariety,
     viewModel: SyncSdkViewModel,
     modifier: Modifier = Modifier,
 ) {
     SyncIdCheckScreenContent(
-        documentType = documentType,
+        documentType = documentVariety.toDocumentType(),
         journeyType = viewModel.journeyType,
         sessionId = viewModel.session.sessionId,
         accessToken = viewModel.biometricToken.accessToken,
