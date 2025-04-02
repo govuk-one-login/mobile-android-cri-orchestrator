@@ -10,29 +10,60 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.network.client.KtorHttpClient
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 import uk.gov.onelogin.criorchestrator.testwrapper.R
+import javax.inject.Provider
 
 internal fun createHttpClient(
+    subjectToken: Provider<String?>,
     resources: Resources,
-    subjectToken: String,
 ): GenericHttpClient =
     KtorHttpClient(
         userAgentGenerator = UserAgentGeneratorStub("userAgent"),
     ).apply {
         setAuthenticationProvider(
-            StubAuthenticationProvider(
-                client = this,
-                resources = resources,
+            TestWrapperAuthenticationProvider(
                 subjectToken = subjectToken,
+                mockStsAuthenticationProvider =
+                    MockStsAuthenticationProvider(
+                        resources = resources,
+                        client = Provider { this },
+                    ),
+                stubAuthenticationProvider = StubAuthenticationProvider(),
             ),
         )
     }
 
-internal class StubAuthenticationProvider(
-    val client: GenericHttpClient,
-    val resources: Resources,
-    val subjectToken: String,
+internal fun createStubHttpClient(): GenericHttpClient =
+    KtorHttpClient(
+        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+    ).apply {
+        setAuthenticationProvider(
+            StubAuthenticationProvider(),
+        )
+    }
+
+internal class TestWrapperAuthenticationProvider(
+    private val mockStsAuthenticationProvider: MockStsAuthenticationProvider,
+    private val stubAuthenticationProvider: StubAuthenticationProvider,
+    private val subjectToken: Provider<String?>,
 ) : AuthenticationProvider {
     override suspend fun fetchBearerToken(scope: String): AuthenticationResponse {
+        val sub = subjectToken.get()
+        return if (sub == null) {
+            stubAuthenticationProvider.fetchBearerToken(scope)
+        } else {
+            mockStsAuthenticationProvider.fetchBearerToken(scope, sub)
+        }
+    }
+}
+
+internal class MockStsAuthenticationProvider(
+    val client: Provider<GenericHttpClient>,
+    val resources: Resources,
+) {
+    suspend fun fetchBearerToken(
+        scope: String,
+        subjectToken: String,
+    ): AuthenticationResponse {
         val tokenEndpoint = resources.getString(R.string.stsUrl) + "/token"
 
         val request =
@@ -47,7 +78,7 @@ internal class StubAuthenticationProvider(
                     ),
             )
 
-        val response = client.makeRequest(request)
+        val response = client.get().makeRequest(request)
         if (response !is Success<*>) {
             return AuthenticationResponse.Failure(Exception("Could not exchange token with STS mock"))
         }
@@ -61,4 +92,10 @@ internal class StubAuthenticationProvider(
         const val SUBJECT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"
         private val jsonFormat = Json { ignoreUnknownKeys = true }
     }
+}
+
+internal class StubAuthenticationProvider : AuthenticationProvider {
+    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse =
+        AuthenticationResponse
+            .Success("token")
 }

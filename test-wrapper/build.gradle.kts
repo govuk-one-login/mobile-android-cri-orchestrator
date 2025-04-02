@@ -21,6 +21,7 @@ configure<ApplicationExtension> {
 
 dependencies {
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.kotlinx.serialization.json)

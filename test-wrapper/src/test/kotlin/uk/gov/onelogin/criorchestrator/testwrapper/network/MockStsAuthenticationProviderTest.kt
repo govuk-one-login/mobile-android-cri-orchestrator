@@ -13,12 +13,13 @@ import uk.gov.android.network.auth.AuthenticationResponse
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.network.client.StubHttpClient
 import uk.gov.onelogin.criorchestrator.testwrapper.R
-import uk.gov.onelogin.criorchestrator.testwrapper.network.StubAuthenticationProvider.Companion.GRANT_TYPE
-import uk.gov.onelogin.criorchestrator.testwrapper.network.StubAuthenticationProvider.Companion.SUBJECT_TOKEN_TYPE
+import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.GRANT_TYPE
+import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.SUBJECT_TOKEN_TYPE
+import javax.inject.Provider
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-class StubAuthenticationProviderTest {
+class MockStsAuthenticationProviderTest {
     private val resources = mock<Resources>()
 
     private val scope = "sts.read.hello-world"
@@ -34,14 +35,13 @@ class StubAuthenticationProviderTest {
         val mockClient = mock<GenericHttpClient>()
 
         val provider =
-            StubAuthenticationProvider(
-                client = mockClient,
+            MockStsAuthenticationProvider(
+                client = Provider { mockClient },
                 resources = resources,
-                subjectToken = subjectToken,
             )
 
         runTest {
-            provider.fetchBearerToken(scope)
+            provider.fetchBearerToken(scope, subjectToken)
 
             verify(mockClient).makeRequest(
                 ApiRequest.FormUrlEncoded(
@@ -63,26 +63,28 @@ class StubAuthenticationProviderTest {
         val accessToken = "example_access_token"
 
         val provider =
-            StubAuthenticationProvider(
+            MockStsAuthenticationProvider(
                 client =
-                    StubHttpClient(
-                        ApiResponse.Success(
-                            """
-                            {
-                              "access_token": "$accessToken",
-                              "expires_in": 10
-                            }
-                            """.trimIndent(),
-                        ),
-                    ),
+                    Provider {
+                        StubHttpClient(
+                            ApiResponse.Success(
+                                """
+                                {
+                                  "access_token": "$accessToken",
+                                  "expires_in": 10
+                                }
+                                """.trimIndent(),
+                            ),
+                        )
+                    },
                 resources = resources,
-                subjectToken = subjectToken,
             )
 
         runTest {
-            when (val response = provider.fetchBearerToken(scope)) {
+            when (val response = provider.fetchBearerToken(scope, subjectToken)) {
                 is AuthenticationResponse.Failure ->
                     fail("expected a success response")
+
                 is AuthenticationResponse.Success ->
                     assertEquals(response.bearerToken, accessToken)
             }
@@ -94,27 +96,29 @@ class StubAuthenticationProviderTest {
         val accessToken = "example_access_token"
 
         val provider =
-            StubAuthenticationProvider(
+            MockStsAuthenticationProvider(
                 client =
-                    StubHttpClient(
-                        ApiResponse.Success(
-                            """
-                            {
-                              "access_token": "$accessToken",
-                              "expires_in": 10,
-                              "token_type": "bearer"
-                            }
-                            """.trimIndent(),
-                        ),
-                    ),
+                    Provider {
+                        StubHttpClient(
+                            ApiResponse.Success(
+                                """
+                                {
+                                  "access_token": "$accessToken",
+                                  "expires_in": 10,
+                                  "token_type": "bearer"
+                                }
+                                """.trimIndent(),
+                            ),
+                        )
+                    },
                 resources = resources,
-                subjectToken = subjectToken,
             )
 
         runTest {
-            when (val response = provider.fetchBearerToken(scope)) {
+            when (val response = provider.fetchBearerToken(scope, subjectToken)) {
                 is AuthenticationResponse.Failure ->
                     fail("expected a success response")
+
                 is AuthenticationResponse.Success ->
                     assertEquals(response.bearerToken, accessToken)
             }

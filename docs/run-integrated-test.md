@@ -26,6 +26,8 @@ SSO registration scopes [sso:account:access]:
 Attempting to automatically open the SSO authorization page in your default browser.
 If the browser does not open or you wish to use a different device to authorize this request, open the following URL:
 
+There are 2 AWS accounts available to you.
+> di-mobile-id-check-async-build
 Using the account ID 058264551042
 Using the role name "platform-mob-test-iam"
 CLI default client Region [None]: eu-west-2

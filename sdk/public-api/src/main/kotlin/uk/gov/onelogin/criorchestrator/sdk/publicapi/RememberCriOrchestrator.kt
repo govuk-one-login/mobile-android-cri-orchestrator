@@ -24,10 +24,9 @@ fun rememberCriOrchestrator(
     analyticsLogger: AnalyticsLogger,
     initialConfig: Config,
     logger: Logger,
-    key: String = "",
 ): CriOrchestratorComponent {
     val context = LocalContext.current
-    return remember(key) {
+    return remember {
         createCriOrchestratorComponent(
             authenticatedHttpClient = authenticatedHttpClient,
             analyticsLogger = analyticsLogger,

@@ -16,6 +16,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
 
 @RunWith(AndroidJUnit4::class)
 class MainContentTest {
@@ -44,12 +45,14 @@ class MainContentTest {
                 val resources = ApplicationProvider.getApplicationContext<Application>().resources
 
                 MainContent(
+                    httpClient = createStubHttpClient(),
                     analyticsLogger = mock<AnalyticsLogger>(),
                     config =
                         TestWrapperConfig.provideConfig(
                             resources = resources,
                         ),
                     logger = mock<Logger>(),
+                    onSubUpdateRequest = {},
                 )
             }
         }
