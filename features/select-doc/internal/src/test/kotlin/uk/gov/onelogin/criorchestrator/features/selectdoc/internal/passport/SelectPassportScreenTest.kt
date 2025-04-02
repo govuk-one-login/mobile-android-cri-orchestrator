@@ -151,7 +151,7 @@ class SelectPassportScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.Confirm)
+        verify(navController).navigate(SelectDocumentDestinations.ConfirmPassport)
     }
 
     @Test

@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport
 import android.content.Context
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.performClick
@@ -12,6 +11,7 @@ import androidx.compose.ui.test.swipeUp
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,6 +57,16 @@ class SelectPassportScreenAnalyticsTest {
             analytics = analytics,
         )
 
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            SelectPassportScreen(
+                viewModel = viewModel,
+                navController = rememberNavController(),
+            )
+        }
+    }
+
     @Test
     fun `when screen is started, it tracks analytics`() {
         val expectedEvent =
@@ -66,14 +76,11 @@ class SelectPassportScreenAnalyticsTest {
                     name = context.getString(R.string.selectdocument_passport_title),
                     params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()
-        composeTestRule.setSelectPassportScreenContent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
     @Test
     fun `given selection is made, when continue button is clicked, it tracks analytics`() {
-        composeTestRule.setSelectPassportScreenContent()
-
         swipeToAdditionalContent()
 
         composeTestRule
@@ -96,8 +103,6 @@ class SelectPassportScreenAnalyticsTest {
 
     @Test
     fun `when read more is clicked, it tracks analytics`() {
-        composeTestRule.setSelectPassportScreenContent()
-
         swipeToAdditionalContent()
 
         composeTestRule
@@ -111,15 +116,6 @@ class SelectPassportScreenAnalyticsTest {
                     params = SelectDocumentAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
-    }
-
-    private fun ComposeContentTestRule.setSelectPassportScreenContent() {
-        setContent {
-            SelectPassportScreen(
-                viewModel = viewModel,
-                navController = rememberNavController(),
-            )
-        }
     }
 
     private fun swipeToAdditionalContent() {
