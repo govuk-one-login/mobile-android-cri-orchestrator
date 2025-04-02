@@ -17,7 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 @Composable
 internal fun SyncIdCheckScreen(
     documentVariety: DocumentVariety,
-    viewModel: SyncSdkViewModel,
+    viewModel: SyncIdCheckViewModel,
     modifier: Modifier = Modifier,
 ) {
     SyncIdCheckScreenContent(

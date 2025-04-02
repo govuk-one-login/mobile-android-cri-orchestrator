@@ -8,7 +8,7 @@ import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
-class SyncSdkViewModel(
+class SyncIdCheckViewModel(
     sessionStore: SessionStore,
 ) : ViewModel() {
     internal lateinit var biometricToken: BiometricToken
