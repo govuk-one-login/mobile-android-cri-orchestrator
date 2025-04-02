@@ -8,7 +8,9 @@ import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.ConfirmDocumentScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
@@ -23,6 +25,8 @@ import javax.inject.Named
 class SelectDocumentNavGraphProvider
     @Inject
     constructor(
+        @Named(SelectBrpViewModelModule.FACTORY_NAME)
+        private val selectBrpViewModelFactory: ViewModelProvider.Factory,
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
         private val selectPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
@@ -37,7 +41,10 @@ class SelectDocumentNavGraphProvider
             }
 
             composable<SelectDocumentDestinations.Brp> {
-                SelectBrpScreen()
+                SelectBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectBrpViewModelFactory),
+                )
             }
 
             composable<SelectDocumentDestinations.DrivingLicence> {
@@ -52,6 +59,10 @@ class SelectDocumentNavGraphProvider
 
             composable<SelectDocumentDestinations.ConfirmPassport> {
                 ConfirmDocumentScreen()
+            }
+
+            composable<SelectDocumentDestinations.ConfirmBrp> {
+                ConfirmBrpScreen()
             }
         }
     }
