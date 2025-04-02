@@ -43,7 +43,7 @@ class ConfirmPassportViewModelTest {
                     .trackButtonEvent(
                         buttonText = R.string.confirmdocument_confirmbutton,
                     )
-                assertEquals(ConfirmPassportAction.NavigateToSyncSdk, awaitItem())
+                assertEquals(ConfirmPassportAction.NavigateToSyncIdCheck, awaitItem())
             }
         }
 }

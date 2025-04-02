@@ -12,15 +12,15 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object SyncSdkViewModelModule {
-    const val FACTORY_NAME = "SyncSdkViewModelModuleFactory"
+object SyncIdCheckViewModelModule {
+    const val FACTORY_NAME = "SyncIdCheckViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(sessionStore: SessionStore): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                SyncSdkViewModel(
+                SyncIdCheckViewModel(
                     sessionStore,
                 )
             }
