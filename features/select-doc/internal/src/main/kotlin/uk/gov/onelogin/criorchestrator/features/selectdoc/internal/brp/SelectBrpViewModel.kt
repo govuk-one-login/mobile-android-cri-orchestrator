@@ -56,8 +56,3 @@ class SelectBrpViewModel(
         }
     }
 }
-
-data class SelectBrpState(
-    val selectedItem: Int? = null,
-    val continueButtonEnabled: Boolean = false,
-)
