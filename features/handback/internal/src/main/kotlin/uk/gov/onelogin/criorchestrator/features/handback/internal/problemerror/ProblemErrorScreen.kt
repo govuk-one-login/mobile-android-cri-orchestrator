@@ -47,7 +47,6 @@ internal fun ProblemErrorScreen(
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
-@Suppress("LongMethod", "LongParameterList")
 @Composable
 internal fun ProblemErrorScreenContent(
     onButtonClick: () -> Unit,
