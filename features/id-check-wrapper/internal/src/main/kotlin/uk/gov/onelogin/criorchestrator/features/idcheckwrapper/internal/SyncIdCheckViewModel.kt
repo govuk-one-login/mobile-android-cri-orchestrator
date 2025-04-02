@@ -15,6 +15,8 @@ class SyncIdCheckViewModel(
     internal lateinit var session: Session
     internal lateinit var journeyType: JourneyType
 
+    // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
+    // information needed to start the ID Check SDK.
     init {
         viewModelScope.launch {
             session = sessionStore.read().value!!
@@ -23,13 +25,16 @@ class SyncIdCheckViewModel(
         }
     }
 
-    // DCMAW-12468: Actually call and properly stub the Biometric Token endpoint call
+    // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
+    // information needed to start the ID Check SDK.
     private suspend fun stubCallToBiometricTokenEndpoint(): BiometricToken =
         BiometricToken(
             accessToken = "Stub Access Token",
             opaqueId = "Stub Opaque ID",
         )
 
+    // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
+    // information needed to start the ID Check SDK.
     private fun getJourneyTypeFromRedirectUri(session: Session): JourneyType =
         if (session.redirectUri.isNullOrBlank()) {
             JourneyType.DESKTOP_APP_DESKTOP
