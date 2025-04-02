@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirm/ConfirmBrpScreen.kt
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm
+========
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirmation
+>>>>>>>> d560d7e5 (fix: rebase issues):features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirmation/ConfirmBrpScreen.kt
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
