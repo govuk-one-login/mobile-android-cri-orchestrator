@@ -59,7 +59,7 @@ internal fun SelectDrivingLicenceScreen(
 
                 SelectDrivingLicenceAction.NavigateToConfirmation ->
                     navController.navigate(
-                        SelectDocumentDestinations.ConfirmDrivingLicence
+                        SelectDocumentDestinations.ConfirmDrivingLicence,
                     )
 
                 SelectDrivingLicenceAction.NavigateToTypesOfPhotoID ->
