@@ -7,14 +7,13 @@ import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
+import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.bouncycastle.crypto.params.Blake3Parameters.context
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
@@ -56,7 +55,7 @@ class SelectBrpScreenAnalyticsTest {
         composeTestRule.setContent {
             SelectBrpScreen(
                 viewModel,
-                navController = mock(),
+                navController = rememberNavController(),
             )
         }
     }
