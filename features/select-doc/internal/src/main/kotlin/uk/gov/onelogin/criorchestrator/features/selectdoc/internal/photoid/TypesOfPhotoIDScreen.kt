@@ -76,7 +76,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                         body = stringResource(R.string.typesofphotoid_ukpassport_body),
                         image = {
                             FullWidthImage(
-                                painter = painterResource(R.drawable.uk_passport),
+                                painter = painterResource(R.drawable.uk_passport_small),
                                 contentDescription =
                                     stringResource(R.string.typesofphotoid_ukpassport_imagedescription),
                             )
@@ -91,7 +91,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                         body = stringResource(R.string.typesofphotoid_nonukpassport_body),
                         image = {
                             FullWidthImage(
-                                painter = painterResource(R.drawable.nfc_passport_wide),
+                                painter = painterResource(R.drawable.nfc_passport_small),
                                 contentDescription =
                                     stringResource(R.string.typesofphotoid_nonukpassport_imagedescription),
                             )
@@ -116,7 +116,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                         body = stringResource(R.string.typesofphotoid_brp_body),
                         image = {
                             FullWidthImage(
-                                painter = painterResource(R.drawable.brp),
+                                painter = painterResource(R.drawable.brp_small),
                                 contentDescription = stringResource(R.string.typesofphotoid_brp_imagedescription),
                             )
                         },
@@ -141,7 +141,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                         body = stringResource(R.string.typesofphotoid_drivinglicence_body),
                         image = {
                             FullWidthImage(
-                                painter = painterResource(R.drawable.driving_licence),
+                                painter = painterResource(R.drawable.driving_licence_small),
                                 contentDescription =
                                     stringResource(R.string.typesofphotoid_drivinglicence_imagedescription),
                             )
