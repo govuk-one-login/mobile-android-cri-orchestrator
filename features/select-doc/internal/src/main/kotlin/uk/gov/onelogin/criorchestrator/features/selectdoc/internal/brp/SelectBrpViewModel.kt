@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
@@ -16,8 +13,6 @@ class SelectBrpViewModel(
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
-    private val _state = MutableStateFlow(SelectBrpState())
-    val state: StateFlow<SelectBrpState> = _state
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -30,15 +25,6 @@ class SelectBrpViewModel(
         analytics.trackButtonEvent(SelectBrpConstants.readMoreButtonTextId)
         viewModelScope.launch {
             _actions.emit(SelectBrpAction.NavigateToTypesOfPhotoID)
-        }
-    }
-
-    fun onItemSelected(selectedItem: Int) {
-        _state.update {
-            it.copy(
-                selectedItem = selectedItem,
-                continueButtonEnabled = true,
-            )
         }
     }
 

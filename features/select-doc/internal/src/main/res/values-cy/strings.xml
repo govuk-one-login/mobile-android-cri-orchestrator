@@ -40,12 +40,12 @@
     <string name="typesofphotoid_drivinglicence_body">Gall fod yn drwydded yrru y DU llawn neu dros dro.</string>
     <string name="typesofphotoid_drivinglicence_imagedescription">Enghraifft o beth mae trwydded yrru cerdyn-llun y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda baner y DU.</string>
 
-    <string name="selectdocument_brp_title">Oes gennych chi gerdyn neu drwydded preswylio biometrig y DU? </string>
+    <string name="selectdocument_brp_title">Oes gennych chi gerdyn neu drwydded preswylio biometrig y DU?</string>
 
     <string name="selectdocument_brp_bullet_title">Gall hyn fod yn:</string>
-    <string name="selectdocument_brp_bullet_brp">trwydded breswylio biometrig (BRP)</string>
-    <string name="selectdocument_brp_bullet_brc">cerdyn preswylio biometrig (BRC)</string>
-    <string name="selectdocument_brp_bullet_fwp">trwydded Gweithwyr Ffiniol (FWP)</string>
+    <string name="selectdocument_brp_bullet_brp">trwydded breswylio biometreg y DU (BRP)</string>
+    <string name="selectdocument_brp_bullet_brc">cerdyn preswylio biometreg y DU (BRC)</string>
+    <string name="selectdocument_brp_bullet_fwp">trwydded Gweithwyr Ffiniol y DU (FWP)</string>
 
     <string name="selectdocument_brp_expiry">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben.</string>
 

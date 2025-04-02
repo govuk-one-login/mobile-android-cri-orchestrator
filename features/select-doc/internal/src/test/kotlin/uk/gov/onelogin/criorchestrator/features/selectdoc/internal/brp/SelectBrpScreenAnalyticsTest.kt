@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.test.runTest
+import org.bouncycastle.crypto.params.Blake3Parameters.context
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -92,52 +92,50 @@ class SelectBrpScreenAnalyticsTest {
     }
 
     @Test
-    fun `given yes is selected, when continue is clicked, it tracks analytics`() =
-        runTest {
-            swipeToAdditionalContent()
+    fun `given yes is selected, when continue is clicked, it tracks analytics`() {
+        swipeToAdditionalContent()
 
-            composeTestRule
-                .onNode(yesOption, useUnmergedTree = true)
-                .performClick()
+        composeTestRule
+            .onNode(yesOption, useUnmergedTree = true)
+            .performClick()
 
-            composeTestRule
-                .onNode(continueButton, useUnmergedTree = true)
-                .performClick()
+        composeTestRule
+            .onNode(continueButton, useUnmergedTree = true)
+            .performClick()
 
-            val expectedEvent =
-                TrackEvent
-                    .Form(
-                        text = context.getString(SelectBrpConstants.continueButtonTextId),
-                        params = SelectDocumentAnalytics.requiredParameters,
-                        response = context.getString(SelectBrpConstants.selectionItems[0]),
-                    ).asLegacyEvent()
+        val expectedEvent =
+            TrackEvent
+                .Form(
+                    text = context.getString(SelectBrpConstants.continueButtonTextId),
+                    params = SelectDocumentAnalytics.requiredParameters,
+                    response = context.getString(SelectBrpConstants.selectionItems[0]),
+                ).asLegacyEvent()
 
-            assertContains(analyticsLogger.loggedEvents, expectedEvent)
-        }
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
+    }
 
     @Test
-    fun `given no is selected, when continue is clicked, it tracks analytics`() =
-        runTest {
-            swipeToAdditionalContent()
+    fun `given no is selected, when continue is clicked, it tracks analytics`() {
+        swipeToAdditionalContent()
 
-            composeTestRule
-                .onNode(noOption, useUnmergedTree = true)
-                .performClick()
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .performClick()
 
-            composeTestRule
-                .onNode(continueButton, useUnmergedTree = true)
-                .performClick()
+        composeTestRule
+            .onNode(continueButton, useUnmergedTree = true)
+            .performClick()
 
-            val expectedEvent =
-                TrackEvent
-                    .Form(
-                        text = context.getString(SelectBrpConstants.continueButtonTextId),
-                        params = SelectDocumentAnalytics.requiredParameters,
-                        response = context.getString(SelectBrpConstants.selectionItems[1]),
-                    ).asLegacyEvent()
+        val expectedEvent =
+            TrackEvent
+                .Form(
+                    text = context.getString(SelectBrpConstants.continueButtonTextId),
+                    params = SelectDocumentAnalytics.requiredParameters,
+                    response = context.getString(SelectBrpConstants.selectionItems[1]),
+                ).asLegacyEvent()
 
-            assertContains(analyticsLogger.loggedEvents, expectedEvent)
-        }
+        assertContains(analyticsLogger.loggedEvents, expectedEvent)
+    }
 
     private fun swipeToAdditionalContent() {
         composeTestRule
