@@ -11,8 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 internal class ConfirmPassportViewModel(
     private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
-    private val _action = MutableSharedFlow<NavigateToSyncSdk>()
-    val action: Flow<NavigateToSyncSdk> = _action
+    private val _action = MutableSharedFlow<ConfirmPassportAction.NavigateToSyncSdk>()
+    val action: Flow<ConfirmPassportAction.NavigateToSyncSdk> = _action
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -26,7 +26,7 @@ internal class ConfirmPassportViewModel(
 
         viewModelScope.launch {
             _action.emit(
-                NavigateToSyncSdk,
+                ConfirmPassportAction.NavigateToSyncSdk,
             )
         }
     }
