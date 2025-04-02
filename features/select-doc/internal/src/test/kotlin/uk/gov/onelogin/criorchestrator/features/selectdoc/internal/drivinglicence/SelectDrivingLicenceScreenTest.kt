@@ -197,7 +197,7 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when nfc is enabled and user has not made choice, the confirm button is disabled`() {
+    fun `when nfc is enabled and user has not made a choice, the confirm button is disabled`() {
         given(nfcChecker.hasNfc()).willReturn(true)
 
         composeTestRule.setSelectDrivingLicenceContent()
@@ -215,7 +215,7 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when  nfc is not enabled and user has not made choice, the confirm button is disabled`() {
+    fun `when  nfc is not enabled and user has not made a choice, the confirm button is disabled`() {
         given(nfcChecker.hasNfc()).willReturn(false)
 
         composeTestRule.setSelectDrivingLicenceContent()
