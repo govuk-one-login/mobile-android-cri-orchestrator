@@ -8,8 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.ConfirmDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -18,8 +18,7 @@ class ConfirmPassportViewModelTest {
 
     private val viewModel by lazy {
         ConfirmPassportViewModel(
-            analytics =
-            analyticsLogger,
+            analytics = analyticsLogger,
         )
     }
 
@@ -29,7 +28,7 @@ class ConfirmPassportViewModelTest {
 
         verify(analyticsLogger)
             .trackScreen(
-                id = ConfirmDocumentScreenId.ConfirmPassport,
+                id = SelectDocScreenId.ConfirmPassport,
                 title = R.string.confirmdocument_passport_title,
             )
     }
