@@ -15,8 +15,8 @@ import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.ConfirmDocumentScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -57,7 +57,7 @@ class ConfirmPassportScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = ConfirmDocumentScreenId.ConfirmPassport.rawId,
+                    id = SelectDocScreenId.ConfirmPassport.rawId,
                     name = context.getString(R.string.confirmdocument_passport_title),
                     params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
