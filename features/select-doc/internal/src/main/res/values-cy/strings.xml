@@ -51,7 +51,7 @@
 
     <string name="selectdocument_brp_read_more_button">Darllenwch fwy am y mathau o ID gyda llun y gallwch eu defnyddio</string>
 
-    <string name="selectdocument_brp_selection_title">Do you have any of these types of photo ID?</string>
+    <string name="selectdocument_brp_selection_title">Oes gennych chi unrhyw un o’r mathau hyn o ID gyda llun?</string>
     <string name="selectdocument_brp_selection_yes">Oes</string>
     <string name="selectdocument_brp_selection_no">Na, defnyddiwch fath gwahanol o ID gyda llun</string>
 
