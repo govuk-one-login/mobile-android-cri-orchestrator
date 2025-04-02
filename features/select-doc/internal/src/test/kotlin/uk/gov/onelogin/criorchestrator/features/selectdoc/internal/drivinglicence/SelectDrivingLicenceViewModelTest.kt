@@ -91,7 +91,7 @@ class SelectDrivingLicenceViewModelTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 1])
     fun `when nfc is not enabled and continue is clicked, it sends analytics`(selection: Int) {
-        given(nfcChecker.hasNfc()).willReturn(true)
+        given(nfcChecker.hasNfc()).willReturn(false)
 
         viewModel.onContinueClicked(selection)
 
@@ -123,7 +123,7 @@ class SelectDrivingLicenceViewModelTest {
 
     @Test
     fun `when nfc is not enabled and yes is selected, navigate to confirmation`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
+        given(nfcChecker.hasNfc()).willReturn(false)
 
         runTest {
             viewModel.actions.test {
