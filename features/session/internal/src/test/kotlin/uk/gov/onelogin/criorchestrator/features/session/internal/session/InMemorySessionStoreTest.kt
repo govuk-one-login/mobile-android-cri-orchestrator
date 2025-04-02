@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.session
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 
 class InMemorySessionStoreTest {
