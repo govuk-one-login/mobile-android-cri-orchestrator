@@ -2,7 +2,6 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +10,6 @@ import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
 
@@ -20,21 +18,6 @@ internal class SelectDrivingLicenceViewModel(
     private val nfcChecker: NfcChecker,
     private val configStore: ConfigStore,
 ) : ViewModel() {
-    private val _state =
-        MutableStateFlow(
-            SelectDrivingLicenceState(
-                titleId = R.string.selectdocument_drivinglicence_title,
-                readMoreButtonTextId = R.string.selectdocument_drivinglicence_readmore_button,
-                options =
-                    persistentListOf(
-                        R.string.selectdocument_drivinglicence_selection_yes,
-                        R.string.selectdocument_drivinglicence_selection_no,
-                    ),
-                buttonTextId = R.string.selectdocument_drivinglicence_continuebutton,
-            ),
-        )
-    val state: StateFlow<SelectDrivingLicenceState> = _state
-
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
 
@@ -47,15 +30,15 @@ internal class SelectDrivingLicenceViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            SelectDocumentScreenId.SelectDrivingLicence,
-            state.value.titleId,
+            id = SelectDocumentScreenId.SelectDrivingLicence,
+            title = SelectDrivingLicenceConstants.titleId,
         )
 
         _isNfcEnabled.value = isNfcEnabled()
     }
 
     fun onReadMoreClick() {
-        analytics.trackButtonEvent(state.value.readMoreButtonTextId)
+        analytics.trackButtonEvent(SelectDrivingLicenceConstants.readMoreButtonTextId)
         viewModelScope.launch {
             _actions.emit(SelectDrivingLicenceAction.NavigateToTypesOfPhotoID)
         }
@@ -63,8 +46,8 @@ internal class SelectDrivingLicenceViewModel(
 
     fun onConfirmSelection(selectedIndex: Int) {
         analytics.trackFormSubmission(
-            buttonText = state.value.buttonTextId,
-            response = state.value.options[selectedIndex],
+            buttonText = SelectDrivingLicenceConstants.buttonTextId,
+            response = SelectDrivingLicenceConstants.options[selectedIndex],
         )
 
         viewModelScope.launch {
