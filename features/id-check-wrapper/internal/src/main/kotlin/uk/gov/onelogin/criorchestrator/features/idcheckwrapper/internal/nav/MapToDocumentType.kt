@@ -1,8 +1,8 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.navigation
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav
 
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.IdCheckWrapperDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 
 fun IdCheckWrapperDestinations.SyncIdCheckScreen.toDocumentType(): DocumentType =
     when (documentVariety) {
