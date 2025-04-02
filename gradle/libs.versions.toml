@@ -106,7 +106,6 @@ uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref 
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
 uk-gov-idcheck-repositories-api = { module = "uk.gov.onelogin.idcheck:repositories-api", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
