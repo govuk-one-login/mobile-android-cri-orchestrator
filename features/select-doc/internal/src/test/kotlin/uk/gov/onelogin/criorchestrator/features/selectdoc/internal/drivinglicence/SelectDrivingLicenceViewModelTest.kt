@@ -142,7 +142,7 @@ class SelectDrivingLicenceViewModelTest {
             viewModel.actions.test {
                 viewModel.onContinueClicked(1)
 
-                assertEquals(SelectDrivingLicenceAction.NavigateToNfcAbort, awaitItem())
+                assertEquals(SelectDrivingLicenceAction.NavigateToConfirmNoChippedID, awaitItem())
             }
         }
     }
@@ -155,7 +155,7 @@ class SelectDrivingLicenceViewModelTest {
             viewModel.actions.test {
                 viewModel.onContinueClicked(1)
 
-                assertEquals(SelectDrivingLicenceAction.NavigateToNoNfcAbort, awaitItem())
+                assertEquals(SelectDrivingLicenceAction.NavigateToConfirmNoNonChippedID, awaitItem())
             }
         }
     }

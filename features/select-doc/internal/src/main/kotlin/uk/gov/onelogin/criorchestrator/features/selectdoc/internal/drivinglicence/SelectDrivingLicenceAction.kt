@@ -3,9 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicen
 sealed class SelectDrivingLicenceAction {
     data object NavigateToConfirmation : SelectDrivingLicenceAction()
 
-    data object NavigateToNfcAbort : SelectDrivingLicenceAction()
+    data object NavigateToConfirmNoChippedID : SelectDrivingLicenceAction()
 
-    data object NavigateToNoNfcAbort : SelectDrivingLicenceAction()
+    data object NavigateToConfirmNoNonChippedID : SelectDrivingLicenceAction()
 
     data object NavigateToTypesOfPhotoID : SelectDrivingLicenceAction()
 }

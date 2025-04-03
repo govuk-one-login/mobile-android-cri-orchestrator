@@ -57,9 +57,9 @@ internal class SelectDrivingLicenceViewModel(
                 1 ->
                     _actions.emit(
                         if (isNfcEnabled()) {
-                            SelectDrivingLicenceAction.NavigateToNfcAbort
+                            SelectDrivingLicenceAction.NavigateToConfirmNoChippedID
                         } else {
-                            SelectDrivingLicenceAction.NavigateToNoNfcAbort
+                            SelectDrivingLicenceAction.NavigateToConfirmNoNonChippedID
                         },
                     )
             }
