@@ -52,12 +52,12 @@ constructor(
             )
         }
 
-        composable<SelectDocDestinations.Brp> {
-            SelectBrpScreen(
-                navController = navController,
-                viewModel = viewModel(factory = selectBrpViewModelFactory),
-            )
-        }
+            composable<SelectDocDestinations.Brp> {
+                SelectBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = selectBrpViewModelFactory),
+                )
+            }
 
             composable<SelectDocDestinations.DrivingLicence> {
                 SelectDrivingLicenceScreen(
@@ -66,18 +66,18 @@ constructor(
                 )
             }
 
-        composable<SelectDocDestinations.TypesOfPhotoID> {
-            TypesOfPhotoIDScreen(
-                viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
-            )
-        }
+            composable<SelectDocDestinations.TypesOfPhotoID> {
+                TypesOfPhotoIDScreen(
+                    viewModel = viewModel(factory = typesOfPhotoIDViewModelFactory),
+                )
+            }
 
-        composable<SelectDocDestinations.ConfirmPassport> {
-            ConfirmPassportScreen(
-                navController = navController,
-                viewModel = viewModel(factory = confirmPassportViewModelFactory),
-            )
-        }
+            composable<SelectDocDestinations.ConfirmPassport> {
+                ConfirmPassportScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmPassportViewModelFactory),
+                )
+            }
 
             composable<SelectDocDestinations.ConfirmDrivingLicence> {
                 ConfirmDocumentScreen()

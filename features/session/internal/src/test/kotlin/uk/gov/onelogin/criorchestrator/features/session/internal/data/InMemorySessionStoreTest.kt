@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.session
+package uk.gov.onelogin.criorchestrator.features.session.internal.data
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
