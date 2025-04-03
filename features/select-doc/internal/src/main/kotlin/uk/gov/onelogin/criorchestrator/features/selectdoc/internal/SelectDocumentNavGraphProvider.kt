@@ -35,7 +35,7 @@ class SelectDocumentNavGraphProvider
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
         @Named(SelectDrivingLicenceViewModelModule.FACTORY_NAME)
-        private val drivinglicenceViewModelFactory: ViewModelProvider.Factory,
+        private val selectDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<SelectDocumentDestinations.Passport> {
@@ -55,7 +55,7 @@ class SelectDocumentNavGraphProvider
             composable<SelectDocumentDestinations.DrivingLicence> {
                 SelectDrivingLicenceScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = drivinglicenceViewModelFactory),
+                    viewModel = viewModel(factory = selectDrivingLicenceViewModelFactory),
                 )
             }
 
