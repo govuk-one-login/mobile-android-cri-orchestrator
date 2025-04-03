@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
@@ -21,12 +22,12 @@ internal class SelectDrivingLicenceViewModel(
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
 
-    private val _isNfcEnabled = MutableStateFlow(false)
-    val isNfcEnabled: StateFlow<Boolean> = _isNfcEnabled
-
-    init {
-        _isNfcEnabled.value = isNfcEnabled()
-    }
+    private val _state = MutableStateFlow(
+        SelectDrivingLicenseState(
+            displayReadMoreButton = isNfcEnabled()
+        )
+    )
+    val state: StateFlow<SelectDrivingLicenseState> = _state
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -34,7 +35,7 @@ internal class SelectDrivingLicenceViewModel(
             title = SelectDrivingLicenceConstants.titleId,
         )
 
-        _isNfcEnabled.value = isNfcEnabled()
+        updateNfcEnabledState()
     }
 
     fun onReadMoreClick() {
@@ -71,4 +72,8 @@ internal class SelectDrivingLicenceViewModel(
         } else {
             nfcChecker.hasNfc()
         }
+
+    private fun updateNfcEnabledState() {
+        _state.update { it.copy(displayReadMoreButton = isNfcEnabled()) }
+    }
 }

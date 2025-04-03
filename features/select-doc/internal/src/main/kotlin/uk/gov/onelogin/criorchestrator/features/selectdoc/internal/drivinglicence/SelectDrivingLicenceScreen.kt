@@ -40,7 +40,7 @@ internal fun SelectDrivingLicenceScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val isNfcEnabled by viewModel.isNfcEnabled.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
@@ -74,7 +74,7 @@ internal fun SelectDrivingLicenceScreen(
         modifier = modifier,
         onContinueClicked = viewModel::onContinueClicked,
         onReadMoreClick = viewModel::onReadMoreClick,
-        isNfcEnabled = isNfcEnabled,
+        displayReadMoreButton = state.displayReadMoreButton,
     )
 }
 
@@ -84,7 +84,7 @@ internal fun SelectDrivingLicenceScreen(
 internal fun SelectDrivingLicenceScreenContent(
     onContinueClicked: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
-    isNfcEnabled: Boolean,
+    displayReadMoreButton: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -108,7 +108,7 @@ internal fun SelectDrivingLicenceScreenContent(
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
-                if (isNfcEnabled) {
+                if (displayReadMoreButton) {
                     item {
                         GdsButton(
                             text = stringResource(SelectDrivingLicenceConstants.readMoreButtonTextId),
@@ -162,7 +162,7 @@ internal fun PreviewDrivingLicenceSelectionScreen() {
     GdsTheme {
         SelectDrivingLicenceScreenContent(
             onReadMoreClick = { },
-            isNfcEnabled = isNfcEnabled,
+            displayReadMoreButton = isNfcEnabled,
             onContinueClicked = {},
         )
     }
