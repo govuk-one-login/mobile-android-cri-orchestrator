@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
