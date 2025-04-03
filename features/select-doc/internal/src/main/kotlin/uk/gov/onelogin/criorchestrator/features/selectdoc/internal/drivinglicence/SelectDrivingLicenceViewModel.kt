@@ -22,11 +22,12 @@ internal class SelectDrivingLicenceViewModel(
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
 
-    private val _state = MutableStateFlow(
-        SelectDrivingLicenseState(
-            displayReadMoreButton = isNfcEnabled()
+    private val _state =
+        MutableStateFlow(
+            SelectDrivingLicenseState(
+                displayReadMoreButton = isNfcEnabled(),
+            ),
         )
-    )
     val state: StateFlow<SelectDrivingLicenseState> = _state
 
     fun onScreenStart() {
