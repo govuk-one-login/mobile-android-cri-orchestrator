@@ -17,7 +17,7 @@ class FakeConfigStore(
     override fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T> =
         config
             .mapNotNull {
-                it.get(key)
+                it[key]
             }.distinctUntilChanged()
 
     override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = config.value[key]
