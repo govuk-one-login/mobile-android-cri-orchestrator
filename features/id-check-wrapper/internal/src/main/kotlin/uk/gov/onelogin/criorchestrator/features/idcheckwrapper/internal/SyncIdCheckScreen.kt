@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
@@ -26,10 +29,17 @@ internal fun SyncIdCheckScreen(
     viewModel: SyncIdCheckViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val session by viewModel.session.collectAsState()
+    val journeyType by viewModel.journeyType.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.start()
+    }
+
     SyncIdCheckScreenContent(
         documentType = documentVariety.toDocumentType(),
-        journeyType = viewModel.journeyType,
-        sessionId = viewModel.session.sessionId,
+        journeyType = journeyType?.toString() ?: "loading journey type",
+        sessionId = session?.sessionId ?: "loading session id",
         accessToken = viewModel.biometricToken.accessToken,
         opaqueId = viewModel.biometricToken.opaqueId,
         modifier = modifier,
@@ -41,7 +51,7 @@ internal fun SyncIdCheckScreen(
 @Composable
 private fun SyncIdCheckScreenContent(
     documentType: DocumentType,
-    journeyType: JourneyType,
+    journeyType: String,
     sessionId: String,
     accessToken: String,
     opaqueId: String,
@@ -76,7 +86,7 @@ internal fun PreviewSyncIdCheckScreen() {
     GdsTheme {
         SyncIdCheckScreenContent(
             documentType = DocumentType.NFC_PASSPORT,
-            journeyType = JourneyType.MOBILE_APP_MOBILE,
+            journeyType = JourneyType.MOBILE_APP_MOBILE.toString(),
             sessionId = "test session ID",
             accessToken = "test access token",
             opaqueId = "test opaque ID",

@@ -17,8 +17,8 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.session.internal.data.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
 
@@ -26,6 +26,7 @@ import java.util.stream.Stream
 class RemoteSessionReaderTest {
     private val logger = SystemLogger()
     private val sessionApi = spy(StubSessionApiImpl())
+    private val sessionStore = FakeSessionStore()
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -33,7 +34,7 @@ class RemoteSessionReaderTest {
     fun setUp() {
         remoteSessionReader =
             RemoteSessionReader(
-                sessionStore = InMemorySessionStore(logger),
+                sessionStore = sessionStore,
                 sessionApi = sessionApi,
                 logger = logger,
             )

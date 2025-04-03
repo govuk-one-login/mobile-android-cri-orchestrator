@@ -1,9 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface SessionStore {
-    fun read(): StateFlow<Session?>
+    fun read(): Flow<Session?>
 
-    fun write(value: Session?)
+    suspend fun write(value: Session?)
 }

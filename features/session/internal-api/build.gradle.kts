@@ -1,8 +1,10 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    alias(libs.plugins.kotlin.serialization)
 }
 dependencies {
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.networking)
     implementation(projects.libraries.di)
 

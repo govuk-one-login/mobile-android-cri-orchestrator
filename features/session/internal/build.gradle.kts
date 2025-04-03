@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    api(libs.androidx.datastore)
+
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
@@ -16,14 +18,14 @@ dependencies {
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.di)
 
-    testFixturesImplementation(libs.kotlinx.coroutines)
+    testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(projects.features.session.internalApi)
 
-    testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(projects.features.config.publicApi)
     testImplementation(testFixtures(projects.features.config.internalApi))
+    testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(testFixtures(projects.libraries.analytics))
 }
 
