@@ -27,10 +27,10 @@ import javax.inject.Named
 class SelectDocNavGraphProvider
     @Inject
     constructor(
-        @Named(SelectPassportViewModelModule.FACTORY_NAME)
-        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(SelectBrpViewModelModule.FACTORY_NAME)
         private val selectBrpViewModelFactory: ViewModelProvider.Factory,
+        @Named(SelectPassportViewModelModule.FACTORY_NAME)
+        private val selectPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmPassportViewModelModule.FACTORY_NAME)
         private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
