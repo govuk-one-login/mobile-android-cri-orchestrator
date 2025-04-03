@@ -73,14 +73,12 @@ internal fun ConfirmPassportScreenContent(
                 item {
                     Text(
                         text = stringResource(R.string.confirmdocument_passport_body_1),
-                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
                 item {
                     Text(
                         text = stringResource(R.string.confirmdocument_passport_body_2),
-                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
