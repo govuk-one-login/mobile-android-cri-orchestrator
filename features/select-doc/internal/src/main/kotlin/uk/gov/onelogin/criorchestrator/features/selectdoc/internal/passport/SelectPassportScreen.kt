@@ -94,7 +94,6 @@ internal fun SelectPassportScreenContent(
                 item {
                     Text(
                         text = stringResource(R.string.selectdocument_passport_body),
-                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
@@ -107,7 +106,6 @@ internal fun SelectPassportScreenContent(
                 item {
                     Text(
                         text = stringResource(R.string.selectdocument_passport_expiry),
-                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
