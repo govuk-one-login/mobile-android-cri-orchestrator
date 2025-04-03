@@ -16,7 +16,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
+import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
 
 @RunWith(AndroidJUnit4::class)
 class MainContentTest {
@@ -42,14 +42,17 @@ class MainContentTest {
     private fun ComposeContentTestRule.setMainContent() =
         setContent {
             GdsTheme {
+                val resources = ApplicationProvider.getApplicationContext<Application>().resources
+
                 MainContent(
-                    httpClient = createHttpClient(),
+                    httpClient = createStubHttpClient(),
                     analyticsLogger = mock<AnalyticsLogger>(),
                     config =
                         TestWrapperConfig.provideConfig(
-                            resources = ApplicationProvider.getApplicationContext<Application>().resources,
+                            resources = resources,
                         ),
                     logger = mock<Logger>(),
+                    onSubUpdateRequest = {},
                 )
             }
         }

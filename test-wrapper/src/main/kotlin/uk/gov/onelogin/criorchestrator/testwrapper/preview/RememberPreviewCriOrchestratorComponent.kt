@@ -5,13 +5,14 @@ import androidx.compose.ui.platform.LocalContext
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.testwrapper.TestWrapperConfig
-import uk.gov.onelogin.criorchestrator.testwrapper.network.createHttpClient
+import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
 
 @Composable
-internal fun rememberPreviewCriOrchestratorComponent() =
+internal fun rememberPreviewCriOrchestratorComponent(): CriOrchestratorComponent =
     rememberCriOrchestrator(
-        authenticatedHttpClient = createHttpClient(),
+        authenticatedHttpClient = createStubHttpClient(),
         analyticsLogger = FakeAnalyticsLogger(),
         initialConfig = TestWrapperConfig.provideConfig(LocalContext.current.resources),
         logger = SystemLogger(),

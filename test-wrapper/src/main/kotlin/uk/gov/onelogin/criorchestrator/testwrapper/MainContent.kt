@@ -1,29 +1,25 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import kotlinx.serialization.Serializable
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
-import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuDialog
-import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuFloatingActionButton
 
 @Composable
+@Suppress("LongParameterList")
 fun MainContent(
-    httpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
     config: Config,
     logger: Logger,
+    httpClient: GenericHttpClient,
+    onSubUpdateRequest: (String?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val criOrchestratorComponent =
@@ -33,25 +29,33 @@ fun MainContent(
             initialConfig = config,
             logger = logger,
         )
-    var showDevMenu by remember { mutableStateOf(false) }
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            DevMenuFloatingActionButton(
-                onClick = { showDevMenu = true },
-            )
-        },
-    ) { innerPadding ->
-        ProveYourIdentityCard(
-            component = criOrchestratorComponent,
-            modifier = modifier.padding(innerPadding),
-        )
 
-        if (showDevMenu) {
-            DevMenuDialog(
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = NavDestination.Setup,
+    ) {
+        composable<NavDestination.Setup> {
+            SetupScreen(
+                onSubUpdateRequest = onSubUpdateRequest,
+                onStartClick = { navController.navigate(NavDestination.Home) },
                 criOrchestratorComponent = criOrchestratorComponent,
-                onDismissRequest = { showDevMenu = false },
+            )
+        }
+        composable<NavDestination.Home> {
+            HomeScreen(
+                modifier = modifier,
+                criOrchestratorComponent = criOrchestratorComponent,
             )
         }
     }
+}
+
+private sealed class NavDestination {
+    @Serializable
+    object Setup
+
+    @Serializable
+    object Home
 }
