@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.response.ActiveSessionApiResponse

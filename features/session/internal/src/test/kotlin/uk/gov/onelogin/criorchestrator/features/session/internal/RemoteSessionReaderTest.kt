@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore

@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
     implementation(project(":features:config:internal"))
+    implementation(project(":features:config:internal-api"))
     implementation(project(":features:config:public-api"))
     implementation(project(":features:dev:internal"))
     implementation(project(":features:dev:internal-api"))

@@ -72,4 +72,18 @@ class ConfigTest {
                 )
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun `given string entry, when get is called, it returns the correct value`() {
+        val config = stubConfig()
+
+        assertEquals(STUB_STRING_CONFIG_VALUE, config[StubStringConfigKey].value)
+    }
+
+    @Test
+    fun `given boolean entry, when get is called, it returns the correct value`() {
+        val config = stubConfig()
+
+        assertEquals(STUB_BOOLEAN_CONFIG_VALUE, config[StubBooleanConfigKey].value)
+    }
 }

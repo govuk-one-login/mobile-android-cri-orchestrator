@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -29,10 +29,10 @@ class InMemoryConfigStore
         override fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T> =
             config
                 .mapNotNull {
-                    getValueFromConfig(it, key)
+                    it[key]
                 }.distinctUntilChanged()
 
-        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = getValueFromConfig(config.value, key)
+        override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = config.value[key]
 
         override fun readAll(): Flow<Config> = config
 
@@ -51,20 +51,4 @@ class InMemoryConfigStore
                     entries = persistentListOf(entry),
                 ),
             )
-
-        private fun <T : Config.Value> getValueFromConfig(
-            config: Config,
-            key: ConfigKey<T>,
-        ): T {
-            val entry = config.entries.find { it.key == key }
-
-            if (entry == null) {
-                throw NoSuchElementException("key: ${key.javaClass.simpleName}")
-            }
-
-            require(entry.key == key)
-            // The entry guarantees the value's type is consistent with the key
-            @Suppress("UNCHECKED_CAST")
-            return entry.value as T
-        }
     }

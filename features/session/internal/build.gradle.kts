@@ -9,7 +9,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
-    implementation(project(":features:config:public-api"))
+    implementation(project(":features:config:internal-api"))
     implementation(project(":features:session:internal-api"))
     implementation(project(":libraries:analytics"))
     implementation(project(":libraries:compose-utils"))
@@ -23,7 +23,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(project(":features:config:public-api"))
-    testImplementation(testFixtures(project(":features:config:internal")))
+    testImplementation(testFixtures(project(":features:config:internal-api")))
     testImplementation(testFixtures(project(":libraries:analytics")))
 }
 

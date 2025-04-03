@@ -7,13 +7,17 @@ data object StubStringConfigKey : ConfigKey<Config.Value.StringValue>(
     name = "stub string config key",
 )
 
+const val STUB_STRING_CONFIG_VALUE = "stub string config value"
+
 data object StubBooleanConfigKey : ConfigKey<Config.Value.BooleanValue>(
     name = "stub boolean config key",
 )
 
+const val STUB_BOOLEAN_CONFIG_VALUE = true
+
 fun stubStringConfigEntry(
     key: ConfigKey<Config.Value.StringValue> = StubStringConfigKey,
-    value: String = "stub string config value",
+    value: String = STUB_STRING_CONFIG_VALUE,
 ) = Config.Entry<Config.Value.StringValue>(
     key = key,
     value = Config.Value.StringValue(value = value),
@@ -21,7 +25,7 @@ fun stubStringConfigEntry(
 
 fun stubBooleanConfigEntry(
     key: ConfigKey<Config.Value.BooleanValue> = StubBooleanConfigKey,
-    value: Boolean = true,
+    value: Boolean = STUB_BOOLEAN_CONFIG_VALUE,
 ) = Config.Entry<Config.Value.BooleanValue>(
     key = key,
     value = Config.Value.BooleanValue(value = value),

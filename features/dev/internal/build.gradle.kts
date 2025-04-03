@@ -9,11 +9,10 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(project(":features:dev:internal-api"))
     implementation(project(":features:dev:public-api"))
-    implementation(project(":features:config:public-api"))
+    implementation(project(":features:config:internal-api"))
     implementation(project(":libraries:di"))
 
-    testImplementation(testFixtures(project(":features:config:internal")))
-    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(project(":features:config:internal-api")))
 }
 
 mavenPublishingConfig {
