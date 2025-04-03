@@ -36,6 +36,19 @@ data class Config(
                     }.toPersistentList(),
         )
 
+    operator fun <T : Value> get(key: ConfigKey<T>): T {
+        val entry = entries.find { it.key == key }
+
+        if (entry == null) {
+            throw NoSuchElementException("key: ${key.javaClass.simpleName}")
+        }
+
+        require(entry.key == key)
+        // The entry guarantees the value's type is consistent with the key
+        @Suppress("UNCHECKED_CAST")
+        return entry.value as T
+    }
+
     data class Entry<out T : Value>(
         val key: ConfigKey<T>,
         val value: T,

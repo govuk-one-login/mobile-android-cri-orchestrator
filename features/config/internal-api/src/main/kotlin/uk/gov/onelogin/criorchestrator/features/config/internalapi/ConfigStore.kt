@@ -1,6 +1,8 @@
-package uk.gov.onelogin.criorchestrator.features.config.publicapi
+package uk.gov.onelogin.criorchestrator.features.config.internalapi
 
 import kotlinx.coroutines.flow.Flow
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
 
 /**
  * Interface for reading and writing configuration and feature flags.

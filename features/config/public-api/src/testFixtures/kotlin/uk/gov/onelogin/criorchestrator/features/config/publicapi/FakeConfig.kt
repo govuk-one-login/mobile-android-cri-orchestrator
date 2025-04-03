@@ -1,8 +1,6 @@
-package uk.gov.onelogin.criorchestrator.features.config.internal
+package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
 import kotlinx.collections.immutable.persistentListOf
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 
 object FakeConfig {

@@ -7,13 +7,13 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.logging.api)
-    implementation(project(":features:config:public-api"))
+    implementation(project(":features:config:internal-api"))
     implementation(project(":libraries:di"))
-    testImplementation(project(":features:config:public-api"))
+    testImplementation(project(":features:config:internal-api"))
 
     testFixturesImplementation(libs.uk.gov.logging.testdouble)
-    testFixturesImplementation(project(":features:config:public-api"))
-    testFixturesImplementation(testFixtures(project(":features:config:public-api")))
+    testFixturesImplementation(project(":features:config:internal-api"))
+    testFixturesImplementation(testFixtures(project(":features:config:internal-api")))
 
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(project(":features:config:public-api")))

@@ -18,12 +18,11 @@ dependencies {
 mavenPublishingConfig {
     mavenConfigBlock {
         name.set(
-            "GOV.UK One Login CRI Orchestrator Config Internal API",
+            "GOV.UK One Login CRI Orchestrator Config Public API",
         )
         description.set(
             """
-            The Config Public API module contains the configuration store class
-            and an interface for providing configuration to the configuration store.
+            The Config Public API module provides tools for configuring the SDK.
             """.trimIndent(),
         )
     }

@@ -55,6 +55,7 @@ rootProject.name = "mobile-android-cri-orchestrator"
 
 include(
     ":features:config:internal",
+    ":features:config:internal-api",
     ":features:config:public-api",
     ":features:dev:internal",
     ":features:dev:internal-api",

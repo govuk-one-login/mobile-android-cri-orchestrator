@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuViewModel
 
 @RunWith(AndroidJUnit4::class)

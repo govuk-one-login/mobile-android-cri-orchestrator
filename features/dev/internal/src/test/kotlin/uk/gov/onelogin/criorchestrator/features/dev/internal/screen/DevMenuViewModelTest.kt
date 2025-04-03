@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import uk.gov.onelogin.criorchestrator.features.config.internal.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.stubConfig
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.stubStringConfigEntry
@@ -15,7 +15,7 @@ class DevMenuViewModelTest {
         DevMenuViewModel(
             configStore =
                 FakeConfigStore(
-                    config = stubConfig(),
+                    initialConfig = stubConfig(),
                 ),
         )
 
