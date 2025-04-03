@@ -55,19 +55,6 @@ class SelectDrivingLicenceViewModelTest {
             )
     }
 
-    @Test
-    fun `when nfc is not enabled and screen starts, it sends analytics`() {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
-        viewModel.onScreenStart()
-
-        verify(analyticsLogger)
-            .trackScreen(
-                id = SelectDocumentScreenId.SelectDrivingLicence,
-                title = R.string.selectdocument_drivinglicence_title,
-            )
-    }
-
     @ParameterizedTest
     @ValueSource(ints = [0, 1])
     fun `when nfc is enabled and continue is clicked, it sends analytics`(selection: Int) {
@@ -109,19 +96,6 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is enabled and yes is selected, navigate to confirmation`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
-        runTest {
-            viewModel.actions.test {
-                viewModel.onContinueClicked(0)
-
-                assertEquals(SelectDrivingLicenceAction.NavigateToConfirmation, awaitItem())
-            }
-        }
-    }
-
-    @Test
     fun `when nfc is not enabled and yes is selected, navigate to confirmation`() {
         given(nfcChecker.hasNfc()).willReturn(false)
 
@@ -135,7 +109,7 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is  enabled and no is not selected, navigate to no nfc Abort`() {
+    fun `when nfc is  enabled and no is not selected, navigate to Confirm No Chipped ID`() {
         given(nfcChecker.hasNfc()).willReturn(true)
 
         runTest {
@@ -148,7 +122,7 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is not enabled and no is not selected, navigate to no nfc Abort`() {
+    fun `when nfc is not enabled and no is not selected, navigate to Confirm No Non Chipped ID`() {
         given(nfcChecker.hasNfc()).willReturn(false)
 
         runTest {

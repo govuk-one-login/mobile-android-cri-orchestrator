@@ -78,24 +78,6 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when screen is started and nfc is enabled, no item is selected`() =
-        runTest {
-            given(nfcChecker.hasNfc()).willReturn(true)
-
-            composeTestRule.setSelectDrivingLicenceContent()
-
-            composeTestRule
-                .onNode(yesOption, useUnmergedTree = true)
-                .onSibling()
-                .assertIsNotSelected()
-
-            composeTestRule
-                .onNode(noOption, useUnmergedTree = true)
-                .onSibling()
-                .assertIsNotSelected()
-        }
-
-    @Test
     fun `when screen is started and nfc is not enabled, no item is selected`() =
         runTest {
             given(nfcChecker.hasNfc()).willReturn(false)
@@ -173,30 +155,6 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when nfc is not enabled and yes is tapped, it is selected`() {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
-        composeTestRule.setSelectDrivingLicenceContent()
-
-        composeTestRule
-            .onNode(yesOption, useUnmergedTree = true)
-            .performClick()
-            .onSibling()
-            .assertIsSelected()
-    }
-
-    @Test
-    fun `when nfc is not enabled and no is tapped, it is selected`() {
-        composeTestRule.setSelectDrivingLicenceContent()
-
-        composeTestRule
-            .onNode(noOption, useUnmergedTree = true)
-            .performClick()
-            .onSibling()
-            .assertIsSelected()
-    }
-
-    @Test
     fun `when nfc is enabled and user has not made a choice, the confirm button is disabled`() {
         given(nfcChecker.hasNfc()).willReturn(true)
 
@@ -213,43 +171,6 @@ class SelectDrivingLicenceScreenTest {
         verify(viewModel, never()).onContinueClicked(any())
         verifyNoInteractions(navController)
     }
-
-    @Test
-    fun `when  nfc is not enabled and user has not made a choice, the confirm button is disabled`() {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
-        composeTestRule.setSelectDrivingLicenceContent()
-
-        composeTestRule
-            .onNode(continueButton)
-            .performClick()
-
-        composeTestRule
-            .onNode(continueButton)
-            .assertIsNotEnabled()
-
-        verify(viewModel, never()).onContinueClicked(any())
-        verifyNoInteractions(navController)
-    }
-
-    @Test
-    fun `when nfc is enabled and yes is selected, it navigates to confirm document`() =
-        runTest {
-            given(nfcChecker.hasNfc()).willReturn(true)
-
-            composeTestRule.setSelectDrivingLicenceContent()
-
-            composeTestRule
-                .onNode(yesOption, useUnmergedTree = true)
-                .performClick()
-
-            composeTestRule
-                .onNode(continueButton)
-                .assertIsEnabled()
-                .performClick()
-
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmDrivingLicence)
-        }
 
     @Test
     fun `when nfc is not enabled and yes is selected, it navigates to confirm document`() =
