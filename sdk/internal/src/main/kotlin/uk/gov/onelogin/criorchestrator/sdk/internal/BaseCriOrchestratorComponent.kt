@@ -3,10 +3,8 @@ package uk.gov.onelogin.criorchestrator.sdk.internal
 import android.content.Context
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
-import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.logging.api.Logger
-import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
+import uk.gov.onelogin.criorchestrator.features.session.internal.SessionComponent
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
@@ -14,15 +12,21 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
  * The real Dagger component that other component interfaces and modules will be merged into.
  */
 @ActivityScope
-@MergeComponent(CriOrchestratorScope::class)
+@MergeComponent(
+    CriOrchestratorScope::class,
+    dependencies = [
+        BaseCriOrchestratorSingletonComponent::class,
+        ConfigComponent::class,
+        SessionComponent::class,
+    ],
+)
 interface BaseCriOrchestratorComponent {
     @MergeComponent.Factory
     interface Factory {
         fun create(
-            @BindsInstance authenticatedHttpClient: GenericHttpClient,
-            @BindsInstance analyticsLogger: AnalyticsLogger,
-            @BindsInstance initialConfig: Config,
-            @BindsInstance logger: Logger,
+            baseSingletonComponent: BaseCriOrchestratorSingletonComponent,
+            configComponent: ConfigComponent,
+            sessionComponent: SessionComponent,
             @BindsInstance context: Context,
         ): BaseCriOrchestratorComponent
     }
