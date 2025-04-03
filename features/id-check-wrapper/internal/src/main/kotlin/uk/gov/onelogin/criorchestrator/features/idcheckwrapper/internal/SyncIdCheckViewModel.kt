@@ -1,8 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -11,23 +9,15 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 class SyncIdCheckViewModel(
     sessionStore: SessionStore,
 ) : ViewModel() {
-    internal lateinit var biometricToken: BiometricToken
-    internal lateinit var session: Session
-    internal lateinit var journeyType: JourneyType
+    // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
+    // information needed to start the ID Check SDK.
+    internal var biometricToken: BiometricToken = stubCallToBiometricTokenEndpoint()
+    internal var session: Session = sessionStore.read().value!!
+    internal var journeyType: JourneyType = getJourneyTypeFromRedirectUri(session)
 
     // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
     // information needed to start the ID Check SDK.
-    init {
-        viewModelScope.launch {
-            session = sessionStore.read().value!!
-            biometricToken = stubCallToBiometricTokenEndpoint()
-            journeyType = getJourneyTypeFromRedirectUri(session)
-        }
-    }
-
-    // DCMAW-12468: Viewmodel shouldn't have such detailed knowledge about how we collate the
-    // information needed to start the ID Check SDK.
-    private suspend fun stubCallToBiometricTokenEndpoint(): BiometricToken =
+    private fun stubCallToBiometricTokenEndpoint(): BiometricToken =
         BiometricToken(
             accessToken = "Stub Access Token",
             opaqueId = "Stub Opaque ID",
