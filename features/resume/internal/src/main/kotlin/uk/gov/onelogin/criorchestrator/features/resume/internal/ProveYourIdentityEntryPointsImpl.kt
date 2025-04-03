@@ -37,6 +37,6 @@ class ProveYourIdentityEntryPointsImpl
         }
 
         companion object {
-            internal val TEST_TAG = this.javaClass.simpleName
+            internal val TEST_TAG = this::class.java.simpleName
         }
     }

@@ -1,32 +1,25 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
 import android.content.Context
-import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.logging.api.Logger
-import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
+import uk.gov.onelogin.criorchestrator.features.session.internal.SessionComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonComponent
 
 /**
  * Creates instance of [BaseCriOrchestratorComponent].
  *
- * @param authenticatedHttpClient The HTTP client to make all network calls.
- * @param analyticsLogger The analytics logger that will receive events from the SDK.
- * @param logger The logger that logs events to the system and to Crashlytics.
- * @param context Application context.
+ * @param singletonComponent The singleton component instance.
+ * @param activityContext activity context.
  * @return An instance of [CriOrchestratorComponent].
  */
 fun createCriOrchestratorComponent(
-    authenticatedHttpClient: GenericHttpClient,
-    analyticsLogger: AnalyticsLogger,
-    initialConfig: Config,
-    logger: Logger,
-    context: Context,
+    singletonComponent: CriOrchestratorSingletonComponent,
+    activityContext: Context,
 ): CriOrchestratorComponent =
     DaggerMergedBaseCriOrchestratorComponent.factory().create(
-        authenticatedHttpClient = authenticatedHttpClient,
-        analyticsLogger = analyticsLogger,
-        initialConfig = initialConfig,
-        logger = logger,
-        context = context,
+        baseSingletonComponent = singletonComponent as BaseCriOrchestratorSingletonComponent,
+        configComponent = singletonComponent as ConfigComponent,
+        sessionComponent = singletonComponent as SessionComponent,
+        context = activityContext,
     )
