@@ -79,7 +79,7 @@ internal fun SelectDrivingLicenceScreen(
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
-@Suppress("LongMethod", "LongParameterList")
+@Suppress("LongMethod")
 @Composable
 internal fun SelectDrivingLicenceScreenContent(
     onContinueClicked: (Int) -> Unit,
