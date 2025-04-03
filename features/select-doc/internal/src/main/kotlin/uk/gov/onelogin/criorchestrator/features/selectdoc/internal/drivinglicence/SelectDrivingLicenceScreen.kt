@@ -49,12 +49,12 @@ internal fun SelectDrivingLicenceScreen(
             when (event) {
                 SelectDrivingLicenceAction.NavigateToNfcAbort ->
                     navController.navigate(
-                        SelectDocumentDestinations.NfcAbortConfirmationScreen,
+                        SelectDocumentDestinations.ConfirmNoChippedID,
                     )
 
                 SelectDrivingLicenceAction.NavigateToNoNfcAbort ->
                     navController.navigate(
-                        SelectDocumentDestinations.NoNfcAbortConfirmationScreen,
+                        SelectDocumentDestinations.ConfirmNoNonChippedID,
                     )
 
                 SelectDrivingLicenceAction.NavigateToConfirmation ->

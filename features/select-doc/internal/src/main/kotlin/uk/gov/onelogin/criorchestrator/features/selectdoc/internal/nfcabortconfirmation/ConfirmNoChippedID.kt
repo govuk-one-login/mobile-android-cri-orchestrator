@@ -7,7 +7,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun NfcAbortConfirmationScreen(modifier: Modifier = Modifier) {
+internal fun ConfirmNoChippedID(modifier: Modifier = Modifier) {
     Text(
         text = "DCMAW-10691 | Android | Document Selection | NFC enabled Abort Confirmation Screen",
         modifier = modifier,
@@ -16,8 +16,8 @@ internal fun NfcAbortConfirmationScreen(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewNfcAbortConfirmationScreen() {
+internal fun PreviewConfirmNoChippedID() {
     GdsTheme {
-        NfcAbortConfirmationScreen()
+        ConfirmNoChippedID()
     }
 }

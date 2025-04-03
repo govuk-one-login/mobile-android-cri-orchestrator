@@ -13,8 +13,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NfcAbortConfirmationScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.NoNfcAbortConfirmationScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.ConfirmNoChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.ConfirmNoNonChippedID
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -77,12 +77,12 @@ class SelectDocumentNavGraphProvider
                 ConfirmBrpScreen()
             }
 
-            composable<SelectDocumentDestinations.NfcAbortConfirmationScreen> {
-                NfcAbortConfirmationScreen()
+            composable<SelectDocumentDestinations.ConfirmNoChippedID> {
+                ConfirmNoChippedID()
             }
 
-            composable<SelectDocumentDestinations.NoNfcAbortConfirmationScreen> {
-                NoNfcAbortConfirmationScreen()
+            composable<SelectDocumentDestinations.ConfirmNoNonChippedID> {
+                ConfirmNoNonChippedID()
             }
         }
     }

@@ -287,7 +287,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.NfcAbortConfirmationScreen)
+            verify(navController).navigate(SelectDocumentDestinations.ConfirmNoChippedID)
         }
 
     @Test
@@ -307,7 +307,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.NoNfcAbortConfirmationScreen)
+            verify(navController).navigate(SelectDocumentDestinations.ConfirmNoNonChippedID)
         }
 
     private fun ComposeContentTestRule.setSelectDrivingLicenceContent() {
