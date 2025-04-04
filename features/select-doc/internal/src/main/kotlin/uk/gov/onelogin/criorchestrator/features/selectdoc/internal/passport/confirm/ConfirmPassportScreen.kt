@@ -1,6 +1,6 @@
 @file:OptIn(UnstableDesignSystemAPI::class)
 
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
