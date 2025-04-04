@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm
 
 import androidx.annotation.StringRes
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
