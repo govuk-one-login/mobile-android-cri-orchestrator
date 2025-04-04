@@ -16,17 +16,19 @@ import uk.gov.android.network.client.StubHttpClient
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 
 class RememberCriOrchestratorKtTest {
-    private val httpClient =
-        StubHttpClient(
-            apiResponse = ApiResponse.Offline,
+    private val criOrchestratorSdk =
+        CriOrchestratorSdk.create(
+            authenticatedHttpClient = StubHttpClient(apiResponse = ApiResponse.Offline),
+            analyticsLogger = mock<AnalyticsLogger>(),
+            initialConfig = Config(),
+            logger = SystemLogger(),
+            applicationContext = mock(),
         )
-
-    private val analyticsLogger = mock<AnalyticsLogger>()
-
-    private val logger = SystemLogger()
 
     @Test
     fun `it returns a value`() =
@@ -34,10 +36,7 @@ class RememberCriOrchestratorKtTest {
             moleculeFlow(RecompositionMode.Immediate) {
                 withContext {
                     rememberCriOrchestrator(
-                        authenticatedHttpClient = httpClient,
-                        analyticsLogger = analyticsLogger,
-                        initialConfig = Config(),
-                        logger = logger,
+                        criOrchestratorSdk = criOrchestratorSdk,
                     )
                 }
             }.test {
