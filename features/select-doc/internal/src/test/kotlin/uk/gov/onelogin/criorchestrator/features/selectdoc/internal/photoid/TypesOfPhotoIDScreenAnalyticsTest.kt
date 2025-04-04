@@ -11,8 +11,8 @@ import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -32,7 +32,7 @@ class TypesOfPhotoIDScreenAnalyticsTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     private val analytics =
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider =
                 AndroidResourceProvider(
                     context = context,
@@ -59,9 +59,9 @@ class TypesOfPhotoIDScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = SelectDocumentScreenId.TypesOfPhotoID.rawId,
+                    id = SelectDocScreenId.TypesOfPhotoID.rawId,
                     name = context.getString(R.string.typesofphotoid_title),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }

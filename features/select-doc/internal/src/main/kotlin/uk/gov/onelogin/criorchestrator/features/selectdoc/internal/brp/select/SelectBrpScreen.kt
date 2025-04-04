@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +28,7 @@ import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
@@ -44,19 +44,19 @@ fun SelectBrpScreen(
             when (event) {
                 SelectBrpAction.NavigateToTypesOfPhotoID -> {
                     navController.navigate(
-                        SelectDocumentDestinations.TypesOfPhotoID,
+                        SelectDocDestinations.TypesOfPhotoID,
                     )
                 }
 
                 SelectBrpAction.NavigateToBrpConfirmation -> {
                     navController.navigate(
-                        SelectDocumentDestinations.ConfirmBrp,
+                        SelectDocDestinations.ConfirmBrp,
                     )
                 }
 
                 SelectBrpAction.NavigateToDrivingLicence -> {
                     navController.navigate(
-                        SelectDocumentDestinations.DrivingLicence,
+                        SelectDocDestinations.DrivingLicence,
                     )
                 }
             }

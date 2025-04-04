@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 sealed class SelectBrpAction {
     data object NavigateToBrpConfirmation : SelectBrpAction()

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import androidx.annotation.StringRes
 import kotlinx.collections.immutable.ImmutableList

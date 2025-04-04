@@ -19,12 +19,12 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 
 @RunWith(AndroidJUnit4::class)
-class SelectDocumentAnalyticsTest {
+class SelectDocAnalyticsTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     private val analytics by lazy {
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider = AndroidResourceProvider(context = context),
             analyticsLogger = analyticsLogger,
         )

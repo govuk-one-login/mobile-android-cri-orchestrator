@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
@@ -17,8 +17,8 @@ import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -43,7 +43,7 @@ class SelectBrpScreenAnalyticsTest {
     private val continueButton = hasText(context.getString(SelectBrpConstants.continueButtonTextId))
 
     private val analytics =
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider = resourceProvider,
             analyticsLogger = analyticsLogger,
         )
@@ -65,9 +65,9 @@ class SelectBrpScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = SelectDocumentScreenId.SelectBrp.rawId,
+                    id = SelectDocScreenId.SelectBrp.rawId,
                     name = context.getString(SelectBrpConstants.titleId),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
@@ -84,7 +84,7 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Button(
                     text = context.getString(SelectBrpConstants.readMoreButtonTextId),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
@@ -106,7 +106,7 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Form(
                     text = context.getString(SelectBrpConstants.continueButtonTextId),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                     response = context.getString(SelectBrpConstants.selectionItems[0]),
                 ).asLegacyEvent()
 
@@ -129,7 +129,7 @@ class SelectBrpScreenAnalyticsTest {
             TrackEvent
                 .Form(
                     text = context.getString(SelectBrpConstants.continueButtonTextId),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                     response = context.getString(SelectBrpConstants.selectionItems[1]),
                 ).asLegacyEvent()
 

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
@@ -20,7 +20,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class SelectBrpScreenTest {
@@ -58,7 +58,7 @@ class SelectBrpScreenTest {
             .onNode(readMore)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
+        verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
     }
 
     // DCMAW-10690 | AC4: User doesn’t select an option
@@ -88,7 +88,7 @@ class SelectBrpScreenTest {
             .onNode(continueButton, useUnmergedTree = true)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.ConfirmBrp)
+        verify(navController).navigate(SelectDocDestinations.ConfirmBrp)
     }
 
     // DCMAW-10690 | AC3: User doesn’t have a biometric document
@@ -104,7 +104,7 @@ class SelectBrpScreenTest {
             .onNode(continueButton, useUnmergedTree = true)
             .performClick()
 
-        verify(navController).navigate(SelectDocumentDestinations.DrivingLicence)
+        verify(navController).navigate(SelectDocDestinations.DrivingLicence)
     }
 
     private fun swipeToAdditionalContent() {

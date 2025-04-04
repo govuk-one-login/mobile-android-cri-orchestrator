@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
@@ -10,13 +10,13 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectBrpViewModelTest {
-    private val analytics = mock<SelectDocumentAnalytics>()
+    private val analytics = mock<SelectDocAnalytics>()
 
     private val viewModel by lazy {
         SelectBrpViewModel(
@@ -30,7 +30,7 @@ class SelectBrpViewModelTest {
         viewModel.onScreenStart()
 
         verify(analytics).trackScreen(
-            id = SelectDocumentScreenId.SelectBrp,
+            id = SelectDocScreenId.SelectBrp,
             title = SelectBrpConstants.titleId,
         )
     }
