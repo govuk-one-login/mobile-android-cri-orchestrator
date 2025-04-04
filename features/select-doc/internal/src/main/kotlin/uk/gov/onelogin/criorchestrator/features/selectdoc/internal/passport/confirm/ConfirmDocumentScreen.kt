@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/passport/confirm/ConfirmDocumentScreen.kt
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm
-========
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
->>>>>>>> 0d96af74 (refactor: update package structure):features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/passport/confirmation/ConfirmDocumentScreen.kt
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
