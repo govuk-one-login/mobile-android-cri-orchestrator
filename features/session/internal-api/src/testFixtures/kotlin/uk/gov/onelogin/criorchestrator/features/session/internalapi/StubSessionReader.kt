@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internalapi
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

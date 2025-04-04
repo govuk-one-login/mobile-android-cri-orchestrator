@@ -22,7 +22,7 @@ dependencies {
     testImplementation(testFixtures(project(":libraries:analytics")))
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(testFixtures(project(":features:session:internal")))
+    testImplementation(testFixtures(project(":features:session:internal-api")))
     testImplementation(kotlin("test"))
 }
 

@@ -18,7 +18,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
-import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {

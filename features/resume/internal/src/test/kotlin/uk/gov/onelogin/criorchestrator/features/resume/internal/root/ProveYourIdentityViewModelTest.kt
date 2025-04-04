@@ -16,7 +16,7 @@ import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internal.StubSessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 

@@ -36,14 +36,17 @@ class ModuleArchitectureTest {
     fun `feature modules do not depend directly on other features internals`() {
         Konsist
             .defaultScope()
-            .minus(scope = scopeFromTest())
             .files
             .withPackageMatching(featurePackageAny)
             .assertTrue(
                 additionalMessage =
                     """
+                    Features shouldn't know about other features internals.
                     Features should depend on each other indirectly, through API modules.
                     Implementations should be injected.
+                    If a test fixture is needed across different features, then it is part of the
+                    API of the feature and the implementation should live in one of its feature's
+                    API modules.
                     """.trimIndent(),
             ) {
                 val thisFeaturePackage =
