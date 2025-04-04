@@ -22,7 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigSto
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
 import javax.inject.Provider
