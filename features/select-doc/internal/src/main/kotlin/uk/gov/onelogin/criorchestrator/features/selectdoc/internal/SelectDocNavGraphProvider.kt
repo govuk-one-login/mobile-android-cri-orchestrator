@@ -11,7 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.C
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmDocumentScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmPassportScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
@@ -29,6 +30,8 @@ class SelectDocNavGraphProvider
         private val selectBrpViewModelFactory: ViewModelProvider.Factory,
         @Named(SelectPassportViewModelModule.FACTORY_NAME)
         private val selectPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmPassportViewModelModule.FACTORY_NAME)
+        private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
@@ -58,7 +61,10 @@ class SelectDocNavGraphProvider
             }
 
             composable<SelectDocDestinations.ConfirmPassport> {
-                ConfirmDocumentScreen()
+                ConfirmPassportScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmPassportViewModelFactory),
+                )
             }
 
             composable<SelectDocDestinations.ConfirmBrp> {
