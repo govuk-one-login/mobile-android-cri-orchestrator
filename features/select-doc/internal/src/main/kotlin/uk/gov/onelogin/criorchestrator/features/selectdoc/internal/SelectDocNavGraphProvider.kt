@@ -7,10 +7,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirmation.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoChippedID
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoNonChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmDocumentScreen
@@ -19,9 +21,6 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.conf
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation.ConfirmPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirmation.ConfirmBrpScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
