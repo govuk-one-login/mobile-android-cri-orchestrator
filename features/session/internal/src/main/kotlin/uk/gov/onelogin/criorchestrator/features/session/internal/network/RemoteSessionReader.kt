@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
@@ -20,17 +20,16 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import javax.inject.Inject
 import javax.inject.Provider
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @ActivityScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = SessionReader::class)
 class RemoteSessionReader
     @Inject
     constructor(
         private val configStore: ConfigStore,
-        private val dispatchers: CoroutineDispatchers,
         private val sessionStore: SessionStore,
         private val sessionApi: Provider<SessionApi>,
         private val logger: Logger,
@@ -45,7 +44,6 @@ class RemoteSessionReader
         override fun isActiveSession(): Flow<Boolean> =
             configStore
                 .read(SdkConfigKey.BypassIdCheckAsyncBackend)
-                .flowOn(dispatchers.io)
                 .flatMapLatest {
                     configStore.read(IdCheckAsyncBackendBaseUrl)
                 }.map {

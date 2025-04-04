@@ -49,8 +49,9 @@ class IntegrationTest {
         )
         sessionApiImpl =
             SessionApiImpl(
-                createTestHttpClient(),
-                fakeConfigStore,
+                dispatchers = dispatchers,
+                httpClient = createTestHttpClient(),
+                configStore = fakeConfigStore,
             )
 
         val sessionApiProvider =
@@ -61,7 +62,6 @@ class IntegrationTest {
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = fakeConfigStore,
-                dispatchers = dispatchers,
                 sessionStore = sessionStore,
                 sessionApi = sessionApiProvider,
                 logger = logger,

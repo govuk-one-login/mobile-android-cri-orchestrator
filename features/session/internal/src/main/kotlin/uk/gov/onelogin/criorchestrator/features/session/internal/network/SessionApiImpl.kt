@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.GenericHttpClient
@@ -8,6 +9,7 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import javax.inject.Inject
 
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"
@@ -16,6 +18,7 @@ private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"
 class SessionApiImpl
     @Inject
     constructor(
+        private val dispatchers: CoroutineDispatchers,
         private val httpClient: GenericHttpClient,
         private val configStore: ConfigStore,
     ) : SessionApi,
@@ -26,12 +29,12 @@ class SessionApiImpl
                 ApiRequest.Get(
                     url = baseUrl + GET_ACTIVE_SESSION_ENDPOINT,
                 )
-            val response =
+            return withContext(dispatchers.io) {
                 httpClient.makeAuthorisedRequest(
                     apiRequest = request,
                     scope = SCOPE,
                 )
-            return response
+            }
         }
 
         companion object {

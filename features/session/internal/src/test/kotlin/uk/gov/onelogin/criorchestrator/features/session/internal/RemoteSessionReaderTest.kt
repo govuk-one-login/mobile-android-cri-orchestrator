@@ -2,7 +2,6 @@ package uk.gov.onelogin.criorchestrator.features.session.internal
 
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -25,13 +24,11 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
-import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import java.util.stream.Stream
 import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
-    private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val logger = SystemLogger()
     private val sessionApi = spy(StubSessionApiImpl())
     private val configStore = FakeConfigStore()
@@ -43,7 +40,6 @@ class RemoteSessionReaderTest {
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = configStore,
-                dispatchers = dispatchers,
                 sessionStore = InMemorySessionStore(logger),
                 sessionApi = Provider { sessionApi },
                 logger = logger,
