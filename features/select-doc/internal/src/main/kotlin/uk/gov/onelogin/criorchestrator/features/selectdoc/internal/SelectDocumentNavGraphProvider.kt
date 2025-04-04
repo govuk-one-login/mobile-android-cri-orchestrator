@@ -13,8 +13,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmation.
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmbrp.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.SelectDrivingLicenceViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.ConfirmNoChippedID
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.nfcabortconfirmation.ConfirmNoNonChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoNonChippedID
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.SelectPassportViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
