@@ -75,29 +75,11 @@ class SelectDrivingLicenceAnalyticsTest {
         whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
             Config.Value.BooleanValue(false),
         )
-    }
-
-    @Test
-    fun `when screen is started and nfc is enabled, it tracks analytics`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
-        val expectedEvent =
-            ViewEvent
-                .Screen(
-                    id = SelectDocumentScreenId.SelectDrivingLicence.rawId,
-                    name = context.getString(R.string.selectdocument_drivinglicence_title),
-                    params = SelectDocumentAnalytics.requiredParameters,
-                ).asLegacyEvent()
-
-        composeTestRule.setSelectDrivingLicenceContent()
-
-        assertContains(analyticsLogger.loggedEvents, expectedEvent)
-    }
-
-    @Test
-    fun `when screen is started and nfc is not enabled, it tracks analytics`() {
         given(nfcChecker.hasNfc()).willReturn(false)
+    }
 
+    @Test
+    fun `when screen is started, it tracks analytics`() {
         val expectedEvent =
             ViewEvent
                 .Screen(
@@ -112,9 +94,7 @@ class SelectDrivingLicenceAnalyticsTest {
     }
 
     @Test
-    fun `when nfc is enabled and continue button is clicked, it tracks analytics`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
+    fun `when continue button is clicked, it tracks analytics`() {
         composeTestRule.setSelectDrivingLicenceContent()
 
         composeTestRule
@@ -136,31 +116,7 @@ class SelectDrivingLicenceAnalyticsTest {
     }
 
     @Test
-    fun `when nfc is not enabled and continue button is clicked, it tracks analytics`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
-        composeTestRule.setSelectDrivingLicenceContent()
-
-        composeTestRule
-            .onNode(yesOption, useUnmergedTree = true)
-            .performClick()
-
-        composeTestRule
-            .onNode(continueButton)
-            .performClick()
-
-        val expectedEvent =
-            TrackEvent
-                .Form(
-                    text = context.getString(R.string.selectdocument_drivinglicence_continuebutton),
-                    params = SelectDocumentAnalytics.requiredParameters,
-                    response = context.getString(R.string.selectdocument_drivinglicence_selection_yes),
-                ).asLegacyEvent()
-        assertContains(analyticsLogger.loggedEvents, expectedEvent)
-    }
-
-    @Test
-    fun `when nfc is enabled and read more is clicked, it tracks analytics`() {
+    fun `when read more is clicked, it tracks analytics`() {
         given(nfcChecker.hasNfc()).willReturn(true)
 
         composeTestRule.setSelectDrivingLicenceContent()

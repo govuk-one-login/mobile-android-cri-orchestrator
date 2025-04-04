@@ -40,12 +40,11 @@ class SelectDrivingLicenceViewModelTest {
         whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
             Config.Value.BooleanValue(false),
         )
+        given(nfcChecker.hasNfc()).willReturn(false)
     }
 
     @Test
-    fun `when nfc is enabled and screen starts, it sends analytics`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
+    fun `when screen starts, it sends analytics`() {
         viewModel.onScreenStart()
 
         verify(analyticsLogger)
@@ -57,7 +56,7 @@ class SelectDrivingLicenceViewModelTest {
 
     @ParameterizedTest
     @ValueSource(ints = [0, 1])
-    fun `when nfc is enabled and continue is clicked, it sends analytics`(selection: Int) {
+    fun `when continue is clicked and nfc is enabled, it sends analytics`(selection: Int) {
         given(nfcChecker.hasNfc()).willReturn(true)
 
         viewModel.onContinueClicked(selection)
@@ -77,9 +76,7 @@ class SelectDrivingLicenceViewModelTest {
 
     @ParameterizedTest
     @ValueSource(ints = [0, 1])
-    fun `when nfc is not enabled and continue is clicked, it sends analytics`(selection: Int) {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
+    fun `when continue is clicked and nfc is not enabled, it sends analytics`(selection: Int) {
         viewModel.onContinueClicked(selection)
 
         val item =
@@ -96,9 +93,7 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is not enabled and yes is selected, navigate to confirmation`() {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
+    fun `when yes is selected and nfc is not enabled, navigate to confirmation`() {
         runTest {
             viewModel.actions.test {
                 viewModel.onContinueClicked(0)
@@ -109,7 +104,7 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is  enabled and no is not selected, navigate to Confirm No Chipped ID`() {
+    fun `when no is not selected and nfc is enabled, navigate to confirm no chipped ID`() {
         given(nfcChecker.hasNfc()).willReturn(true)
 
         runTest {
@@ -122,9 +117,7 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `when nfc is not enabled and no is not selected, navigate to Confirm No Non Chipped ID`() {
-        given(nfcChecker.hasNfc()).willReturn(false)
-
+    fun `when nfc is not enabled and no is not selected, navigate to confirm no non chipped ID`() {
         runTest {
             viewModel.actions.test {
                 viewModel.onContinueClicked(1)

@@ -75,13 +75,12 @@ class SelectDrivingLicenceScreenTest {
         whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
             Config.Value.BooleanValue(false),
         )
+        given(nfcChecker.hasNfc()).willReturn(false)
     }
 
     @Test
-    fun `when screen is started and nfc is not enabled, no item is selected`() =
+    fun `when screen is started, no item is selected`() =
         runTest {
-            given(nfcChecker.hasNfc()).willReturn(false)
-
             composeTestRule.setSelectDrivingLicenceContent()
 
             composeTestRule
@@ -96,10 +95,8 @@ class SelectDrivingLicenceScreenTest {
         }
 
     @Test
-    fun `when screen is started and nfc is not enabled, read more button is not displayed`() =
+    fun `when screen is started and nfc is not enabled, the read more button is not displayed`() =
         runTest {
-            given(nfcChecker.hasNfc()).willReturn(false)
-
             composeTestRule.setSelectDrivingLicenceContent()
 
             composeTestRule
@@ -122,9 +119,7 @@ class SelectDrivingLicenceScreenTest {
         }
 
     @Test
-    fun `when nfc is enabled and yes is tapped, it is selected`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
+    fun `when yes is tapped, it is selected`() {
         composeTestRule.setSelectDrivingLicenceContent()
 
         composeTestRule
@@ -135,10 +130,8 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when nfc is enabled and no is tapped, it is selected`() {
+    fun `when no is tapped, it is selected`() {
         composeTestRule.setSelectDrivingLicenceContent()
-
-        given(nfcChecker.hasNfc()).willReturn(true)
 
         composeTestRule
             .onNode(noOption, useUnmergedTree = true)
@@ -155,9 +148,7 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when nfc is enabled and user has not made a choice, the confirm button is disabled`() {
-        given(nfcChecker.hasNfc()).willReturn(true)
-
+    fun `when user has not made a choice, the confirm button is disabled`() {
         composeTestRule.setSelectDrivingLicenceContent()
 
         composeTestRule
@@ -173,10 +164,8 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when nfc is not enabled and yes is selected, it navigates to confirm document`() =
+    fun `when yes is selected and confirm is tapped, it navigates to confirm driving licence`() =
         runTest {
-            given(nfcChecker.hasNfc()).willReturn(false)
-
             composeTestRule.setSelectDrivingLicenceContent()
 
             composeTestRule
@@ -192,7 +181,7 @@ class SelectDrivingLicenceScreenTest {
         }
 
     @Test
-    fun `when nfc is enabled and no is selected, it navigates to Nfc Abort Confirmation`() =
+    fun `when no is selected and nfc is enabled, it navigates to confirm no chipped ID`() =
         runTest {
             composeTestRule.setSelectDrivingLicenceContent()
 
@@ -212,10 +201,8 @@ class SelectDrivingLicenceScreenTest {
         }
 
     @Test
-    fun `when nfc is not enabled and no is selected, it navigates to No Nfc Abort Confirmation`() =
+    fun `when no is selected and nfc is not enabled, it navigates to confirm no non chipped ID`() =
         runTest {
-            given(nfcChecker.hasNfc()).willReturn(false)
-
             composeTestRule.setSelectDrivingLicenceContent()
 
             composeTestRule
