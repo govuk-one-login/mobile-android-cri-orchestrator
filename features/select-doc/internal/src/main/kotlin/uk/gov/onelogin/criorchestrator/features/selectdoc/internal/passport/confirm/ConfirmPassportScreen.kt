@@ -3,7 +3,6 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirmation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,6 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
-import uk.gov.android.ui.theme.xsmallPadding
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
@@ -89,10 +87,10 @@ internal fun ConfirmPassportScreenContent(
                     Image(
                         painter = painterResource(R.drawable.nfc_passport),
                         contentDescription = stringResource(R.string.selectdocument_passport_imagedescription),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                        ,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
                         contentScale = ContentScale.FillWidth,
                     )
                 }
