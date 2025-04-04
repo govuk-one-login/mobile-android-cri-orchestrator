@@ -17,6 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.toPersistentList
@@ -153,15 +155,32 @@ internal fun SelectDrivingLicenceScreenContent(
     }
 }
 
+internal data class PreviewParams(
+    val state: Boolean,
+)
+
+internal class SelectDrivingLicenceScreenPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
+    override val values =
+        sequenceOf(
+            PreviewParams(
+                state = true,
+            ),
+            PreviewParams(
+                state = false,
+            ),
+        )
+}
+
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewDrivingLicenceSelectionScreen() {
-    val isNfcEnabled = remember { true }
-
+internal fun PreviewDrivingLicenceSelectionScreen(
+    @PreviewParameter(SelectDrivingLicenceScreenPreviewParameterProvider::class)
+    isNfcEnabled: PreviewParams,
+) {
     GdsTheme {
         SelectDrivingLicenceScreenContent(
             onReadMoreClick = { },
-            displayReadMoreButton = isNfcEnabled,
+            displayReadMoreButton = isNfcEnabled.state,
             onContinueClicked = {},
         )
     }
