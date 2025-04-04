@@ -5,6 +5,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.networking)
     implementation(project(":libraries:di"))
+
+    testFixturesImplementation(libs.kotlinx.coroutines)
 }
 
 mavenPublishingConfig {
