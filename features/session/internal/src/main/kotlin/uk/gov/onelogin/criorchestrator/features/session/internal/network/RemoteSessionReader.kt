@@ -3,9 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
@@ -43,11 +43,12 @@ class RemoteSessionReader
         }
 
         override fun isActiveSession(): Flow<Boolean> =
-            merge(
-                configStore.read(IdCheckAsyncBackendBaseUrl),
-                configStore.read(SdkConfigKey.BypassIdCheckAsyncBackend),
-            ).flowOn(dispatchers.io)
-                .map {
+            configStore
+                .read(SdkConfigKey.BypassIdCheckAsyncBackend)
+                .flowOn(dispatchers.io)
+                .flatMapLatest {
+                    configStore.read(IdCheckAsyncBackendBaseUrl)
+                }.map {
                     sessionApi.get().getActiveSession()
                 }.onEach {
                     logResponse(it)
