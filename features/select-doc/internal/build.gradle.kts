@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(project(":features:config:public-api"))
+    implementation(project(":features:config:internal-api"))
     implementation(project(":features:resume:internal-api"))
     implementation(project(":features:resume:public-api"))
     implementation(project(":features:select-doc:internal-api"))
