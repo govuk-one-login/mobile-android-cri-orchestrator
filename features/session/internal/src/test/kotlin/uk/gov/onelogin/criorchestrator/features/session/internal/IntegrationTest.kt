@@ -2,7 +2,6 @@ package uk.gov.onelogin.criorchestrator.features.session.internal
 
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -19,7 +18,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.Session
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import javax.inject.Provider
@@ -28,7 +26,6 @@ import javax.inject.Provider
 class IntegrationTest {
     private val fakeConfigStore = FakeConfigStore()
     private val logger = SystemLogger()
-    private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val imposter = Imposter.createMockEngine()
 
     private lateinit var sessionApiImpl: SessionApi
@@ -49,8 +46,8 @@ class IntegrationTest {
         )
         sessionApiImpl =
             SessionApiImpl(
-                createTestHttpClient(),
-                fakeConfigStore,
+                httpClient = createTestHttpClient(),
+                configStore = fakeConfigStore,
             )
 
         val sessionApiProvider =
@@ -61,7 +58,6 @@ class IntegrationTest {
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = fakeConfigStore,
-                dispatchers = dispatchers,
                 sessionStore = sessionStore,
                 sessionApi = sessionApiProvider,
                 logger = logger,

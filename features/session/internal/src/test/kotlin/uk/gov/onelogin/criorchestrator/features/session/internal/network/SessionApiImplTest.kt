@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -11,6 +12,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SessionApiImplTest {
     private val fakeConfigStore = FakeConfigStore()
 
@@ -30,8 +32,8 @@ class SessionApiImplTest {
         )
         sessionApiImpl =
             SessionApiImpl(
-                createTestHttpClient(),
-                fakeConfigStore,
+                httpClient = createTestHttpClient(),
+                configStore = fakeConfigStore,
             )
     }
 

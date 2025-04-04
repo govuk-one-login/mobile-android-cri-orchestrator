@@ -2,54 +2,53 @@ package uk.gov.onelogin.criorchestrator.features.session.internal
 
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Named.named
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
-import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import java.util.stream.Stream
 import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
-    private val dispatchers = CoroutineDispatchers.from(UnconfinedTestDispatcher())
     private val logger = SystemLogger()
-    private val stubSessionApiImpl = StubSessionApiImpl()
-
-    val sessionApi = Provider<SessionApi> { stubSessionApiImpl }
+    private val sessionApi = spy(StubSessionApiImpl())
+    private val configStore = FakeConfigStore()
 
     private lateinit var remoteSessionReader: SessionReader
 
     @BeforeEach
     fun setUp() {
-        val configStore = FakeConfigStore()
         remoteSessionReader =
             RemoteSessionReader(
                 configStore = configStore,
-                dispatchers = dispatchers,
                 sessionStore = InMemorySessionStore(logger),
-                sessionApi = sessionApi,
+                sessionApi = Provider { sessionApi },
                 logger = logger,
             )
     }
 
     @AfterEach
     fun tearDown() {
-        stubSessionApiImpl.setActiveSession(ApiResponse.Offline)
+        sessionApi.setActiveSession(ApiResponse.Offline)
     }
 
     @ParameterizedTest(name = "{0}")
@@ -59,12 +58,46 @@ class RemoteSessionReaderTest {
         logEntry: String,
         expectedIsActiveSession: Boolean,
     ) = runTest {
-        stubSessionApiImpl.setActiveSession(apiResponse)
+        sessionApi.setActiveSession(apiResponse)
         remoteSessionReader.isActiveSession().test {
             assertEquals(expectedIsActiveSession, awaitItem())
             assertTrue(logger.contains(logEntry))
         }
     }
+
+    @Test
+    fun `given no config changes, session API is called just once`() =
+        runTest {
+            remoteSessionReader.isActiveSession().test {
+                awaitItem()
+                cancel()
+            }
+            verify(sessionApi, times(1)).getActiveSession()
+        }
+
+    @Test
+    fun `when config changes, session API is called each time`() =
+        runTest {
+            remoteSessionReader.isActiveSession().test {
+                awaitItem()
+                configStore.write(
+                    Config.Entry(
+                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                        value = Config.Value.BooleanValue(true),
+                    ),
+                )
+                // No emission as stub API returns the same response
+                configStore.write(
+                    Config.Entry(
+                        key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                        value = Config.Value.StringValue("different"),
+                    ),
+                )
+                // No emission as stub API returns the same response
+                cancel()
+            }
+            verify(sessionApi, times(3)).getActiveSession()
+        }
 
     companion object {
         @JvmStatic

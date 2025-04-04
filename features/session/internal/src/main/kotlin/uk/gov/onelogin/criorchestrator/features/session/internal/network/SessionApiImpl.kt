@@ -26,12 +26,10 @@ class SessionApiImpl
                 ApiRequest.Get(
                     url = baseUrl + GET_ACTIVE_SESSION_ENDPOINT,
                 )
-            val response =
-                httpClient.makeAuthorisedRequest(
-                    apiRequest = request,
-                    scope = SCOPE,
-                )
-            return response
+            return httpClient.makeAuthorisedRequest(
+                apiRequest = request,
+                scope = SCOPE,
+            )
         }
 
         companion object {
