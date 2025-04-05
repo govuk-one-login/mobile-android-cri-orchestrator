@@ -9,6 +9,7 @@
     <string name="confirmdocument_brp_body_1">Make sure you have your original BRP, BRC or FWP with you. You cannot use a photocopy or digital copy.</string>
     <string name="confirmdocument_brp_expired_warning">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.</string>
     <string name="confirmdocument_brp_body_2">You will not be able to choose a different type of photo ID after confirming.</string>
+    <string name="selectdoc_imagedescription_brp">An example of what a UK biometric permit or card looks like. It’s a pink and blue card with the UK government crest and the biometric chip symbol. The symbol is rectangular with a circle in the middle.</string>
 
     <string name="confirmdocument_confirmbutton">Confirm</string>
 

@@ -90,17 +90,17 @@ internal fun ConfirmBrpScreenContent(
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
-//                item {
-//                    Image(
-//                        painter = painterResource(R.drawable.nfc_passport),
-//                        contentDescription = stringResource(R.string.selectdocument_passport_imagedescription),
-//                        modifier =
-//                            Modifier
-//                                .fillMaxWidth()
-//                                .padding(vertical = 8.dp),
-//                        contentScale = ContentScale.FillWidth,
-//                    )
-//                }
+                item {
+                    Image(
+                        painter = painterResource(R.drawable.brp),
+                        contentDescription = stringResource(R.string.selectdoc_imagedescription_brp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                        contentScale = ContentScale.FillWidth,
+                    )
+                }
             },
             primaryButton = {
                 GdsButton(
