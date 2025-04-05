@@ -5,6 +5,11 @@
     <string name="confirmdocument_passport_body_1">Make sure you have your original passport with you. You cannot use a photocopy or digital copy.</string>
     <string name="confirmdocument_passport_body_2">You will not be able to choose a different type of photo ID after confirming.</string>
 
+    <string name="confirmdocument_brp_title">Confirm you want to continue with your BRP, BRC or FWP</string>
+    <string name="confirmdocument_brp_body_1">Make sure you have your original BRP, BRC or FWP with you. You cannot use a photocopy or digital copy.</string>
+    <string name="confirmdocument_brp_expired_warning">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.</string>
+    <string name="confirmdocument_brp_body_2">You will not be able to choose a different type of photo ID after confirming.</string>
+
     <string name="confirmdocument_confirmbutton">Confirm</string>
 
     <!--  Select  -->
