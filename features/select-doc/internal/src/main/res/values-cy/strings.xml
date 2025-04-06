@@ -11,6 +11,11 @@
     <string name="confirmdocument_brp_body_2">Ni fyddwch yn gallu dewis math gwahanol o ID gyda llun ar ôl cadarnhau.</string>
     <string name="selectdoc_imagedescription_brp">Enghraifft o beth mae trwydded neu gerdyn biometrig y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda arwyddlun llywodraeth y DU a’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
 
+    <string name="confirmdocument_drivinglicence_title">Cadarnhau eich bod am barhau gyda’ch trwydded yrru cerdyn-llun y DU</string>
+    <string name="confirmdocument_drivinglicence_body_1">Gwnewch yn siwr bod gennych eich trwydded yrru cerdyn-llun y DU gwreiddiol gyda chi. Ni allwch ddefnyddio llungopi neu gopi digidol.</string>
+    <string name="confirmdocument_drivinglicence_body_2">Ni fyddwch yn gallu dewis math gwahanol o ID gyda llun ar ôl cadarnhau.</string>
+    <string name="selectdoc_imagedescription_drivinglicence">Enghraifft o beth mae trwydded yrru cerdyn-llun y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda baner y DU.</string>
+
     <string name="confirmdocument_confirmbutton">Cadarnhau</string>
 
     <!--  Select  -->
