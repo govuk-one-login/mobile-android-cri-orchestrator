@@ -21,7 +21,7 @@ internal class ConfirmPassportViewModel(
         )
     }
 
-    fun onPrimary() {
+    fun onConfirmClick() {
         analytics.trackButtonEvent(buttonText = ConfirmPassportConstants.buttonTextId)
 
         viewModelScope.launch {

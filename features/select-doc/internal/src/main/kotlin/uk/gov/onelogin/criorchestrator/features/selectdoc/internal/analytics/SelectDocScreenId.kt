@@ -9,6 +9,7 @@ enum class SelectDocScreenId(
     ConfirmPassport(rawId = "6bc099b5-8194-4d3f-86ed-cb815d8f0056"),
     ConfirmBrp(rawId = "cd406643-bfc3-4664-b3ac-f15c9f7469fa"),
     ConfirmDrivingLicence(rawId = "e112b83c-5100-4d44-8db0-bbdaaa5b19da"),
+    SelectDrivingLicence(rawId = "2721b4e6-4b7e-4aab-bf50-5ba29f2d9d56"),
     TypesOfPhotoID(rawId = "c841ad80-4b16-4425-9bf2-aa24485fdaa0"),
     SelectBrp(rawId = "8349d732-fb9e-49f0-9b7c-5ed84ffe4613"),
 }

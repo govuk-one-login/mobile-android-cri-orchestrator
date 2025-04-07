@@ -71,4 +71,13 @@
 
     <string name="selectdocument_brp_continue_button">Continue</string>
 
+    <!--    Driving Licence strings    -->
+    <string name="selectdocument_drivinglicence_title">Do you have a UK photocard driving licence?</string>
+    <string name="selectdocument_drivinglicence_body">You can use a full or provisional UK driving licence.\n\nYour UK driving licence must be a plastic photocard, not a paper licence.\n\nYou cannot use your UK driving licence if it has expired.</string>
+    <string name="selectdocument_drivinglicence_readmore_button">Read more about the types of photo ID you can use</string>
+
+    <string name="selectdocument_drivinglicence_selection_yes">Yes</string>
+    <string name="selectdocument_drivinglicence_selection_no">No</string>
+
+    <string name="selectdocument_drivinglicence_continuebutton">Continue</string>
 </resources>
