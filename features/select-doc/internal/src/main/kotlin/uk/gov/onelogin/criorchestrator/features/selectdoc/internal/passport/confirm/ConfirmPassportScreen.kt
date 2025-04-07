@@ -47,7 +47,7 @@ internal fun ConfirmPassportScreen(
     ConfirmPassportScreenContent(
         title = stringResource(ConfirmPassportConstants.titleId),
         confirmButtonText = stringResource(ConfirmPassportConstants.buttonTextId),
-        onPrimaryClick = viewModel::onPrimary,
+        onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
 }

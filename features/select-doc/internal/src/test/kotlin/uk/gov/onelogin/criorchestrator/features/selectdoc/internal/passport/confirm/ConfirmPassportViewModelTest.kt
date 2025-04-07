@@ -34,14 +34,22 @@ class ConfirmPassportViewModelTest {
     }
 
     @Test
-    fun `when confirm is pressed, send analytics and `() =
+    fun `when confirm is pressed, send analytics`() =
         runTest {
             viewModel.action.test {
-                viewModel.onPrimary()
+                viewModel.onConfirmClick()
                 verify(analyticsLogger)
                     .trackButtonEvent(
                         buttonText = R.string.confirmdocument_confirmbutton,
                     )
+            }
+        }
+
+    @Test
+    fun `when confirm is pressed, navigates to SyncIdCheck screen`() =
+        runTest {
+            viewModel.action.test {
+                viewModel.onConfirmClick()
                 assertEquals(ConfirmPassportAction.NavigateToSyncIdCheck, awaitItem())
             }
         }
