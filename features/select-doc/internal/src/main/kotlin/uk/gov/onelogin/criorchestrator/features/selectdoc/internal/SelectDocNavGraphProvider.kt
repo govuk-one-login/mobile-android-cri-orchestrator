@@ -83,20 +83,21 @@ class SelectDocNavGraphProvider
                     navController = navController,
                     viewModel = viewModel(factory = confirmBrpViewModelFactory),
                 )
-                composable<SelectDocDestinations.ConfirmDrivingLicence> {
-                    ConfirmBrpScreen(
-                        navController = navController,
-                        viewModel = viewModel(factory = confirmBrpViewModelFactory),
-                    )
-                }
+            }
 
-                composable<SelectDocDestinations.ConfirmNoChippedID> {
-                    ConfirmNoChippedID()
-                }
+            composable<SelectDocDestinations.ConfirmDrivingLicence> {
+                ConfirmBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmBrpViewModelFactory),
+                )
+            }
 
-                composable<SelectDocDestinations.ConfirmNoNonChippedID> {
-                    ConfirmNoNonChippedID()
-                }
+            composable<SelectDocDestinations.ConfirmNoChippedID> {
+                ConfirmNoChippedID()
+            }
+
+            composable<SelectDocDestinations.ConfirmNoNonChippedID> {
+                ConfirmNoNonChippedID()
             }
         }
     }
