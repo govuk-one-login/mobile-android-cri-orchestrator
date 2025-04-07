@@ -9,7 +9,6 @@ dependencies {
     api(libs.uk.gov.logging.api)
 
     implementation(libs.uk.gov.idcheck.repositories.api)
-    implementation(libs.uk.gov.idcheck.ui.presentation)
     implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(project(":features:config:public-api"))

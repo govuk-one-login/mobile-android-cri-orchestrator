@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/confirmabort/ConfirmNoChippedID.kt
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort
-========
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
->>>>>>>> e99fa2e0 (refactor: update package structure):features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/drivinglicence/select/SelectDrivingLicenceScreen.kt
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

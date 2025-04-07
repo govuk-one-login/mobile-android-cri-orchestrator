@@ -1,12 +1,4 @@
-<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirmation/ConfirmBrpScreen.kt
-<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirm/ConfirmBrpScreen.kt
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm
-========
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirmation
->>>>>>>> dc297a4e (fix: rebase issues):features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirmation/ConfirmBrpScreen.kt
-========
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm
->>>>>>>> 1233ac6e (refactor: use active tense confirm instead of confirmation):features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/brp/confirm/ConfirmBrpScreen.kt
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
