@@ -156,17 +156,17 @@ internal fun SelectDrivingLicenceScreenContent(
 }
 
 internal data class PreviewParams(
-    val state: Boolean,
+    val displayReadMoreButton: Boolean,
 )
 
 internal class SelectDrivingLicenceScreenPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
     override val values =
         sequenceOf(
             PreviewParams(
-                state = true,
+                displayReadMoreButton = true,
             ),
             PreviewParams(
-                state = false,
+                displayReadMoreButton = false,
             ),
         )
 }
@@ -175,12 +175,12 @@ internal class SelectDrivingLicenceScreenPreviewParameterProvider : PreviewParam
 @Composable
 internal fun PreviewDrivingLicenceSelectionScreen(
     @PreviewParameter(SelectDrivingLicenceScreenPreviewParameterProvider::class)
-    isNfcEnabled: PreviewParams,
+    params: PreviewParams,
 ) {
     GdsTheme {
         SelectDrivingLicenceScreenContent(
             onReadMoreClick = { },
-            displayReadMoreButton = isNfcEnabled.state,
+            displayReadMoreButton = params.displayReadMoreButton,
             onContinueClicked = {},
         )
     }
