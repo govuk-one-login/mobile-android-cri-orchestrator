@@ -17,6 +17,10 @@ internal fun DependencyHandlerScope.testImplementation(
     dependency: Any,
 ) = dependencies.add("testImplementation",  dependency)
 
+internal fun DependencyHandlerScope.testFixturesImplementation(
+    dependency: Any,
+) = dependencies.add("testFixturesImplementation",  dependency)
+
 internal fun DependencyHandlerScope.testRuntimeOnly(
     dependency: Any,
 ) = dependencies.add("testRuntimeOnly",  dependency)
@@ -56,6 +60,7 @@ internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLi
     libs.kotlinx.collections.immutable,
 ).forEach {
     implementation(it)
+    testFixturesImplementation(it)
 }
 
 internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = listOf(

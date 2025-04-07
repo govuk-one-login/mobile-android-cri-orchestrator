@@ -25,6 +25,10 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(project(":sdk:internal"))
 
+    testFixturesImplementation(libs.org.mockito.kotlin)
+    testFixturesImplementation(libs.uk.gov.logging.api)
+    testFixturesImplementation(libs.uk.gov.networking)
+
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(project(":features:config:public-api"))
 }
