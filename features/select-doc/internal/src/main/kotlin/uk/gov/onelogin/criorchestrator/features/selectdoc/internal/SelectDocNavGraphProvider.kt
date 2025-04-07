@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoChippedID
@@ -37,6 +38,8 @@ class SelectDocNavGraphProvider
         private val selectDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmPassportViewModelModule.FACTORY_NAME)
         private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmBrpViewModelModule.FACTORY_NAME)
+        private val confirmBrpViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
@@ -75,12 +78,18 @@ class SelectDocNavGraphProvider
                 )
             }
 
-            composable<SelectDocDestinations.ConfirmDrivingLicence> {
-                ConfirmBrpScreen()
+            composable<SelectDocDestinations.ConfirmBrp> {
+                ConfirmBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmBrpViewModelFactory),
+                )
             }
 
-            composable<SelectDocDestinations.ConfirmBrp> {
-                ConfirmBrpScreen()
+            composable<SelectDocDestinations.ConfirmDrivingLicence> {
+                ConfirmBrpScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmBrpViewModelFactory),
+                )
             }
 
             composable<SelectDocDestinations.ConfirmNoChippedID> {

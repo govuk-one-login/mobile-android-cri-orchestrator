@@ -18,4 +18,7 @@
 
     <!-- Duplicate Strings are prefered across different screens to limit the impact of change -->
     <issue id="DuplicateStrings" severity="ignore" />
+
+    <!-- Ignoring rule limiting vector sizes to 200x200 -->
+    <issue id="VectorRaster" severity="ignore" />
 </lint>
