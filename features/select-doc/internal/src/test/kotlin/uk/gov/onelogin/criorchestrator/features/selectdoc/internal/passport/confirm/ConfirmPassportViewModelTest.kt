@@ -42,6 +42,7 @@ class ConfirmPassportViewModelTest {
                     .trackButtonEvent(
                         buttonText = R.string.confirmdocument_confirmbutton,
                     )
+                cancelAndIgnoreRemainingEvents()
             }
         }
 

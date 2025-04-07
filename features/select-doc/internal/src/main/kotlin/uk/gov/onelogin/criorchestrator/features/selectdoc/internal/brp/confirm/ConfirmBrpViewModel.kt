@@ -21,7 +21,7 @@ internal class ConfirmBrpViewModel(
         )
     }
 
-    fun onPrimary() {
+    fun onConfirmClick() {
         analytics.trackButtonEvent(buttonText = ConfirmBrpConstants.buttonTextId)
 
         viewModelScope.launch {

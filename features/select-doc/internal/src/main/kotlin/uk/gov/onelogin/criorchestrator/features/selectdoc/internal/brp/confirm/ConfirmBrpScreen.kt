@@ -48,7 +48,7 @@ internal fun ConfirmBrpScreen(
     ConfirmBrpScreenContent(
         title = stringResource(ConfirmBrpConstants.titleId),
         confirmButtonText = stringResource(ConfirmBrpConstants.buttonTextId),
-        onPrimaryClick = viewModel::onPrimary,
+        onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
 }
