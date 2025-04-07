@@ -13,6 +13,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.Se
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoChippedID
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort.ConfirmNoNonChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.confirm.ConfirmDrivingLicenceScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.confirm.ConfirmDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmPassportScreen
@@ -27,6 +29,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
+@Suppress("LongParameterList")
 class SelectDocNavGraphProvider
     @Inject
     constructor(
@@ -40,6 +43,8 @@ class SelectDocNavGraphProvider
         private val confirmPassportViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmBrpViewModelModule.FACTORY_NAME)
         private val confirmBrpViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmDrivingLicenceViewModelModule.FACTORY_NAME)
+        private val confirmDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
@@ -86,9 +91,9 @@ class SelectDocNavGraphProvider
             }
 
             composable<SelectDocDestinations.ConfirmDrivingLicence> {
-                ConfirmBrpScreen(
+                ConfirmDrivingLicenceScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = confirmBrpViewModelFactory),
+                    viewModel = viewModel(factory = confirmDrivingLicenceViewModelFactory),
                 )
             }
 
