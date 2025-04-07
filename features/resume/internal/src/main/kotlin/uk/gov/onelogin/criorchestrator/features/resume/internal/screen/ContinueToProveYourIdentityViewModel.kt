@@ -16,7 +16,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKe
 internal class ContinueToProveYourIdentityViewModel(
     private val analytics: ResumeAnalytics,
     private val nfcChecker: NfcChecker,
-    private val configStore: ConfigStore,
 ) : ViewModel(),
     LogTagProvider {
     private val _actions = MutableSharedFlow<ContinueToProveYourIdentityAction>()
@@ -29,7 +28,7 @@ internal class ContinueToProveYourIdentityViewModel(
 
         viewModelScope.launch {
             _actions.emit(
-                if (isNfcEnabled()) {
+                if (nfcChecker.hasNfc()) {
                     ContinueToProveYourIdentityAction.NavigateToPassport
                 } else {
                     ContinueToProveYourIdentityAction.NavigateToDrivingLicense
@@ -44,13 +43,6 @@ internal class ContinueToProveYourIdentityViewModel(
             title = R.string.continue_to_prove_your_identity_screen_title,
         )
     }
-
-    private fun isNfcEnabled() =
-        if (configStore.readSingle(NfcConfigKey.StubNcfCheck).value) {
-            configStore.readSingle(NfcConfigKey.IsNfcAvailable).value
-        } else {
-            nfcChecker.hasNfc()
-        }
 
     sealed class ContinueToProveYourIdentityAction {
         data object NavigateToPassport : ContinueToProveYourIdentityAction()

@@ -38,7 +38,6 @@ class ContinueToProveYourIdentityScreenTest {
         ContinueToProveYourIdentityViewModel(
             analytics = mock<ResumeAnalytics>(),
             nfcChecker = nfcChecker,
-            configStore = configStore,
         )
 
     @Before

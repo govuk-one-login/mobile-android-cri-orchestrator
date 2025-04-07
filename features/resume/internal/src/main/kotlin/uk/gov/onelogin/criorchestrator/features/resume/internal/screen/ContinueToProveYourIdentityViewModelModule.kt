@@ -22,14 +22,12 @@ object ContinueToProveYourIdentityViewModelModule {
     fun provideFactory(
         analytics: ResumeAnalytics,
         nfcChecker: NfcChecker,
-        configStore: ConfigStore,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ContinueToProveYourIdentityViewModel(
                     analytics = analytics,
                     nfcChecker = nfcChecker,
-                    configStore = configStore,
                 )
             }
         }

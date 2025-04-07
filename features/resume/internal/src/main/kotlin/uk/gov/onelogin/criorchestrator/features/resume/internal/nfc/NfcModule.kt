@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcCheckerImpl
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
@@ -15,9 +16,13 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 object NfcModule {
     @Provides
     @ActivityScope
-    fun providesNfcManager(context: Context): NfcManager = context.getSystemService(Context.NFC_SERVICE) as NfcManager
-
-    @Provides
-    @ActivityScope
-    fun provideNfcChecker(nfcManager: NfcManager): NfcChecker = NfcCheckerImpl(nfcManager)
+    fun provideNfcChecker(
+        context: Context,
+        configStore: ConfigStore,
+    ): NfcChecker = ConfigurableNfcChecker(
+        deviceNfcChecker = NfcCheckerImpl(
+            context.getSystemService(Context.NFC_SERVICE) as NfcManager
+        ),
+        configStore = configStore
+    )
 }
