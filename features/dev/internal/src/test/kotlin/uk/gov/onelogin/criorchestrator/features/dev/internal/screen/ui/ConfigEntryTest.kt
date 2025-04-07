@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui
 
-import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -62,7 +61,7 @@ class ConfigEntryTest {
             }
 
         composeTestRule
-            .onNode(hasClickAction())
+            .onNodeWithText(stubBooleanConfigEntry().key.name)
             .performClick()
 
         verify(onEntryChange).invoke(
