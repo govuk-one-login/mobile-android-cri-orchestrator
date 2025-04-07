@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,17 +7,17 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun ConfirmNoNonChippedID(modifier: Modifier = Modifier) {
+internal fun ConfirmDocumentScreen(modifier: Modifier = Modifier) {
     Text(
-        text = "DCMAW-10678 | Android | Document Selection | No NFC enabled Abort Confirmation Screen",
+        text = "DCMAW-8798 | Android | Document Selection |  Photo ID confirmation screen",
         modifier = modifier,
     )
 }
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewConfirmNoNonChippedID() {
+internal fun PreviewConfirmDocumentScreen() {
     GdsTheme {
-        ConfirmNoNonChippedID()
+        ConfirmDocumentScreen()
     }
 }

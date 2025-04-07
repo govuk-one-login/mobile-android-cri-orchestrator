@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -12,15 +12,15 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object TypesOfPhotoIDViewModelModule {
-    const val FACTORY_NAME = "TypesOfPhotoIDViewModelModuleFactory"
+object SelectPassportViewModelModule {
+    const val FACTORY_NAME = "SelectPassportViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(analytics: SelectDocAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                TypesOfPhotoIDViewModel(analytics)
+                SelectPassportViewModel(analytics)
             }
         }
 }
