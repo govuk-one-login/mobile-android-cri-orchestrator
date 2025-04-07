@@ -18,6 +18,6 @@ internal fun ConfirmNoNonChippedID(modifier: Modifier = Modifier) {
 @Composable
 internal fun PreviewConfirmNoNonChippedID() {
     GdsTheme {
-        ConfirmNoChippedID()
+        ConfirmNoNonChippedID()
     }
 }
