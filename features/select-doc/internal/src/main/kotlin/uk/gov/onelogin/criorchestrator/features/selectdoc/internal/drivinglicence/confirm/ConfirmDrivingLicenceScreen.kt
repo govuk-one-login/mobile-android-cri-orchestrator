@@ -47,7 +47,7 @@ internal fun ConfirmDrivingLicenceScreen(
     ConfirmDrivingLicenceScreenContent(
         title = stringResource(ConfirmDrivingLicenceConstants.titleId),
         confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
-        onPrimaryClick = viewModel::onPrimary,
+        onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
 }

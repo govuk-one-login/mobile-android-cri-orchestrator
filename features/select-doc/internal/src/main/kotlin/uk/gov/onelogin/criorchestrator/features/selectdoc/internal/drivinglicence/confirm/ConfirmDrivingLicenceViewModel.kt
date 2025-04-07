@@ -21,7 +21,7 @@ internal class ConfirmDrivingLicenceViewModel(
         )
     }
 
-    fun onPrimary() {
+    fun onConfirmClick() {
         analytics.trackButtonEvent(buttonText = ConfirmDrivingLicenceConstants.buttonTextId)
 
         viewModelScope.launch {
