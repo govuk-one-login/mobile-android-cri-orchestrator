@@ -29,6 +29,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
+@Suppress("LongParameterList")
 class SelectDocNavGraphProvider
     @Inject
     constructor(
