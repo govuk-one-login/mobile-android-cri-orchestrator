@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
@@ -24,8 +24,8 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -52,7 +52,7 @@ class SelectDrivingLicenceAnalyticsTest {
     private val navController: NavController = mock()
 
     private val analytics =
-        SelectDocumentAnalytics(
+        SelectDocAnalytics(
             resourceProvider =
                 AndroidResourceProvider(
                     context = context,
@@ -83,9 +83,9 @@ class SelectDrivingLicenceAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = SelectDocumentScreenId.SelectDrivingLicence.rawId,
+                    id = SelectDocScreenId.SelectDrivingLicence.rawId,
                     name = context.getString(R.string.selectdocument_drivinglicence_title),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         composeTestRule.setSelectDrivingLicenceContent()
@@ -109,7 +109,7 @@ class SelectDrivingLicenceAnalyticsTest {
             TrackEvent
                 .Form(
                     text = context.getString(R.string.selectdocument_drivinglicence_continuebutton),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                     response = context.getString(R.string.selectdocument_drivinglicence_selection_yes),
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
@@ -129,7 +129,7 @@ class SelectDrivingLicenceAnalyticsTest {
             TrackEvent
                 .Button(
                     text = context.getString(R.string.selectdocument_drivinglicence_readmore_button),
-                    params = SelectDocumentAnalytics.requiredParameters,
+                    params = SelectDocAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }

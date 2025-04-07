@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
@@ -36,7 +36,7 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocumentDestinations
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class SelectDrivingLicenceScreenTest {
@@ -115,7 +115,7 @@ class SelectDrivingLicenceScreenTest {
                 .onNode(readMoreButton)
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.TypesOfPhotoID)
+            verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
         }
 
     @Test
@@ -177,7 +177,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmDrivingLicence)
+            verify(navController).navigate(SelectDocDestinations.ConfirmDrivingLicence)
         }
 
     @Test
@@ -197,7 +197,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmNoChippedID)
+            verify(navController).navigate(SelectDocDestinations.ConfirmNoChippedID)
         }
 
     @Test
@@ -215,7 +215,7 @@ class SelectDrivingLicenceScreenTest {
                 .assertIsEnabled()
                 .performClick()
 
-            verify(navController).navigate(SelectDocumentDestinations.ConfirmNoNonChippedID)
+            verify(navController).navigate(SelectDocDestinations.ConfirmNoNonChippedID)
         }
 
     private fun ComposeContentTestRule.setSelectDrivingLicenceContent() {

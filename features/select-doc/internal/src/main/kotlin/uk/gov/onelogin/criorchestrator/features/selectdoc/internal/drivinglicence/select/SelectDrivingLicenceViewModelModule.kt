@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -20,7 +20,7 @@ object SelectDrivingLicenceViewModelModule {
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(
-        analytics: SelectDocumentAnalytics,
+        analytics: SelectDocAnalytics,
         nfcChecker: NfcChecker,
         configStore: ConfigStore,
     ): ViewModelProvider.Factory =

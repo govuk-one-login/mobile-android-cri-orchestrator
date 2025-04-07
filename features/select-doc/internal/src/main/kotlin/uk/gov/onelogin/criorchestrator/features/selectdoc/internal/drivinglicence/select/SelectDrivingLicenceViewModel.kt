@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,11 +11,11 @@ import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 
 internal class SelectDrivingLicenceViewModel(
-    private val analytics: SelectDocumentAnalytics,
+    private val analytics: SelectDocAnalytics,
     private val nfcChecker: NfcChecker,
     private val configStore: ConfigStore,
 ) : ViewModel() {
@@ -32,7 +32,7 @@ internal class SelectDrivingLicenceViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            id = SelectDocumentScreenId.SelectDrivingLicence,
+            id = SelectDocScreenId.SelectDrivingLicence,
             title = SelectDrivingLicenceConstants.titleId,
         )
 

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 sealed class SelectDrivingLicenceAction {
     data object NavigateToConfirmation : SelectDrivingLicenceAction()

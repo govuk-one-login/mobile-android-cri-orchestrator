@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
@@ -17,14 +17,14 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocumentScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
     private val configStore: ConfigStore = mock()
-    private val analyticsLogger: SelectDocumentAnalytics = mock()
+    private val analyticsLogger: SelectDocAnalytics = mock()
     private val nfcChecker = mock<NfcChecker>()
 
     private val viewModel by lazy {
@@ -49,7 +49,7 @@ class SelectDrivingLicenceViewModelTest {
 
         verify(analyticsLogger)
             .trackScreen(
-                id = SelectDocumentScreenId.SelectDrivingLicence,
+                id = SelectDocScreenId.SelectDrivingLicence,
                 title = R.string.selectdocument_drivinglicence_title,
             )
     }
