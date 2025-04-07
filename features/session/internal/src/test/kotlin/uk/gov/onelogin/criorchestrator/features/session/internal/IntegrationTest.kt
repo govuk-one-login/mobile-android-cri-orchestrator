@@ -15,9 +15,9 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApiImpl
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.InMemorySessionStore
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.session.SessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import javax.inject.Provider

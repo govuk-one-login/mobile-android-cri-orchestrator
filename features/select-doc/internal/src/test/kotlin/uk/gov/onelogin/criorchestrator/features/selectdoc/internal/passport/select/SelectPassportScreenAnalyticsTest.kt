@@ -38,10 +38,14 @@ class SelectPassportScreenAnalyticsTest {
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val readMoreButton = hasText(context.getString(R.string.selectdocument_passport_readmore_button))
-    private val continueButton = hasText(context.getString(R.string.selectdocument_passport_continuebutton))
-    private val yesOption = hasText(context.getString(R.string.selectdocument_passport_selection_yes))
-    private val image = hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
+    private val readMoreButton =
+        hasText(context.getString(R.string.selectdocument_passport_readmore_button))
+    private val continueButton =
+        hasText(context.getString(R.string.selectdocument_passport_continuebutton))
+    private val yesOption =
+        hasText(context.getString(R.string.selectdocument_passport_selection_yes))
+    private val image =
+        hasContentDescription(context.getString(R.string.selectdocument_passport_imagedescription))
 
     private val analytics =
         SelectDocAnalytics(
