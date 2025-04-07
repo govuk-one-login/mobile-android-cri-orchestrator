@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal
 
-import ConfirmNoNonChippedID
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -84,19 +83,20 @@ class SelectDocNavGraphProvider
                     navController = navController,
                     viewModel = viewModel(factory = confirmBrpViewModelFactory),
                 )
-            composable<SelectDocDestinations.ConfirmDrivingLicence> {
-                ConfirmBrpScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = confirmBrpViewModelFactory),
-                )
-            }
+                composable<SelectDocDestinations.ConfirmDrivingLicence> {
+                    ConfirmBrpScreen(
+                        navController = navController,
+                        viewModel = viewModel(factory = confirmBrpViewModelFactory),
+                    )
+                }
 
-            composable<SelectDocDestinations.ConfirmNoChippedID> {
-                ConfirmNoChippedID()
-            }
+                composable<SelectDocDestinations.ConfirmNoChippedID> {
+                    ConfirmNoChippedID()
+                }
 
-            composable<SelectDocDestinations.ConfirmNoNonChippedID> {
-                ConfirmNoNonChippedID()
+                composable<SelectDocDestinations.ConfirmNoNonChippedID> {
+                    ConfirmNoNonChippedID()
+                }
             }
         }
     }

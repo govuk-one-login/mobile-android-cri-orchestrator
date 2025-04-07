@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/drivinglicence/select/SelectDrivingLicenceScreen.kt
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select
-========
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort
->>>>>>>> feat/DCMAW-8798-confirmation-passport-screens:features/select-doc/internal/src/main/kotlin/uk/gov/onelogin/criorchestrator/features/selectdoc/internal/confirmabort/ConfirmNoNonChippedID.kt
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
