@@ -1,2 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Recoverable Error  -->
+    <string name="error_recoverableerror_title">Nid ydych wedi’ch cysylltu â’r rhyngrwyd</string>
+    <string name="error_recoverableerror_body1">Mae angen i chi gael cysylltiad rhyngrwyd i ddefnyddio GOV.UK One Login.</string>
+    <string name="error_recoverableerror_body2">Ailgysylltwch â’r rhyngrwyd a rhoi cynnig eto.</string>
+    <string name="error_recoverableerror_button">Ewch yn ôl i roi cynnig eto</string>
 </resources>

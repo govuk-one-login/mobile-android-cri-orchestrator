@@ -1,2 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Recoverable Error  -->
+    <string name="error_recoverableerror_title">You are not connected to the internet</string>
+    <string name="error_recoverableerror_body1">You need to have an internet connection to use GOV.UK One Login.</string>
+    <string name="error_recoverableerror_body2">Reconnect to the internet and try again.</string>
+    <string name="error_recoverableerror_button">Go back and try again</string>
 </resources>
