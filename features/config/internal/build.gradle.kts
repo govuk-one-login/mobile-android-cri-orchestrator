@@ -7,16 +7,16 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.logging.api)
-    implementation(project(":features:config:internal-api"))
-    implementation(project(":libraries:di"))
-    testImplementation(project(":features:config:internal-api"))
+    implementation(projects.features.config.internalApi)
+    implementation(projects.libraries.di)
+    testImplementation(projects.features.config.internalApi)
 
     testFixturesImplementation(libs.uk.gov.logging.testdouble)
-    testFixturesImplementation(project(":features:config:internal-api"))
-    testFixturesImplementation(testFixtures(project(":features:config:internal-api")))
+    testFixturesImplementation(projects.features.config.internalApi)
+    testFixturesImplementation(testFixtures(projects.features.config.internalApi))
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(projects.features.config.publicApi))
 }
 
 mavenPublishingConfig {

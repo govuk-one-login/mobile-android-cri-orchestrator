@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":libraries:di"))
+    implementation(projects.libraries.di)
 }
 
 mavenPublishingConfig {

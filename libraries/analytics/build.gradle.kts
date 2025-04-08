@@ -19,7 +19,7 @@ dependencies {
     listOf(
         libs.androidx.appcompat,
         libs.uk.gov.logging.api,
-        project(":libraries:di"),
+        projects.libraries.di,
     ).forEach {
         implementation(it)
     }

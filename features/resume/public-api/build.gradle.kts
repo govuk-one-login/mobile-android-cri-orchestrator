@@ -9,9 +9,9 @@ plugins {
 
 dependencies {
     listOf(
-        project(":sdk:shared-api"),
-        project(":features:resume:internal-api"),
-        project(":features:config:public-api"),
+        projects.sdk.sharedApi,
+        projects.features.resume.internalApi,
+        projects.features.config.publicApi,
     ).forEach {
         implementation(it)
     }

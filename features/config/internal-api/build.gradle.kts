@@ -4,14 +4,14 @@ plugins {
 
 dependencies {
     api(libs.kotlinx.collections.immutable)
-    api(project(":features:config:public-api"))
+    api(projects.features.config.publicApi)
 
     implementation(libs.kotlinx.coroutines)
 
-    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(projects.features.config.publicApi))
 
     testFixturesImplementation(libs.kotlinx.coroutines)
-    testFixturesApi(testFixtures(project(":features:config:public-api")))
+    testFixturesApi(testFixtures(projects.features.config.publicApi))
 }
 
 mavenPublishingConfig {

@@ -9,10 +9,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
-    implementation(project(":libraries:di"))
+    implementation(projects.libraries.di)
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(testFixtures(project(":features:config:public-api")))
+    testImplementation(testFixtures(projects.features.config.publicApi))
 }
 
 mavenPublishingConfig {
