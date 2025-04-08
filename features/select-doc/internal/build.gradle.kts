@@ -8,8 +8,6 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
-    implementation(libs.uk.gov.idcheck.repositories.api)
-    implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(projects.features.config.publicApi)
     implementation(projects.features.config.internalApi)
