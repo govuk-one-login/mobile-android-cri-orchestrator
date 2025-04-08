@@ -1,20 +1,23 @@
 package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class ConfigEntryTest {
     @Test
-    fun `valid boolean value`() {
-        Config.Entry(
-            key = StubBooleanConfigKey,
-            value = Config.Value.BooleanValue(true),
-        )
+    fun `given valid boolean value, it doesn't throw`() {
+        assertDoesNotThrow {
+            Config.Entry(
+                key = StubBooleanConfigKey,
+                value = Config.Value.BooleanValue(true),
+            )
+        }
     }
 
     @Test
-    fun `invalid boolean value type`() {
+    fun `given invalid boolean value type, it throws`() {
         val exception =
             assertThrows<IllegalArgumentException> {
                 Config.Entry(
@@ -26,15 +29,17 @@ class ConfigEntryTest {
     }
 
     @Test
-    fun `valid string value`() {
-        Config.Entry(
-            key = StubStringConfigKey,
-            value = Config.Value.StringValue("hello, world"),
-        )
+    fun `given valid string value, it doesn't throw`() {
+        assertDoesNotThrow {
+            Config.Entry(
+                key = StubStringConfigKey,
+                value = Config.Value.StringValue("hello, world"),
+            )
+        }
     }
 
     @Test
-    fun `invalid string value type`() {
+    fun `given invalid string value type, it throws`() {
         val exception =
             assertThrows<IllegalArgumentException> {
                 Config.Entry(
@@ -46,15 +51,17 @@ class ConfigEntryTest {
     }
 
     @Test
-    fun `valid option value`() {
-        Config.Entry(
-            key = StubOptionConfigKey,
-            value = Config.Value.StringValue(StubOptionConfigKey.OPTION_1),
-        )
+    fun `given valid option value, it doesn't throw`() {
+        assertDoesNotThrow {
+            Config.Entry(
+                key = StubOptionConfigKey,
+                value = Config.Value.StringValue(StubOptionConfigKey.OPTION_1),
+            )
+        }
     }
 
     @Test
-    fun `invalid option value`() {
+    fun `given invalid option value, it throws`() {
         val exception =
             assertThrows<IllegalArgumentException> {
                 Config.Entry(
@@ -69,7 +76,7 @@ class ConfigEntryTest {
     }
 
     @Test
-    fun `invalid option value type`() {
+    fun `given invalid option value type, it throws`() {
         assertThrows<IllegalArgumentException> {
             Config.Entry(
                 key = StubOptionConfigKey,
