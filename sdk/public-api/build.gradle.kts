@@ -16,21 +16,21 @@ configure<PublishingExtension> {
 }
 
 dependencies {
-    api(project(":features:config:public-api"))
-    api(project(":features:dev:public-api"))
-    api(project(":features:resume:public-api"))
-    api(project(":sdk:shared-api"))
+    api(projects.features.config.publicApi)
+    api(projects.features.dev.publicApi)
+    api(projects.features.resume.publicApi)
+    api(projects.sdk.sharedApi)
 
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
-    implementation(project(":sdk:internal"))
+    implementation(projects.sdk.internal)
 
     testFixturesImplementation(libs.org.mockito.kotlin)
     testFixturesImplementation(libs.uk.gov.logging.api)
     testFixturesImplementation(libs.uk.gov.networking)
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(project(":features:config:public-api"))
+    testImplementation(projects.features.config.publicApi)
 }
 
 mavenPublishingConfig {

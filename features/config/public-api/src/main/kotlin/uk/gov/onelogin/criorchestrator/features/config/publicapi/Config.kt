@@ -54,7 +54,11 @@ data class Config(
     data class Entry<out T : Value>(
         val key: ConfigKey<T>,
         val value: T,
-    )
+    ) {
+        init {
+            key.requireValidValue(value)
+        }
+    }
 
     sealed interface Value {
         data class StringValue(

@@ -5,9 +5,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":features:resume:internal-api"))
-    implementation(project(":libraries:di"))
-    implementation(project(":libraries:navigation"))
+    implementation(projects.features.resume.internalApi)
+    implementation(projects.libraries.di)
+    implementation(projects.libraries.navigation)
 }
 
 mavenPublishingConfig {

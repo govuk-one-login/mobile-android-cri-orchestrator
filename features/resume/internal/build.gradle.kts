@@ -10,19 +10,19 @@ dependencies {
     api(libs.uk.gov.idcheck.sdk)
 
     implementation(libs.uk.gov.networking)
-    implementation(project(":features:resume:internal-api"))
-    implementation(project(":features:resume:public-api"))
-    implementation(project(":features:select-doc:internal-api"))
-    implementation(project(":features:session:internal-api"))
-    implementation(project(":features:config:internal-api"))
-    implementation(project(":libraries:analytics"))
-    implementation(project(":libraries:di"))
-    implementation(project(":libraries:navigation"))
+    implementation(projects.features.resume.internalApi)
+    implementation(projects.features.resume.publicApi)
+    implementation(projects.features.selectDoc.internalApi)
+    implementation(projects.features.session.internalApi)
+    implementation(projects.features.config.internalApi)
+    implementation(projects.libraries.analytics)
+    implementation(projects.libraries.di)
+    implementation(projects.libraries.navigation)
 
-    testImplementation(testFixtures(project(":libraries:analytics")))
+    testImplementation(testFixtures(projects.libraries.analytics))
 
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(testFixtures(project(":features:session:internal-api")))
+    testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(kotlin("test"))
 }
 

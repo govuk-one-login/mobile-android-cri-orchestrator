@@ -4,7 +4,7 @@ plugins {
 dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.uk.gov.networking)
-    implementation(project(":libraries:di"))
+    implementation(projects.libraries.di)
 
     testFixturesImplementation(libs.kotlinx.coroutines)
 }

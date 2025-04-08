@@ -9,22 +9,22 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
-    implementation(project(":features:config:internal-api"))
-    implementation(project(":features:session:internal-api"))
-    implementation(project(":libraries:analytics"))
-    implementation(project(":libraries:compose-utils"))
-    implementation(project(":libraries:kotlin-utils"))
-    implementation(project(":libraries:di"))
+    implementation(projects.features.config.internalApi)
+    implementation(projects.features.session.internalApi)
+    implementation(projects.libraries.analytics)
+    implementation(projects.libraries.composeUtils)
+    implementation(projects.libraries.kotlinUtils)
+    implementation(projects.libraries.di)
 
     testFixturesImplementation(libs.kotlinx.coroutines)
     testFixturesImplementation(libs.uk.gov.networking)
-    testFixturesImplementation(project(":features:session:internal-api"))
+    testFixturesImplementation(projects.features.session.internalApi)
 
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(project(":features:config:public-api"))
-    testImplementation(testFixtures(project(":features:config:internal-api")))
-    testImplementation(testFixtures(project(":libraries:analytics")))
+    testImplementation(projects.features.config.publicApi)
+    testImplementation(testFixtures(projects.features.config.internalApi))
+    testImplementation(testFixtures(projects.libraries.analytics))
 }
 
 mavenPublishingConfig {
