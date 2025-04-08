@@ -60,6 +60,8 @@ include(
     ":features:dev:internal",
     ":features:dev:internal-api",
     ":features:dev:public-api",
+    ":features:error:internal",
+    ":features:error:internal-api",
     ":features:handback:internal",
     ":features:handback:internal-api",
     ":features:id-check-wrapper:internal",
