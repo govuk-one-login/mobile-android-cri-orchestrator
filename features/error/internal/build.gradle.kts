@@ -8,6 +8,7 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
+    implementation(projects.features.error.internalApi)
     implementation(projects.features.resume.internalApi)
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.di)
