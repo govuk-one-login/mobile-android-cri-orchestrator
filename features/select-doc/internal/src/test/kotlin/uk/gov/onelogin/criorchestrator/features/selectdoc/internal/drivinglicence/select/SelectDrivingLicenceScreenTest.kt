@@ -72,8 +72,8 @@ class SelectDrivingLicenceScreenTest {
         noOption = hasText(context.getString(R.string.selectdocument_drivinglicence_selection_no))
         continueButton =
             hasText(context.getString(R.string.selectdocument_drivinglicence_continuebutton))
-        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-            Config.Value.BooleanValue(false),
+        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
         )
         given(nfcChecker.hasNfc()).willReturn(false)
     }

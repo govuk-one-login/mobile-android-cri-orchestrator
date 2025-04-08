@@ -46,8 +46,8 @@ class ContinueToProveYourIdentityScreenTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         primaryButton =
             hasText(context.getString(R.string.continue_to_prove_your_identity_screen_button))
-        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-            Config.Value.BooleanValue(false),
+        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
         )
     }
 

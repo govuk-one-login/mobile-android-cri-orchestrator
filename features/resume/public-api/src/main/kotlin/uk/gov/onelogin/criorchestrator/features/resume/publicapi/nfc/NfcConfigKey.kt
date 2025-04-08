@@ -1,18 +1,25 @@
 package uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc
 
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
+import kotlinx.collections.immutable.persistentListOf
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.OptionConfigKey
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey.NfcAvailability.OPTION_AVAILABLE
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey.NfcAvailability.OPTION_DEVICE
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE
 
 sealed interface NfcConfigKey {
-    data object StubNcfCheck :
-        ConfigKey<Config.Value.BooleanValue>(
-            name = "Stub NFC enabled",
+    data object NfcAvailability :
+        OptionConfigKey(
+            name = "NFC availability",
+            options =
+                persistentListOf(
+                    OPTION_DEVICE,
+                    OPTION_AVAILABLE,
+                    OPTION_NOT_AVAILABLE,
+                ),
         ),
-        NfcConfigKey
-
-    data object IsNfcAvailable :
-        ConfigKey<Config.Value.BooleanValue>(
-            name = "Stub NFC available",
-        ),
-        NfcConfigKey
+        NfcConfigKey {
+        const val OPTION_DEVICE = "Use device setting"
+        const val OPTION_AVAILABLE = "Available"
+        const val OPTION_NOT_AVAILABLE = "Not available"
+    }
 }

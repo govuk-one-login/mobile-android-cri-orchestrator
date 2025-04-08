@@ -23,16 +23,10 @@ object TestWrapperConfig {
                             value = false,
                         ),
                     ),
-                    Config.Entry(
-                        key = NfcConfigKey.StubNcfCheck,
-                        Config.Value.BooleanValue(
-                            value = false,
-                        ),
-                    ),
-                    Config.Entry(
-                        key = NfcConfigKey.IsNfcAvailable,
-                        Config.Value.BooleanValue(
-                            value = false,
+                    Config.Entry<Config.Value.StringValue>(
+                        key = NfcConfigKey.NfcAvailability,
+                        Config.Value.StringValue(
+                            value = NfcConfigKey.NfcAvailability.OPTION_DEVICE,
                         ),
                     ),
                 ),

@@ -37,8 +37,8 @@ class SelectDrivingLicenceViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-            Config.Value.BooleanValue(false),
+        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
         )
         given(nfcChecker.hasNfc()).willReturn(false)
     }

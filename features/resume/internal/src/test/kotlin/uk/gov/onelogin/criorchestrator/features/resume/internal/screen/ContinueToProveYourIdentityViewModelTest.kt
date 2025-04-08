@@ -48,8 +48,8 @@ class ContinueToProveYourIdentityViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-            Config.Value.BooleanValue(false),
+        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
         )
     }
 
@@ -89,8 +89,8 @@ class ContinueToProveYourIdentityViewModelTest {
     @Test
     fun `given nfc available, when continue clicked, navigate to passport`() =
         runTest {
-            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-                Config.Value.BooleanValue(false),
+            whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+                Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
             )
 
             whenever(nfcChecker.hasNfc()).thenReturn(true)
@@ -105,8 +105,8 @@ class ContinueToProveYourIdentityViewModelTest {
     @Test
     fun `given nfc not available, when continue clicked, navigate to driving license`() =
         runTest {
-            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-                Config.Value.BooleanValue(false),
+            whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+                Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
             )
 
             whenever(nfcChecker.hasNfc()).thenReturn(false)
@@ -121,12 +121,8 @@ class ContinueToProveYourIdentityViewModelTest {
     @Test
     fun `given stub nfc check and nfc available, when continue, navigate to passport`() =
         runTest {
-            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-                Config.Value.BooleanValue(true),
-            )
-
-            whenever(configStore.readSingle(NfcConfigKey.IsNfcAvailable)).thenReturn(
-                Config.Value.BooleanValue(true),
+            whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+                Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_AVAILABLE),
             )
 
             viewModel.actions.test {
@@ -139,12 +135,8 @@ class ContinueToProveYourIdentityViewModelTest {
     @Test
     fun `given nfc check is and nfc not available, when continue, navigate to driving license`() =
         runTest {
-            whenever(configStore.readSingle(NfcConfigKey.StubNcfCheck)).thenReturn(
-                Config.Value.BooleanValue(true),
-            )
-
-            whenever(configStore.readSingle(NfcConfigKey.IsNfcAvailable)).thenReturn(
-                Config.Value.BooleanValue(false),
+            whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
+                Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE),
             )
             viewModel.actions.test {
                 viewModel.onContinueClick()
