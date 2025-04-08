@@ -12,13 +12,13 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
  */
 sealed interface SdkConfigKey {
     data object IdCheckAsyncBackendBaseUrl :
-        ConfigKey<Config.Value.StringValue>(
+        StringConfigKey(
             name = "ID Check async backend base URL",
         ),
         SdkConfigKey
 
     data object BypassIdCheckAsyncBackend :
-        ConfigKey<Config.Value.BooleanValue>(
+        BooleanConfigKey(
             name = "Bypass ID Check async backend",
         ),
         SdkConfigKey

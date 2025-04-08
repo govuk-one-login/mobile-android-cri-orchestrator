@@ -1,9 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui
 
 import kotlinx.collections.immutable.persistentListOf
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.BooleanConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.OptionConfigKey
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.StringConfigKey
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui.PreviewOptionConfigKey.OPTION1
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui.PreviewOptionConfigKey.OPTION2
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui.PreviewOptionConfigKey.OPTION3
@@ -27,11 +28,11 @@ internal val previewConfig =
             ),
     )
 
-private object PreviewStringConfigKey : ConfigKey<Config.Value.StringValue>(
+private object PreviewStringConfigKey : StringConfigKey(
     name = "Preview string config",
 )
 
-private object PreviewBoolConfigKey : ConfigKey<Config.Value.BooleanValue>(
+private object PreviewBoolConfigKey : BooleanConfigKey(
     name = "Preview boolean config",
 )
 

@@ -3,14 +3,14 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-data object StubStringConfigKey : ConfigKey<Config.Value.StringValue>(
+data object StubStringConfigKey : StringConfigKey(
     name = "stub string config key",
 )
 
 const val STUB_STRING_CONFIG_VALUE = "stub string config value"
 
 data object StubOptionConfigKey : OptionConfigKey(
-    name = "stub string config key",
+    name = "stub option config key",
     options =
         persistentListOf(
             StubOptionConfigKey.OPTION_1,
@@ -23,7 +23,7 @@ data object StubOptionConfigKey : OptionConfigKey(
     const val OPTION_3 = "option 3"
 }
 
-data object StubBooleanConfigKey : ConfigKey<Config.Value.BooleanValue>(
+data object StubBooleanConfigKey : BooleanConfigKey(
     name = "stub boolean config key",
 )
 
