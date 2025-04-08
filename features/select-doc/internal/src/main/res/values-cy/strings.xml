@@ -18,6 +18,15 @@
 
     <string name="confirmdocument_confirmbutton">Cadarnhau</string>
 
+    <string name="confirm_nochippedid_title">Ydych chi’n siŵr nad oes gennych unrhyw un o’r mathau hyn o ID gyda llun?</string>
+    <string name="confirm_nochippedid_body_1">Rydych wedi dweud nad oes gennych unrhyw un o’r mathau canlynol o ID gyda llun:</string>
+    <string name="confirm_nochippedid_body_2">Dim ond os oes gennych un o’r rhain y gallwch brofi eich hunaniaeth gyda’r ap hwn.</string>
+    <string name="confirm_nochippedid_bullet_1">pasbort y DU</string>
+    <string name="confirm_nochippedid_bullet_2">pasbort o’r tu allan i’r DU gyda sglodyn biometrig</string>
+    <string name="confirm_nochippedid_bullet_3">Cerdyn neu drwydded biometrig y DU (BRP, BRC neu FWP)</string>
+    <string name="confirm_nochippedid_bullet_4">trwydded yrru cerdyn llun y DU</string>
+    <string name="confirm_nochippedid_confirmbutton">Cadarnhau</string>
+
     <!--  Select  -->
     <string name="selectdocument_passport_title">Oes gennych chi basbort gyda sglodyn biometrig?</string>
     <string name="selectdocument_passport_body">Mae gan bob pasbort y DU sglodyn biometrig.\n\nOs oes gennych basbort nad yw o’r DU, rhaid iddo gael y symbol sglodyn biometrig ar y clawr.</string>

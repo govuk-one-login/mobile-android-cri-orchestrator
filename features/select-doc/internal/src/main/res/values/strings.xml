@@ -18,6 +18,15 @@
 
     <string name="confirmdocument_confirmbutton">Confirm</string>
 
+    <string name="confirm_nochippedid_title">Are you sure you do not have any of these types of photo ID?</string>
+    <string name="confirm_nochippedid_body_1">You’ve said you do not have any of the following types of photo ID:</string>
+    <string name="confirm_nochippedid_body_2">You can only prove your identity with this app if you have one of these.</string>
+    <string name="confirm_nochippedid_bullet_1">UK passport</string>
+    <string name="confirm_nochippedid_bullet_2">non-UK passport with a biometric chip</string>
+    <string name="confirm_nochippedid_bullet_3">UK biometric card or permit (BRP, BRC or FWP)</string>
+    <string name="confirm_nochippedid_bullet_4">UK photocard driving licence</string>
+    <string name="confirm_nochippedid_confirmbutton">Confirm</string>
+
     <!--  Select  -->
     <string name="selectdocument_passport_title">Do you have a passport with a biometric chip?</string>
     <string name="selectdocument_passport_body">All UK passports have a biometric chip.\n\nIf you have a non-UK passport, it must have the biometric chip symbol on the cover.</string>
