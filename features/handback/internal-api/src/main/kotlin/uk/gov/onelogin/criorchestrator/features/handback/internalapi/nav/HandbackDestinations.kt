@@ -5,7 +5,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 
 sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     @Serializable
-    data object GenericProblemError : HandbackDestinations
+    data object UnrecoverableError : HandbackDestinations
 
     @Serializable
     data object Abort : HandbackDestinations

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
@@ -17,24 +17,24 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 
 @RunWith(AndroidJUnit4::class)
-class ProblemErrorScreenTest {
+class UnrecoverableErrorScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val button = hasText(context.getString(R.string.handback_problemerror_button))
+    private val button = hasText(context.getString(R.string.handback_unrecoverableerror_button))
 
     private val navController: NavController = mock()
 
     private val viewModel =
-        ProblemErrorViewModel(
+        UnrecoverableErrorViewModel(
             analytics = mock(),
         )
 
     @Before
     fun setup() {
         composeTestRule.setContent {
-            ProblemErrorScreen(
+            UnrecoverableErrorScreen(
                 viewModel = viewModel,
                 navController = navController,
             )

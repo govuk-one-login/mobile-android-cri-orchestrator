@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="handback_problemerror_title">Sorry, there’s a problem</string>
-    <string name="handback_problemerror_body1">You cannot use this app to prove your identity at the moment.</string>
-    <string name="handback_problemerror_body2">You can try again later, or check if you can prove your identity another way.</string>
-    <string name="handback_problemerror_button">Check if you can prove your identity another way</string>
+    <string name="handback_unrecoverableerror_title">Sorry, there’s a problem</string>
+    <string name="handback_unrecoverableerror_body1">You cannot use this app to prove your identity at the moment.</string>
+    <string name="handback_unrecoverableerror_body2">You can try again later, or check if you can prove your identity another way.</string>
+    <string name="handback_unrecoverableerror_button">Check if you can prove your identity another way</string>
 </resources>

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror
 
 import android.content.Context
 import androidx.compose.ui.test.hasText
@@ -23,7 +23,7 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLogge
 import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
-class ProblemErrorScreenAnalyticsTest {
+class UnrecoverableErrorScreenAnalyticsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -34,7 +34,7 @@ class ProblemErrorScreenAnalyticsTest {
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val button = hasText(context.getString(R.string.handback_problemerror_button))
+    private val button = hasText(context.getString(R.string.handback_unrecoverableerror_button))
 
     private val analytics =
         HandbackAnalytics(
@@ -46,14 +46,14 @@ class ProblemErrorScreenAnalyticsTest {
         )
 
     private val viewModel =
-        ProblemErrorViewModel(
+        UnrecoverableErrorViewModel(
             analytics = analytics,
         )
 
     @Before
     fun setup() {
         composeTestRule.setContent {
-            ProblemErrorScreen(
+            UnrecoverableErrorScreen(
                 viewModel = viewModel,
                 navController = rememberNavController(),
             )
@@ -65,8 +65,8 @@ class ProblemErrorScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = HandbackScreenId.ProblemError.rawId,
-                    name = context.getString(R.string.handback_problemerror_title),
+                    id = HandbackScreenId.UnrecoverableError.rawId,
+                    name = context.getString(R.string.handback_unrecoverableerror_title),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
@@ -81,7 +81,7 @@ class ProblemErrorScreenAnalyticsTest {
         val expectedEvent =
             TrackEvent
                 .Button(
-                    text = context.getString(R.string.handback_problemerror_button),
+                    text = context.getString(R.string.handback_unrecoverableerror_button),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
