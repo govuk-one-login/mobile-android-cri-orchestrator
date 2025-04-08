@@ -18,8 +18,7 @@ class UnrecoverableErrorViewModelTest {
 
     private val viewModel by lazy {
         UnrecoverableErrorViewModel(
-            analytics =
-                analyticsLogger,
+            analytics = analyticsLogger,
         )
     }
 
