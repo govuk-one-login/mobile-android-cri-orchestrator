@@ -46,10 +46,10 @@ internal class ContinueToProveYourIdentityViewModel(
     }
 
     private fun isNfcEnabled() =
-        if (configStore.readSingle(NfcConfigKey.StubNcfCheck).value) {
-            configStore.readSingle(NfcConfigKey.IsNfcAvailable).value
-        } else {
-            nfcChecker.hasNfc()
+        when (configStore.readSingle(NfcConfigKey.NfcAvailability).value) {
+            NfcConfigKey.NfcAvailability.OPTION_AVAILABLE -> true
+            NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE -> false
+            else -> nfcChecker.hasNfc()
         }
 
     sealed class ContinueToProveYourIdentityAction {
