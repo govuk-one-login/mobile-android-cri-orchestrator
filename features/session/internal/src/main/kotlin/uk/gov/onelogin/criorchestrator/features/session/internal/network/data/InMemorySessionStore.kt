@@ -8,12 +8,12 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityScope
-@ContributesBinding(CriOrchestratorScope::class, boundType = SessionStore::class)
+@Singleton
+@ContributesBinding(CriOrchestratorSingletonScope::class, boundType = SessionStore::class)
 class InMemorySessionStore
     @Inject
     constructor(

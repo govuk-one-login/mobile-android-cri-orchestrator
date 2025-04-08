@@ -19,6 +19,8 @@ data class Config(
         assert(entries.map { it.key }.toSet().size == entries.size)
     }
 
+    companion object;
+
     private val keys: List<ConfigKey<Value>> by lazy { entries.map { it.key } }
 
     fun combinedWith(config: Config): Config =

@@ -36,4 +36,5 @@ dependencies {
     implementation(projects.sdk.sharedApi)
 
     testImplementation(platform(libs.org.junit.bom))
+    testImplementation(testFixtures(projects.sdk.publicApi))
 }

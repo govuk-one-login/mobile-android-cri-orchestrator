@@ -6,28 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
-import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.logging.api.Logger
-import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 
 @Composable
 @Suppress("LongParameterList")
 fun MainContent(
-    analyticsLogger: AnalyticsLogger,
-    config: Config,
-    logger: Logger,
-    httpClient: GenericHttpClient,
+    criOrchestratorSdk: CriOrchestratorSdk,
     onSubUpdateRequest: (String?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val criOrchestratorComponent =
         rememberCriOrchestrator(
-            authenticatedHttpClient = httpClient,
-            analyticsLogger = analyticsLogger,
-            initialConfig = config,
-            logger = logger,
+            criOrchestratorSdk = criOrchestratorSdk,
         )
 
     val navController = rememberNavController()

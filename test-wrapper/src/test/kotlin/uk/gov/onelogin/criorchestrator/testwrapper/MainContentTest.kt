@@ -6,22 +6,23 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.logging.api.Logger
-import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
+import uk.gov.onelogin.criorchestrator.sdk.publicapi.createTestInstance
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
+import org.robolectric.annotation.Config as RobolectricConfig
 
 @RunWith(AndroidJUnit4::class)
+@RobolectricConfig(application = Application::class)
 class MainContentTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    val criOrchestratorSdk = CriOrchestratorSdk.createTestInstance()
 
     @Test
     fun `when click developer settings, it opens the dev menu`() {
@@ -42,16 +43,8 @@ class MainContentTest {
     private fun ComposeContentTestRule.setMainContent() =
         setContent {
             GdsTheme {
-                val resources = ApplicationProvider.getApplicationContext<Application>().resources
-
                 MainContent(
-                    httpClient = createStubHttpClient(),
-                    analyticsLogger = mock<AnalyticsLogger>(),
-                    config =
-                        TestWrapperConfig.provideConfig(
-                            resources = resources,
-                        ),
-                    logger = mock<Logger>(),
+                    criOrchestratorSdk = criOrchestratorSdk,
                     onSubUpdateRequest = {},
                 )
             }
