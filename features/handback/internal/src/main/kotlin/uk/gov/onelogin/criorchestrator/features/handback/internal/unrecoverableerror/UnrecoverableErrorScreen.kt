@@ -1,6 +1,6 @@
 @file:OptIn(UnstableDesignSystemAPI::class)
 
-package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,8 +21,8 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.Handbac
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun ProblemErrorScreen(
-    viewModel: ProblemErrorViewModel,
+internal fun UnrecoverableErrorScreen(
+    viewModel: UnrecoverableErrorViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
@@ -33,14 +33,14 @@ internal fun ProblemErrorScreen(
     LaunchedEffect(Unit) {
         viewModel.actions.collect { action ->
             when (action) {
-                ProblemErrorAction.NavigateToAbort -> {
+                UnrecoverableErrorAction.NavigateToAbort -> {
                     navController.navigate(HandbackDestinations.Abort)
                 }
             }
         }
     }
 
-    ProblemErrorScreenContent(
+    UnrecoverableErrorScreenContent(
         modifier = modifier,
         onButtonClick = viewModel::onButtonClick,
     )
@@ -48,7 +48,7 @@ internal fun ProblemErrorScreen(
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ProblemErrorScreenContent(
+internal fun UnrecoverableErrorScreenContent(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -57,20 +57,20 @@ internal fun ProblemErrorScreenContent(
         color = MaterialTheme.colorScheme.background,
     ) {
         ErrorScreen(
-            title = stringResource(ProblemErrorConstants.titleId),
+            title = stringResource(UnrecoverableErrorConstants.titleId),
             body =
                 persistentListOf(
                     CentreAlignedScreenBodyContent.Text(
-                        bodyText = stringResource(R.string.handback_problemerror_body1),
+                        bodyText = stringResource(R.string.handback_unrecoverableerror_body1),
                     ),
                     CentreAlignedScreenBodyContent.Text(
-                        bodyText = stringResource(R.string.handback_problemerror_body2),
+                        bodyText = stringResource(R.string.handback_unrecoverableerror_body2),
                     ),
                 ),
             icon = ErrorScreenIcon.ErrorIcon,
             secondaryButton =
                 CentreAlignedScreenButton(
-                    text = stringResource(ProblemErrorConstants.buttonTextId),
+                    text = stringResource(UnrecoverableErrorConstants.buttonTextId),
                     onClick = onButtonClick,
                 ),
         )
@@ -79,9 +79,9 @@ internal fun ProblemErrorScreenContent(
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun ProblemErrorScreenPreview() {
+internal fun UnrecoverableErrorScreenPreview() {
     GdsTheme {
-        ProblemErrorScreenContent(
+        UnrecoverableErrorScreenContent(
             onButtonClick = {},
         )
     }

@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
-import uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror.ProblemErrorScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror.ProblemErrorViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -18,12 +18,12 @@ import javax.inject.Named
 class HandbackNavGraphProvider
     @Inject
     constructor(
-        @Named(ProblemErrorViewModelModule.FACTORY_NAME)
+        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
         private val viewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-            composable<HandbackDestinations.GenericProblemError> {
-                ProblemErrorScreen(
+            composable<HandbackDestinations.UnrecoverableError> {
+                UnrecoverableErrorScreen(
                     navController = navController,
                     viewModel = viewModel(factory = viewModelFactory),
                 )

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.problemerror
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
@@ -13,13 +13,13 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
-class ProblemErrorViewModelTest {
+class UnrecoverableErrorViewModelTest {
     private val analyticsLogger = mock<HandbackAnalytics>()
 
     private val viewModel by lazy {
-        ProblemErrorViewModel(
+        UnrecoverableErrorViewModel(
             analytics =
-            analyticsLogger,
+                analyticsLogger,
         )
     }
 
@@ -29,8 +29,8 @@ class ProblemErrorViewModelTest {
 
         verify(analyticsLogger)
             .trackScreen(
-                id = HandbackScreenId.ProblemError,
-                title = R.string.handback_problemerror_title,
+                id = HandbackScreenId.UnrecoverableError,
+                title = R.string.handback_unrecoverableerror_title,
             )
     }
 
@@ -40,7 +40,7 @@ class ProblemErrorViewModelTest {
             viewModel.actions.test {
                 viewModel.onButtonClick()
 
-                assertEquals(ProblemErrorAction.NavigateToAbort, awaitItem())
+                assertEquals(UnrecoverableErrorAction.NavigateToAbort, awaitItem())
             }
         }
     }
