@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":sdk:shared-api"))
-    implementation(project(":features:dev:internal-api"))
+    implementation(projects.sdk.sharedApi)
+    implementation(projects.features.dev.internalApi)
 }
 
 mavenPublishingConfig {

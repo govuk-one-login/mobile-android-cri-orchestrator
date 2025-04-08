@@ -16,7 +16,7 @@ configure<PublishingExtension> {
 
 dependencies {
     listOf(
-        project(":libraries:di"),
+        projects.libraries.di,
     ).forEach {
         api(it)
     }

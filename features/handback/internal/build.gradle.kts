@@ -14,7 +14,7 @@ dependencies {
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
 
-    testImplementation(testFixtures(project(":libraries:analytics")))
+    testImplementation(testFixtures(projects.libraries.analytics))
 
     testImplementation(libs.uk.gov.logging.testdouble)
 }

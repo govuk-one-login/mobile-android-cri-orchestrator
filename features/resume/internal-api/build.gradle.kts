@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":libraries:di"))
-    implementation(project(":libraries:navigation"))
+    implementation(projects.libraries.di)
+    implementation(projects.libraries.navigation)
 }
 
 mavenPublishingConfig {
