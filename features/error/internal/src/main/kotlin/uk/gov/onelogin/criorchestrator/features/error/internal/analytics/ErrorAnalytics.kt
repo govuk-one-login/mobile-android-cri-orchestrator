@@ -9,20 +9,20 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourcePro
 import javax.inject.Inject
 
 class ErrorAnalytics
-@Inject
-constructor(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
-    resourceProvider,
-    analyticsLogger,
-    requiredParameters = requiredParameters,
-) {
-    companion object {
-        internal val requiredParameters =
-            RequiredParameters(
-                taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
-                taxonomyLevel3 = TaxonomyLevel3.ERROR,
-            )
+    @Inject
+    constructor(
+        resourceProvider: ResourceProvider,
+        analyticsLogger: AnalyticsLogger,
+    ) : Analytics(
+            resourceProvider,
+            analyticsLogger,
+            requiredParameters = requiredParameters,
+        ) {
+        companion object {
+            internal val requiredParameters =
+                RequiredParameters(
+                    taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
+                    taxonomyLevel3 = TaxonomyLevel3.ERROR,
+                )
+        }
     }
-}
