@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmabort
+package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
