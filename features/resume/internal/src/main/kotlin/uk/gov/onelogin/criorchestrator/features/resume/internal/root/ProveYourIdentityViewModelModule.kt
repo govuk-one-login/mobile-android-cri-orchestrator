@@ -1,12 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -22,14 +22,13 @@ object ProveYourIdentityViewModelModule {
     fun provideFactory(
         resumeAnalytics: ResumeAnalytics,
         sessionReader: SessionReader,
-        logger: Logger,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ProveYourIdentityViewModel(
                     analytics = resumeAnalytics,
                     sessionReader = sessionReader,
-                    logger = logger,
+                    savedStateHandle = createSavedStateHandle(),
                 )
             }
         }

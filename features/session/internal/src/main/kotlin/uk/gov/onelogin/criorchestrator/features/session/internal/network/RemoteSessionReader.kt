@@ -2,18 +2,10 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.response.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
@@ -21,7 +13,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
-import javax.inject.Provider
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ActivityScope
@@ -29,9 +20,8 @@ import javax.inject.Provider
 class RemoteSessionReader
     @Inject
     constructor(
-        private val configStore: ConfigStore,
         private val sessionStore: SessionStore,
-        private val sessionApi: Provider<SessionApi>,
+        private val sessionApi: SessionApi,
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
@@ -41,23 +31,14 @@ class RemoteSessionReader
             }
         }
 
-        override fun isActiveSession(): Flow<Boolean> =
-            configStore
-                .read(SdkConfigKey.BypassIdCheckAsyncBackend)
-                .flatMapLatest {
-                    configStore.read(IdCheckAsyncBackendBaseUrl)
-                }.map {
-                    sessionApi.get().getActiveSession()
-                }.onEach {
-                    logResponse(it)
-                }.map {
-                    parseSession(it)
-                }.distinctUntilChanged()
-                .onEach {
-                    sessionStore.write(it)
-                }.map { session ->
-                    session != null
-                }
+        override suspend fun isActiveSession(): Boolean {
+            val response = sessionApi.getActiveSession()
+            logResponse(response)
+            val session = parseSession(response)
+            sessionStore.write(session)
+
+            return session != null
+        }
 
         private fun parseSession(response: ApiResponse): Session? {
             if (response !is ApiResponse.Success<*>) {

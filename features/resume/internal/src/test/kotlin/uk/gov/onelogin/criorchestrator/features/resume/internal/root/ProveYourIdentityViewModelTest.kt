@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,9 +15,7 @@ import uk.gov.logging.api.v3dot1.logger.logEventV3Dot1
 import uk.gov.logging.api.v3dot1.model.AnalyticsEvent
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
-import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
@@ -24,15 +23,15 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 class ProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
     private val resourceProvider = FakeResourceProvider()
+    private var savedStateHandle = SavedStateHandle(emptyMap())
     private val viewModel by lazy {
-        ProveYourIdentityViewModel(
+        ProveYourIdentityViewModel.createTestInstance(
             analytics =
                 ResumeAnalytics(
                     resourceProvider = resourceProvider,
                     analyticsLogger = analyticsLogger,
                 ),
-            sessionReader = StubSessionReader(),
-            logger = SystemLogger(),
+            savedStateHandle = savedStateHandle,
         )
     }
 
@@ -48,6 +47,21 @@ class ProveYourIdentityViewModelTest {
         runTest {
             viewModel.state.test {
                 assertEquals(INITIAL_STATE, awaitItem())
+            }
+        }
+
+    @Test
+    fun `given saved state, initial state is restored`() =
+        runTest {
+            savedStateHandle =
+                SavedStateHandle(
+                    mapOf(
+                        ProveYourIdentityViewModel.SHOULD_DISPLAY_KEY to true,
+                    ),
+                )
+            val expected = INITIAL_STATE.copy(shouldDisplay = true)
+            viewModel.state.test {
+                assertEquals(expected, awaitItem())
             }
         }
 
