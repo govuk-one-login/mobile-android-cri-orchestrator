@@ -18,7 +18,6 @@ import uk.gov.onelogin.criorchestrator.features.error.internal.R
 import uk.gov.onelogin.criorchestrator.features.error.internal.analytics.ErrorAnalytics
 import uk.gov.onelogin.criorchestrator.features.error.internal.analytics.ErrorScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
-import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
 
