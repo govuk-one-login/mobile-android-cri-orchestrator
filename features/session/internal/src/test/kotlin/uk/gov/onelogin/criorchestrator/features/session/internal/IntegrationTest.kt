@@ -20,7 +20,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
-import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class IntegrationTest {
@@ -28,7 +27,7 @@ class IntegrationTest {
     private val logger = SystemLogger()
     private val imposter = Imposter.createMockEngine()
 
-    private lateinit var sessionApiImpl: SessionApi
+    private lateinit var sessionApi: SessionApi
     private lateinit var remoteSessionReader: RemoteSessionReader
     private lateinit var sessionStore: SessionStore
 
@@ -44,22 +43,16 @@ class IntegrationTest {
                     ),
             ),
         )
-        sessionApiImpl =
+        sessionApi =
             SessionApiImpl(
                 httpClient = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
 
-        val sessionApiProvider =
-            Provider<SessionApi> {
-                sessionApiImpl
-            }
-
         remoteSessionReader =
             RemoteSessionReader(
-                configStore = fakeConfigStore,
                 sessionStore = sessionStore,
-                sessionApi = sessionApiProvider,
+                sessionApi = sessionApi,
                 logger = logger,
             )
     }
@@ -76,24 +69,21 @@ class IntegrationTest {
             ),
         )
         runTest {
-            remoteSessionReader.isActiveSession().test {
-                assertTrue(awaitItem())
+            assertTrue(remoteSessionReader.isActiveSession())
 
-                val expectedSession =
-                    Session(
-                        sessionId = "37aae92b-a51e-4f68-b571-8e455fb0ec34",
-                        redirectUri = "https://example/redirect",
-                        state = "11112222333344445555666677778888",
-                    )
-                sessionStore.read().test {
-                    assertEquals(
-                        expectedSession,
-                        awaitItem(),
-                    )
-                }
-                assertTrue(logger.contains("Got active session"))
-                cancelAndIgnoreRemainingEvents()
+            val expectedSession =
+                Session(
+                    sessionId = "37aae92b-a51e-4f68-b571-8e455fb0ec34",
+                    redirectUri = "https://example/redirect",
+                    state = "11112222333344445555666677778888",
+                )
+            sessionStore.read().test {
+                assertEquals(
+                    expectedSession,
+                    awaitItem(),
+                )
             }
+            assertTrue(logger.contains("Got active session"))
         }
     }
 
@@ -109,10 +99,8 @@ class IntegrationTest {
             ),
         )
         runTest {
-            remoteSessionReader.isActiveSession().test {
-                assertFalse(awaitItem())
-                assertTrue(logger.contains("Failed to fetch active session"))
-            }
+            assertFalse(remoteSessionReader.isActiveSession())
+            assertTrue(logger.contains("Failed to fetch active session"))
         }
     }
 }

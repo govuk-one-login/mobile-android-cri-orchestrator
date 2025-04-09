@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
-import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
@@ -18,20 +17,15 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
-import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
     private val logger = SystemLogger()
     private val sessionApi = spy(StubSessionApiImpl())
-    private val configStore = FakeConfigStore()
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -39,9 +33,8 @@ class RemoteSessionReaderTest {
     fun setUp() {
         remoteSessionReader =
             RemoteSessionReader(
-                configStore = configStore,
                 sessionStore = InMemorySessionStore(logger),
-                sessionApi = Provider { sessionApi },
+                sessionApi = sessionApi,
                 logger = logger,
             )
     }
@@ -59,44 +52,16 @@ class RemoteSessionReaderTest {
         expectedIsActiveSession: Boolean,
     ) = runTest {
         sessionApi.setActiveSession(apiResponse)
-        remoteSessionReader.isActiveSession().test {
-            assertEquals(expectedIsActiveSession, awaitItem())
-            assertTrue(logger.contains(logEntry))
-        }
+        val isActiveSession = remoteSessionReader.isActiveSession()
+        assertEquals(expectedIsActiveSession, isActiveSession)
+        assertTrue(logger.contains(logEntry))
     }
 
     @Test
-    fun `given no config changes, session API is called just once`() =
+    fun `session API is called just once`() =
         runTest {
-            remoteSessionReader.isActiveSession().test {
-                awaitItem()
-                cancel()
-            }
+            remoteSessionReader.isActiveSession()
             verify(sessionApi, times(1)).getActiveSession()
-        }
-
-    @Test
-    fun `when config changes, session API is called each time`() =
-        runTest {
-            remoteSessionReader.isActiveSession().test {
-                awaitItem()
-                configStore.write(
-                    Config.Entry(
-                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                        value = Config.Value.BooleanValue(true),
-                    ),
-                )
-                // No emission as stub API returns the same response
-                configStore.write(
-                    Config.Entry(
-                        key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
-                        value = Config.Value.StringValue("different"),
-                    ),
-                )
-                // No emission as stub API returns the same response
-                cancel()
-            }
-            verify(sessionApi, times(3)).getActiveSession()
         }
 
     companion object {

@@ -20,12 +20,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
-import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
-import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -35,11 +32,7 @@ class ProveYourIdentityRootTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val viewModel =
         spy(
-            ProveYourIdentityViewModel(
-                analytics = mock<ResumeAnalytics>(),
-                sessionReader = StubSessionReader(),
-                logger = SystemLogger(),
-            ),
+            ProveYourIdentityViewModel.createTestInstance(),
         )
 
     private val card: SemanticsMatcher = hasTestTag(ProveYourIdentityRootTestTags.CARD)

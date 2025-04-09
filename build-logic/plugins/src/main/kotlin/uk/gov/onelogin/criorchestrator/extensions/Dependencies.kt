@@ -80,6 +80,7 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
     testFixturesImplementation(libs.kotlinx.coroutines)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
+    testFixturesImplementation(libs.org.mockito.kotlin)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.app.cash.turbine)

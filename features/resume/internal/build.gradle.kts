@@ -19,8 +19,9 @@ dependencies {
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
 
-    testImplementation(testFixtures(projects.libraries.analytics))
+    testFixturesImplementation(testFixtures(projects.features.session.internalApi))
 
+    testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(kotlin("test"))

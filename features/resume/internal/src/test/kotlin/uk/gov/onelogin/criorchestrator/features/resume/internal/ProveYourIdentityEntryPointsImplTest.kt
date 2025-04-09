@@ -13,12 +13,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
+import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {
@@ -26,11 +24,7 @@ class ProveYourIdentityEntryPointsImplTest {
     val composeTestRule = createComposeRule()
 
     private val fakeProveYourIdentityViewModel =
-        ProveYourIdentityViewModel(
-            analytics = mock<ResumeAnalytics>(),
-            sessionReader = StubSessionReader(),
-            logger = SystemLogger(),
-        )
+        ProveYourIdentityViewModel.createTestInstance()
 
     private val fakeViewModelProviderFactory =
         viewModelFactory {

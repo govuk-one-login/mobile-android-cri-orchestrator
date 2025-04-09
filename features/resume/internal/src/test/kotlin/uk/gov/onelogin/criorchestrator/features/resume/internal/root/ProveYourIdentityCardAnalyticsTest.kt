@@ -18,12 +18,10 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
-import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
@@ -39,14 +37,12 @@ class ProveYourIdentityCardAnalyticsTest {
 
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val viewModel =
-        ProveYourIdentityViewModel(
+        ProveYourIdentityViewModel.createTestInstance(
             analytics =
                 ResumeAnalytics(
                     resourceProvider = AndroidResourceProvider(context),
                     analyticsLogger = analyticsLogger,
                 ),
-            sessionReader = StubSessionReader(),
-            logger = SystemLogger(),
         )
 
     private val modal: SemanticsMatcher = hasTestTag(ProveYourIdentityRootTestTags.MODAL)
