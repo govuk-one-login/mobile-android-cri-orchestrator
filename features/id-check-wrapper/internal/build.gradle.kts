@@ -12,3 +12,11 @@ dependencies {
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
 }
+
+mavenPublishingConfig {
+    mavenConfigBlock {
+        name.set(
+            "GOV.UK One Login CRI Orchestrator ID Check Wrapper Internal",
+        )
+    }
+}
