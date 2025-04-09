@@ -22,7 +22,7 @@ dependencies {
 mavenPublishingConfig {
     mavenConfigBlock {
         name.set(
-            "GOV.UK One Login CRI Orchestrator Handback Internal",
+            "GOV.UK One Login CRI Orchestrator Error Internal",
         )
     }
 }
