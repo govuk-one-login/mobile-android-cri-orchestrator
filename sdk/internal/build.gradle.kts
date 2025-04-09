@@ -26,6 +26,8 @@ dependencies {
     implementation(projects.features.dev.internal)
     implementation(projects.features.dev.internalApi)
     implementation(projects.features.dev.publicApi)
+    implementation(projects.features.error.internal)
+    implementation(projects.features.error.internalApi)
     implementation(projects.features.idCheckWrapper.internal)
     implementation(projects.features.resume.internal)
     implementation(projects.features.resume.internalApi)
