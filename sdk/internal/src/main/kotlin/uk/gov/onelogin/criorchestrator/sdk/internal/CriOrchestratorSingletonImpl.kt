@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
 import android.content.Context
+import kotlinx.coroutines.CoroutineDispatcher
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
@@ -15,6 +16,8 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonCom
  *   Configuration may be updated through the developer menu.
  * @param logger The logger that logs events to the system and to Crashlytics.
  * @param applicationContext The host application
+ * @param testDispatcher Coroutine dispatcher to use in place of
+ *   IO, Default and Unconfined dispatchers.
  */
 class CriOrchestratorSingletonImpl(
     authenticatedHttpClient: GenericHttpClient,
@@ -22,6 +25,7 @@ class CriOrchestratorSingletonImpl(
     initialConfig: Config,
     logger: Logger,
     applicationContext: Context,
+    testDispatcher: CoroutineDispatcher? = null,
 ) : CriOrchestratorSdk {
     override val component: CriOrchestratorSingletonComponent =
         DaggerMergedBaseCriOrchestratorSingletonComponent.factory().create(
@@ -30,5 +34,6 @@ class CriOrchestratorSingletonImpl(
             initialConfig = initialConfig,
             logger = logger,
             applicationContext = applicationContext,
+            testDispatcher = testDispatcher,
         )
 }

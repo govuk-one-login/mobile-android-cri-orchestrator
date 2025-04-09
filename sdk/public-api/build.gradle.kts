@@ -28,6 +28,7 @@ dependencies {
     testFixturesImplementation(libs.org.mockito.kotlin)
     testFixturesImplementation(libs.uk.gov.logging.api)
     testFixturesImplementation(libs.uk.gov.networking)
+    testFixturesImplementation(projects.sdk.internal)
 
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(projects.features.config.publicApi)

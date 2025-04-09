@@ -78,8 +78,12 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
 }
 
 internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
+    testFixturesImplementation(libs.kotlinx.coroutines)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
+
     testImplementation(kotlin("test"))
     testImplementation(libs.app.cash.turbine)
+    testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.org.junit.jupiter.api)
     testImplementation(libs.org.junit.jupiter.engine)
