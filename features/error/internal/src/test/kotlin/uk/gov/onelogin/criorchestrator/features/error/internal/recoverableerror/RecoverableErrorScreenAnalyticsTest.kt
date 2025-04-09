@@ -28,9 +28,6 @@ class RecoverableErrorScreenAnalyticsTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val mainStandardDispatcherRule = MainStandardDispatcherRule()
-
-    @get:Rule
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val context: Context = ApplicationProvider.getApplicationContext()
