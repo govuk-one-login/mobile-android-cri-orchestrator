@@ -10,12 +10,12 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.respons
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ActivityScope
+@CompositionScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = SessionReader::class)
 class RemoteSessionReader
     @Inject

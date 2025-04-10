@@ -9,12 +9,12 @@ import com.squareup.anvil.annotations.ContributesBinding
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuScreen
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuViewModelModule
 import uk.gov.onelogin.criorchestrator.features.dev.internalapi.DevMenuEntryPoints
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
-@ActivityScope
+@CompositionScope
 @ContributesBinding(CriOrchestratorScope::class)
 class DevMenuEntryPointsImpl
     @Inject

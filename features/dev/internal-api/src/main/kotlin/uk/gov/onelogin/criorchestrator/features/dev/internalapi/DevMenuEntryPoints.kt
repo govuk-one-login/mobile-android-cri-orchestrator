@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.squareup.anvil.annotations.ContributesTo
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @Immutable
@@ -13,7 +13,7 @@ fun interface DevMenuEntryPoints {
     fun DevMenuScreen(modifier: Modifier)
 }
 
-@ActivityScope
+@CompositionScope
 @ContributesTo(CriOrchestratorScope::class)
 fun interface DevMenuEntryPointsComponent {
     fun devMenuEntryPoints(): DevMenuEntryPoints

@@ -3,9 +3,9 @@ package uk.gov.onelogin.criorchestrator.libraries.di
 import javax.inject.Scope
 
 /**
- * Dagger scope intended for use at Activity level.
+ * Dagger scope for objects that live no longer than the Compose UI composition.
  */
 @Scope
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ActivityScope
+annotation class CompositionScope

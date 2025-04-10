@@ -7,12 +7,12 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import javax.inject.Inject
 
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"
 
-@ActivityScope
+@CompositionScope
 class SessionApiImpl
     @Inject
     constructor(
