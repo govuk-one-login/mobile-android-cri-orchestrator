@@ -17,6 +17,7 @@ import uk.gov.android.ui.componentsv2.bulletedlist.TitleType
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -50,7 +51,6 @@ internal fun ConfirmNoChippedIDScreen(
     )
 }
 
-//@Suppress("LongMethod", "LongParameterList")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmNoChippedIDContent(
@@ -65,6 +65,7 @@ internal fun ConfirmNoChippedIDContent(
             title = { horizontalPadding ->
                 GdsHeading(
                     stringResource(ConfirmNoChippedIDConstants.titleId),
+                    textAlign = GdsHeadingAlignment.LeftAligned,
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },
