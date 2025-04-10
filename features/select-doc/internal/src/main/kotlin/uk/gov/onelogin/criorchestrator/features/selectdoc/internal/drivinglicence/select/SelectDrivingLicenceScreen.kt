@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
@@ -98,6 +99,7 @@ internal fun SelectDrivingLicenceScreenContent(
             title = { horizontalPadding ->
                 GdsHeading(
                     text = stringResource(SelectDrivingLicenceConstants.titleId),
+                    textAlign = GdsHeadingAlignment.LeftAligned,
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },

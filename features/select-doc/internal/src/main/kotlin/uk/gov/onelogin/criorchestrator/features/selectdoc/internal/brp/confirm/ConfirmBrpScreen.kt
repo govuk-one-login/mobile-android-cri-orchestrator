@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.warning.GdsWarningText
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
@@ -68,6 +69,7 @@ internal fun ConfirmBrpScreenContent(
             title = { horizontalPadding ->
                 GdsHeading(
                     text = title,
+                    textAlign = GdsHeadingAlignment.LeftAligned,
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },

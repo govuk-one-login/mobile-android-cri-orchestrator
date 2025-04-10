@@ -4,7 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import kotlinx.collections.immutable.ImmutableList
@@ -23,6 +21,8 @@ import uk.gov.android.ui.componentsv2.bulletedlist.BulletedListTitle
 import uk.gov.android.ui.componentsv2.bulletedlist.GdsBulletedList
 import uk.gov.android.ui.componentsv2.bulletedlist.TitleType.Text
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
@@ -55,6 +55,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
             title = { horizontalPadding ->
                 GdsHeading(
                     text = stringResource(TypesOfPhotoIDConstants.titleId),
+                    textAlign = GdsHeadingAlignment.LeftAligned,
                     modifier =
                         Modifier.padding(
                             horizontal = horizontalPadding,
@@ -181,8 +182,8 @@ private fun PhotoIDInformation(
     ) {
         GdsHeading(
             text = title,
-            fontWeight = FontWeight.W700,
-            style = LocalTextStyle.current,
+            textAlign = GdsHeadingAlignment.LeftAligned,
+            style = GdsHeadingStyle.Body,
             modifier =
                 Modifier
                     .padding(horizontal = horizontalPadding)
