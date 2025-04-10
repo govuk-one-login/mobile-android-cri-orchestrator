@@ -11,7 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.C
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModelModule
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedID
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.ConfirmNoNonChippedID
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.confirm.ConfirmDrivingLicenceScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.confirm.ConfirmDrivingLicenceViewModelModule
@@ -45,6 +46,8 @@ class SelectDocNavGraphProvider
         private val confirmBrpViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmDrivingLicenceViewModelModule.FACTORY_NAME)
         private val confirmDrivingLicenceViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmNoChippedIDViewModelModule.FACTORY_NAME)
+        private val confirmNoChippedIDViewModelFactory: ViewModelProvider.Factory,
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
@@ -98,7 +101,10 @@ class SelectDocNavGraphProvider
             }
 
             composable<SelectDocDestinations.ConfirmNoChippedID> {
-                ConfirmNoChippedID()
+                ConfirmNoChippedIDScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = confirmNoChippedIDViewModelFactory)
+                )
             }
 
             composable<SelectDocDestinations.ConfirmNoNonChippedID> {
