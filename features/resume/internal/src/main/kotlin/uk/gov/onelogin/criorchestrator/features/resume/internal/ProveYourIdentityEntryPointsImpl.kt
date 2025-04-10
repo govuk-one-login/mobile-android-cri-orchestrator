@@ -11,12 +11,12 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourId
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.libraries.di.ActivityScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
-@ActivityScope
+@CompositionScope
 @ContributesBinding(CriOrchestratorScope::class)
 class ProveYourIdentityEntryPointsImpl
     @Inject
