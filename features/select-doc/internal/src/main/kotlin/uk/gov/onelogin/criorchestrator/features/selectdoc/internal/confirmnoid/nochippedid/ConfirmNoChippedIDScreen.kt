@@ -34,12 +34,10 @@ internal fun ConfirmNoChippedIDScreen(
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
-        viewModel.actions.collect { event ->
+        viewModel.action.collect { event ->
             when (event) {
                 ConfirmNoChippedIDAction.NavigateToConfirmAbort -> {
-                    navController.navigate(
-                        SelectDocDestinations.ConfirmAbort
-                    )
+                    navController.navigate(SelectDocDestinations.ConfirmAbort)
                 }
             }
         }

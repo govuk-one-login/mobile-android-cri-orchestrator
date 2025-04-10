@@ -12,5 +12,5 @@ enum class SelectDocScreenId(
     SelectDrivingLicence(rawId = "2721b4e6-4b7e-4aab-bf50-5ba29f2d9d56"),
     TypesOfPhotoID(rawId = "c841ad80-4b16-4425-9bf2-aa24485fdaa0"),
     SelectBrp(rawId = "8349d732-fb9e-49f0-9b7c-5ed84ffe4613"),
-    ConfirmNoChippedID(rawId = "e5259446-7367-4d97-8d4d-d8b10bb95eca")
+    ConfirmNoChippedID(rawId = "e5259446-7367-4d97-8d4d-d8b10bb95eca"),
 }

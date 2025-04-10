@@ -11,8 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 class ConfirmNoChippedIDViewModel(
     private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
-    private val _actions = MutableSharedFlow<ConfirmNoChippedIDAction>()
-    val actions: Flow<ConfirmNoChippedIDAction> = _actions
+    private val _action = MutableSharedFlow<ConfirmNoChippedIDAction>()
+    val action: Flow<ConfirmNoChippedIDAction> = _action
 
     fun onScreenStart() {
         analytics.trackScreen(
@@ -24,7 +24,7 @@ class ConfirmNoChippedIDViewModel(
     fun onConfirmClick() {
         analytics.trackButtonEvent(ConfirmNoChippedIDConstants.confirmButtonTextId)
         viewModelScope.launch {
-            _actions.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbort)
+            _action.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbort)
         }
     }
 }
