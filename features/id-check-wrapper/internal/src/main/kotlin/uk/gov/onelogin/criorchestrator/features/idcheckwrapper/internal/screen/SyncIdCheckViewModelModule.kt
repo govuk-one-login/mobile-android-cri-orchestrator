@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -6,7 +6,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.network.BiometricTokenProviderImpl
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -17,11 +18,15 @@ object SyncIdCheckViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(launcherDataReader: LauncherDataReader): ViewModelProvider.Factory =
+    fun provideFactory(
+        sessionStore: SessionStore,
+        biometricTokenProvider: BiometricTokenProviderImpl,
+    ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 SyncIdCheckViewModel(
-                    launcherDataReader = launcherDataReader,
+                    sessionStore,
+                    biometricTokenProvider,
                 )
             }
         }
