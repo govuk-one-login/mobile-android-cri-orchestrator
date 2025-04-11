@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.network.data
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -11,6 +11,6 @@ sealed class BiometricApiResponse {
         @JsonNames("accessToken")
         val accessToken: String,
         @JsonNames("opaqueId")
-        val opaqueId: String
+        val opaqueId: String,
     ) : BiometricApiResponse()
 }

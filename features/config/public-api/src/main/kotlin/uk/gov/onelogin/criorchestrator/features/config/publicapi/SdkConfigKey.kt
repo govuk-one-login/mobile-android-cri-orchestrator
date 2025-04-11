@@ -22,4 +22,10 @@ sealed interface SdkConfigKey {
             name = "Bypass ID Check async backend",
         ),
         SdkConfigKey
+
+    data object BypassGetTokenAsyncBackend :
+        BooleanConfigKey(
+            name = "Bypass get token async backend",
+        ),
+        SdkConfigKey
 }

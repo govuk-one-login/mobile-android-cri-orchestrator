@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.network
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
 import uk.gov.android.network.api.ApiResponse
 
