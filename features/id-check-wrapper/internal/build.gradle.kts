@@ -1,6 +1,7 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
@@ -12,6 +13,8 @@ dependencies {
     implementation(projects.features.resume.internalApi)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
+    implementation(libs.uk.gov.networking)
+    implementation(libs.uk.gov.logging.api)
 
     testImplementation(testFixtures(projects.features.session.internalApi))
 }
