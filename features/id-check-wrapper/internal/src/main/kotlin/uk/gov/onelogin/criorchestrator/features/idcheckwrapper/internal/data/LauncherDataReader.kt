@@ -5,11 +5,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.timeout
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -37,18 +35,9 @@ class LauncherDataReader
                 )
 
             return LauncherData(
-                sessionId = session.sessionId,
-                journeyType = session.journeyType,
+                session = session,
                 biometricToken = biometricToken,
                 documentType = documentVariety.toDocumentType(),
             )
         }
-
-        private val Session.journeyType: JourneyType
-            get() =
-                if (this.redirectUri == null) {
-                    JourneyType.DESKTOP_APP_DESKTOP
-                } else {
-                    JourneyType.MOBILE_APP_MOBILE
-                }
     }

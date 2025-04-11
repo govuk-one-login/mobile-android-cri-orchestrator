@@ -2,17 +2,29 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.idcheck.sdk.IdCheckSdkExitState
+import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 class SyncIdCheckViewModel(
     private val launcherDataReader: LauncherDataReader,
+    val logger: Logger,
 ) : ViewModel() {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
+
+    private val _actions = MutableSharedFlow<SyncIdCheckAction>()
+    val actions = _actions.asSharedFlow()
 
     fun onScreenStart(documentVariety: DocumentVariety) {
         viewModelScope.launch {
@@ -20,11 +32,69 @@ class SyncIdCheckViewModel(
         }
     }
 
+    fun onStubExitStateSelected(selectedExitState: Int) {
+        val curState = requireDisplayState()
+        _state.value =
+            curState.copy(
+                activityResultContractParameters =
+                    curState.activityResultContractParameters.copy(
+                        stubExitState = ExitStateOption.entries[selectedExitState],
+                    ),
+                manualLauncher =
+                    curState.manualLauncher?.copy(
+                        selectedExitState = selectedExitState,
+                    ),
+            )
+    }
+
+    fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) =
+        viewModelScope.launch {
+            _actions.emit(
+                SyncIdCheckAction.LaunchIdCheckSdk(
+                    launcherData = launcherData,
+                    logger = logger,
+                ),
+            )
+        }
+
+    fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) =
+        viewModelScope.launch {
+            when (exitState) {
+                is IdCheckSdkExitState.Nowhere -> error("not implemented")
+                is IdCheckSdkExitState.ConfirmAnotherWay -> error("not implemented")
+                is IdCheckSdkExitState.ConfirmationAbortedJourney -> error("not implemented")
+                IdCheckSdkExitState.ConfirmationFailed -> error("not implemented")
+                is IdCheckSdkExitState.FaceScanLimitReached -> error("not implemented")
+                IdCheckSdkExitState.HappyPath ->
+                    _actions.emit(
+                        when (requireDisplayState().launcherData.journeyType) {
+                            JourneyType.DESKTOP_APP_DESKTOP -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                            JourneyType.MOBILE_APP_MOBILE -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                            JourneyType.NOT_DEFINED -> error("not implemented")
+                        },
+                    )
+
+                IdCheckSdkExitState.UnknownDocumentType -> error("not implemented")
+            }
+        }
+
     private suspend fun loadManualLauncher(documentVariety: DocumentVariety) {
         val launcherData = launcherDataReader.read(documentVariety)
         _state.value =
-            SyncIdCheckState.DisplayManualLauncher(
+            SyncIdCheckState.Display(
                 launcherData = launcherData,
+                manualLauncher =
+                    ManualLauncher(
+                        selectedExitState = 0,
+                        exitStateOptions = ExitStateOption.displayNames,
+                    ),
+                activityResultContractParameters =
+                    IdCheckSdkActivityResultContractParameters(
+                        stubExitState = ExitStateOption.None,
+                        logger = logger,
+                    ),
             )
     }
+
+    private fun requireDisplayState() = _state.value as? SyncIdCheckState.Display ?: error("Expected display state")
 }
