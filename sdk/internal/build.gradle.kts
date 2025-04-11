@@ -16,7 +16,6 @@ configure<PublishingExtension> {
 
 dependencies {
     // This module should depend on every other module that contributes to the dagger dependency graph
-    implementation(libs.firebase.crashlytics)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
