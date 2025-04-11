@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 sealed class SyncIdCheckAction {
     data object NavigateToRecoverableError : SyncIdCheckAction()

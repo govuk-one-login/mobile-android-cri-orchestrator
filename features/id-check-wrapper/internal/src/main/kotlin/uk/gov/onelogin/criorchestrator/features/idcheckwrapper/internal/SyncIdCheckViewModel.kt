@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenProvider
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckAction
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
 class SyncIdCheckViewModel(

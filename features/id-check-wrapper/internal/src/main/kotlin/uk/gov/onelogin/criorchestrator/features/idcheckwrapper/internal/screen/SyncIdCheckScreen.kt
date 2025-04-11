@@ -1,21 +1,22 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
+import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
@@ -29,44 +30,46 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 internal fun SyncIdCheckScreen(
     documentVariety: DocumentVariety,
     viewModel: SyncIdCheckViewModel,
-    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
+    val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
-        viewModel.getBiometricToken(documentVariety.toDocumentType().name)
-
-        viewModel.actions.collect { event ->
-            when (event) {
-                SyncIdCheckAction.NavigateToRecoverableError ->
-                    navController.navigate(HandbackDestinations.UnrecoverableError) // update this
-
-                SyncIdCheckAction.NavigateToUnRecoverableError ->
-                    navController.navigate(HandbackDestinations.UnrecoverableError)
+        viewModel.onScreenStart(documentVariety)
+    }
+    val launchIdCheck: (LauncherData) -> Unit = {
+        // DCMAW-11490: Actually call ID Check SDK
+    }
+    state.let { state ->
+        when (state) {
+            is SyncIdCheckState.DisplayManualLauncher -> {
+                SyncIdCheckScreenManualLauncherContent(
+                    documentType = state.launcherData.documentType,
+                    journeyType = state.launcherData.journeyType,
+                    sessionId = state.launcherData.sessionId,
+                    accessToken = state.launcherData.biometricToken.accessToken,
+                    opaqueId = state.launcherData.biometricToken.opaqueId,
+                    onLaunchRequest = { launchIdCheck(state.launcherData) },
+                    modifier = modifier,
+                )
             }
+
+            SyncIdCheckState.Display -> {
+                // This screen does not have any content
+            }
+            SyncIdCheckState.Loading -> Text(text = "Loading")
         }
     }
-
-    SyncIdCheckScreenContent(
-        documentType = documentVariety.toDocumentType(),
-        journeyType = JourneyType.DESKTOP_APP_DESKTOP,
-        sessionId = "",
-        accessToken = "",
-        opaqueId = "",
-        modifier = modifier,
-    )
 }
 
-// DCMAW-11490: Actually call ID Check SDK and build bypass
 @Suppress("LongParameterList")
 @Composable
-private fun SyncIdCheckScreenContent(
+private fun SyncIdCheckScreenManualLauncherContent(
     documentType: DocumentType,
     journeyType: JourneyType,
     sessionId: String,
     accessToken: String,
     opaqueId: String,
+    onLaunchRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -89,19 +92,26 @@ private fun SyncIdCheckScreenContent(
         Text(
             text = "Biometric Token Opaque ID: $opaqueId",
         )
+        GdsButton(
+            text = "Launch ID Check SDK",
+            onClick = onLaunchRequest,
+            buttonType = ButtonType.Primary,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewSyncIdCheckScreen() {
+internal fun PreviewSyncIdCheckManualLauncherContent() {
     GdsTheme {
-        SyncIdCheckScreenContent(
+        SyncIdCheckScreenManualLauncherContent(
             documentType = DocumentType.NFC_PASSPORT,
             journeyType = JourneyType.MOBILE_APP_MOBILE,
             sessionId = "test session ID",
             accessToken = "test access token",
             opaqueId = "test opaque ID",
+            onLaunchRequest = {},
         )
     }
 }
