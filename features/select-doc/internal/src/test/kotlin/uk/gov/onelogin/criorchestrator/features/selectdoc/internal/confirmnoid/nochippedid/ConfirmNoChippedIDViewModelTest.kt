@@ -47,7 +47,7 @@ class ConfirmNoChippedIDViewModelTest {
         }
 
     @Test
-    fun `when confirm is pressed, navigatae to SyncIdCheck screen`() =
+    fun `when confirm is pressed, it navigates to Confirm Abort screen`() =
         runTest {
             viewModel.action.test {
                 viewModel.onConfirmClick()
