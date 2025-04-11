@@ -23,6 +23,12 @@ object TestWrapperConfig {
                             value = false,
                         ),
                     ),
+                    Config.Entry(
+                        key = SdkConfigKey.BypassGetTokenAsyncBackend,
+                        Config.Value.BooleanValue(
+                            value = false,
+                        ),
+                    ),
                     Config.Entry<Config.Value.StringValue>(
                         key = NfcConfigKey.NfcAvailability,
                         Config.Value.StringValue(
