@@ -25,7 +25,7 @@ sealed interface SdkConfigKey {
 
     data object BypassGetTokenAsyncBackend :
         BooleanConfigKey(
-            name = "Bypass get token async backend",
+            name = "Bypass get biometric token async backend",
         ),
         SdkConfigKey
 }

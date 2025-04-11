@@ -80,19 +80,3 @@ class BiometricTokenProviderImpl
                 )
             }
     }
-
-sealed class BiometricTokenResult {
-    object Loading : BiometricTokenResult()
-
-    data class Success(
-        val token: BiometricToken,
-    ) : BiometricTokenResult()
-
-    object Offline : BiometricTokenResult()
-
-    data class Error(
-        val message: String,
-        val statusCode: Int? = null,
-        val error: Exception? = null,
-    ) : BiometricTokenResult()
-}

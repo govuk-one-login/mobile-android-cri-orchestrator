@@ -95,8 +95,6 @@ class BiometricTokenProviderImplTest {
 
             val encoded = json.encodeToString(successData)
 
-            println(encoded)
-
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
