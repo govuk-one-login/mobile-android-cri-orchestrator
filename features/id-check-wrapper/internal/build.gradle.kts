@@ -11,6 +11,8 @@ dependencies {
     implementation(projects.features.config.internalApi)
     implementation(projects.features.session.internalApi)
     implementation(projects.features.resume.internalApi)
+    implementation(projects.features.handback.internalApi)
+    implementation(projects.features.config.internalApi)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
     implementation(libs.uk.gov.networking)

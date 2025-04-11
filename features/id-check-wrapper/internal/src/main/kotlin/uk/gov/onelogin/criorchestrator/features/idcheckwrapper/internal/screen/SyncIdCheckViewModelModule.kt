@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.network.BiometricTokenProviderImpl
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenProviderImpl
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named

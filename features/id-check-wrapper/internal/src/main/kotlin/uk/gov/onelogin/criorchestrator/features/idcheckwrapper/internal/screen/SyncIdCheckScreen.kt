@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
@@ -25,18 +29,31 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 internal fun SyncIdCheckScreen(
     documentVariety: DocumentVariety,
     viewModel: SyncIdCheckViewModel,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
-        viewModel.getBiometricToken()
+        viewModel.getBiometricToken(documentVariety.toDocumentType().name)
+
+        viewModel.actions.collect { event ->
+            when (event) {
+                SyncIdCheckAction.NavigateToRecoverableError ->
+                    navController.navigate(HandbackDestinations.UnrecoverableError) // update this
+
+                SyncIdCheckAction.NavigateToUnRecoverableError ->
+                    navController.navigate(HandbackDestinations.UnrecoverableError)
+            }
+        }
     }
 
     SyncIdCheckScreenContent(
         documentType = documentVariety.toDocumentType(),
-        journeyType = viewModel.journeyType,
-        sessionId = viewModel.session.sessionId,
-        accessToken = viewModel.biometricToken.accessToken,
-        opaqueId = viewModel.biometricToken.opaqueId,
+        journeyType = JourneyType.DESKTOP_APP_DESKTOP,
+        sessionId = "",
+        accessToken = "",
+        opaqueId = "",
         modifier = modifier,
     )
 }

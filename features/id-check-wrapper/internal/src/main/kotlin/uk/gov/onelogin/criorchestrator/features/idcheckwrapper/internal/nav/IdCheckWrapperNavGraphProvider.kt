@@ -28,6 +28,7 @@ class IdCheckWrapperNavGraphProvider
                 SyncIdCheckScreen(
                     documentVariety = args.documentVariety,
                     viewModel = viewModel(factory = syncIdCheckViewModelFactory),
+                    navController = navController,
                 )
             }
         }
