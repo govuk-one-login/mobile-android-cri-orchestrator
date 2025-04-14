@@ -36,7 +36,8 @@ class SyncIdCheckViewModel(
                 )
 
             null,
-            is LauncherDataReaderResult.UnRecoverableError ->
+            is LauncherDataReaderResult.UnRecoverableError,
+            ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToUnRecoverableError,
                 )
