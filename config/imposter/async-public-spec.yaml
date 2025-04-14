@@ -237,7 +237,8 @@ paths:
                 success:
                   value:
                     {
-                      "accessToken": "string"
+                      "accessToken": "string",
+                      "opaqueId": "string"
                     }
               schema:
                 type: object

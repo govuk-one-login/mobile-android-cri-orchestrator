@@ -9,12 +9,11 @@ import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
-import javax.inject.Provider
 
-const val SESSION_ID = "session_id"
-const val DOCUMENT_TYPE = "document_type"
+private const val SESSION_ID = "session_id"
+private const val DOCUMENT_TYPE = "document_type"
 
-class BiometricTokenReaderImplTest {
+class RemoteBiometricTokenReaderTest {
     private lateinit var biometricTokenReader: BiometricTokenReader
     private val biometricApi = mock<BiometricApi>()
     private val logger = mock<Logger>()
@@ -23,8 +22,8 @@ class BiometricTokenReaderImplTest {
     @BeforeEach
     fun setup() {
         biometricTokenReader =
-            BiometricTokenReaderImpl(
-                biometricApi = Provider { biometricApi },
+            RemoteBiometricTokenReader(
+                biometricApi = biometricApi,
                 logger,
             )
     }

@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
+import android.R.attr.tag
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
@@ -10,14 +11,13 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
-import javax.inject.Provider
 
 @CompositionScope
 @ContributesBinding(CriOrchestratorScope::class, boundType = BiometricTokenReader::class)
-class BiometricTokenReaderImpl
+class RemoteBiometricTokenReader
     @Inject
     constructor(
-        private val biometricApi: Provider<BiometricApi>,
+        private val biometricApi: BiometricApi,
         private val logger: Logger,
     ) : BiometricTokenReader,
         LogTagProvider {
@@ -31,7 +31,7 @@ class BiometricTokenReaderImpl
             sessionId: String,
             documentType: String,
         ): BiometricTokenResult {
-            val response = biometricApi.get().getBiometricToken(sessionId, documentType)
+            val response = biometricApi.getBiometricToken(sessionId, documentType)
 
             return when (response) {
                 ApiResponse.Offline -> BiometricTokenResult.Offline
@@ -55,6 +55,8 @@ class BiometricTokenReaderImpl
                             json.decodeFromString<BiometricApiResponse.BiometricSuccess>(
                                 response.response.toString(),
                             )
+
+                        logger.debug(tag, "Got the biometric token")
 
                         BiometricTokenResult.Success(
                             BiometricToken(
