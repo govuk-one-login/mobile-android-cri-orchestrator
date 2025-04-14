@@ -16,8 +16,8 @@ internal class ConfirmDrivingLicenceViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            SelectDocScreenId.ConfirmDrivingLicence,
-            ConfirmDrivingLicenceConstants.titleId,
+            id = SelectDocScreenId.ConfirmDrivingLicence,
+            title = ConfirmDrivingLicenceConstants.titleId,
         )
     }
 
