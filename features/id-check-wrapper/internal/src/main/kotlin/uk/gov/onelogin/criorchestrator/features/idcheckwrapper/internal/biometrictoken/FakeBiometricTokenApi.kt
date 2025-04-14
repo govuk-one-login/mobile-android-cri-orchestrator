@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
-import android.util.Log
 import uk.gov.android.network.api.ApiResponse
 import javax.inject.Inject
 
@@ -10,8 +9,8 @@ class FakeBiometricTokenApi
         override suspend fun getBiometricToken(
             sessionId: String,
             documentType: String,
-        ): ApiResponse {
-            return ApiResponse.Success<String>(
+        ): ApiResponse =
+            ApiResponse.Success<String>(
                 """
                 {
                     "accessToken": "SlAV32hkKG",
@@ -19,5 +18,4 @@ class FakeBiometricTokenApi
                 }
                 """.trimIndent(),
             )
-        }
     }
