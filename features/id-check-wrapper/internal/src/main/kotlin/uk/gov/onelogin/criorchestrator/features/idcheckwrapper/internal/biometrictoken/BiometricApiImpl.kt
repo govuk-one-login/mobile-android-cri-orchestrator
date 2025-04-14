@@ -36,13 +36,8 @@ class BiometricApiImpl
                     contentType = ContentType.APPLICATION_JSON,
                 )
 
-            return httpClient.makeAuthorisedRequest(
+            return httpClient.makeRequest(
                 apiRequest = request,
-                scope = SCOPE,
             )
-        }
-
-        companion object {
-            const val SCOPE = "idCheck.activeSession.read"
         }
     }
