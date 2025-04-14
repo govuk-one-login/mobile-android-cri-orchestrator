@@ -27,6 +27,13 @@
     <string name="confirm_nochippedid_bullet_4">UK photocard driving licence</string>
     <string name="confirm_nochippedid_confirmbutton">Confirm</string>
 
+    <string name="confirm_nononchippedid_title">Confirm you do not have a UK photocard driving licence</string>
+    <string name="confirm_nononchippedid_body_1">You’ve said you do not have a UK photocard driving licence.</string>
+    <string name="confirm_nononchippedid_body_2">This means you will not be able to prove your identity with this app because:</string>
+    <string name="confirm_nononchippedid_bullet_1">your phone does not have an NFC reader - so it cannot scan a passport or biometric card</string>
+    <string name="confirm_nononchippedid_bullet_2">the only type of photo ID you could use without an NFC reader is a UK photocard driving licence</string>
+    <string name="confirm_nononchippedid_confirmbutton">Confirm</string>
+
     <!--  Select  -->
     <string name="selectdocument_passport_title">Do you have a passport with a biometric chip?</string>
     <string name="selectdocument_passport_body">All UK passports have a biometric chip.\n\nIf you have a non-UK passport, it must have the biometric chip symbol on the cover.</string>
