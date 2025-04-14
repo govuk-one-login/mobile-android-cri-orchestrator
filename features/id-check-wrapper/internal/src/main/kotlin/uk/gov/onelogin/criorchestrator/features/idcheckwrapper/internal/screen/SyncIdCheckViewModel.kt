@@ -30,16 +30,12 @@ class SyncIdCheckViewModel(
         val launcherDataResult = launcherDataReader.read(documentVariety)
 
         when (launcherDataResult) {
-            null ->
-                _actions.emit(
-                    SyncIdCheckAction.NavigateToUnRecoverableError,
-                )
-
             is LauncherDataReaderResult.RecoverableError ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToRecoverableError,
                 )
 
+            null,
             is LauncherDataReaderResult.UnRecoverableError ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToUnRecoverableError,

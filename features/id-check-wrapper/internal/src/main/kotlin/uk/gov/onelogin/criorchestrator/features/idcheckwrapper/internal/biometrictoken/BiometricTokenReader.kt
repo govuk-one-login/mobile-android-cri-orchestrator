@@ -1,6 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
-interface BiometricTokenReader {
+fun interface BiometricTokenReader {
     suspend fun getBiometricToken(
         sessionId: String,
         documentType: String,
