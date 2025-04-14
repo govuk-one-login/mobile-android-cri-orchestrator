@@ -21,7 +21,7 @@ object SyncIdCheckViewModelModule {
         viewModelFactory {
             initializer {
                 SyncIdCheckViewModel(
-                    launcherDataReader,
+                    launcherDataReader = launcherDataReader,
                 )
             }
         }

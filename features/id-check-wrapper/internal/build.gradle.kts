@@ -26,3 +26,11 @@ dependencies {
 
     testFixturesImplementation(libs.uk.gov.idcheck.repositories.api)
 }
+
+mavenPublishingConfig {
+    mavenConfigBlock {
+        name.set(
+            "GOV.UK One Login CRI Orchestrator ID Check Wrapper Internal",
+        )
+    }
+}

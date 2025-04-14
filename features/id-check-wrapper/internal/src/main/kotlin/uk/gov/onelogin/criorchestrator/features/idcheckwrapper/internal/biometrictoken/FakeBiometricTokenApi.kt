@@ -18,7 +18,11 @@ class FakeBiometricTokenApi
             sessionId: String,
             documentType: String,
         ): ApiResponse {
-            val response = BiometricToken("SlAV32hkKG", "11111111-1111-1111-1111-111111111111")
+            val response =
+                BiometricToken(
+                    accessToken = "SlAV32hkKG",
+                    opaqueId = "11111111-1111-1111-1111-111111111111",
+                )
             val responseString = json.encodeToString(response)
 
             return ApiResponse.Success<String>(
@@ -27,8 +31,8 @@ class FakeBiometricTokenApi
         }
     }
 
-// This is to avoid having string response because github has flagged "accessToken" and security issue
-// Also BiometricToken is not serializable in repositories library
+// This is to avoid having a json string because github has flagged "accessToken" and security issue
+// Additionally, BiometricToken is not serializable in repositories library
 @Serializable
 private data class BiometricToken(
     val accessToken: String,

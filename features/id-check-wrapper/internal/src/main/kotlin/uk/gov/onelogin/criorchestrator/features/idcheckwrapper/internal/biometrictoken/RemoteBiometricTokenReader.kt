@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
-import android.R.attr.tag
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse

@@ -26,9 +26,8 @@ class SyncIdCheckScreenKtTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    //    private val viewModel = SyncIdCheckViewModel(launcherDataReader = mock())
     private val navController: NavController = mock()
-    private val actionsFlow = MutableSharedFlow<SyncIdCheckAction>(replay = 0)
+    private val actionsFlow = MutableSharedFlow<SyncIdCheckAction>()
     private val viewModel =
         mock<SyncIdCheckViewModel>().apply {
             whenever(actions).thenReturn(actionsFlow.asSharedFlow())

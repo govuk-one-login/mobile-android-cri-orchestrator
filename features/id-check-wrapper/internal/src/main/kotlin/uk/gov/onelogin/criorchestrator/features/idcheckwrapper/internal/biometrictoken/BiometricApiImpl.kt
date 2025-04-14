@@ -43,6 +43,6 @@ class BiometricApiImpl
         }
 
         companion object {
-            const val SCOPE = "idCheck.activeSession.read" // check if this is the correct
+            const val SCOPE = "idCheck.activeSession.read"
         }
     }

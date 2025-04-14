@@ -59,6 +59,7 @@ class IntegrationTest {
                 )
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+
             assertEquals(expected, result)
             assertTrue(logger.contains("Got the biometric token"))
         }
@@ -105,6 +106,7 @@ class IntegrationTest {
         )
         runTest {
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+
             assert(result is BiometricTokenResult.Error)
         }
     }
@@ -119,6 +121,7 @@ class IntegrationTest {
         )
         runTest {
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+
             assert(result is BiometricTokenResult.Error)
         }
     }
