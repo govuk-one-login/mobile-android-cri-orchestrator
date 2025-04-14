@@ -12,6 +12,9 @@ import org.junit.jupiter.api.assertInstanceOf
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
@@ -23,18 +26,16 @@ import kotlin.time.Duration.Companion.seconds
 class LauncherDataReaderTest {
     private companion object {
         private val session = Session.createTestInstance()
-        private val biometricToken =
-            BiometricToken(
-                accessToken = "TODO",
-                opaqueId = "TODO",
-            )
+        private val biometricToken = BiometricToken.createTestToken()
         private val documentVariety = DocumentVariety.NFC_PASSPORT
-        private val expectedLauncherData =
-            LauncherData(
-                sessionId = session.sessionId,
-                journeyType = JourneyType.DESKTOP_APP_DESKTOP,
-                biometricToken = biometricToken,
-                documentType = DocumentType.NFC_PASSPORT,
+        private val expectedLauncherDataResult =
+            LauncherDataReaderResult.Success(
+                LauncherData(
+                    sessionId = session.sessionId,
+                    journeyType = JourneyType.DESKTOP_APP_DESKTOP,
+                    biometricToken = biometricToken,
+                    documentType = DocumentType.NFC_PASSPORT,
+                ),
             )
         private val sessionStore =
             FakeSessionStore(
@@ -45,19 +46,25 @@ class LauncherDataReaderTest {
     private fun createLauncherDataReader(sessionStore: SessionStore = LauncherDataReaderTest.sessionStore) =
         LauncherDataReader(
             sessionStore = sessionStore,
+            biometricTokenReader =
+                StubBiometricTokenReader(
+                    BiometricTokenResult.Success(
+                        biometricToken,
+                    ),
+                ),
         )
 
     @Test
     fun `read gets the launcher data`() =
         runTest {
             val launcherDataReader = createLauncherDataReader()
-            val launcherData =
+            val launcherDataResult =
                 launcherDataReader.read(
                     documentVariety = documentVariety,
                 )
             assertEquals(
-                expectedLauncherData,
-                launcherData,
+                expectedLauncherDataResult,
+                launcherDataResult,
             )
         }
 
@@ -65,15 +72,19 @@ class LauncherDataReaderTest {
     fun `given different document variety, read gets the launcher data`() =
         runTest {
             val launcherDataReader = createLauncherDataReader()
-            val launcherData =
+            val launcherDataResult =
                 launcherDataReader.read(
                     documentVariety = DocumentVariety.BRP,
                 )
+
             assertEquals(
-                expectedLauncherData.copy(
-                    documentType = DocumentType.BRP,
+                expectedLauncherDataResult.copy(
+                    launcherData =
+                        expectedLauncherDataResult.launcherData.copy(
+                            documentType = DocumentType.BRP,
+                        ),
                 ),
-                launcherData,
+                launcherDataResult,
             )
         }
 
@@ -89,15 +100,18 @@ class LauncherDataReaderTest {
                             ),
                         ),
                 )
-            val launcherData =
+            val launcherDataResult =
                 launcherDataReader.read(
                     documentVariety = documentVariety,
                 )
             assertEquals(
-                expectedLauncherData.copy(
-                    journeyType = JourneyType.MOBILE_APP_MOBILE,
+                expectedLauncherDataResult.copy(
+                    launcherData =
+                        expectedLauncherDataResult.launcherData.copy(
+                            journeyType = JourneyType.MOBILE_APP_MOBILE,
+                        ),
                 ),
-                launcherData,
+                launcherDataResult,
             )
         }
 
@@ -118,11 +132,11 @@ class LauncherDataReaderTest {
                 sessionStore.write(session)
             }
 
-            val launcherData = asyncLauncherData.await()
+            val launcherDataResult = asyncLauncherData.await()
 
             assertEquals(
-                expectedLauncherData,
-                launcherData,
+                expectedLauncherDataResult,
+                launcherDataResult,
             )
         }
 

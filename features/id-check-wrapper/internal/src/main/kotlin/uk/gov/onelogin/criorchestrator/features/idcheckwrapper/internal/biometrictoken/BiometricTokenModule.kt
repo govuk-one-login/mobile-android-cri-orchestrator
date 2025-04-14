@@ -16,7 +16,7 @@ class BiometricTokenModule {
         realBiometricApi: BiometricApiImpl,
         fakeBiometricApi: FakeBiometricTokenApi,
     ): BiometricApi =
-        if (configStore.readSingle(SdkConfigKey.BypassGetTokenAsyncBackend).value) {
+        if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
             fakeBiometricApi
         } else {
             realBiometricApi

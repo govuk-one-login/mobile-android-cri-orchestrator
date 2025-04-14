@@ -13,7 +13,7 @@ sealed interface BiometricTokenResult {
 
     data class Error(
         val message: String,
+        val error: Exception,
         val statusCode: Int? = null,
-        val error: Exception? = null,
     ) : BiometricTokenResult
 }

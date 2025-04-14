@@ -1,6 +1,5 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.network
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.BeforeEach
@@ -9,26 +8,22 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricApi
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenProvider
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenProviderImpl
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
 import javax.inject.Provider
 
 const val SESSION_ID = "session_id"
 const val DOCUMENT_TYPE = "document_type"
 
-class BiometricTokenProviderImplTest {
-    private lateinit var biometricTokenProvider: BiometricTokenProvider
+class BiometricTokenReaderImplTest {
+    private lateinit var biometricTokenReader: BiometricTokenReader
     private val biometricApi = mock<BiometricApi>()
     private val logger = mock<Logger>()
     private val json = Json { ignoreUnknownKeys = true }
 
     @BeforeEach
     fun setup() {
-        biometricTokenProvider =
-            BiometricTokenProviderImpl(
+        biometricTokenReader =
+            BiometricTokenReaderImpl(
                 biometricApi = Provider { biometricApi },
                 logger,
             )
@@ -46,7 +41,8 @@ class BiometricTokenProviderImplTest {
                 ApiResponse.Loading,
             )
 
-            val result = biometricTokenProvider.getBiometricToken(SESSION_ID, DOCUMENT_TYPE).first()
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+
             assert(result is BiometricTokenResult.Loading)
         }
 
@@ -62,7 +58,7 @@ class BiometricTokenProviderImplTest {
                 ApiResponse.Offline,
             )
 
-            val result = biometricTokenProvider.getBiometricToken(SESSION_ID, DOCUMENT_TYPE).first()
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
 
             assert(result is BiometricTokenResult.Offline)
         }
@@ -77,7 +73,7 @@ class BiometricTokenProviderImplTest {
                 ),
             ).thenReturn(ApiResponse.Failure(status = 400, error = Exception("error")))
 
-            val result = biometricTokenProvider.getBiometricToken(SESSION_ID, DOCUMENT_TYPE).first()
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
             val error = result as BiometricTokenResult.Error
 
             assert(result == error)
@@ -102,7 +98,7 @@ class BiometricTokenProviderImplTest {
                 ),
             ).thenReturn(ApiResponse.Success(encoded))
 
-            val result = biometricTokenProvider.getBiometricToken(SESSION_ID, DOCUMENT_TYPE).first()
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
 
             assert(result is BiometricTokenResult.Success)
         }
@@ -116,7 +112,7 @@ class BiometricTokenProviderImplTest {
                     DOCUMENT_TYPE,
                 ),
             ).thenReturn(ApiResponse.Success("invalid json"))
-            val result = biometricTokenProvider.getBiometricToken(SESSION_ID, DOCUMENT_TYPE).first()
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
             assert(result is BiometricTokenResult.Error)
         }
 }
