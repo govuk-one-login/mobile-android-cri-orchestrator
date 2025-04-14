@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
+import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -17,11 +18,15 @@ object SyncIdCheckViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(launcherDataReader: LauncherDataReader): ViewModelProvider.Factory =
+    fun provideFactory(
+        launcherDataReader: LauncherDataReader,
+        logger: Logger,
+    ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 SyncIdCheckViewModel(
                     launcherDataReader = launcherDataReader,
+                    logger = logger,
                 )
             }
         }

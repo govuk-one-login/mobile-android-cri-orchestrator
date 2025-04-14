@@ -13,6 +13,8 @@ import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createDesktopAppDesktopInstance
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createMobileAppMobileInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -31,11 +33,11 @@ class LauncherDataReaderTest {
         private val documentVariety = DocumentVariety.NFC_PASSPORT
         private val expectedLauncherData =
             LauncherData(
-                sessionId = session.sessionId,
-                journeyType = JourneyType.DESKTOP_APP_DESKTOP,
+                session = session,
                 biometricToken = biometricToken,
                 documentType = DocumentType.NFC_PASSPORT,
             )
+
         private val sessionStore =
             FakeSessionStore(
                 session = session,
@@ -78,15 +80,13 @@ class LauncherDataReaderTest {
         }
 
     @Test
-    fun `given redirect URI is present, read gets the launcher data`() =
+    fun `given mobile-app-mobile journey, read gets the launcher data`() =
         runTest {
             val launcherDataReader =
                 createLauncherDataReader(
                     sessionStore =
                         FakeSessionStore(
-                            session.copy(
-                                redirectUri = "https://example.com",
-                            ),
+                            Session.createMobileAppMobileInstance(),
                         ),
                 )
             val launcherData =
@@ -94,10 +94,28 @@ class LauncherDataReaderTest {
                     documentVariety = documentVariety,
                 )
             assertEquals(
-                expectedLauncherData.copy(
-                    journeyType = JourneyType.MOBILE_APP_MOBILE,
-                ),
-                launcherData,
+                JourneyType.MOBILE_APP_MOBILE,
+                launcherData.journeyType,
+            )
+        }
+
+    @Test
+    fun `given desktop-app-desktop journey, read gets the launcher data`() =
+        runTest {
+            val launcherDataReader =
+                createLauncherDataReader(
+                    sessionStore =
+                        FakeSessionStore(
+                            Session.createDesktopAppDesktopInstance(),
+                        ),
+                )
+            val launcherData =
+                launcherDataReader.read(
+                    documentVariety = documentVariety,
+                )
+            assertEquals(
+                JourneyType.DESKTOP_APP_DESKTOP,
+                launcherData.journeyType,
             )
         }
 
