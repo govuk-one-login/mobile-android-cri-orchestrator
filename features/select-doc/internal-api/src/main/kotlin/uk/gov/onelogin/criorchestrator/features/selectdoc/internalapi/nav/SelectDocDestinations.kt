@@ -30,7 +30,4 @@ sealed interface SelectDocDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object ConfirmNoNonChippedID : SelectDocDestinations
-
-    @Serializable
-    data object ConfirmAbort : SelectDocDestinations
 }

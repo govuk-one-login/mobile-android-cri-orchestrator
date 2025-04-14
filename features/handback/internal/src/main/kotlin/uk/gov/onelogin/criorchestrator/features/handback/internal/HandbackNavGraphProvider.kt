@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.ConfirmAbort
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -36,6 +37,10 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.ReturnToDesktopWeb> {
                 Text("Return to GOV.UK to finish proving your identity | DCMAW-11596")
+            }
+
+            composable<HandbackDestinations.ConfirmAbort> {
+                ConfirmAbort()
             }
         }
     }

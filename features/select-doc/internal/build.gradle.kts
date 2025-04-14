@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(projects.features.config.publicApi)
     implementation(projects.features.config.internalApi)
+    implementation(projects.features.handback.internalApi)
     implementation(projects.features.resume.internalApi)
     implementation(projects.features.resume.publicApi)
     implementation(projects.features.selectDoc.internalApi)
