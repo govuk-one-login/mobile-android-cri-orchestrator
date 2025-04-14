@@ -27,7 +27,7 @@ object CriOrchestratorSdkExt {
         CriOrchestratorSingletonImpl(
             authenticatedHttpClient = authenticatedHttpClient,
             analyticsLogger = analyticsLogger,
-            initialConfig = initialConfig,
+            userConfig = initialConfig,
             logger = logger,
             applicationContext = applicationContext,
         )

@@ -21,7 +21,7 @@ data class Config(
 
     companion object;
 
-    private val keys: List<ConfigKey<Value>> by lazy { entries.map { it.key } }
+    val keys: List<ConfigKey<Value>> by lazy { entries.map { it.key } }
 
     fun combinedWith(config: Config): Config =
         Config(

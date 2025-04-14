@@ -6,13 +6,14 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.sdk.internal.config.fromUserConfig
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonComponent
 
 /**
  * @param authenticatedHttpClient The HTTP client to make all network calls.
  * @param analyticsLogger The analytics logger that will receive events from the SDK.
- * @param initialConfig The configuration to initialise the SDK.
+ * @param userConfig The configuration to initialise the SDK.
  *   Configuration may be updated through the developer menu.
  * @param logger The logger that logs events to the system and to Crashlytics.
  * @param applicationContext The host application
@@ -22,7 +23,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonCom
 class CriOrchestratorSingletonImpl(
     authenticatedHttpClient: GenericHttpClient,
     analyticsLogger: AnalyticsLogger,
-    initialConfig: Config,
+    userConfig: Config,
     logger: Logger,
     applicationContext: Context,
     testDispatcher: CoroutineDispatcher? = null,
@@ -31,7 +32,7 @@ class CriOrchestratorSingletonImpl(
         DaggerMergedBaseCriOrchestratorSingletonComponent.factory().create(
             authenticatedHttpClient = authenticatedHttpClient,
             analyticsLogger = analyticsLogger,
-            initialConfig = initialConfig,
+            initialConfig = Config.fromUserConfig(userConfig),
             logger = logger,
             applicationContext = applicationContext,
             testDispatcher = testDispatcher,

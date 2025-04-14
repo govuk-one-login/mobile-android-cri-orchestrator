@@ -30,7 +30,7 @@ fun CriOrchestratorSdk.Companion.createTestInstance(
     CriOrchestratorSingletonImpl(
         authenticatedHttpClient = authenticatedHttpClient,
         analyticsLogger = analyticsLogger,
-        initialConfig = initialConfig,
+        userConfig = initialConfig,
         logger = logger,
         applicationContext = applicationContext,
         testDispatcher = testDispatcher,
