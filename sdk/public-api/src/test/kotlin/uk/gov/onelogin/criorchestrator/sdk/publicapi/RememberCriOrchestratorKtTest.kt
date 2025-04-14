@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
 import app.cash.turbine.test
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertInstanceOf
@@ -16,16 +17,27 @@ import uk.gov.android.network.client.StubHttpClient
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 
 class RememberCriOrchestratorKtTest {
+    private val initialConfig =
+        Config(
+            entries =
+                persistentListOf(
+                    Config.Entry<Config.Value.StringValue>(
+                        key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                        value = Config.Value.StringValue("baseurl"),
+                    ),
+                ),
+        )
     private val criOrchestratorSdk =
         CriOrchestratorSdk.create(
             authenticatedHttpClient = StubHttpClient(apiResponse = ApiResponse.Offline),
             analyticsLogger = mock<AnalyticsLogger>(),
-            initialConfig = Config(),
+            initialConfig = initialConfig,
             logger = SystemLogger(),
             applicationContext = mock(),
         )
