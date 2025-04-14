@@ -11,11 +11,6 @@ class FakeBiometricTokenApi
             sessionId: String,
             documentType: String,
         ): ApiResponse {
-            Log.d(
-                "FakeBiometricTokenApi",
-                "getBiometricToken called with sessionId: $sessionId and documentType: $documentType",
-            )
-
             return ApiResponse.Success<String>(
                 """
                 {
