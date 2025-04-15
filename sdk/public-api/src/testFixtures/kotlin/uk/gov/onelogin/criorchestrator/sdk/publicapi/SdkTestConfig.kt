@@ -10,13 +10,16 @@ import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKe
  *
  * All stubs are enabled.
  */
-fun Config.Companion.createTestInstance(isNfcAvailable: Boolean = true): Config =
+fun Config.Companion.createTestInstance(
+    isNfcAvailable: Boolean = true,
+    bypassIdCheckAsyncBackend: Boolean = true,
+): Config =
     Config(
         entries =
             persistentListOf(
                 Config.Entry<Config.Value.BooleanValue>(
                     key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(true),
+                    value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
                 ),
                 Config.Entry<Config.Value.StringValue>(
                     key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
