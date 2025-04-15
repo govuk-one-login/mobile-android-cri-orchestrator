@@ -16,9 +16,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmNoChippedIDScreenTest {
@@ -57,6 +57,6 @@ class ConfirmNoChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(SelectDocDestinations.ConfirmAbort)
+        verify(navController).navigate(HandbackDestinations.ConfirmAbort)
     }
 }

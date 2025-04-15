@@ -7,7 +7,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.abort.ConfirmAbort
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpViewModelModule
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
@@ -110,10 +109,6 @@ class SelectDocNavGraphProvider
 
             composable<SelectDocDestinations.ConfirmNoNonChippedID> {
                 ConfirmNoNonChippedID()
-            }
-
-            composable<SelectDocDestinations.ConfirmAbort> {
-                ConfirmAbort()
             }
         }
     }
