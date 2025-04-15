@@ -14,6 +14,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -230,6 +231,16 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
             exitStateOptions = persistentListOf("None", "Happy Path"),
             selectedExitState = 0,
             onExitStateSelected = {},
+            onLaunchRequest = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSyncIdCheckAutomaticLauncherContent() {
+    GdsTheme {
+        SyncIdCheckAutomaticLauncherContent(
             onLaunchRequest = {},
         )
     }
