@@ -1,9 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,7 +16,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -25,6 +32,7 @@ import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.theme.largePadding
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
@@ -32,6 +40,7 @@ import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
@@ -103,7 +112,8 @@ internal fun SyncIdCheckScreen(
         when (state) {
             is SyncIdCheckState.Display -> {
                 if (state.manualLauncher != null) {
-                    SyncIdCheckScreenManualLauncherContent(
+                    SyncIdCheckScreenContent(
+                        showDebugData = true,
                         modifier = modifier,
                         launcherData = state.launcherData,
                         selectedExitState = state.manualLauncher.selectedExitState,
@@ -116,8 +126,42 @@ internal fun SyncIdCheckScreen(
                 }
             }
 
-            SyncIdCheckState.Loading -> Text(text = "Loading")
+            SyncIdCheckState.Loading ->
+                SyncIdCheckScreenContent(
+                    showDebugData = false,
+                    modifier = modifier,
+                    launcherData = null,
+                    selectedExitState = 0,
+                    exitStateOptions = persistentListOf(),
+                    onLaunchRequest = {},
+                    onExitStateSelected = {},
+                )
         }
+    }
+}
+
+@Composable
+@Suppress("LongParameterList")
+private fun SyncIdCheckScreenContent(
+    showDebugData: Boolean,
+    launcherData: LauncherData?,
+    selectedExitState: Int,
+    exitStateOptions: ImmutableList<String>,
+    onExitStateSelected: (Int) -> Unit,
+    onLaunchRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (showDebugData) {
+        SyncIdCheckScreenManualLauncherContent(
+            launcherData = launcherData,
+            selectedExitState = selectedExitState,
+            exitStateOptions = exitStateOptions,
+            onExitStateSelected = onExitStateSelected,
+            onLaunchRequest = onLaunchRequest,
+            modifier = modifier,
+        )
+    } else {
+        Loading()
     }
 }
 
@@ -125,7 +169,7 @@ internal fun SyncIdCheckScreen(
 @OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongParameterList")
 private fun SyncIdCheckScreenManualLauncherContent(
-    launcherData: LauncherData,
+    launcherData: LauncherData?,
     selectedExitState: Int,
     exitStateOptions: ImmutableList<String>,
     onExitStateSelected: (Int) -> Unit,
@@ -145,14 +189,16 @@ private fun SyncIdCheckScreenManualLauncherContent(
         },
         body = { horizontalPadding ->
             item {
-                DebugData(
-                    documentType = launcherData.documentType,
-                    journeyType = launcherData.journeyType,
-                    sessionId = launcherData.sessionId,
-                    accessToken = launcherData.biometricToken.accessToken,
-                    opaqueId = launcherData.biometricToken.opaqueId,
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
-                )
+                launcherData?.let {
+                    DebugData(
+                        documentType = it.documentType,
+                        journeyType = it.journeyType,
+                        sessionId = it.sessionId,
+                        accessToken = it.biometricToken.accessToken,
+                        opaqueId = it.biometricToken.opaqueId,
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                    )
+                }
             }
             item {
                 GdsSelection(
@@ -176,6 +222,22 @@ private fun SyncIdCheckScreenManualLauncherContent(
             )
         },
     )
+}
+
+@Composable
+private fun Loading(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        CircularProgressIndicator()
+        Text(
+            text = stringResource(R.string.loading),
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(top = largePadding),
+        )
+    }
 }
 
 @Composable
@@ -207,11 +269,30 @@ private fun DebugData(
     )
 }
 
+internal data class PreviewParams(
+    val showDebugData: Boolean,
+)
+
+private class SyncIdCheckScreenPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
+    override val values =
+        sequenceOf(
+            PreviewParams(
+                showDebugData = true,
+            ),
+            PreviewParams(
+                showDebugData = false,
+            ),
+        )
+}
+
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewSyncIdCheckManualLauncherContent() {
+internal fun PreviewSyncIdCheckContent(
+    @PreviewParameter(SyncIdCheckScreenPreviewParameterProvider::class)
+    params: PreviewParams,
+) {
     GdsTheme {
-        SyncIdCheckScreenManualLauncherContent(
+        SyncIdCheckScreenContent(
             launcherData =
                 LauncherData(
                     documentType = DocumentType.NFC_PASSPORT,
@@ -230,6 +311,7 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
             selectedExitState = 0,
             onExitStateSelected = {},
             onLaunchRequest = {},
+            showDebugData = params.showDebugData,
         )
     }
 }
