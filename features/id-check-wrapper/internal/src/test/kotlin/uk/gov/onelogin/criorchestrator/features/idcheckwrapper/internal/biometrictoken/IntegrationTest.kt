@@ -54,7 +54,7 @@ class IntegrationTest {
                 BiometricTokenResult.Success(
                     BiometricToken(
                         accessToken = "string",
-                        opaqueId = "string",
+                        opaqueId = "6ec96ea7-941c-4967-9fcf-94fc9b717a22",
                     ),
                 )
 

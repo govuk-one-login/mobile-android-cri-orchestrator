@@ -40,7 +40,7 @@ class BiometricApiImplTest {
         runTest {
             val expected =
                 ApiResponse.Success<String>(
-                    "{\"accessToken\":\"string\",\"opaqueId\":\"string\"}",
+                    "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
                 )
 
             val result = biometricApiImpl.getBiometricToken("sessionId", "documentType")
