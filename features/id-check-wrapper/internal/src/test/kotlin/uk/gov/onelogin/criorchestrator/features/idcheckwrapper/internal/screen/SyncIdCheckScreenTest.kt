@@ -11,8 +11,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
-import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createMobileAppMobileInstance
@@ -30,26 +32,32 @@ class SyncIdCheckScreenTest {
 
     private val navController: NavController = mock()
 
-    private fun createViewModel(session: Session = Session.createMobileAppMobileInstance()) =
-        SyncIdCheckViewModel(
+    private var session: Session = Session.createMobileAppMobileInstance()
+    private var enableManualLauncher = false
+
+    private val viewModel by lazy {
+        SyncIdCheckViewModel.createTestInstance(
             launcherDataReader =
                 LauncherDataReader(
                     FakeSessionStore(
                         session = session,
                     ),
                 ),
-            logger = SystemLogger(),
+            configStore =
+                FakeConfigStore(
+                    initialConfig =
+                        Config.createTestInstance(
+                            enableManualLauncher = enableManualLauncher,
+                        ),
+                ),
         )
+    }
 
     @Test
     fun `given manual laucher and MAM session, when happy path launched, it navigates to mobile handback`() {
-        val viewModel =
-            createViewModel(
-                session = Session.createMobileAppMobileInstance(),
-            )
-        composeTestRule.setScreenContent(
-            viewModel = viewModel,
-        )
+        enableManualLauncher = true
+        session = Session.createMobileAppMobileInstance()
+        composeTestRule.setScreenContent()
         composeTestRule
             .onNode(happyPathOption, useUnmergedTree = true)
             .performClick()
@@ -67,13 +75,9 @@ class SyncIdCheckScreenTest {
 
     @Test
     fun `given manual laucher and DAD session, when happy path launched, it navigates to desktop handback`() {
-        val viewModel =
-            createViewModel(
-                session = Session.createDesktopAppDesktopInstance(),
-            )
-        composeTestRule.setScreenContent(
-            viewModel = viewModel,
-        )
+        enableManualLauncher = true
+        session = Session.createDesktopAppDesktopInstance()
+        composeTestRule.setScreenContent()
         composeTestRule
             .onNode(happyPathOption, useUnmergedTree = true)
             .performClick()
@@ -89,7 +93,7 @@ class SyncIdCheckScreenTest {
         )
     }
 
-    private fun ComposeContentTestRule.setScreenContent(viewModel: SyncIdCheckViewModel = createViewModel()) =
+    private fun ComposeContentTestRule.setScreenContent() =
         setContent {
             SyncIdCheckScreen(
                 documentVariety = DocumentVariety.NFC_PASSPORT,

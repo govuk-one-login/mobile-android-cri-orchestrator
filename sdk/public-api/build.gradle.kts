@@ -18,6 +18,7 @@ configure<PublishingExtension> {
 dependencies {
     api(projects.features.config.publicApi)
     api(projects.features.dev.publicApi)
+    api(projects.features.idCheckWrapper.publicApi)
     api(projects.features.resume.publicApi)
     api(projects.sdk.sharedApi)
 

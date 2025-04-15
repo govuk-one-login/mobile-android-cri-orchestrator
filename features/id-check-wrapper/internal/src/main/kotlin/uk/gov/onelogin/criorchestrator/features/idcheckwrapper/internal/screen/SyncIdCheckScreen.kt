@@ -37,6 +37,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEffect
 
 /**
  * This screen handles launching of the ID Check SDK journey of the desired journey/document type,
@@ -103,7 +104,9 @@ internal fun SyncIdCheckScreen(
                         onExitStateSelected = viewModel::onStubExitStateSelected,
                     )
                 } else {
-                    // This screen does not have any content
+                    SyncIdCheckAutomaticLauncherContent(
+                        onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
+                    )
                 }
             }
 
@@ -167,6 +170,13 @@ private fun SyncIdCheckScreenManualLauncherContent(
             )
         },
     )
+}
+
+@Composable
+private fun SyncIdCheckAutomaticLauncherContent(onLaunchRequest: () -> Unit) {
+    OneTimeLaunchedEffect {
+        onLaunchRequest()
+    }
 }
 
 @Composable
