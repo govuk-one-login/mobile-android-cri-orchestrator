@@ -7,6 +7,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -21,12 +22,14 @@ object SyncIdCheckViewModelModule {
     fun provideFactory(
         launcherDataReader: LauncherDataReader,
         logger: Logger,
+        analytics: SyncIdCheckAnalytics,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 SyncIdCheckViewModel(
                     launcherDataReader = launcherDataReader,
                     logger = logger,
+                    analytics = analytics,
                 )
             }
         }

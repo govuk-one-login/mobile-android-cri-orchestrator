@@ -8,10 +8,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.verify
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
@@ -32,6 +37,7 @@ import java.util.stream.Stream
 class SyncIdCheckViewModelTest {
     private val documentVariety = DocumentVariety.NFC_PASSPORT
     private val biometricToken = BiometricToken.createTestToken()
+    private val analytics = mock<SyncIdCheckAnalytics>()
 
     private fun viewModel(
         biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken),
@@ -49,6 +55,7 @@ class SyncIdCheckViewModelTest {
                         biometricTokenResult = biometricTokenResult,
                     ),
             ),
+        analytics = analytics,
     )
 
     private val logger = SystemLogger()
@@ -91,6 +98,18 @@ class SyncIdCheckViewModelTest {
                     Session.createMobileAppMobileInstance(),
                     SyncIdCheckAction.NavigateToReturnToMobileWeb,
                 ),
+            )
+    }
+
+    @Test
+    fun `when screen is started, it sends analytics`() {
+        val viewModel = viewModel()
+        viewModel.onScreenStart(documentVariety = documentVariety)
+
+        verify(analytics)
+            .trackScreen(
+                id = SyncIdCheckScreenId.SyncIdCheckScreen,
+                title = R.string.loading,
             )
     }
 

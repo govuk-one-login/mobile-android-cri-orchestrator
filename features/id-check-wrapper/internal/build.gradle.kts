@@ -29,6 +29,7 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.idcheck.ui.presentation)
     testFixturesImplementation(projects.features.session.internalApi)
     testFixturesImplementation(testFixtures(projects.features.session.internalApi))
+    implementation(projects.libraries.analytics)
 
     testImplementation(testFixtures(projects.features.config.internalApi))
     testImplementation(testFixtures(projects.features.session.internalApi))
@@ -37,6 +38,7 @@ dependencies {
     testImplementation(libs.uk.gov.idcheck.ui.presentation)
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(testFixtures(projects.libraries.analytics))
 }
 
 mavenPublishingConfig {

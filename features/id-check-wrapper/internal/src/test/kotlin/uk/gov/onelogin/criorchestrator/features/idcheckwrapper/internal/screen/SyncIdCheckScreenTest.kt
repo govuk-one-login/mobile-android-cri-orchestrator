@@ -56,6 +56,7 @@ class SyncIdCheckScreenTest {
                         ),
                 ),
             logger = SystemLogger(),
+            analytics = mock(),
         )
 
     @Test

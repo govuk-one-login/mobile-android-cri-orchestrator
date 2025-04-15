@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReaderResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
@@ -20,6 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.Docum
 class SyncIdCheckViewModel(
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
+    val analytics: SyncIdCheckAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
@@ -28,6 +32,11 @@ class SyncIdCheckViewModel(
     val actions = _actions.asSharedFlow()
 
     fun onScreenStart(documentVariety: DocumentVariety) {
+        analytics.trackScreen(
+            SyncIdCheckScreenId.SyncIdCheckScreen,
+            R.string.loading,
+        )
+
         viewModelScope.launch {
             loadManualLauncher(documentVariety)
         }
