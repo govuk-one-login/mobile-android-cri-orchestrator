@@ -34,7 +34,14 @@ class LauncherDataReader
             val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety.name)
             return when (result) {
                 is BiometricTokenResult.Error -> {
-                    LauncherDataReaderResult.UnRecoverableError(result.error)
+                    LauncherDataReaderResult.UnRecoverableError(
+                        statusCode = result.statusCode,
+                        error =
+                            DataReaderError(
+                                message = "Failed to get biometric token",
+                                cause = result.error,
+                            ),
+                    )
                 }
 
                 // The network library is currently not returning this status
@@ -45,7 +52,14 @@ class LauncherDataReader
 
                 // The network library is currently not returning this status
                 BiometricTokenResult.Offline -> {
-                    LauncherDataReaderResult.RecoverableError(Exception("Device is offline"))
+                    LauncherDataReaderResult.RecoverableError(
+                        statusCode = null,
+                        error =
+                            DataReaderError(
+                                message = "Device is offline",
+                                cause = null,
+                            ),
+                    )
                 }
 
                 is BiometricTokenResult.Success -> {
@@ -67,10 +81,17 @@ sealed interface LauncherDataReaderResult {
     ) : LauncherDataReaderResult
 
     data class RecoverableError(
-        val exception: Exception,
+        val error: DataReaderError,
+        val statusCode: Int?,
     ) : LauncherDataReaderResult
 
     data class UnRecoverableError(
-        val exception: Exception,
+        val error: DataReaderError,
+        val statusCode: Int?,
     ) : LauncherDataReaderResult
 }
+
+data class DataReaderError(
+    val message: String,
+    val cause: Exception?,
+)
