@@ -31,10 +31,8 @@ class ConfirmNoNonChippedIDScreenTest {
     private val analytics: SelectDocAnalytics = mock()
 
     private val viewModel =
-        spy(
-            ConfirmNoNonChippedIDViewModel(
-                analytics = analytics,
-            ),
+        ConfirmNoNonChippedIDViewModel(
+            analytics = analytics,
         )
 
     @Before
