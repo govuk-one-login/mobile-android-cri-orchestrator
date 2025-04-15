@@ -16,6 +16,9 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createDesktopAppDesktopInstance
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.journeyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -31,12 +34,12 @@ class LauncherDataReaderTest {
         private val expectedLauncherDataResult =
             LauncherDataReaderResult.Success(
                 LauncherData(
-                    sessionId = session.sessionId,
-                    journeyType = JourneyType.DESKTOP_APP_DESKTOP,
+                    session = session,
                     biometricToken = biometricToken,
                     documentType = DocumentType.NFC_PASSPORT,
                 ),
             )
+
         private val sessionStore =
             FakeSessionStore(
                 session = session,
@@ -89,30 +92,43 @@ class LauncherDataReaderTest {
         }
 
     @Test
-    fun `given redirect URI is present, read gets the launcher data`() =
+    fun `given mobile-app-mobile journey, read gets the launcher data`() =
         runTest {
             val launcherDataReader =
                 createLauncherDataReader(
                     sessionStore =
                         FakeSessionStore(
-                            session.copy(
-                                redirectUri = "https://example.com",
-                            ),
+                            Session.createMobileAppMobileInstance(),
                         ),
                 )
             val launcherDataResult =
                 launcherDataReader.read(
                     documentVariety = documentVariety,
                 )
-            assertEquals(
-                expectedLauncherDataResult.copy(
-                    launcherData =
-                        expectedLauncherDataResult.launcherData.copy(
-                            journeyType = JourneyType.MOBILE_APP_MOBILE,
+
+            val journeyType =
+                (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
+            assertEquals(JourneyType.MOBILE_APP_MOBILE, journeyType)
+        }
+
+    @Test
+    fun `given desktop-app-desktop journey, read gets the launcher data`() =
+        runTest {
+            val launcherDataReader =
+                createLauncherDataReader(
+                    sessionStore =
+                        FakeSessionStore(
+                            Session.createDesktopAppDesktopInstance(),
                         ),
-                ),
-                launcherDataResult,
-            )
+                )
+            val launcherDataResult =
+                launcherDataReader.read(
+                    documentVariety = documentVariety,
+                )
+
+            val journeyType =
+                (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
+            assertEquals(JourneyType.DESKTOP_APP_DESKTOP, journeyType)
         }
 
     @Test

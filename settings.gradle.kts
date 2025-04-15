@@ -26,6 +26,11 @@ dependencyResolutionManagement {
         maven("https://raw.githubusercontent.com/iProov/android/master/maven/")
         maven("https://jitpack.io")
     }
+    versionCatalogs {
+        create("testwrapperlibs") {
+            from(files("./gradle/testwrapperlibs.versions.toml"))
+        }
+    }
 }
 
 fun setupGithubCredentials(): MavenArtifactRepository.() -> Unit =

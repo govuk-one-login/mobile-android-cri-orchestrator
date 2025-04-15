@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal
 
+import androidx.compose.material3.Text
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -27,6 +28,14 @@ class HandbackNavGraphProvider
                     navController = navController,
                     viewModel = viewModel(factory = viewModelFactory),
                 )
+            }
+
+            composable<HandbackDestinations.ReturnToMobileWeb> {
+                Text("Return to GOV.UK to finish proving your identity | DCMAW-11595")
+            }
+
+            composable<HandbackDestinations.ReturnToDesktopWeb> {
+                Text("Return to GOV.UK to finish proving your identity | DCMAW-11596")
             }
         }
     }

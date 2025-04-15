@@ -16,7 +16,6 @@ configure<PublishingExtension> {
 
 dependencies {
     // This module should depend on every other module that contributes to the dagger dependency graph
-    implementation(libs.firebase.crashlytics)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
@@ -29,6 +28,8 @@ dependencies {
     implementation(projects.features.error.internal)
     implementation(projects.features.error.internalApi)
     implementation(projects.features.idCheckWrapper.internal)
+    implementation(projects.features.handback.internal)
+    implementation(projects.features.handback.internalApi)
     implementation(projects.features.resume.internal)
     implementation(projects.features.resume.internalApi)
     implementation(projects.features.resume.publicApi)
