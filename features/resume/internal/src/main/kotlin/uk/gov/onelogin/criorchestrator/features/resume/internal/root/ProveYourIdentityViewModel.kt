@@ -30,7 +30,7 @@ class ProveYourIdentityViewModel(
     private val _state =
         MutableStateFlow<ProveYourIdentityRootUiState>(
             ProveYourIdentityRootUiState(
-                shouldDisplay = savedShouldDisplay ?: true,
+                shouldDisplay = savedShouldDisplay ?: false,
             ),
         )
     val state: StateFlow<ProveYourIdentityRootUiState> = _state
