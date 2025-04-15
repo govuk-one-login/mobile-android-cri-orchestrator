@@ -21,6 +21,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteS
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
+import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
@@ -34,7 +35,7 @@ class RemoteSessionReaderTest {
         remoteSessionReader =
             RemoteSessionReader(
                 sessionStore = InMemorySessionStore(logger),
-                sessionApi = sessionApi,
+                sessionApi = Provider { sessionApi },
                 logger = logger,
             )
     }
