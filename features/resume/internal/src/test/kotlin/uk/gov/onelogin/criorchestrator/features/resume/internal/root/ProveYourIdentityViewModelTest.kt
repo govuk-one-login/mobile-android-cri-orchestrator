@@ -16,6 +16,8 @@ import uk.gov.logging.api.v3dot1.model.AnalyticsEvent
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubSessionReader
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
@@ -24,8 +26,10 @@ class ProveYourIdentityViewModelTest {
     private val analyticsLogger = mock<AnalyticsLogger>()
     private val resourceProvider = FakeResourceProvider()
     private var savedStateHandle = SavedStateHandle(emptyMap())
+    private var sessionReader: SessionReader = StubSessionReader()
     private val viewModel by lazy {
         ProveYourIdentityViewModel.createTestInstance(
+            sessionReader = sessionReader,
             analytics =
                 ResumeAnalytics(
                     resourceProvider = resourceProvider,
@@ -43,16 +47,49 @@ class ProveYourIdentityViewModelTest {
     }
 
     @Test
-    fun `initial state`() =
+    fun `given no saved state and active session, initial state is created`() =
         runTest {
+            sessionReader = StubSessionReader(isActiveSession = true)
+            savedStateHandle =
+                SavedStateHandle(emptyMap())
+            val expected = INITIAL_STATE.copy(shouldDisplay = true)
             viewModel.state.test {
-                assertEquals(INITIAL_STATE, awaitItem())
+                assertEquals(expected, awaitItem())
             }
         }
 
     @Test
-    fun `given saved state, initial state is restored`() =
+    fun `given no saved state and no session, initial state is created`() =
         runTest {
+            sessionReader = StubSessionReader(isActiveSession = false)
+            savedStateHandle =
+                SavedStateHandle(emptyMap())
+            val expected = INITIAL_STATE.copy(shouldDisplay = false)
+            viewModel.state.test {
+                assertEquals(expected, awaitItem())
+            }
+        }
+
+    @Test
+    fun `given saved state and no session, initial state is restored`() =
+        runTest {
+            sessionReader = StubSessionReader(isActiveSession = false)
+            savedStateHandle =
+                SavedStateHandle(
+                    mapOf(
+                        ProveYourIdentityViewModel.SHOULD_DISPLAY_KEY to true,
+                    ),
+                )
+            val expected = INITIAL_STATE.copy(shouldDisplay = true)
+            viewModel.state.test {
+                assertEquals(expected, awaitItem())
+            }
+        }
+
+    @Test
+    fun `given saved state and active session, initial state is restored`() =
+        runTest {
+            sessionReader = StubSessionReader(isActiveSession = true)
             savedStateHandle =
                 SavedStateHandle(
                     mapOf(
