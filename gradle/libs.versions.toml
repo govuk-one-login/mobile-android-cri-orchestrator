@@ -14,9 +14,6 @@ composable-preview-scanner = "0.5.1"
 compose-lint-checks = "1.4.2"
 dagger = "2.56.1"
 espressoCore = "3.6.1"
-firebase-bom = "33.12.0" # https://firebase.google.com/support/release-notes/android
-firebase-crashlytics-gradle = "3.0.3" # https://firebase.google.com/support/release-notes/android
-google-services = "4.4.2" # https://developers.google.com/android/guides/releases
 imposter = "4.6.2" # https://github.com/imposter-project/imposter-jvm-engine/releases/tag/v4.6.2
 junit = "5.12.1"
 junit4 = "4.13.2"
@@ -73,10 +70,6 @@ com-slack-lint-compose = { module = "com.slack.lint.compose:compose-lint-checks"
 composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composable-preview-scanner" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testparameterinjector" }
 imposter-config-parser = { group = "io.gatehill.imposter", name = "config-dynamic", version.ref = "imposter" }
 imposter-main = { group = "io.gatehill.imposter", name = "distro-embedded", version.ref = "imposter" }
@@ -114,8 +107,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 anvil = { id = "dev.zacsweers.anvil", version.ref = "anvil" }
 app-cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

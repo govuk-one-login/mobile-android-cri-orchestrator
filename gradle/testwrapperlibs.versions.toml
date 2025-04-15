@@ -1,0 +1,16 @@
+# Dependencies in this version catalog are used in the test wrapper app but shouldn't
+# find their way into production CRI Orchestrator SDK builds.
+
+[versions]
+firebase-bom = "33.12.0" # https://firebase.google.com/support/release-notes/android
+firebase-crashlytics-gradle = "3.0.3" # https://firebase.google.com/support/release-notes/android
+google-services = "4.4.2" # https://developers.google.com/android/guides/releases
+
+[libraries]
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+
+[plugins]
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }

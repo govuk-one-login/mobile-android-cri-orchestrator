@@ -4,8 +4,8 @@ import uk.gov.onelogin.criorchestrator.extensions.setApplicationId
 
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-app-config")
-    alias(libs.plugins.firebase.crashlytics)
-    alias(libs.plugins.google.services)
+    alias(testwrapperlibs.plugins.firebase.crashlytics)
+    alias(testwrapperlibs.plugins.google.services)
     alias(libs.plugins.kotlin.serialization) apply true
 }
 
@@ -22,14 +22,14 @@ configure<ApplicationExtension> {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
+    implementation(testwrapperlibs.firebase.analytics)
+    implementation(testwrapperlibs.firebase.crashlytics)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.logging.testdouble)
     implementation(libs.uk.gov.networking)
-    implementation(platform(libs.firebase.bom))
+    implementation(platform(testwrapperlibs.firebase.bom))
     implementation(projects.features.config.publicApi)
     implementation(projects.features.dev.publicApi)
     implementation(projects.sdk.publicApi)
