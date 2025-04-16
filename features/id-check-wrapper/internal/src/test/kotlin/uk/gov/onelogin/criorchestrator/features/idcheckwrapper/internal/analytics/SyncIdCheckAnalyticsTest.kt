@@ -61,7 +61,7 @@ class SyncIdCheckAnalyticsTest {
         verify(analyticsLogger).logEventV3Dot1(
             ViewEvent.Screen(
                 id = SyncIdCheckScreenId.SyncIdCheckScreen.rawId,
-                name = "Loading",
+                name = context.getString(title),
                 params =
                     RequiredParameters(
                         taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
