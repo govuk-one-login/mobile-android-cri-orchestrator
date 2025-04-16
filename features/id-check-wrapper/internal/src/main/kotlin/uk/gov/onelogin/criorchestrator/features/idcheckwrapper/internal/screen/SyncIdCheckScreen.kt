@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
@@ -34,6 +34,7 @@ import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -89,6 +90,13 @@ internal fun SyncIdCheckScreen(
                     navController.navigate(
                         HandbackDestinations.ReturnToDesktopWeb,
                     )
+
+                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
+                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
+                ->
+                    navController.navigate(
+                        HandbackDestinations.ConfirmAbort,
+                    )
             }
         }
     }
@@ -102,7 +110,7 @@ internal fun SyncIdCheckScreen(
                         selectedExitState = state.manualLauncher.selectedExitState,
                         exitStateOptions = state.manualLauncher.exitStateOptions,
                         onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
-                        onExitStateSelected = viewModel::onStubExitStateSelected,
+                        onExitStateSelected = { viewModel.onStubExitStateSelected(it) },
                     )
                 } else {
                     SyncIdCheckAutomaticLauncherContent(
@@ -228,7 +236,7 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
                             opaqueId = "test opaque ID",
                         ),
                 ),
-            exitStateOptions = persistentListOf("None", "Happy Path"),
+            exitStateOptions = ExitStateOption.entries.map { it.displayName }.toPersistentList(),
             selectedExitState = 0,
             onExitStateSelected = {},
             onLaunchRequest = {},
