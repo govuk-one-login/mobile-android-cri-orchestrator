@@ -54,7 +54,7 @@ class SyncIdCheckScreenTest {
     }
 
     @Test
-    fun `given manual laucher and MAM session, when happy path launched, it navigates to mobile handback`() {
+    fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
         enableManualLauncher = true
         session = Session.createMobileAppMobileInstance()
         composeTestRule.setScreenContent()
@@ -74,7 +74,7 @@ class SyncIdCheckScreenTest {
     }
 
     @Test
-    fun `given manual laucher and DAD session, when happy path launched, it navigates to desktop handback`() {
+    fun `given manual launcher and DAD session, when happy path launched, it navigates to desktop handback`() {
         enableManualLauncher = true
         session = Session.createDesktopAppDesktopInstance()
         composeTestRule.setScreenContent()

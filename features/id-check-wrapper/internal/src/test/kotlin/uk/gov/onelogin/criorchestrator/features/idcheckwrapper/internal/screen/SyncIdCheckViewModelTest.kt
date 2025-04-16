@@ -35,7 +35,7 @@ class SyncIdCheckViewModelTest {
     private val documentVariety = DocumentVariety.NFC_PASSPORT
     private var enableManualLauncher = false
     private var session = Session.createTestInstance()
-    val launcherData by lazy {
+    private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session,
         )
