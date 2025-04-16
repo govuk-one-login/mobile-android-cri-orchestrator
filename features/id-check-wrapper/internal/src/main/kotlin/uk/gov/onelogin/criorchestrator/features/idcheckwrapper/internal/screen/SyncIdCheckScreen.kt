@@ -19,8 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -112,8 +110,7 @@ internal fun SyncIdCheckScreen(
         when (state) {
             is SyncIdCheckState.Display -> {
                 if (state.manualLauncher != null) {
-                    SyncIdCheckScreenContent(
-                        showDebugData = true,
+                    SyncIdCheckScreenManualLauncherContent(
                         modifier = modifier,
                         launcherData = state.launcherData,
                         selectedExitState = state.manualLauncher.selectedExitState,
@@ -127,41 +124,8 @@ internal fun SyncIdCheckScreen(
             }
 
             SyncIdCheckState.Loading ->
-                SyncIdCheckScreenContent(
-                    showDebugData = false,
-                    modifier = modifier,
-                    launcherData = null,
-                    selectedExitState = 0,
-                    exitStateOptions = persistentListOf(),
-                    onLaunchRequest = {},
-                    onExitStateSelected = {},
-                )
+                Loading()
         }
-    }
-}
-
-@Composable
-@Suppress("LongParameterList")
-private fun SyncIdCheckScreenContent(
-    showDebugData: Boolean,
-    launcherData: LauncherData?,
-    selectedExitState: Int,
-    exitStateOptions: ImmutableList<String>,
-    onExitStateSelected: (Int) -> Unit,
-    onLaunchRequest: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    if (showDebugData) {
-        SyncIdCheckScreenManualLauncherContent(
-            launcherData = launcherData,
-            selectedExitState = selectedExitState,
-            exitStateOptions = exitStateOptions,
-            onExitStateSelected = onExitStateSelected,
-            onLaunchRequest = onLaunchRequest,
-            modifier = modifier,
-        )
-    } else {
-        Loading()
     }
 }
 
@@ -169,7 +133,7 @@ private fun SyncIdCheckScreenContent(
 @OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongParameterList")
 private fun SyncIdCheckScreenManualLauncherContent(
-    launcherData: LauncherData?,
+    launcherData: LauncherData,
     selectedExitState: Int,
     exitStateOptions: ImmutableList<String>,
     onExitStateSelected: (Int) -> Unit,
@@ -269,30 +233,11 @@ private fun DebugData(
     )
 }
 
-internal data class PreviewParams(
-    val showDebugData: Boolean,
-)
-
-private class SyncIdCheckScreenPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
-    override val values =
-        sequenceOf(
-            PreviewParams(
-                showDebugData = true,
-            ),
-            PreviewParams(
-                showDebugData = false,
-            ),
-        )
-}
-
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewSyncIdCheckContent(
-    @PreviewParameter(SyncIdCheckScreenPreviewParameterProvider::class)
-    params: PreviewParams,
-) {
+internal fun PreviewSyncIdCheckContent() {
     GdsTheme {
-        SyncIdCheckScreenContent(
+        SyncIdCheckScreenManualLauncherContent(
             launcherData =
                 LauncherData(
                     documentType = DocumentType.NFC_PASSPORT,
@@ -311,7 +256,14 @@ internal fun PreviewSyncIdCheckContent(
             selectedExitState = 0,
             onExitStateSelected = {},
             onLaunchRequest = {},
-            showDebugData = params.showDebugData,
         )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewLoading() {
+    GdsTheme {
+        Loading()
     }
 }
