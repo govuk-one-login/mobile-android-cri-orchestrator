@@ -9,7 +9,8 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * LaunchedEffect that only runs once and isn't re-run when recomposed.
+ * LaunchedEffect that only runs once.
+ * It isn't re-run when recomposed or restored from saved state.
  *
  * The coroutine will be cancelled when the [OneTimeLaunchedEffect] leaves
  * the composition.
