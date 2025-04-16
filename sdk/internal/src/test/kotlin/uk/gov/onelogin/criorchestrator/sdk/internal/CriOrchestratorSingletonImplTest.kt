@@ -50,6 +50,10 @@ class CriOrchestratorSingletonImplTest {
                                 key = SdkConfigKey.BypassIdCheckAsyncBackend,
                                 Config.Value.BooleanValue(false),
                             ),
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                                Config.Value.BooleanValue(false),
+                            ),
                             Config.Entry<Config.Value.StringValue>(
                                 key = NfcConfigKey.NfcAvailability,
                                 Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),

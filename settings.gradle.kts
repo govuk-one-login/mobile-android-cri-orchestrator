@@ -71,6 +71,7 @@ include(
     ":features:handback:internal-api",
     ":features:id-check-wrapper:internal",
     ":features:id-check-wrapper:internal-api",
+    ":features:id-check-wrapper:public-api",
     ":features:resume:internal",
     ":features:resume:internal-api",
     ":features:resume:public-api",

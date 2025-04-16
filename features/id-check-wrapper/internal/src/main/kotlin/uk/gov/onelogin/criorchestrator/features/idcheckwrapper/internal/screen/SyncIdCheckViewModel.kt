@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
@@ -17,6 +18,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 class SyncIdCheckViewModel(
+    private val configStore: ConfigStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
 ) : ViewModel() {
@@ -26,14 +28,22 @@ class SyncIdCheckViewModel(
     private val _actions = MutableSharedFlow<SyncIdCheckAction>()
     val actions = _actions.asSharedFlow()
 
+    companion object;
+
     fun onScreenStart(documentVariety: DocumentVariety) {
         viewModelScope.launch {
-            loadManualLauncher(documentVariety)
+            loadLauncher(
+                documentVariety = documentVariety,
+                enableManualLauncher = configStore.readSingle(IdCheckWrapperConfigKey.EnableManualLauncher).value,
+            )
         }
     }
 
     fun onStubExitStateSelected(selectedExitState: Int) {
         val curState = requireDisplayState()
+        require(curState.manualLauncher != null) {
+            "Can't select a stub exit state unless the manual launcher is enabled"
+        }
         _state.value =
             curState.copy(
                 activityResultContractParameters =
@@ -41,7 +51,7 @@ class SyncIdCheckViewModel(
                         stubExitState = ExitStateOption.entries[selectedExitState],
                     ),
                 manualLauncher =
-                    curState.manualLauncher?.copy(
+                    curState.manualLauncher.copy(
                         selectedExitState = selectedExitState,
                     ),
             )
@@ -77,16 +87,24 @@ class SyncIdCheckViewModel(
             }
         }
 
-    private suspend fun loadManualLauncher(documentVariety: DocumentVariety) {
+    private suspend fun loadLauncher(
+        documentVariety: DocumentVariety,
+        enableManualLauncher: Boolean,
+    ) {
         val launcherData = launcherDataReader.read(documentVariety)
+        val manualLauncher =
+            if (enableManualLauncher) {
+                ManualLauncher(
+                    selectedExitState = 0,
+                    exitStateOptions = ExitStateOption.displayNames,
+                )
+            } else {
+                null
+            }
         _state.value =
             SyncIdCheckState.Display(
                 launcherData = launcherData,
-                manualLauncher =
-                    ManualLauncher(
-                        selectedExitState = 0,
-                        exitStateOptions = ExitStateOption.displayNames,
-                    ),
+                manualLauncher = manualLauncher,
                 activityResultContractParameters =
                     IdCheckSdkActivityResultContractParameters(
                         stubExitState = ExitStateOption.None,
