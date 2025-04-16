@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
 
     alias(testwrapperlibs.plugins.firebase.crashlytics) apply false
+    alias(testwrapperlibs.plugins.hilt.gradle) apply false
     alias(testwrapperlibs.plugins.google.services) apply false
 
     id("uk.gov.pipelines.android-root-config")
