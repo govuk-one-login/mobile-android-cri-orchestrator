@@ -7,4 +7,6 @@ plugins {
 dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.ui.tooling.preview)
+
+    testImplementation(libs.androidx.navigation.compose)
 }
