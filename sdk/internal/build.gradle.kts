@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
+    implementation(libs.uk.gov.ui.theme)
     implementation(projects.features.config.internal)
     implementation(projects.features.config.internalApi)
     implementation(projects.features.config.publicApi)
