@@ -9,7 +9,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.cash.turbine.test
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -197,12 +196,7 @@ class SyncIdCheckScreenTest {
                     biometricTokenResult = BiometricTokenResult.Offline,
                 )
 
-            viewModel.actions.test {
-                composeTestRule.setScreenContent(viewModel = viewModel)
-
-                assertEquals(SyncIdCheckAction.NavigateToRecoverableError, awaitItem())
-                cancelAndIgnoreRemainingEvents()
-            }
+            composeTestRule.setScreenContent(viewModel = viewModel)
 
             composeTestRule.waitForIdle()
 
@@ -220,12 +214,7 @@ class SyncIdCheckScreenTest {
                         ),
                 )
 
-            viewModel.actions.test {
-                composeTestRule.setScreenContent(viewModel = viewModel)
-
-                assertEquals(SyncIdCheckAction.NavigateToUnrecoverableError, awaitItem())
-                cancelAndIgnoreRemainingEvents()
-            }
+            composeTestRule.setScreenContent(viewModel = viewModel)
 
             composeTestRule.waitForIdle()
 

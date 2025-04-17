@@ -30,7 +30,7 @@ class RemoteBiometricTokenReaderTest {
     }
 
     @Test
-    fun `emits loading when api response is loading`() =
+    fun `emits error when api response is loading`() =
         runTest {
             whenever(
                 biometricApi.getBiometricToken(
