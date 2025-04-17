@@ -14,8 +14,8 @@ import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckScreenId
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
@@ -41,7 +41,7 @@ class SyncIdCheckScreenAnalyticsTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     private val analytics =
-        SyncIdCheckAnalytics(
+        IdCheckWrapperAnalytics(
             resourceProvider =
                 AndroidResourceProvider(
                     context = context,
@@ -54,9 +54,9 @@ class SyncIdCheckScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = SyncIdCheckScreenId.SyncIdCheckScreen.rawId,
+                    id = IdCheckWrapperScreenId.SyncIdCheckScreen.rawId,
                     name = context.getString(R.string.loading),
-                    params = SyncIdCheckAnalytics.requiredParameters,
+                    params = IdCheckWrapperAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
         composeTestRule.setSyncIdCheckScreenContent()

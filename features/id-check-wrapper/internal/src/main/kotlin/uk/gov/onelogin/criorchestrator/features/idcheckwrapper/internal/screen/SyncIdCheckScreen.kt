@@ -61,9 +61,6 @@ internal fun SyncIdCheckScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
-    LaunchedEffect(Unit) {
-        viewModel.onScreenStart(documentVariety)
-    }
     val activityResultContract by remember {
         derivedStateOf {
             state.let { state ->
@@ -100,7 +97,7 @@ internal fun SyncIdCheckScreen(
                     navController.navigate(ErrorDestinations.RecoverableError)
                 }
 
-                SyncIdCheckAction.NavigateToUnRecoverableError -> {
+                SyncIdCheckAction.NavigateToUnrecoverableError -> {
                     navController.navigate(HandbackDestinations.UnrecoverableError)
                 }
             }
@@ -126,6 +123,9 @@ internal fun SyncIdCheckScreen(
             SyncIdCheckState.Loading ->
                 Loading()
         }
+    }
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart(documentVariety)
     }
 }
 

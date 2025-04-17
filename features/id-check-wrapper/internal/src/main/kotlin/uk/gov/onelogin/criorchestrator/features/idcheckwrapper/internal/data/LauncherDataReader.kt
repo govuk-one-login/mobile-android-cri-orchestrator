@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data
 
-import android.util.Log
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -21,7 +20,7 @@ class LauncherDataReader
         private val biometricTokenReader: BiometricTokenReader,
     ) {
         @OptIn(FlowPreview::class)
-        suspend fun read(documentVariety: DocumentVariety): LauncherDataReaderResult? {
+        suspend fun read(documentVariety: DocumentVariety): LauncherDataReaderResult {
             val session =
                 sessionStore
                     .read()
@@ -34,7 +33,7 @@ class LauncherDataReader
             val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety.name)
             return when (result) {
                 is BiometricTokenResult.Error -> {
-                    LauncherDataReaderResult.UnRecoverableError(
+                    LauncherDataReaderResult.UnrecoverableError(
                         statusCode = result.statusCode,
                         error =
                             DataReaderError(
@@ -42,12 +41,6 @@ class LauncherDataReader
                                 cause = result.error,
                             ),
                     )
-                }
-
-                // The network library is currently not returning this status
-                BiometricTokenResult.Loading -> {
-                    Log.d("LauncherDataReader", "Loading")
-                    null
                 }
 
                 // The network library is currently not returning this status
@@ -85,7 +78,7 @@ sealed interface LauncherDataReaderResult {
         val statusCode: Int?,
     ) : LauncherDataReaderResult
 
-    data class UnRecoverableError(
+    data class UnrecoverableError(
         val error: DataReaderError,
         val statusCode: Int?,
     ) : LauncherDataReaderResult

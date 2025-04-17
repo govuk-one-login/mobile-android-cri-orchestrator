@@ -42,7 +42,6 @@ class RemoteBiometricTokenReader
                         response.error,
                     )
                     BiometricTokenResult.Error(
-                        message = response.error.message ?: "Failed to get biometric token",
                         statusCode = response.status,
                         error = response.error,
                     )
@@ -66,13 +65,15 @@ class RemoteBiometricTokenReader
                     } catch (e: IllegalArgumentException) {
                         logger.error(tag, "Failed to parse biometric token", e)
                         BiometricTokenResult.Error(
-                            message = "Failed to parse biometric token",
                             error = e,
                         )
                     }
                 }
 
-                ApiResponse.Loading -> BiometricTokenResult.Loading
+                ApiResponse.Loading ->
+                    BiometricTokenResult.Error(
+                        error = IllegalStateException("Loading state should not be returned"),
+                    )
             }
         }
     }

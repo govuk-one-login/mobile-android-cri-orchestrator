@@ -23,6 +23,7 @@ dependencies {
     implementation(projects.libraries.navigation)
     implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.logging.api)
+    implementation(projects.libraries.analytics)
 
     testFixturesImplementation(projects.features.session.internalApi)
     testFixturesImplementation(libs.uk.gov.idcheck.repositories.api)
@@ -30,7 +31,6 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.idcheck.ui.presentation)
     testFixturesImplementation(projects.features.session.internalApi)
     testFixturesImplementation(testFixtures(projects.features.session.internalApi))
-    implementation(projects.libraries.analytics)
 
     testImplementation(testFixtures(projects.features.config.internalApi))
     testImplementation(testFixtures(projects.features.session.internalApi))

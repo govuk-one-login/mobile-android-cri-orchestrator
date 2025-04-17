@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import javax.inject.Inject
 
-class SyncIdCheckAnalytics
+class IdCheckWrapperAnalytics
     @Inject
     constructor(
         resourceProvider: ResourceProvider,

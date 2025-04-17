@@ -15,8 +15,8 @@ import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckScreenId
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
@@ -37,7 +37,7 @@ import java.util.stream.Stream
 class SyncIdCheckViewModelTest {
     private val documentVariety = DocumentVariety.NFC_PASSPORT
     private val biometricToken = BiometricToken.createTestToken()
-    private val analytics = mock<SyncIdCheckAnalytics>()
+    private val analytics = mock<IdCheckWrapperAnalytics>()
 
     private fun viewModel(
         biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken),
@@ -108,7 +108,7 @@ class SyncIdCheckViewModelTest {
 
         verify(analytics)
             .trackScreen(
-                id = SyncIdCheckScreenId.SyncIdCheckScreen,
+                id = IdCheckWrapperScreenId.SyncIdCheckScreen,
                 title = R.string.loading,
             )
     }
@@ -225,7 +225,6 @@ class SyncIdCheckViewModelTest {
                 viewModel(
                     biometricTokenResult =
                         BiometricTokenResult.Error(
-                            "Error",
                             Exception("Error"),
                         ),
                 )
@@ -233,7 +232,7 @@ class SyncIdCheckViewModelTest {
             viewModel.actions.test {
                 viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(SyncIdCheckAction.NavigateToUnRecoverableError, awaitItem())
+                assertEquals(SyncIdCheckAction.NavigateToUnrecoverableError, awaitItem())
             }
         }
 

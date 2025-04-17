@@ -11,8 +11,8 @@ import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckAnalytics
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.SyncIdCheckScreenId
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReaderResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
@@ -23,7 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.Docum
 class SyncIdCheckViewModel(
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
-    val analytics: SyncIdCheckAnalytics,
+    val analytics: IdCheckWrapperAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
@@ -33,7 +33,7 @@ class SyncIdCheckViewModel(
 
     fun onScreenStart(documentVariety: DocumentVariety) {
         analytics.trackScreen(
-            SyncIdCheckScreenId.SyncIdCheckScreen,
+            IdCheckWrapperScreenId.SyncIdCheckScreen,
             R.string.loading,
         )
 
@@ -97,11 +97,10 @@ class SyncIdCheckViewModel(
                     SyncIdCheckAction.NavigateToRecoverableError,
                 )
 
-            null,
-            is LauncherDataReaderResult.UnRecoverableError,
+            is LauncherDataReaderResult.UnrecoverableError,
             ->
                 _actions.emit(
-                    SyncIdCheckAction.NavigateToUnRecoverableError,
+                    SyncIdCheckAction.NavigateToUnrecoverableError,
                 )
 
             is LauncherDataReaderResult.Success ->

@@ -42,7 +42,7 @@ class RemoteBiometricTokenReaderTest {
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
 
-            assert(result is BiometricTokenResult.Loading)
+            assert(result is BiometricTokenResult.Error)
         }
 
     @Test

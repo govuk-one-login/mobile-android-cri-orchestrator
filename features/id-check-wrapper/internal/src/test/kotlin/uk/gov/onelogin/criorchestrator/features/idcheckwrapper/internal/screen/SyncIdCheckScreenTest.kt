@@ -5,18 +5,18 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import app.cash.turbine.test
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
@@ -30,6 +30,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.cr
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class SyncIdCheckScreenTest {
@@ -41,23 +42,28 @@ class SyncIdCheckScreenTest {
 
     private val navController: NavController = mock()
 
-    private fun createViewModel(session: Session = Session.createMobileAppMobileInstance()) =
-        SyncIdCheckViewModel(
-            launcherDataReader =
-                LauncherDataReader(
-                    FakeSessionStore(
-                        session = session,
-                    ),
-                    biometricTokenReader =
-                        StubBiometricTokenReader(
-                            BiometricTokenResult.Success(
-                                BiometricToken.createTestToken(),
-                            ),
-                        ),
+    private fun createViewModel(
+        session: Session = Session.createMobileAppMobileInstance(),
+        biometricTokenResult: BiometricTokenResult =
+            BiometricTokenResult.Success(
+                BiometricToken.createTestToken(),
+            ),
+        readerDelay: Long = 0,
+    ) = SyncIdCheckViewModel(
+        launcherDataReader =
+            LauncherDataReader(
+                FakeSessionStore(
+                    session = session,
                 ),
-            logger = SystemLogger(),
-            analytics = mock(),
-        )
+                biometricTokenReader =
+                    StubBiometricTokenReader(
+                        biometricTokenResult = biometricTokenResult,
+                        delay = readerDelay,
+                    ),
+            ),
+        logger = SystemLogger(),
+        analytics = mock(),
+    )
 
     @Test
     fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
@@ -107,62 +113,65 @@ class SyncIdCheckScreenTest {
         )
     }
 
-    // AC2: Loading state
     @Test
-    fun `when loading state is receive, loading progress indicator is displayed`() {
-        val actionsFlow = MutableSharedFlow<SyncIdCheckAction>()
-        val viewModel =
-            mock<SyncIdCheckViewModel>().apply {
-                whenever(actions).thenReturn(actionsFlow.asSharedFlow())
-                whenever(state).thenReturn(MutableStateFlow(SyncIdCheckState.Loading))
-            }
+    fun `when loading state is receive, loading progress indicator is displayed`() =
+        runTest {
+            val viewModel =
+                createViewModel(
+                    readerDelay = 1000,
+                )
 
-        composeTestRule.setScreenContent(
-            viewModel = viewModel,
-        )
+            val loadingState = viewModel.state.first()
+            assertEquals(SyncIdCheckState.Loading, loadingState)
 
-        composeTestRule
-            .onNode(hasText("Loading"))
-            .assertIsDisplayed()
-    }
+            composeTestRule.setScreenContent(viewModel = viewModel)
 
-    // AC4: User receives recoverable error on call
+            composeTestRule.waitForIdle()
+
+            composeTestRule
+                .onNode(hasText("Loading"))
+                .assertIsDisplayed()
+        }
+
     @Test
     fun `when data launcher returns recoverable error, navigate to recoverable error screen`() =
         runTest {
-            val actionsFlow = MutableSharedFlow<SyncIdCheckAction>()
             val viewModel =
-                mock<SyncIdCheckViewModel>().apply {
-                    whenever(actions).thenReturn(actionsFlow.asSharedFlow())
-                    whenever(state).thenReturn(MutableStateFlow(SyncIdCheckState.Loading))
-                }
+                createViewModel(
+                    biometricTokenResult = BiometricTokenResult.Offline,
+                )
 
-            composeTestRule.setScreenContent(
-                viewModel = viewModel,
-            )
+            viewModel.actions.test {
+                composeTestRule.setScreenContent(viewModel = viewModel)
 
-            actionsFlow.emit(SyncIdCheckAction.NavigateToRecoverableError)
+                assertEquals(SyncIdCheckAction.NavigateToRecoverableError, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+
             composeTestRule.waitForIdle()
 
             verify(navController).navigate(ErrorDestinations.RecoverableError)
         }
 
-    // AC3: User receives unrecoverable error on call
     @Test
     fun `when data launcher returns unrecoverable error, navigate to unrecoverable error screen`() =
         runTest {
-            val actionsFlow = MutableSharedFlow<SyncIdCheckAction>()
             val viewModel =
-                mock<SyncIdCheckViewModel>().apply {
-                    whenever(actions).thenReturn(actionsFlow.asSharedFlow())
-                    whenever(state).thenReturn(MutableStateFlow(SyncIdCheckState.Loading))
-                }
+                createViewModel(
+                    biometricTokenResult =
+                        BiometricTokenResult.Error(
+                            Exception("error"),
+                            400,
+                        ),
+                )
 
-            composeTestRule.setScreenContent(
-                viewModel = viewModel,
-            )
+            viewModel.actions.test {
+                composeTestRule.setScreenContent(viewModel = viewModel)
 
-            actionsFlow.emit(SyncIdCheckAction.NavigateToUnRecoverableError)
+                assertEquals(SyncIdCheckAction.NavigateToUnrecoverableError, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+
             composeTestRule.waitForIdle()
 
             verify(navController).navigate(HandbackDestinations.UnrecoverableError)

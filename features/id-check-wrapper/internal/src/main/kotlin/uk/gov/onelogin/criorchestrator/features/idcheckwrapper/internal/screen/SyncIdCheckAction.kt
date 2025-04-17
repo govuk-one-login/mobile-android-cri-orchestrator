@@ -15,5 +15,5 @@ sealed interface SyncIdCheckAction {
 
     data object NavigateToRecoverableError : SyncIdCheckAction
 
-    data object NavigateToUnRecoverableError : SyncIdCheckAction
+    data object NavigateToUnrecoverableError : SyncIdCheckAction
 }
