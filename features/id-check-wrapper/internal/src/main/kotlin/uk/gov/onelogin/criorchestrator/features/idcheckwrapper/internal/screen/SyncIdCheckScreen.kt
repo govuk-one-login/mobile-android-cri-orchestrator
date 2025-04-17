@@ -278,7 +278,7 @@ internal fun PreviewSyncIdCheckAutomaticLauncherContent() {
     }
 }
 
-@PreviewLightDark
+@LightDarkBothLocalesPreview
 @Composable
 internal fun PreviewLoading() {
     GdsTheme {
