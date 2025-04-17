@@ -1,13 +1,7 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
-}
-
-android {
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
-    }
+    id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
 }
 
 dependencies {
