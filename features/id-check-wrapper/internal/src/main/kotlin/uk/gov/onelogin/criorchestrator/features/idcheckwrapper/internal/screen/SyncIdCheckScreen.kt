@@ -48,8 +48,6 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEff
 /**
  * This screen handles launching of the ID Check SDK journey of the desired journey/document type,
  * and handling of the SDK exit states once the ID Check SDK journey has been completed.
- *
- * This screen will (DCMAW-11498) display a loading spinner while launching the ID Check SDK.
  */
 @OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongMethod")
