@@ -1,12 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -31,7 +27,7 @@ import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
-import uk.gov.android.ui.theme.largePadding
+import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
@@ -55,6 +51,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEff
  *
  * This screen will (DCMAW-11498) display a loading spinner while launching the ID Check SDK.
  */
+@OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongMethod")
 @Composable
 internal fun SyncIdCheckScreen(
@@ -199,20 +196,13 @@ private fun SyncIdCheckScreenManualLauncherContent(
     )
 }
 
+@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 private fun Loading(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        CircularProgressIndicator()
-        Text(
-            text = stringResource(R.string.loading),
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(top = largePadding),
-        )
-    }
+    LoadingScreen(
+        text = stringResource(R.string.loading),
+        modifier = modifier,
+    )
 }
 
 @Composable
@@ -285,5 +275,13 @@ internal fun PreviewSyncIdCheckAutomaticLauncherContent() {
         SyncIdCheckAutomaticLauncherContent(
             onLaunchRequest = {},
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewLoading() {
+    GdsTheme {
+        Loading()
     }
 }

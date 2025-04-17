@@ -12,19 +12,19 @@ import javax.inject.Inject
 
 @ContributesBinding(CriOrchestratorScope::class, boundType = BiometricApi::class)
 class ConfigurableBiometricApi
-@Inject constructor(
-    private val configStore: ConfigStore,
-    private val realBiometricApi: BiometricApiImpl,
-    private val fakeBiometricApi: FakeBiometricTokenApi,
-) : BiometricApi {
-    override suspend fun getBiometricToken(
-        sessionId: String,
-        documentType: String
-    ): ApiResponse {
-        return if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
-            fakeBiometricApi.getBiometricToken(sessionId, documentType)
-        } else {
-            realBiometricApi.getBiometricToken(sessionId, documentType)
-        }
+    @Inject
+    constructor(
+        private val configStore: ConfigStore,
+        private val realBiometricApi: BiometricApiImpl,
+        private val fakeBiometricApi: FakeBiometricTokenApi,
+    ) : BiometricApi {
+        override suspend fun getBiometricToken(
+            sessionId: String,
+            documentType: String,
+        ): ApiResponse =
+            if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
+                fakeBiometricApi.getBiometricToken(sessionId, documentType)
+            } else {
+                realBiometricApi.getBiometricToken(sessionId, documentType)
+            }
     }
-}

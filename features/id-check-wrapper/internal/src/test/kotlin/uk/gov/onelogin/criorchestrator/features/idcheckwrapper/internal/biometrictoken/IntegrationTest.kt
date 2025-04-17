@@ -28,15 +28,16 @@ class IntegrationTest {
         configStore.write(
             Config.Entry(
                 key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                value = Config.Value.BooleanValue(false)
-            )
+                value = Config.Value.BooleanValue(false),
+            ),
         )
 
-        val biometricApi = ConfigurableBiometricApi(
-            configStore = configStore,
-            realBiometricApi = BiometricApiImpl(createTestHttpClient(), configStore),
-            fakeBiometricApi = FakeBiometricTokenApi()
-        )
+        val biometricApi =
+            ConfigurableBiometricApi(
+                configStore = configStore,
+                realBiometricApi = BiometricApiImpl(createTestHttpClient(), configStore),
+                fakeBiometricApi = FakeBiometricTokenApi(),
+            )
 
         biometricTokenReader =
             RemoteBiometricTokenReader(
