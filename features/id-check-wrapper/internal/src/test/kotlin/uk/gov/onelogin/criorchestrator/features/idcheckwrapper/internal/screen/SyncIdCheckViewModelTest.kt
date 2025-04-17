@@ -93,19 +93,52 @@ class SyncIdCheckViewModelTest {
 
     companion object {
         @JvmStatic
-        fun provideSdkResultActionParams(): Stream<Arguments> =
-            Stream.of<Arguments>(
-                Arguments.of(
-                    IdCheckSdkExitState.HappyPath,
-                    Session.createDesktopAppDesktopInstance(),
-                    SyncIdCheckAction.NavigateToReturnToDesktopWeb,
-                ),
-                Arguments.of(
-                    IdCheckSdkExitState.HappyPath,
-                    Session.createMobileAppMobileInstance(),
-                    SyncIdCheckAction.NavigateToReturnToMobileWeb,
-                ),
-            )
+        fun provideSdkResultActionParams(): Stream<Arguments> {
+            val unhappyPaths =
+                ExitStateOption.entries
+                    .filter {
+                        it.exitState !is IdCheckSdkExitState.HappyPath
+                    }.mapNotNull {
+                        it.exitState
+                    }.stream()
+                    .flatMap { sdkResult ->
+                        listOf(
+                            Arguments.of(
+                                sdkResult,
+                                Session.createDesktopAppDesktopInstance(),
+                                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
+                            ),
+                            Arguments.of(
+                                sdkResult,
+                                Session.createMobileAppMobileInstance(),
+                                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
+                            ),
+                        ).stream()
+                    }
+            val happyPaths =
+                ExitStateOption.entries
+                    .filter {
+                        it.exitState is IdCheckSdkExitState.HappyPath
+                    }.mapNotNull {
+                        it.exitState
+                    }.stream()
+                    .flatMap { sdkResult ->
+                        listOf(
+                            Arguments.of(
+                                sdkResult,
+                                Session.createDesktopAppDesktopInstance(),
+                                SyncIdCheckAction.NavigateToReturnToDesktopWeb,
+                            ),
+                            Arguments.of(
+                                sdkResult,
+                                Session.createMobileAppMobileInstance(),
+                                SyncIdCheckAction.NavigateToReturnToMobileWeb,
+                            ),
+                        ).stream()
+                    }
+
+            return Stream.concat(happyPaths, unhappyPaths)
+        }
     }
 
     @Test
@@ -223,14 +256,14 @@ class SyncIdCheckViewModelTest {
     @ParameterizedTest(name = "{index} sdk result {0} with session {1} results in {2}")
     @MethodSource("provideSdkResultActionParams")
     fun `when sdk result is received, it emits the navigation action`(
-        sdkResult: IdCheckSdkExitState,
+        stubExitState: IdCheckSdkExitState,
         session: Session,
         expectedNavigationAction: SyncIdCheckAction,
     ) = runTest {
         this@SyncIdCheckViewModelTest.session = session
         viewModel.actions.test {
             viewModel.onScreenStart(documentVariety = documentVariety)
-            viewModel.onIdCheckSdkResult(sdkResult)
+            viewModel.onIdCheckSdkResult(stubExitState)
 
             assertEquals(
                 expectedNavigationAction,

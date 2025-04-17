@@ -67,8 +67,9 @@ class SyncIdCheckViewModel(
             )
         }
 
-    fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) =
-        viewModelScope.launch {
+    fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        val journeyType = requireDisplayState().launcherData.sessionJourneyType
+        val action =
             when (exitState) {
                 is IdCheckSdkExitState.Nowhere,
                 is IdCheckSdkExitState.ConfirmAnotherWay,
@@ -76,16 +77,23 @@ class SyncIdCheckViewModel(
                 IdCheckSdkExitState.ConfirmationFailed,
                 is IdCheckSdkExitState.FaceScanLimitReached,
                 IdCheckSdkExitState.UnknownDocumentType,
-                -> exitStateNotHandled()
+                ->
+                    when (journeyType) {
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
+                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb
+                    }
+
                 IdCheckSdkExitState.HappyPath ->
-                    _actions.emit(
-                        when (requireDisplayState().launcherData.sessionJourneyType) {
-                            JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                            JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
-                        },
-                    )
+                    when (journeyType) {
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                    }
             }
+
+        viewModelScope.launch {
+            _actions.emit(action)
         }
+    }
 
     private suspend fun loadLauncher(
         documentVariety: DocumentVariety,
@@ -114,6 +122,4 @@ class SyncIdCheckViewModel(
     }
 
     private fun requireDisplayState() = _state.value as? SyncIdCheckState.Display ?: error("Expected display state")
-
-    private fun exitStateNotHandled(): Nothing = error("Not yet implemented (DCMAW-11490)")
 }

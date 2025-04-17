@@ -1,9 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
@@ -27,8 +28,9 @@ class SyncIdCheckScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val launchButton = hasText("Launch ID Check SDK")
-    private val happyPathOption = hasText("Happy path")
+    private val launchButton = "Launch ID Check SDK"
+    private val happyPathOption = "Happy path"
+    private val unhappyPathOption = "Confirm identity another way"
 
     private val navController: NavController = mock()
 
@@ -58,13 +60,9 @@ class SyncIdCheckScreenTest {
         enableManualLauncher = true
         session = Session.createMobileAppMobileInstance()
         composeTestRule.setScreenContent()
-        composeTestRule
-            .onNode(happyPathOption, useUnmergedTree = true)
-            .performClick()
 
-        composeTestRule
-            .onNode(launchButton)
-            .performClick()
+        composeTestRule.selectOption(happyPathOption)
+        composeTestRule.clickLaunchButton()
 
         composeTestRule.waitForIdle()
 
@@ -78,13 +76,9 @@ class SyncIdCheckScreenTest {
         enableManualLauncher = true
         session = Session.createDesktopAppDesktopInstance()
         composeTestRule.setScreenContent()
-        composeTestRule
-            .onNode(happyPathOption, useUnmergedTree = true)
-            .performClick()
 
-        composeTestRule
-            .onNode(launchButton)
-            .performClick()
+        composeTestRule.selectOption(happyPathOption)
+        composeTestRule.clickLaunchButton()
 
         composeTestRule.waitForIdle()
 
@@ -92,6 +86,48 @@ class SyncIdCheckScreenTest {
             HandbackDestinations.ReturnToDesktopWeb,
         )
     }
+
+    @Test
+    fun `manual launch with MAM session, when launch unhappy path, navigates to confirm abort MAM`() {
+        enableManualLauncher = true
+        session = Session.createMobileAppMobileInstance()
+        composeTestRule.setScreenContent()
+
+        composeTestRule.selectOption(unhappyPathOption)
+        composeTestRule.clickLaunchButton()
+
+        composeTestRule.waitForIdle()
+
+        verify(navController).navigate(
+            HandbackDestinations.ConfirmAbort,
+        )
+    }
+
+    @Test
+    @Suppress("")
+    fun `manual launch with DAD session, when launch unhappy path, navigates to confirm abort DAD`() {
+        enableManualLauncher = true
+        session = Session.createDesktopAppDesktopInstance()
+        composeTestRule.setScreenContent()
+
+        composeTestRule.selectOption(unhappyPathOption)
+        composeTestRule.clickLaunchButton()
+
+        composeTestRule.waitForIdle()
+
+        verify(navController).navigate(
+            HandbackDestinations.ConfirmAbort,
+        )
+    }
+
+    private fun ComposeContentTestRule.selectOption(text: String) =
+        onNodeWithText(text, useUnmergedTree = true)
+            .performScrollTo()
+            .performClick()
+
+    private fun ComposeContentTestRule.clickLaunchButton() =
+        onNodeWithText(launchButton)
+            .performClick()
 
     private fun ComposeContentTestRule.setScreenContent() =
         setContent {
