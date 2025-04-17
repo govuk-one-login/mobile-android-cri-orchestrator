@@ -6,6 +6,13 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+android {
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
 dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.uk.gov.idcheck.repositories.api)

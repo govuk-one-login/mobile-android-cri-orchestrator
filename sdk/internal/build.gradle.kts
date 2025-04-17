@@ -8,6 +8,13 @@ plugins {
     }
 }
 
+android {
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
 configure<PublishingExtension> {
     customisePublications {
         artifactId = "sdk-internal"
