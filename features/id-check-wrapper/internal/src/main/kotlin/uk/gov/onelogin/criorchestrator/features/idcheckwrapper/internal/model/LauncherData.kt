@@ -6,7 +6,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType as IdCheckJourneyType
 
 data class LauncherData(
-    private val session: Session,
+    val session: Session,
     val biometricToken: BiometricToken,
     val documentType: DocumentType,
 ) {

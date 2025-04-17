@@ -10,8 +10,12 @@ import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReaderResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
@@ -21,6 +25,7 @@ class SyncIdCheckViewModel(
     private val configStore: ConfigStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
+    val analytics: IdCheckWrapperAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
@@ -31,6 +36,11 @@ class SyncIdCheckViewModel(
     companion object;
 
     fun onScreenStart(documentVariety: DocumentVariety) {
+        analytics.trackScreen(
+            IdCheckWrapperScreenId.SyncIdCheckScreen,
+            R.string.loading,
+        )
+
         viewModelScope.launch {
             loadLauncher(
                 documentVariety = documentVariety,
@@ -99,7 +109,7 @@ class SyncIdCheckViewModel(
         documentVariety: DocumentVariety,
         enableManualLauncher: Boolean,
     ) {
-        val launcherData = launcherDataReader.read(documentVariety)
+        val launcherDataResult = launcherDataReader.read(documentVariety)
         val manualLauncher =
             if (enableManualLauncher) {
                 ManualLauncher(
@@ -109,16 +119,31 @@ class SyncIdCheckViewModel(
             } else {
                 null
             }
-        _state.value =
-            SyncIdCheckState.Display(
-                launcherData = launcherData,
-                manualLauncher = manualLauncher,
-                activityResultContractParameters =
-                    IdCheckSdkActivityResultContractParameters(
-                        stubExitState = ExitStateOption.None,
-                        logger = logger,
-                    ),
-            )
+
+        when (launcherDataResult) {
+            is LauncherDataReaderResult.RecoverableError ->
+                _actions.emit(
+                    SyncIdCheckAction.NavigateToRecoverableError,
+                )
+
+            is LauncherDataReaderResult.UnrecoverableError,
+            ->
+                _actions.emit(
+                    SyncIdCheckAction.NavigateToUnrecoverableError,
+                )
+
+            is LauncherDataReaderResult.Success ->
+                _state.value =
+                    SyncIdCheckState.Display(
+                        launcherData = launcherDataResult.launcherData,
+                        manualLauncher = manualLauncher,
+                        activityResultContractParameters =
+                            IdCheckSdkActivityResultContractParameters(
+                                stubExitState = ExitStateOption.None,
+                                logger = logger,
+                            ),
+                    )
+        }
     }
 
     private fun requireDisplayState() = _state.value as? SyncIdCheckState.Display ?: error("Expected display state")

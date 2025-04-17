@@ -14,6 +14,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
@@ -26,12 +27,15 @@ import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
@@ -44,9 +48,8 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEff
 /**
  * This screen handles launching of the ID Check SDK journey of the desired journey/document type,
  * and handling of the SDK exit states once the ID Check SDK journey has been completed.
- *
- * This screen will (DCMAW-11498) display a loading spinner while launching the ID Check SDK.
  */
+@OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongMethod")
 @Composable
 internal fun SyncIdCheckScreen(
@@ -56,9 +59,6 @@ internal fun SyncIdCheckScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
-    LaunchedEffect(Unit) {
-        viewModel.onScreenStart(documentVariety)
-    }
     val activityResultContract by remember {
         derivedStateOf {
             state.let { state ->
@@ -74,6 +74,7 @@ internal fun SyncIdCheckScreen(
             contract = activityResultContract,
             onResult = { viewModel.onIdCheckSdkResult(it) },
         )
+
     LaunchedEffect(Unit) {
         viewModel.actions.collect { action ->
             when (action) {
@@ -97,6 +98,14 @@ internal fun SyncIdCheckScreen(
                     navController.navigate(
                         HandbackDestinations.ConfirmAbort,
                     )
+
+                SyncIdCheckAction.NavigateToRecoverableError -> {
+                    navController.navigate(ErrorDestinations.RecoverableError)
+                }
+
+                SyncIdCheckAction.NavigateToUnrecoverableError -> {
+                    navController.navigate(HandbackDestinations.UnrecoverableError)
+                }
             }
         }
     }
@@ -119,8 +128,12 @@ internal fun SyncIdCheckScreen(
                 }
             }
 
-            SyncIdCheckState.Loading -> Text(text = "Loading")
+            SyncIdCheckState.Loading -> Loading()
         }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart(documentVariety)
     }
 }
 
@@ -178,6 +191,15 @@ private fun SyncIdCheckScreenManualLauncherContent(
                 modifier = Modifier.fillMaxWidth(),
             )
         },
+    )
+}
+
+@OptIn(UnstableDesignSystemAPI::class)
+@Composable
+private fun Loading(modifier: Modifier = Modifier) {
+    LoadingScreen(
+        text = stringResource(R.string.loading),
+        modifier = modifier,
     )
 }
 
@@ -251,5 +273,13 @@ internal fun PreviewSyncIdCheckAutomaticLauncherContent() {
         SyncIdCheckAutomaticLauncherContent(
             onLaunchRequest = {},
         )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewLoading() {
+    GdsTheme {
+        Loading()
     }
 }

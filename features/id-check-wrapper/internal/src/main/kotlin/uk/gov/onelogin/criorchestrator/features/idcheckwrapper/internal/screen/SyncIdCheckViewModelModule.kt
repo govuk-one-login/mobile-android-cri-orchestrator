@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -23,6 +24,7 @@ object SyncIdCheckViewModelModule {
         configStore: ConfigStore,
         launcherDataReader: LauncherDataReader,
         logger: Logger,
+        analytics: IdCheckWrapperAnalytics,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
@@ -30,6 +32,7 @@ object SyncIdCheckViewModelModule {
                     configStore = configStore,
                     launcherDataReader = launcherDataReader,
                     logger = logger,
+                    analytics = analytics,
                 )
             }
         }

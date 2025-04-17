@@ -4,7 +4,8 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.timeout
-import uk.gov.idcheck.repositories.api.vendor.BiometricToken
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
@@ -16,9 +17,10 @@ class LauncherDataReader
     @Inject
     constructor(
         private val sessionStore: SessionStore,
+        private val biometricTokenReader: BiometricTokenReader,
     ) {
         @OptIn(FlowPreview::class)
-        suspend fun read(documentVariety: DocumentVariety): LauncherData {
+        suspend fun read(documentVariety: DocumentVariety): LauncherDataReaderResult {
             val session =
                 sessionStore
                     .read()
@@ -28,16 +30,61 @@ class LauncherDataReader
                     .timeout(10.seconds)
                     .first()
 
-            val biometricToken =
-                BiometricToken(
-                    accessToken = "TODO",
-                    opaqueId = "TODO",
-                )
+            val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety.name)
+            return when (result) {
+                is BiometricTokenResult.Error -> {
+                    LauncherDataReaderResult.UnrecoverableError(
+                        statusCode = result.statusCode,
+                        error =
+                            DataReaderError(
+                                message = "Failed to get biometric token",
+                                cause = result.error,
+                            ),
+                    )
+                }
 
-            return LauncherData(
-                session = session,
-                biometricToken = biometricToken,
-                documentType = documentVariety.toDocumentType(),
-            )
+                // The network library is currently not returning this status
+                BiometricTokenResult.Offline -> {
+                    LauncherDataReaderResult.RecoverableError(
+                        statusCode = null,
+                        error =
+                            DataReaderError(
+                                message = "Device is offline",
+                                cause = null,
+                            ),
+                    )
+                }
+
+                is BiometricTokenResult.Success -> {
+                    LauncherDataReaderResult.Success(
+                        LauncherData(
+                            session = session,
+                            biometricToken = result.token,
+                            documentType = documentVariety.toDocumentType(),
+                        ),
+                    )
+                }
+            }
         }
     }
+
+sealed interface LauncherDataReaderResult {
+    data class Success(
+        val launcherData: LauncherData,
+    ) : LauncherDataReaderResult
+
+    data class RecoverableError(
+        val error: DataReaderError,
+        val statusCode: Int?,
+    ) : LauncherDataReaderResult
+
+    data class UnrecoverableError(
+        val error: DataReaderError,
+        val statusCode: Int?,
+    ) : LauncherDataReaderResult
+}
+
+data class DataReaderError(
+    val message: String,
+    val cause: Exception?,
+)
