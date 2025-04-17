@@ -3,6 +3,13 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.ui-config")
 }
 
+android {
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
 dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.uk.gov.idcheck.repositories.api)
