@@ -11,11 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -23,7 +19,6 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
-    private val configStore: ConfigStore = mock()
     private val analyticsLogger: SelectDocAnalytics = mock()
     private val nfcChecker = mock<NfcChecker>()
 
@@ -31,15 +26,11 @@ class SelectDrivingLicenceViewModelTest {
         SelectDrivingLicenceViewModel(
             analytics = analyticsLogger,
             nfcChecker = nfcChecker,
-            configStore = configStore,
         )
     }
 
     @BeforeEach
     fun setUp() {
-        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
-            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-        )
         given(nfcChecker.hasNfc()).willReturn(false)
     }
 
