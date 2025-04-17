@@ -8,6 +8,7 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import kotlin.test.assertEquals
@@ -20,16 +21,22 @@ class IntegrationTest {
     private val configStore = FakeConfigStore()
     private val logger = SystemLogger()
     private val imposter = Imposter.createMockEngine()
-    private lateinit var biometricApi: BiometricApi
     private lateinit var biometricTokenReader: BiometricTokenReader
 
     @BeforeEach
     fun setup() {
-        biometricApi =
-            BiometricApiImpl(
-                httpClient = createTestHttpClient(),
-                configStore = configStore,
+        configStore.write(
+            Config.Entry(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(false)
             )
+        )
+
+        val biometricApi = ConfigurableBiometricApi(
+            configStore = configStore,
+            realBiometricApi = BiometricApiImpl(createTestHttpClient(), configStore),
+            fakeBiometricApi = FakeBiometricTokenApi()
+        )
 
         biometricTokenReader =
             RemoteBiometricTokenReader(

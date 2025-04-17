@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 
-@CompositionScope
 class BiometricApiImpl
     @Inject
     constructor(

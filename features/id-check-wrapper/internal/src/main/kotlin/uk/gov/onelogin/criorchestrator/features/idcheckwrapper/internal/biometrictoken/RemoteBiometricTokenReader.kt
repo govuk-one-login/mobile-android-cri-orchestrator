@@ -7,6 +7,7 @@ import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class RemoteBiometricTokenReader
     @Inject
     constructor(
-        private val biometricApi: BiometricApi,
+        private val biometricApi: ConfigurableBiometricApi,
         private val logger: Logger,
     ) : BiometricTokenReader,
         LogTagProvider {

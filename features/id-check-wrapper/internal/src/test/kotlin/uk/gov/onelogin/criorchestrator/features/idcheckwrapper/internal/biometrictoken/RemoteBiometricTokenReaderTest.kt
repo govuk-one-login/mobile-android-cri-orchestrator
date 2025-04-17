@@ -9,13 +9,14 @@ import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
 
 private const val SESSION_ID = "session_id"
 private const val DOCUMENT_TYPE = "document_type"
 
 class RemoteBiometricTokenReaderTest {
     private lateinit var biometricTokenReader: BiometricTokenReader
-    private val biometricApi = mock<BiometricApi>()
+    private val biometricApi = mock<ConfigurableBiometricApi>()
     private val logger = mock<Logger>()
     private val json = Json { ignoreUnknownKeys = true }
 
