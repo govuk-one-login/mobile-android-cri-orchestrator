@@ -9,13 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply true
     alias(libs.plugins.ksp)
     alias(testwrapperlibs.plugins.hilt.gradle)
-}
-
-android {
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
-    }
+    id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
 }
 
 configure<ApplicationExtension> {
