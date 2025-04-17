@@ -104,17 +104,6 @@ class SyncIdCheckScreenTest {
             ),
     )
 
-    /*val viewModel =
-        createViewModel(
-            session = Session.createDesktopAppDesktopInstance(),
-        )
-    composeTestRule.setScreenContent(
-    viewModel = viewModel,
-    )
-    composeTestRule
-    .onNode(happyPathOption, useUnmergedTree = true)
-    .performClick()*/
-
     @Test
     fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
         enableManualLauncher = true
