@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
@@ -21,6 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 class SyncIdCheckViewModel(
+    private val configStore: ConfigStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
@@ -31,6 +33,8 @@ class SyncIdCheckViewModel(
     private val _actions = MutableSharedFlow<SyncIdCheckAction>()
     val actions = _actions.asSharedFlow()
 
+    companion object;
+
     fun onScreenStart(documentVariety: DocumentVariety) {
         analytics.trackScreen(
             IdCheckWrapperScreenId.SyncIdCheckScreen,
@@ -38,12 +42,18 @@ class SyncIdCheckViewModel(
         )
 
         viewModelScope.launch {
-            loadManualLauncher(documentVariety)
+            loadLauncher(
+                documentVariety = documentVariety,
+                enableManualLauncher = configStore.readSingle(IdCheckWrapperConfigKey.EnableManualLauncher).value,
+            )
         }
     }
 
     fun onStubExitStateSelected(selectedExitState: Int) {
         val curState = requireDisplayState()
+        require(curState.manualLauncher != null) {
+            "Can't select a stub exit state unless the manual launcher is enabled"
+        }
         _state.value =
             curState.copy(
                 activityResultContractParameters =
@@ -51,7 +61,7 @@ class SyncIdCheckViewModel(
                         stubExitState = ExitStateOption.entries[selectedExitState],
                     ),
                 manualLauncher =
-                    curState.manualLauncher?.copy(
+                    curState.manualLauncher.copy(
                         selectedExitState = selectedExitState,
                     ),
             )
@@ -67,8 +77,9 @@ class SyncIdCheckViewModel(
             )
         }
 
-    fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) =
-        viewModelScope.launch {
+    fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        val journeyType = requireDisplayState().launcherData.sessionJourneyType
+        val action =
             when (exitState) {
                 is IdCheckSdkExitState.Nowhere,
                 is IdCheckSdkExitState.ConfirmAnotherWay,
@@ -76,20 +87,38 @@ class SyncIdCheckViewModel(
                 IdCheckSdkExitState.ConfirmationFailed,
                 is IdCheckSdkExitState.FaceScanLimitReached,
                 IdCheckSdkExitState.UnknownDocumentType,
-                -> exitStateNotHandled()
+                ->
+                    when (journeyType) {
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
+                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb
+                    }
 
                 IdCheckSdkExitState.HappyPath ->
-                    _actions.emit(
-                        when (requireDisplayState().launcherData.sessionJourneyType) {
-                            JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                            JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
-                        },
-                    )
+                    when (journeyType) {
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                    }
             }
-        }
 
-    private suspend fun loadManualLauncher(documentVariety: DocumentVariety) {
+        viewModelScope.launch {
+            _actions.emit(action)
+        }
+    }
+
+    private suspend fun loadLauncher(
+        documentVariety: DocumentVariety,
+        enableManualLauncher: Boolean,
+    ) {
         val launcherDataResult = launcherDataReader.read(documentVariety)
+        val manualLauncher =
+            if (enableManualLauncher) {
+                ManualLauncher(
+                    selectedExitState = 0,
+                    exitStateOptions = ExitStateOption.displayNames,
+                )
+            } else {
+                null
+            }
 
         when (launcherDataResult) {
             is LauncherDataReaderResult.RecoverableError ->
@@ -107,11 +136,7 @@ class SyncIdCheckViewModel(
                 _state.value =
                     SyncIdCheckState.Display(
                         launcherData = launcherDataResult.launcherData,
-                        manualLauncher =
-                            ManualLauncher(
-                                selectedExitState = 0,
-                                exitStateOptions = ExitStateOption.displayNames,
-                            ),
+                        manualLauncher = manualLauncher,
                         activityResultContractParameters =
                             IdCheckSdkActivityResultContractParameters(
                                 stubExitState = ExitStateOption.None,
@@ -122,6 +147,4 @@ class SyncIdCheckViewModel(
     }
 
     private fun requireDisplayState() = _state.value as? SyncIdCheckState.Display ?: error("Expected display state")
-
-    private fun exitStateNotHandled(): Nothing = error("Not yet implemented (DCMAW-11490)")
 }

@@ -4,12 +4,12 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -19,11 +19,14 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createMobileAppMobileInstance
@@ -37,10 +40,39 @@ class SyncIdCheckScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val launchButton = hasText("Launch ID Check SDK")
-    private val happyPathOption = hasText("Happy path")
+    private val launchButton = "Launch ID Check SDK"
+    private val happyPathOption = "Happy path"
+    private val unhappyPathOption = "Confirm identity another way"
 
     private val navController: NavController = mock()
+
+    private var session: Session = Session.createMobileAppMobileInstance()
+    private var enableManualLauncher = false
+
+    private val viewModel by lazy {
+        SyncIdCheckViewModel.createTestInstance(
+            launcherDataReader =
+                LauncherDataReader(
+                    FakeSessionStore(
+                        session = session,
+                    ),
+                    biometricTokenReader =
+                        StubBiometricTokenReader(
+                            biometricTokenResult =
+                                BiometricTokenResult.Success(
+                                    BiometricToken.createTestToken(),
+                                ),
+                        ),
+                ),
+            configStore =
+                FakeConfigStore(
+                    initialConfig =
+                        Config.createTestInstance(
+                            enableManualLauncher = enableManualLauncher,
+                        ),
+                ),
+        )
+    }
 
     private fun createViewModel(
         session: Session = Session.createMobileAppMobileInstance(),
@@ -63,24 +95,34 @@ class SyncIdCheckScreenTest {
             ),
         logger = SystemLogger(),
         analytics = mock(),
+        configStore =
+            FakeConfigStore(
+                initialConfig =
+                    Config.createTestInstance(
+                        enableManualLauncher = true,
+                    ),
+            ),
     )
+
+    /*val viewModel =
+        createViewModel(
+            session = Session.createDesktopAppDesktopInstance(),
+        )
+    composeTestRule.setScreenContent(
+    viewModel = viewModel,
+    )
+    composeTestRule
+    .onNode(happyPathOption, useUnmergedTree = true)
+    .performClick()*/
 
     @Test
     fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
-        val viewModel =
-            createViewModel(
-                session = Session.createMobileAppMobileInstance(),
-            )
-        composeTestRule.setScreenContent(
-            viewModel = viewModel,
-        )
-        composeTestRule
-            .onNode(happyPathOption, useUnmergedTree = true)
-            .performClick()
+        enableManualLauncher = true
+        session = Session.createMobileAppMobileInstance()
+        composeTestRule.setScreenContent(viewModel)
 
-        composeTestRule
-            .onNode(launchButton)
-            .performClick()
+        composeTestRule.selectOption(happyPathOption)
+        composeTestRule.clickLaunchButton()
 
         composeTestRule.waitForIdle()
 
@@ -91,25 +133,50 @@ class SyncIdCheckScreenTest {
 
     @Test
     fun `given manual launcher and DAD session, when happy path launched, it navigates to desktop handback`() {
-        val viewModel =
-            createViewModel(
-                session = Session.createDesktopAppDesktopInstance(),
-            )
-        composeTestRule.setScreenContent(
-            viewModel = viewModel,
-        )
-        composeTestRule
-            .onNode(happyPathOption, useUnmergedTree = true)
-            .performClick()
+        enableManualLauncher = true
+        session = Session.createDesktopAppDesktopInstance()
+        composeTestRule.setScreenContent(viewModel)
 
-        composeTestRule
-            .onNode(launchButton)
-            .performClick()
+        composeTestRule.selectOption(happyPathOption)
+        composeTestRule.clickLaunchButton()
 
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
             HandbackDestinations.ReturnToDesktopWeb,
+        )
+    }
+
+    @Test
+    fun `manual launch with MAM session, when launch unhappy path, navigates to confirm abort MAM`() {
+        enableManualLauncher = true
+        session = Session.createMobileAppMobileInstance()
+        composeTestRule.setScreenContent(viewModel)
+
+        composeTestRule.selectOption(unhappyPathOption)
+        composeTestRule.clickLaunchButton()
+
+        composeTestRule.waitForIdle()
+
+        verify(navController).navigate(
+            HandbackDestinations.ConfirmAbort,
+        )
+    }
+
+    @Test
+    @Suppress("")
+    fun `manual launch with DAD session, when launch unhappy path, navigates to confirm abort DAD`() {
+        enableManualLauncher = true
+        session = Session.createDesktopAppDesktopInstance()
+        composeTestRule.setScreenContent(viewModel)
+
+        composeTestRule.selectOption(unhappyPathOption)
+        composeTestRule.clickLaunchButton()
+
+        composeTestRule.waitForIdle()
+
+        verify(navController).navigate(
+            HandbackDestinations.ConfirmAbort,
         )
     }
 
@@ -160,8 +227,7 @@ class SyncIdCheckScreenTest {
                 createViewModel(
                     biometricTokenResult =
                         BiometricTokenResult.Error(
-                            Exception("error"),
-                            400,
+                            Exception("Test error"),
                         ),
                 )
 
@@ -177,7 +243,16 @@ class SyncIdCheckScreenTest {
             verify(navController).navigate(HandbackDestinations.UnrecoverableError)
         }
 
-    private fun ComposeContentTestRule.setScreenContent(viewModel: SyncIdCheckViewModel = createViewModel()) =
+    private fun ComposeContentTestRule.selectOption(text: String) =
+        onNodeWithText(text, useUnmergedTree = true)
+            .performScrollTo()
+            .performClick()
+
+    private fun ComposeContentTestRule.clickLaunchButton() =
+        onNodeWithText(launchButton)
+            .performClick()
+
+    private fun ComposeContentTestRule.setScreenContent(viewModel: SyncIdCheckViewModel) =
         setContent {
             SyncIdCheckScreen(
                 documentVariety = DocumentVariety.NFC_PASSPORT,

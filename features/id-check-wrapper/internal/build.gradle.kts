@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(libs.uk.gov.idcheck.ui.presentation)
     implementation(projects.features.idCheckWrapper.internalApi)
+    implementation(projects.features.idCheckWrapper.publicApi)
     implementation(projects.features.config.internalApi)
     implementation(projects.features.handback.internalApi)
     implementation(projects.features.session.internalApi)
@@ -19,6 +20,7 @@ dependencies {
     implementation(projects.features.handback.internalApi)
     implementation(projects.features.error.internalApi)
     implementation(projects.features.config.internalApi)
+    implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
     implementation(libs.uk.gov.networking)
@@ -30,6 +32,9 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.idcheck.sdk)
     testFixturesImplementation(libs.uk.gov.idcheck.ui.presentation)
     testFixturesImplementation(projects.features.session.internalApi)
+    testFixturesImplementation(testFixtures(projects.features.config.internalApi))
+    testFixturesImplementation(testFixtures(projects.features.config.publicApi))
+    testFixturesImplementation(testFixtures(projects.features.idCheckWrapper.publicApi))
     testFixturesImplementation(testFixtures(projects.features.session.internalApi))
 
     testImplementation(testFixtures(projects.features.config.internalApi))
@@ -38,8 +43,9 @@ dependencies {
     testImplementation(libs.uk.gov.idcheck.sdk)
     testImplementation(libs.uk.gov.idcheck.ui.presentation)
     testImplementation(libs.uk.gov.logging.testdouble)
-    testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(projects.libraries.analytics))
+    testImplementation(testFixtures(projects.features.config.internalApi))
+    testImplementation(testFixtures(projects.features.session.internalApi))
 }
 
 mavenPublishingConfig {

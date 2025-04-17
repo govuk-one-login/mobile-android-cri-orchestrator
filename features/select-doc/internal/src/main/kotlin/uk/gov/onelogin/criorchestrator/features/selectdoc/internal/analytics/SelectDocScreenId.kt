@@ -13,4 +13,5 @@ enum class SelectDocScreenId(
     TypesOfPhotoID(rawId = "c841ad80-4b16-4425-9bf2-aa24485fdaa0"),
     SelectBrp(rawId = "8349d732-fb9e-49f0-9b7c-5ed84ffe4613"),
     ConfirmNoChippedID(rawId = "e5259446-7367-4d97-8d4d-d8b10bb95eca"),
+    ConfirmNoNonChippedID(rawId = "8c40714b-2d19-449c-86dd-c53a23e8ec6b"),
 }

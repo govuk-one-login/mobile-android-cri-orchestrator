@@ -19,9 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
@@ -41,10 +42,12 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.Handbac
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEffect
 
 /**
  * This screen handles launching of the ID Check SDK journey of the desired journey/document type,
@@ -76,6 +79,7 @@ internal fun SyncIdCheckScreen(
             contract = activityResultContract,
             onResult = { viewModel.onIdCheckSdkResult(it) },
         )
+
     LaunchedEffect(Unit) {
         viewModel.actions.collect { action ->
             when (action) {
@@ -91,6 +95,13 @@ internal fun SyncIdCheckScreen(
                 SyncIdCheckAction.NavigateToReturnToDesktopWeb ->
                     navController.navigate(
                         HandbackDestinations.ReturnToDesktopWeb,
+                    )
+
+                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
+                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
+                ->
+                    navController.navigate(
+                        HandbackDestinations.ConfirmAbort,
                     )
 
                 SyncIdCheckAction.NavigateToRecoverableError -> {
@@ -113,17 +124,19 @@ internal fun SyncIdCheckScreen(
                         selectedExitState = state.manualLauncher.selectedExitState,
                         exitStateOptions = state.manualLauncher.exitStateOptions,
                         onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
-                        onExitStateSelected = viewModel::onStubExitStateSelected,
+                        onExitStateSelected = { viewModel.onStubExitStateSelected(it) },
                     )
                 } else {
-                    // This screen does not have any content
+                    SyncIdCheckAutomaticLauncherContent(
+                        onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
+                    )
                 }
             }
 
-            SyncIdCheckState.Loading ->
-                Loading()
+            SyncIdCheckState.Loading -> Loading()
         }
     }
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart(documentVariety)
     }
@@ -153,16 +166,14 @@ private fun SyncIdCheckScreenManualLauncherContent(
         },
         body = { horizontalPadding ->
             item {
-                launcherData?.let {
-                    DebugData(
-                        documentType = it.documentType,
-                        journeyType = it.journeyType,
-                        sessionId = it.sessionId,
-                        accessToken = it.biometricToken.accessToken,
-                        opaqueId = it.biometricToken.opaqueId,
-                        modifier = Modifier.padding(horizontal = horizontalPadding),
-                    )
-                }
+                DebugData(
+                    documentType = launcherData.documentType,
+                    journeyType = launcherData.journeyType,
+                    sessionId = launcherData.sessionId,
+                    accessToken = launcherData.biometricToken.accessToken,
+                    opaqueId = launcherData.biometricToken.opaqueId,
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                )
             }
             item {
                 GdsSelection(
@@ -205,6 +216,13 @@ private fun Loading(modifier: Modifier = Modifier) {
 }
 
 @Composable
+private fun SyncIdCheckAutomaticLauncherContent(onLaunchRequest: () -> Unit) {
+    OneTimeLaunchedEffect {
+        onLaunchRequest()
+    }
+}
+
+@Composable
 @Suppress("LongParameterList")
 private fun DebugData(
     documentType: DocumentType,
@@ -235,7 +253,7 @@ private fun DebugData(
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewSyncIdCheckContent() {
+internal fun PreviewSyncIdCheckManualLauncherContent() {
     GdsTheme {
         SyncIdCheckScreenManualLauncherContent(
             launcherData =
@@ -252,7 +270,7 @@ internal fun PreviewSyncIdCheckContent() {
                             opaqueId = "test opaque ID",
                         ),
                 ),
-            exitStateOptions = persistentListOf("None", "Happy Path"),
+            exitStateOptions = ExitStateOption.entries.map { it.displayName }.toPersistentList(),
             selectedExitState = 0,
             onExitStateSelected = {},
             onLaunchRequest = {},
@@ -260,10 +278,12 @@ internal fun PreviewSyncIdCheckContent() {
     }
 }
 
-@LightDarkBothLocalesPreview
+@PreviewLightDark
 @Composable
-internal fun PreviewLoading() {
+internal fun PreviewSyncIdCheckAutomaticLauncherContent() {
     GdsTheme {
-        Loading()
+        SyncIdCheckAutomaticLauncherContent(
+            onLaunchRequest = {},
+        )
     }
 }

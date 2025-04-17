@@ -13,6 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
+import javax.inject.Provider
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @CompositionScope
@@ -21,7 +22,7 @@ class RemoteSessionReader
     @Inject
     constructor(
         private val sessionStore: SessionStore,
-        private val sessionApi: SessionApi,
+        private val sessionApi: Provider<SessionApi>,
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
@@ -32,7 +33,7 @@ class RemoteSessionReader
         }
 
         override suspend fun isActiveSession(): Boolean {
-            val response = sessionApi.getActiveSession()
+            val response = sessionApi.get().getActiveSession()
             logResponse(response)
             val session = parseSession(response)
             sessionStore.write(session)

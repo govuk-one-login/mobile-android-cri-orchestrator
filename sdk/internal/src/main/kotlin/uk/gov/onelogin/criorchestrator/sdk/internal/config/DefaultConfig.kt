@@ -13,6 +13,10 @@ private val defaultConfig =
                     key = SdkConfigKey.BypassIdCheckAsyncBackend,
                     Config.Value.BooleanValue(false),
                 ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                    Config.Value.BooleanValue(false),
+                ),
                 Config.Entry<Config.Value.StringValue>(
                     key = NfcConfigKey.NfcAvailability,
                     Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
@@ -27,6 +31,7 @@ fun Config.Companion.fromUserConfig(userConfig: Config): Config {
         listOf(
             SdkConfigKey.BypassIdCheckAsyncBackend,
             SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+            IdCheckWrapperConfigKey.EnableManualLauncher,
             NfcConfigKey.NfcAvailability,
         )
 

@@ -29,6 +29,12 @@ object TestWrapperConfig {
                             value = NfcConfigKey.NfcAvailability.OPTION_DEVICE,
                         ),
                     ),
+                    Config.Entry(
+                        key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                        Config.Value.BooleanValue(
+                            value = true,
+                        ),
+                    ),
                 ),
         )
 }
