@@ -1,3 +1,5 @@
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals

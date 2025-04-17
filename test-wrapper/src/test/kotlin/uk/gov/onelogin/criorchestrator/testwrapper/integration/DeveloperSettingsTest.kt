@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.createTestInstance
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 import uk.gov.onelogin.criorchestrator.testwrapper.MainContent

@@ -15,14 +15,10 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -47,7 +43,6 @@ class SelectDrivingLicenceAnalyticsTest {
     private val continueButton = hasText(context.getString(R.string.selectdocument_drivinglicence_continuebutton))
     private val yesOption = hasText(context.getString(R.string.selectdocument_drivinglicence_selection_yes))
 
-    private val configStore: ConfigStore = mock()
     private val nfcChecker = mock<NfcChecker>()
     private val navController: NavController = mock()
 
@@ -65,16 +60,12 @@ class SelectDrivingLicenceAnalyticsTest {
             SelectDrivingLicenceViewModel(
                 analytics = analytics,
                 nfcChecker = nfcChecker,
-                configStore = configStore,
             ),
         )
     }
 
     @Before
     fun setup() {
-        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
-            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-        )
         given(nfcChecker.hasNfc()).willReturn(false)
     }
 
