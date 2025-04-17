@@ -8,16 +8,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 
 internal class SelectDrivingLicenceViewModel(
     private val analytics: SelectDocAnalytics,
     private val nfcChecker: NfcChecker,
-    private val configStore: ConfigStore,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
@@ -25,7 +22,7 @@ internal class SelectDrivingLicenceViewModel(
     private val _state =
         MutableStateFlow(
             SelectDrivingLicenseState(
-                displayReadMoreButton = isNfcEnabled(),
+                displayReadMoreButton = nfcChecker.hasNfc(),
             ),
         )
     val state: StateFlow<SelectDrivingLicenseState> = _state
@@ -57,7 +54,7 @@ internal class SelectDrivingLicenceViewModel(
                 0 -> _actions.emit(SelectDrivingLicenceAction.NavigateToConfirmation)
                 1 ->
                     _actions.emit(
-                        if (isNfcEnabled()) {
+                        if (nfcChecker.hasNfc()) {
                             SelectDrivingLicenceAction.NavigateToConfirmNoChippedID
                         } else {
                             SelectDrivingLicenceAction.NavigateToConfirmNoNonChippedID
@@ -67,14 +64,7 @@ internal class SelectDrivingLicenceViewModel(
         }
     }
 
-    private fun isNfcEnabled(): Boolean =
-        when (configStore.readSingle(NfcConfigKey.NfcAvailability).value) {
-            NfcConfigKey.NfcAvailability.OPTION_AVAILABLE -> true
-            NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE -> false
-            else -> nfcChecker.hasNfc()
-        }
-
     private fun updateNfcEnabledState() {
-        _state.update { it.copy(displayReadMoreButton = isNfcEnabled()) }
+        _state.update { it.copy(displayReadMoreButton = nfcChecker.hasNfc()) }
     }
 }

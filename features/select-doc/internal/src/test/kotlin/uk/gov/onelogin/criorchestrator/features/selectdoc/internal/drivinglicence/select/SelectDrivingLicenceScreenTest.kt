@@ -31,10 +31,10 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
@@ -50,7 +50,6 @@ class SelectDrivingLicenceScreenTest {
     private lateinit var continueButton: SemanticsMatcher
 
     private val navController: NavController = mock()
-    private val configStore: ConfigStore = mock()
     private val nfcChecker = mock<NfcChecker>()
 
     private val viewModel: SelectDrivingLicenceViewModel by lazy {
@@ -58,7 +57,6 @@ class SelectDrivingLicenceScreenTest {
             SelectDrivingLicenceViewModel(
                 analytics = mock(),
                 nfcChecker = nfcChecker,
-                configStore = configStore,
             ),
         )
     }
@@ -72,9 +70,6 @@ class SelectDrivingLicenceScreenTest {
         noOption = hasText(context.getString(R.string.selectdocument_drivinglicence_selection_no))
         continueButton =
             hasText(context.getString(R.string.selectdocument_drivinglicence_continuebutton))
-        whenever(configStore.readSingle(NfcConfigKey.NfcAvailability)).thenReturn(
-            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-        )
         given(nfcChecker.hasNfc()).willReturn(false)
     }
 
