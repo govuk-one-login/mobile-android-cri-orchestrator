@@ -7,11 +7,10 @@ import org.gradle.accessors.dm.LibrariesForLibs
 //https://github.com/gradle/gradle/issues/15383
 val libs = the<LibrariesForLibs>()
 
-listOf(
-    "kotlin-kapt"
-).forEach {
-    project.plugins.apply(it)
-}
+/**
+ * This plugin is required to run the ID Check SDK, as the SDK activity requires databinding and
+ * viewbinding to be enabled.
+ */
 
 project.extensions.findByType<LibraryExtension>() ?:
     project.extensions.findByType<ApplicationExtension>() ?: error("no Android extension")
