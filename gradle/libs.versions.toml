@@ -104,7 +104,6 @@ uk-gov-idcheck-ui-components = { module = "uk.gov.onelogin.idcheck:ui-components
 uk-gov-idcheck-repositories-impl = { module = "uk.gov.onelogin.idcheck:repositories-impl", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-pages = { module = "uk.gov.onelogin.idcheck:ui-pages", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-theme = { module = "uk.gov.onelogin.idcheck:ui-theme", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
 
 [plugins]
