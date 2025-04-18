@@ -104,14 +104,7 @@ uk-gov-idcheck-ui-components = { module = "uk.gov.onelogin.idcheck:ui-components
 uk-gov-idcheck-repositories-impl = { module = "uk.gov.onelogin.idcheck:repositories-impl", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-pages = { module = "uk.gov.onelogin.idcheck:ui-pages", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-theme = { module = "uk.gov.onelogin.idcheck:ui-theme", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
-androidx-databinding-adapters = { module = "androidx.databinding:databinding-adapters", version.ref = "agp" }
-androidx-databinding-common = { module = "androidx.databinding:databinding-common", version.ref = "agp" }
-androidx-databinding-compiler = { module = "androidx.databinding:databinding-compiler", version.ref = "agp" }
-androidx-databinding-ktx = { module = "androidx.databinding:databinding-ktx", version.ref = "agp" }
-androidx-databinding-runtime = { module = "androidx.databinding:databinding-runtime", version.ref = "agp" }
-androidx-databinding-viewbinding = { module = "androidx.databinding:viewbinding", version.ref = "agp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
