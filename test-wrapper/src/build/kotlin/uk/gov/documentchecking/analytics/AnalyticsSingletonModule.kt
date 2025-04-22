@@ -1,15 +1,12 @@
 package uk.gov.documentchecking.analytics
 
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.logging.MemorisedAnalyticsLogger
-import uk.gov.logging.impl.analytics.FirebaseAnalyticsLogger
+import uk.gov.logging.testdouble.analytics.ToastingAnalyticsLogger
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -18,15 +15,6 @@ object AnalyticsSingletonModule {
     @Provides
     @Singleton
     fun providesAnalyticsLogger(
-        analyticsLogger: FirebaseAnalyticsLogger
+        analyticsLogger: ToastingAnalyticsLogger
     ): AnalyticsLogger = MemorisedAnalyticsLogger(analyticsLogger)
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-class FirebaseSingletonModule {
-
-    @Provides
-    @Singleton
-    fun providesFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
 }
