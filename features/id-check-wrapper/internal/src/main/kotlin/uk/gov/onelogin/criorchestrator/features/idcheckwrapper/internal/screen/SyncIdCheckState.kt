@@ -13,6 +13,8 @@ sealed interface SyncIdCheckState {
         val launcherData: LauncherData,
         val activityResultContractParameters: IdCheckSdkActivityResultContractParameters,
     ) : SyncIdCheckState
+
+    object DisplayStubBiometricToken : SyncIdCheckState
 }
 
 data class ManualLauncher(
