@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
@@ -47,6 +46,12 @@ class SyncIdCheckScreenTest {
 
     private var session: Session = Session.createMobileAppMobileInstance()
     private var enableManualLauncher = false
+    private var biometricTokenResult: BiometricTokenResult =
+        BiometricTokenResult.Success(
+            BiometricToken.createTestToken(),
+        )
+    private var readerDelay: Long = 0
+    private var bypassIdCheckAsyncBackend = false
 
     private val viewModel by lazy {
         SyncIdCheckViewModel.createTestInstance(
@@ -57,10 +62,8 @@ class SyncIdCheckScreenTest {
                     ),
                     biometricTokenReader =
                         StubBiometricTokenReader(
-                            biometricTokenResult =
-                                BiometricTokenResult.Success(
-                                    BiometricToken.createTestToken(),
-                                ),
+                            biometricTokenResult = biometricTokenResult,
+                            delay = readerDelay,
                         ),
                 ),
             configStore =
@@ -68,40 +71,11 @@ class SyncIdCheckScreenTest {
                     initialConfig =
                         Config.createTestInstance(
                             enableManualLauncher = enableManualLauncher,
+                            bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
                         ),
                 ),
         )
     }
-
-    private fun createViewModel(
-        session: Session = Session.createMobileAppMobileInstance(),
-        biometricTokenResult: BiometricTokenResult =
-            BiometricTokenResult.Success(
-                BiometricToken.createTestToken(),
-            ),
-        readerDelay: Long = 0,
-    ) = SyncIdCheckViewModel(
-        launcherDataReader =
-            LauncherDataReader(
-                FakeSessionStore(
-                    session = session,
-                ),
-                biometricTokenReader =
-                    StubBiometricTokenReader(
-                        biometricTokenResult = biometricTokenResult,
-                        delay = readerDelay,
-                    ),
-            ),
-        logger = SystemLogger(),
-        analytics = mock(),
-        configStore =
-            FakeConfigStore(
-                initialConfig =
-                    Config.createTestInstance(
-                        enableManualLauncher = true,
-                    ),
-            ),
-    )
 
     @Test
     fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
@@ -171,15 +145,12 @@ class SyncIdCheckScreenTest {
     @Test
     fun `when loading state is receive, loading progress indicator is displayed`() =
         runTest {
-            val viewModel =
-                createViewModel(
-                    readerDelay = 1000,
-                )
+            readerDelay = 1000
 
             val loadingState = viewModel.state.first()
             assertEquals(SyncIdCheckState.Loading, loadingState)
 
-            composeTestRule.setScreenContent(viewModel = viewModel)
+            composeTestRule.setScreenContent(viewModel)
 
             composeTestRule.waitForIdle()
 
@@ -191,12 +162,9 @@ class SyncIdCheckScreenTest {
     @Test
     fun `when data launcher returns recoverable error, navigate to recoverable error screen`() =
         runTest {
-            val viewModel =
-                createViewModel(
-                    biometricTokenResult = BiometricTokenResult.Offline,
-                )
+            biometricTokenResult = BiometricTokenResult.Offline
 
-            composeTestRule.setScreenContent(viewModel = viewModel)
+            composeTestRule.setScreenContent(viewModel)
 
             composeTestRule.waitForIdle()
 
@@ -206,15 +174,9 @@ class SyncIdCheckScreenTest {
     @Test
     fun `when data launcher returns unrecoverable error, navigate to unrecoverable error screen`() =
         runTest {
-            val viewModel =
-                createViewModel(
-                    biometricTokenResult =
-                        BiometricTokenResult.Error(
-                            Exception("Test error"),
-                        ),
-                )
+            biometricTokenResult = BiometricTokenResult.Error(Exception("Test error"))
 
-            composeTestRule.setScreenContent(viewModel = viewModel)
+            composeTestRule.setScreenContent(viewModel)
 
             composeTestRule.waitForIdle()
 

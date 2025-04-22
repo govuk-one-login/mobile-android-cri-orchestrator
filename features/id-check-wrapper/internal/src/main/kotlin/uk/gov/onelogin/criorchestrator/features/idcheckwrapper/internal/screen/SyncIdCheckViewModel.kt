@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
@@ -20,6 +22,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.Ex
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+
+private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
 class SyncIdCheckViewModel(
     private val configStore: ConfigStore,
@@ -41,6 +45,37 @@ class SyncIdCheckViewModel(
             R.string.loading,
         )
 
+        if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
+            viewModelScope.launch {
+                delay(STUB_BIOMETRIC_TOKEN_DELAY_MS)
+                _state.value = SyncIdCheckState.DisplayStubBiometricToken
+            }
+        } else {
+            loadLauncher(documentVariety)
+        }
+    }
+
+    fun onStubGetBiometricToken(
+        documentVariety: DocumentVariety,
+        selectedItem: Int,
+    ) {
+        when (selectedItem) {
+            0 -> loadLauncher(documentVariety)
+            1 -> {
+                viewModelScope.launch {
+                    _actions.emit(SyncIdCheckAction.NavigateToRecoverableError)
+                }
+            }
+
+            2 -> {
+                viewModelScope.launch {
+                    _actions.emit(SyncIdCheckAction.NavigateToUnrecoverableError)
+                }
+            }
+        }
+    }
+
+    private fun loadLauncher(documentVariety: DocumentVariety) {
         viewModelScope.launch {
             loadLauncher(
                 documentVariety = documentVariety,
