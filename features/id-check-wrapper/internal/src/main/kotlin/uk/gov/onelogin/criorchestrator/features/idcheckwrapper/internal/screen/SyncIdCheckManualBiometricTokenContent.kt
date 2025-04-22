@@ -24,7 +24,7 @@ internal fun SyncIdCheckManualBiometricTokenContent(
         GdsSelection(
             title =
                 RadioSelectionTitle(
-                    "Select get biometric token result",
+                    "Select biometric token result",
                     titleType = TitleType.BoldText,
                 ),
             items =
