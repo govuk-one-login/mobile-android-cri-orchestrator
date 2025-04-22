@@ -8,6 +8,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 sealed interface SyncIdCheckState {
     object Loading : SyncIdCheckState
 
+    object DisplayStubBiometricToken : SyncIdCheckState
+
     data class Display(
         val manualLauncher: ManualLauncher?,
         val launcherData: LauncherData,
