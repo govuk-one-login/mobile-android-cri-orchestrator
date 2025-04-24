@@ -4,4 +4,9 @@
     <string name="handback_unrecoverableerror_body1">You cannot use this app to prove your identity at the moment.</string>
     <string name="handback_unrecoverableerror_body2">You can try again later, or check if you can prove your identity another way.</string>
     <string name="handback_unrecoverableerror_button">Check if you can prove your identity another way</string>
+
+    <string name="handback_mam_title">Return to GOV.UK to finish proving your identity</string>
+    <string name="handback_mam_body1">You’ve successfully submitted your information.</string>
+    <string name="handback_mam_body2">You can now finish proving your identity on the GOV.UK website.</string>
+    <string name="handback_mam_button">Continue to the GOV.UK website</string>
 </resources>
