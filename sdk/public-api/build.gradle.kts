@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.LibraryExtension
+import uk.gov.onelogin.criorchestrator.extensions.configureAllEnvironmentFlavors
 import uk.gov.onelogin.criorchestrator.extensions.customisePublications
 
 plugins {
@@ -8,6 +10,10 @@ plugins {
     ).forEach {
         id(it)
     }
+}
+
+configure<LibraryExtension> {
+    configureAllEnvironmentFlavors()
 }
 
 configure<PublishingExtension> {

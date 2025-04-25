@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import uk.gov.onelogin.criorchestrator.extensions.configureAllEnvironmentFlavors
+
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
@@ -14,13 +17,19 @@ android {
     }
 }
 
+configure<LibraryExtension> {
+    configureAllEnvironmentFlavors()
+}
+
 dependencies {
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.uk.gov.idcheck.default.config)
     implementation(libs.uk.gov.idcheck.repositories.api)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(libs.uk.gov.idcheck.ui.presentation)
     implementation(projects.features.idCheckWrapper.internalApi)
     implementation(projects.features.idCheckWrapper.publicApi)
+    implementation(projects.features.idCheckWrapper.sdkConfig)
     implementation(projects.features.config.internalApi)
     implementation(projects.features.handback.internalApi)
     implementation(projects.features.session.internalApi)

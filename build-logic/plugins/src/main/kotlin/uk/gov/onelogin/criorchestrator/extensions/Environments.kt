@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.extensions
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 
 fun ApplicationExtension.configureEnvironmentFlavors() =
     productFlavors {
@@ -17,3 +18,19 @@ fun ApplicationExtension.configureEnvironmentFlavors() =
         }
     }
 
+fun LibraryExtension.configureAllEnvironmentFlavors() =
+    productFlavors {
+        flavorDimensions.add("env")
+
+        listOf(
+            "build",
+            "dev",
+            "integration",
+            "production",
+            "staging",
+        ).forEach { flavourString ->
+            create(flavourString) {
+                dimension = "env"
+            }
+        }
+    }

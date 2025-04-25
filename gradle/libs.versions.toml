@@ -23,6 +23,7 @@ kotlinx-collections-immutable = "0.3.8"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.8.1"
 ksp = "2.1.20-2.0.0"
+ktor = "3.1.2" # https://ktor.io/
 lifecycleRuntimeKtx = "2.8.7"
 material = "1.12.0"
 mockito = "5.4.0"
@@ -71,6 +72,8 @@ composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePrevi
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testparameterinjector" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
 imposter-config-parser = { group = "io.gatehill.imposter", name = "config-dynamic", version.ref = "imposter" }
 imposter-main = { group = "io.gatehill.imposter", name = "distro-embedded", version.ref = "imposter" }
 imposter-openapi-plugin = { group = "io.gatehill.imposter", name = "mock-openapi", version.ref = "imposter" }
@@ -79,6 +82,7 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 org-bouncycastle-bcutil-jdk18on = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle-jdk18on" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
@@ -98,13 +102,16 @@ uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", ver
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
 uk-gov-idcheck-features-api = { module = "uk.gov.onelogin.idcheck:features-api", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-network-api = { module = "uk.gov.onelogin.idcheck:network-api", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-network-testdouble = { module = "uk.gov.onelogin.idcheck:network-testdouble", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-readid-translations = { module = "uk.gov.onelogin.idcheck:readid-translations", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-repositories-api = { module = "uk.gov.onelogin.idcheck:repositories-api", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-components = { module = "uk.gov.onelogin.idcheck:ui-components", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-repositories-impl = { module = "uk.gov.onelogin.idcheck:repositories-impl", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-ui-components = { module = "uk.gov.onelogin.idcheck:ui-components", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-pages = { module = "uk.gov.onelogin.idcheck:ui-pages", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-default-config = { module = "uk.gov.onelogin.idcheck:default-config", version.ref = "gov-uk-idcheck" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -112,6 +119,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 anvil = { id = "dev.zacsweers.anvil", version.ref = "anvil" }
 app-cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
