@@ -5,8 +5,8 @@
     <string name="handback_unrecoverableerror_body2">Gallwch roi cynnig arall yn nes ymlaen, neu wirio a allwch brofi pwy ydych chi mewn ffordd arall.</string>
     <string name="handback_unrecoverableerror_button">Gwiriwch a allwch brofi eich hunaniaeth mewn ffordd arall</string>
 
-    <string name="handback_mam_title">Ewch yn ôl i GOV.UK i orffen profi pwy ydych chi</string>
-    <string name="handback_mam_body1">Rydych chi wedi cyflwyno’ch gwybodaeth yn llwyddiannus.</string>
-    <string name="handback_mam_body2">Nawr gallwch orffen profi pwy ydych chi ar wefan GOV.UK.</string>
-    <string name="handback_mam_button">Parhau i wefan GOV.UK</string>
+    <string name="handback_returntomobileweb_title">Ewch yn ôl i GOV.UK i orffen profi pwy ydych chi</string>
+    <string name="handback_returntomobileweb_body1">Rydych chi wedi cyflwyno’ch gwybodaeth yn llwyddiannus.</string>
+    <string name="handback_returntomobileweb_body2">Nawr gallwch orffen profi pwy ydych chi ar wefan GOV.UK.</string>
+    <string name="handback_returntomobileweb_button">Parhau i wefan GOV.UK</string>
 </resources>
