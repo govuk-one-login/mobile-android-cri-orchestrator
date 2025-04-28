@@ -5,7 +5,7 @@ import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 
 fun hasTextStartingWith(prefix: String): SemanticsMatcher =
-    SemanticsMatcher("Text starts with \"$prefix\"") {
+    SemanticsMatcher("Text starts with: $prefix") {
         val text =
             it.config
                 .getOrNull(SemanticsProperties.Text)
