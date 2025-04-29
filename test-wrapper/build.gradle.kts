@@ -38,6 +38,7 @@ dependencies {
     implementation(testwrapperlibs.firebase.analytics)
     implementation(testwrapperlibs.firebase.crashlytics)
     implementation(testwrapperlibs.hilt.android)
+    implementation(testwrapperlibs.uk.gov.idcheck.default.config)
 
     ksp(testwrapperlibs.hilt.compiler)
 

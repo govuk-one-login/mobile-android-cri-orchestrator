@@ -14,7 +14,5 @@ import javax.inject.Singleton
 object AnalyticsSingletonModule {
     @Provides
     @Singleton
-    fun providesAnalyticsLogger(
-        analyticsLogger: ToastingAnalyticsLogger
-    ): AnalyticsLogger = MemorisedAnalyticsLogger(analyticsLogger)
+    fun providesAnalyticsLogger(analyticsLogger: ToastingAnalyticsLogger): AnalyticsLogger = MemorisedAnalyticsLogger(analyticsLogger)
 }

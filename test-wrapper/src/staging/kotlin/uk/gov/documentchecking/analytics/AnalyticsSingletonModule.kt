@@ -17,15 +17,12 @@ import javax.inject.Singleton
 object AnalyticsSingletonModule {
     @Provides
     @Singleton
-    fun providesAnalyticsLogger(
-        analyticsLogger: FirebaseAnalyticsLogger
-    ): AnalyticsLogger = MemorisedAnalyticsLogger(analyticsLogger)
+    fun providesAnalyticsLogger(analyticsLogger: FirebaseAnalyticsLogger): AnalyticsLogger = MemorisedAnalyticsLogger(analyticsLogger)
 }
 
 @InstallIn(SingletonComponent::class)
 @Module
 class FirebaseSingletonModule {
-
     @Provides
     @Singleton
     fun providesFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics

@@ -1,5 +1,3 @@
-import com.android.build.gradle.LibraryExtension
-import uk.gov.onelogin.criorchestrator.extensions.configureAllEnvironmentFlavors
 import uk.gov.onelogin.criorchestrator.extensions.customisePublications
 
 plugins {
@@ -9,10 +7,6 @@ plugins {
     ).forEach {
         id(it)
     }
-}
-
-configure<LibraryExtension> {
-    configureAllEnvironmentFlavors()
 }
 
 configure<PublishingExtension> {

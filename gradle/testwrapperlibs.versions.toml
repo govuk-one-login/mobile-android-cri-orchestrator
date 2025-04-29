@@ -6,6 +6,7 @@ dagger = "2.56.1"
 firebase-bom = "33.12.0" # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics-gradle = "3.0.3" # https://firebase.google.com/support/release-notes/android
 google-services = "4.4.2" # https://developers.google.com/android/guides/releases
+gov-uk-idcheck = "0.7.0"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
@@ -14,6 +15,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx"
 dagger-hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
+uk-gov-idcheck-default-config = { module = "uk.gov.onelogin.idcheck:default-config", version.ref = "gov-uk-idcheck" }
 
 [plugins]
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
