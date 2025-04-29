@@ -49,7 +49,7 @@ class ReturnToMobileWebScreenTest {
     }
 
     @Test
-    fun `when button is clicked, it opens the session redirect Uri`() {
+    fun `when continue to gov uk website button is clicked, it opens the session redirect uri`() {
         val context: Context = ApplicationProvider.getApplicationContext()
         composeTestRule
             .onNode(
