@@ -18,7 +18,6 @@ import kotlin.test.assertTrue
 private const val SESSION_ID = "session_id"
 
 class IntegrationTest {
-
     private val documentType = DocumentVariety.NFC_PASSPORT
     private val configStore = FakeConfigStore()
     private val logger = SystemLogger()

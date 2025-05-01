@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -18,7 +17,6 @@ import uk.gov.android.network.client.ContentType
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiRequest.BiometricRequest
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
@@ -80,16 +78,16 @@ class BiometricApiImplTest {
             )
         runTest {
             whenever(
-                mockHttpClient.makeRequest(any())
+                mockHttpClient.makeRequest(any()),
             ).thenReturn(
                 ApiResponse.Success<String>(
                     "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
-                )
+                ),
             )
             biometricApiImpl.getBiometricToken("sessionId", documentVariety)
 
             verify(
-                mockHttpClient
+                mockHttpClient,
             ).makeRequest(
                 ApiRequest.Post(
                     url = "$imposterBaseUrl/async/biometricToken",
@@ -99,7 +97,7 @@ class BiometricApiImplTest {
                             expectedDocumentString,
                         ),
                     contentType = ContentType.APPLICATION_JSON,
-                )
+                ),
             )
         }
     }
