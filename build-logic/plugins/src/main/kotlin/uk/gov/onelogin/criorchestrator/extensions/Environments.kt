@@ -16,3 +16,4 @@ fun ApplicationExtension.configureEnvironmentFlavors() =
             }
         }
     }
+

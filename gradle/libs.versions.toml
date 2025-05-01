@@ -23,7 +23,6 @@ kotlinx-collections-immutable = "0.3.8"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.8.1"
 ksp = "2.1.20-2.0.0"
-ktor = "3.1.2" # https://ktor.io/
 lifecycleRuntimeKtx = "2.8.7"
 material = "1.12.0"
 mockito = "5.4.0"
@@ -80,7 +79,6 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
-ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 org-bouncycastle-bcutil-jdk18on = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle-jdk18on" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
@@ -99,16 +97,9 @@ uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
-uk-gov-idcheck-features-api = { module = "uk.gov.onelogin.idcheck:features-api", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-network-api = { module = "uk.gov.onelogin.idcheck:network-api", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-network-testdouble = { module = "uk.gov.onelogin.idcheck:network-testdouble", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-readid-translations = { module = "uk.gov.onelogin.idcheck:readid-translations", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-repositories-api = { module = "uk.gov.onelogin.idcheck:repositories-api", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-repositories-impl = { module = "uk.gov.onelogin.idcheck:repositories-impl", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-components = { module = "uk.gov.onelogin.idcheck:ui-components", version.ref = "gov-uk-idcheck" }
-uk-gov-idcheck-ui-pages = { module = "uk.gov.onelogin.idcheck:ui-pages", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
