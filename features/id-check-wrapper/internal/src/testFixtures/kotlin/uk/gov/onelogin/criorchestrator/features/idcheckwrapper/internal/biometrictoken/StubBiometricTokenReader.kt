@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
 import kotlinx.coroutines.delay
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 class StubBiometricTokenReader(
     private val biometricTokenResult: BiometricTokenResult,
@@ -8,7 +9,7 @@ class StubBiometricTokenReader(
 ) : BiometricTokenReader {
     override suspend fun getBiometricToken(
         sessionId: String,
-        documentType: String,
+        documentVariety: DocumentVariety,
     ): BiometricTokenResult {
         // Used to simulate network delay
         delay(delay)

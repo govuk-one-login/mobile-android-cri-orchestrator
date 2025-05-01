@@ -10,12 +10,14 @@ import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 private const val SESSION_ID = "session_id"
-private const val DOCUMENT_TYPE = "document_type"
 
 class RemoteBiometricTokenReaderTest {
     private lateinit var biometricTokenReader: BiometricTokenReader
+
+    private val documentType = DocumentVariety.NFC_PASSPORT
     private val biometricApi = mock<ConfigurableBiometricApi>()
     private val logger = mock<Logger>()
     private val json = Json { ignoreUnknownKeys = true }
@@ -35,13 +37,13 @@ class RemoteBiometricTokenReaderTest {
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
-                    DOCUMENT_TYPE,
+                    documentType,
                 ),
             ).thenReturn(
                 ApiResponse.Loading,
             )
 
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Error)
         }
@@ -52,13 +54,13 @@ class RemoteBiometricTokenReaderTest {
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
-                    DOCUMENT_TYPE,
+                    documentType,
                 ),
             ).thenReturn(
                 ApiResponse.Offline,
             )
 
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Offline)
         }
@@ -69,11 +71,11 @@ class RemoteBiometricTokenReaderTest {
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
-                    DOCUMENT_TYPE,
+                    documentType,
                 ),
             ).thenReturn(ApiResponse.Failure(status = 400, error = Exception("error")))
 
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
             val error = result as BiometricTokenResult.Error
 
             assert(result == error)
@@ -94,11 +96,11 @@ class RemoteBiometricTokenReaderTest {
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
-                    DOCUMENT_TYPE,
+                    documentType,
                 ),
             ).thenReturn(ApiResponse.Success(encoded))
 
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Success)
         }
@@ -109,10 +111,10 @@ class RemoteBiometricTokenReaderTest {
             whenever(
                 biometricApi.getBiometricToken(
                     SESSION_ID,
-                    DOCUMENT_TYPE,
+                    documentType,
                 ),
             ).thenReturn(ApiResponse.Success("invalid json"))
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
             assert(result is BiometricTokenResult.Error)
         }
 }

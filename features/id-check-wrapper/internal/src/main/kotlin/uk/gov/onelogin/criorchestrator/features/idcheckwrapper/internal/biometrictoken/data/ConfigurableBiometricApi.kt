@@ -7,6 +7,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricApi
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricApiImpl
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.FakeBiometricTokenApi
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 
@@ -20,11 +21,11 @@ class ConfigurableBiometricApi
     ) : BiometricApi {
         override suspend fun getBiometricToken(
             sessionId: String,
-            documentType: String,
+            documentVariety: DocumentVariety,
         ): ApiResponse =
             if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
-                fakeBiometricApi.getBiometricToken(sessionId, documentType)
+                fakeBiometricApi.getBiometricToken(sessionId, documentVariety)
             } else {
-                realBiometricApi.getBiometricToken(sessionId, documentType)
+                realBiometricApi.getBiometricToken(sessionId, documentVariety)
             }
     }

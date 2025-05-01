@@ -31,6 +31,7 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.idcheck.repositories.api)
     testFixturesImplementation(libs.uk.gov.idcheck.sdk)
     testFixturesImplementation(libs.uk.gov.idcheck.ui.presentation)
+    testFixturesImplementation(projects.features.idCheckWrapper.internalApi)
     testFixturesImplementation(projects.features.session.internalApi)
     testFixturesImplementation(testFixtures(projects.features.config.internalApi))
     testFixturesImplementation(testFixtures(projects.features.config.publicApi))
