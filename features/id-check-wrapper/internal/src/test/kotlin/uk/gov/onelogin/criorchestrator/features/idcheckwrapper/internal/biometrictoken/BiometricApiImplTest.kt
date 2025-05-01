@@ -66,7 +66,7 @@ class BiometricApiImplTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("assertBackendApiUsesCorrectStringForRequest")
-    fun `assert backend API uses correct string for API request`(
+    fun `assert backend API uses correct string for API request given document type`(
         expectedDocumentString: String,
         documentVariety: DocumentVariety,
     ) {
@@ -104,7 +104,6 @@ class BiometricApiImplTest {
 
     companion object {
         @JvmStatic
-        @Suppress("LongMethod")
         fun assertBackendApiUsesCorrectStringForRequest(): Stream<Arguments> =
             Stream.of(
                 arguments(
