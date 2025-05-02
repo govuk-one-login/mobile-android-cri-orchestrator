@@ -10,10 +10,11 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.network.client.KtorHttpClient
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 import uk.gov.onelogin.criorchestrator.testwrapper.R
+import uk.gov.onelogin.criorchestrator.testwrapper.SubjectTokenRepository
 import javax.inject.Provider
 
 internal fun createHttpClient(
-    subjectToken: Provider<String?>,
+    subjectTokenRepository: SubjectTokenRepository,
     resources: Resources,
 ): GenericHttpClient =
     KtorHttpClient(
@@ -21,7 +22,7 @@ internal fun createHttpClient(
     ).apply {
         setAuthenticationProvider(
             TestWrapperAuthenticationProvider(
-                subjectToken = subjectToken,
+                subjectTokenRepository = subjectTokenRepository,
                 mockStsAuthenticationProvider =
                     MockStsAuthenticationProvider(
                         resources = resources,
@@ -44,10 +45,10 @@ internal fun createStubHttpClient(): GenericHttpClient =
 internal class TestWrapperAuthenticationProvider(
     private val mockStsAuthenticationProvider: MockStsAuthenticationProvider,
     private val stubAuthenticationProvider: StubAuthenticationProvider,
-    private val subjectToken: Provider<String?>,
+    private val subjectTokenRepository: SubjectTokenRepository,
 ) : AuthenticationProvider {
     override suspend fun fetchBearerToken(scope: String): AuthenticationResponse {
-        val sub = subjectToken.get()
+        val sub = subjectTokenRepository.subjectToken
         return if (sub == null) {
             stubAuthenticationProvider.fetchBearerToken(scope)
         } else {
