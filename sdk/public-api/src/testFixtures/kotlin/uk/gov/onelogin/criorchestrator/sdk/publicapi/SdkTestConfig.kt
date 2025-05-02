@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.sdk.publicapi
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.features.resume.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 /**
  * Create SDK [Config] for use in tests.

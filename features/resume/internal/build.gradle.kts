@@ -7,9 +7,9 @@ plugins {
 dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
-    api(libs.uk.gov.idcheck.sdk)
 
     implementation(libs.uk.gov.networking)
+    implementation(projects.features.idCheckWrapper.internalApi)
     implementation(projects.features.resume.internalApi)
     implementation(projects.features.resume.publicApi)
     implementation(projects.features.selectDoc.internalApi)
@@ -23,6 +23,7 @@ dependencies {
 
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(libs.uk.gov.logging.testdouble)
+    testImplementation(projects.features.idCheckWrapper.internalApi)
     testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(kotlin("test"))
 }

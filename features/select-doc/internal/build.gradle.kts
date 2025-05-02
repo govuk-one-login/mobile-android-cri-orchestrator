@@ -8,9 +8,9 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
     api(libs.uk.gov.logging.api)
 
-    implementation(libs.uk.gov.idcheck.sdk)
     implementation(projects.features.config.publicApi)
     implementation(projects.features.config.internalApi)
+    implementation(projects.features.idCheckWrapper.publicApi)
     implementation(projects.features.handback.internalApi)
     implementation(projects.features.resume.internalApi)
     implementation(projects.features.resume.publicApi)
