@@ -8,6 +8,7 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -29,9 +30,9 @@ class RemoteBiometricTokenReader
 
         override suspend fun getBiometricToken(
             sessionId: String,
-            documentType: String,
+            documentVariety: DocumentVariety,
         ): BiometricTokenResult {
-            val response = biometricApi.getBiometricToken(sessionId, documentType)
+            val response = biometricApi.getBiometricToken(sessionId, documentVariety)
 
             return when (response) {
                 ApiResponse.Offline -> BiometricTokenResult.Offline

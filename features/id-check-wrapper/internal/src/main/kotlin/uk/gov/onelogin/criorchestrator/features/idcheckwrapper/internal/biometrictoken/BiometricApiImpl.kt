@@ -8,6 +8,8 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiRequest.BiometricRequest
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import javax.inject.Inject
 
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
@@ -21,7 +23,7 @@ class BiometricApiImpl
         LogTagProvider {
         override suspend fun getBiometricToken(
             sessionId: String,
-            documentType: String,
+            documentVariety: DocumentVariety,
         ): ApiResponse {
             val request =
                 ApiRequest.Post(
@@ -29,7 +31,7 @@ class BiometricApiImpl
                     body =
                         BiometricRequest(
                             sessionId,
-                            documentType,
+                            documentVariety.toDocumentType().backendRepresentation,
                         ),
                     contentType = ContentType.APPLICATION_JSON,
                 )

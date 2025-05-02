@@ -30,7 +30,7 @@ class LauncherDataReader
                     .timeout(10.seconds)
                     .first()
 
-            val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety.name)
+            val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety)
             return when (result) {
                 is BiometricTokenResult.Error -> {
                     LauncherDataReaderResult.UnrecoverableError(

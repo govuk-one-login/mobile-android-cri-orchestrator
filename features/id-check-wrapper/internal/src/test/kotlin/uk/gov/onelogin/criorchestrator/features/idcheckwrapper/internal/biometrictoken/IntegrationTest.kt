@@ -9,15 +9,16 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigSto
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 private const val SESSION_ID = "session_id"
-private const val DOCUMENT_TYPE = "document_type"
 
 class IntegrationTest {
+    private val documentType = DocumentVariety.NFC_PASSPORT
     private val configStore = FakeConfigStore()
     private val logger = SystemLogger()
     private val imposter = Imposter.createMockEngine()
@@ -66,7 +67,7 @@ class IntegrationTest {
                     ),
                 )
 
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assertEquals(expected, result)
             assertTrue(logger.contains("Got the biometric token"))
@@ -83,7 +84,7 @@ class IntegrationTest {
         )
 
         runTest {
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Error)
         }
@@ -98,7 +99,7 @@ class IntegrationTest {
             ),
         )
         runTest {
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Error)
         }
@@ -113,7 +114,7 @@ class IntegrationTest {
             ),
         )
         runTest {
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Error)
         }
@@ -128,7 +129,7 @@ class IntegrationTest {
             ),
         )
         runTest {
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, DOCUMENT_TYPE)
+            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
             assert(result is BiometricTokenResult.Error)
         }
