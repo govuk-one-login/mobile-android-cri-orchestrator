@@ -17,12 +17,13 @@ import androidx.compose.ui.unit.Dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import uk.gov.android.ui.componentsv2.bulletedlist.BulletedListTitle
-import uk.gov.android.ui.componentsv2.bulletedlist.GdsBulletedList
-import uk.gov.android.ui.componentsv2.bulletedlist.TitleType.Text
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
+import uk.gov.android.ui.componentsv2.list.GdsBulletedList
+import uk.gov.android.ui.componentsv2.list.ListItem
+import uk.gov.android.ui.componentsv2.list.ListTitle
+import uk.gov.android.ui.componentsv2.list.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
@@ -103,7 +104,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                                 listOf(
                                     R.string.typesofphotoid_nonukpassport_bullet1,
                                     R.string.typesofphotoid_nonukpassport_bullet2,
-                                ).map { stringResource(it) }.toPersistentList(),
+                                ).map { ListItem(stringResource(it)) }.toPersistentList(),
                                 Modifier.padding(horizontal = horizontalPadding),
                             )
                         },
@@ -128,7 +129,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                                     R.string.typesofphotoid_brp_bullet1,
                                     R.string.typesofphotoid_brp_bullet2,
                                     R.string.typesofphotoid_brp_bullet3,
-                                ).map { stringResource(it) }.toPersistentList(),
+                                ).map { ListItem(stringResource(it)) }.toPersistentList(),
                                 Modifier.padding(horizontal = horizontalPadding),
                             )
                         },
@@ -151,8 +152,12 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                             PhotoIDBulletedList(
                                 stringResource(R.string.typesofphotoid_drivinglicence_bulletbody),
                                 persistentListOf(
-                                    stringResource(R.string.typesofphotoid_drivinglicence_bullet1),
-                                    stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
+                                    ListItem(
+                                        stringResource(R.string.typesofphotoid_drivinglicence_bullet1),
+                                    ),
+                                    ListItem(
+                                        stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
+                                    ),
                                 ),
                                 Modifier.padding(horizontal = horizontalPadding),
                             )
@@ -208,14 +213,14 @@ private fun PhotoIDInformation(
 @Composable
 private fun PhotoIDBulletedList(
     title: String,
-    items: ImmutableList<String>,
+    items: ImmutableList<ListItem>,
     modifier: Modifier = Modifier,
 ) {
     GdsBulletedList(
         title =
-            BulletedListTitle(
+            ListTitle(
                 title,
-                Text,
+                TitleType.Text,
             ),
         bulletListItems = items,
         modifier = modifier,

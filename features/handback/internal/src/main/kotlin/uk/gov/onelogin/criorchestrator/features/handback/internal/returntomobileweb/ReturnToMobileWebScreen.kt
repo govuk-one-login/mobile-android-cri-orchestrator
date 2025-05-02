@@ -121,7 +121,7 @@ private fun ReturnToMobileWebScreenContent(
                             contentDescription = stringResource(opens_in_external_browser),
                         ),
                     onClick = onButtonClick,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             },
         )

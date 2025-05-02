@@ -15,15 +15,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import uk.gov.android.ui.componentsv2.bulletedlist.BulletedListTitle
-import uk.gov.android.ui.componentsv2.bulletedlist.GdsBulletedList
-import uk.gov.android.ui.componentsv2.bulletedlist.TitleType.Text
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
+import uk.gov.android.ui.componentsv2.list.GdsBulletedList
+import uk.gov.android.ui.componentsv2.list.ListItem
+import uk.gov.android.ui.componentsv2.list.ListTitle
+import uk.gov.android.ui.componentsv2.list.TitleType
 import uk.gov.android.ui.componentsv2.warning.GdsWarningText
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
@@ -93,15 +94,22 @@ internal fun SelectBrpScreenContent(
         body = { horizontalPadding ->
             item {
                 GdsBulletedList(
-                    persistentListOf(
-                        stringResource(R.string.selectdocument_brp_bullet_brp),
-                        stringResource(R.string.selectdocument_brp_bullet_brc),
-                        stringResource(R.string.selectdocument_brp_bullet_fwp),
-                    ),
+                    bulletListItems =
+                        persistentListOf(
+                            ListItem(
+                                stringResource(R.string.selectdocument_brp_bullet_brp),
+                            ),
+                            ListItem(
+                                stringResource(R.string.selectdocument_brp_bullet_brc),
+                            ),
+                            ListItem(
+                                stringResource(R.string.selectdocument_brp_bullet_fwp),
+                            ),
+                        ),
                     title =
-                        BulletedListTitle(
+                        ListTitle(
                             text = stringResource(R.string.selectdocument_brp_bullet_title),
-                            titleType = Text,
+                            titleType = TitleType.Text,
                         ),
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
