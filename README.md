@@ -57,6 +57,18 @@ You can allow users to continue to prove their identity by placing the `ProveYou
 
 See the [Orchestration of ID Check SDK in One Login app tech design](https://govukverify.atlassian.net/wiki/spaces/DCMAW/pages/3800006819/Orchestration+of+ID+Check+SDK+in+One+Login+app) for more details.
 
+Since the ID Check SDK launched by the CRI Orchestrator uses viewbinding and databinding, consumers of the CRI Orchestrator will need to enable databinding and viewbinding in their app's `build.gradle` file:
+
+```kt
+// build.gradle.kts
+android {
+    buildFeatures {
+        databinding = true
+        viewbinding = true
+    }
+}
+```
+
 See the `test-wrapper` module for an example of how to set this up.
 
 ## Development
