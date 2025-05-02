@@ -3,6 +3,7 @@ import uk.gov.onelogin.criorchestrator.extensions.customisePublications
 plugins {
     listOf(
         "uk.gov.onelogin.criorchestrator.android-lib-config",
+        "uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config",
     ).forEach {
         id(it)
     }

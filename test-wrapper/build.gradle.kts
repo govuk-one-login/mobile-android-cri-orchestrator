@@ -7,6 +7,9 @@ plugins {
     alias(testwrapperlibs.plugins.firebase.crashlytics)
     alias(testwrapperlibs.plugins.google.services)
     alias(libs.plugins.kotlin.serialization) apply true
+    alias(libs.plugins.ksp)
+    alias(testwrapperlibs.plugins.hilt.gradle)
+    id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
 }
 
 configure<ApplicationExtension> {
@@ -22,8 +25,6 @@ configure<ApplicationExtension> {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
-    implementation(testwrapperlibs.firebase.analytics)
-    implementation(testwrapperlibs.firebase.crashlytics)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
@@ -34,6 +35,12 @@ dependencies {
     implementation(projects.features.dev.publicApi)
     implementation(projects.sdk.publicApi)
     implementation(projects.sdk.sharedApi)
+    implementation(testwrapperlibs.firebase.analytics)
+    implementation(testwrapperlibs.firebase.crashlytics)
+    implementation(testwrapperlibs.hilt.android)
+    implementation(testwrapperlibs.uk.gov.idcheck.hilt.config)
+
+    ksp(testwrapperlibs.hilt.compiler)
 
     testImplementation(platform(libs.org.junit.bom))
     testImplementation(testFixtures(projects.sdk.publicApi))
