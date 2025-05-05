@@ -36,7 +36,7 @@ dependencies {
 mavenPublishingConfig {
     mavenConfigBlock {
         name.set(
-            "GOV.UK One Login CRI Orchestrator ID Check Wrapper Screens",
+            "GOV.UK One Login CRI Orchestrator ID Check Wrapper Internal UI",
         )
     }
 }
