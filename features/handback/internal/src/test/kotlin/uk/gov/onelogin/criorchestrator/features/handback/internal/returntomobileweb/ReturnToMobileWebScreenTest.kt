@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb
 
 import android.content.Context
+import androidx.compose.ui.test.assertContentDescriptionContains
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
@@ -10,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
+import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -57,5 +60,19 @@ class ReturnToMobileWebScreenTest {
             ).performClick()
 
         assertEquals(REDIRECT_URI, webNavigator.openUrl)
+    }
+
+    @Test
+    fun `when talkback is enabled, it reads out Gov dot UK correctly`() {
+        val context: Context = ApplicationProvider.getApplicationContext()
+        val title =
+            composeTestRule
+                .onNode(hasText(context.getString(ReturnToMobileWebConstants.titleId)))
+        title.assertContentDescriptionContains("Gov dot UK", true)
+
+        val body =
+            composeTestRule
+                .onNode(hasText(context.getString(R.string.handback_returntomobileweb_body2)))
+        body.assertContentDescriptionContains("Gov dot UK", true)
     }
 }

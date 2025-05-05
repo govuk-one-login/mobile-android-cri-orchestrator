@@ -6,9 +6,9 @@
     <string name="handback_unrecoverableerror_button">Gwiriwch a allwch brofi eich hunaniaeth mewn ffordd arall</string>
 
     <string name="handback_returntomobileweb_title">Ewch yn ôl i GOV.UK i orffen profi pwy ydych chi</string>
-    <string name="handback_returntomobileweb_title_content_description">Ewch yn ôl i GOV.UK i orffen profi pwy ydych chi</string>
+    <string name="handback_returntomobileweb_title_content_description">Ewch yn ôl i Gov dot UK i orffen profi pwy ydych chi</string>
     <string name="handback_returntomobileweb_body1">Rydych chi wedi cyflwyno’ch gwybodaeth yn llwyddiannus.</string>
     <string name="handback_returntomobileweb_body2">Nawr gallwch orffen profi pwy ydych chi ar wefan GOV.UK.</string>
-    <string name="handback_returntomobileweb_body2_content_description">Nawr gallwch orffen profi pwy ydych chi ar wefan GOV.UK.</string>
+    <string name="handback_returntomobileweb_body2_content_description">Nawr gallwch orffen profi pwy ydych chi ar wefan Gov dot UK.</string>
     <string name="handback_returntomobileweb_button">Parhau i wefan GOV.UK</string>
 </resources>
