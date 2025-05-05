@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
@@ -28,6 +28,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.c
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckState
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckViewModel
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session

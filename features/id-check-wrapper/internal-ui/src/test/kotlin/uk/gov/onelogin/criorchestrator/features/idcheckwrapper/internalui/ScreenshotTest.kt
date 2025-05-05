@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector

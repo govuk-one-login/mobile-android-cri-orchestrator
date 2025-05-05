@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest

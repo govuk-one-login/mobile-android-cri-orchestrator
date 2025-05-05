@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui
 
 import android.content.Context
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
@@ -23,6 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckViewModel
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider

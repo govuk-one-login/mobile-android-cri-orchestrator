@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui
 
 import org.mockito.Mockito.mock
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
@@ -11,6 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckViewModel
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 
 fun SyncIdCheckViewModel.Companion.createTestInstance(

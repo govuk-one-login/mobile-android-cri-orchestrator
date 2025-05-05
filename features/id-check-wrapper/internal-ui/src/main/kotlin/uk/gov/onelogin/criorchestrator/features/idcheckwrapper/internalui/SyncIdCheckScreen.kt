@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui
 
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -21,9 +21,12 @@ import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckAction
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckState
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckViewModel
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui.activity.UnavailableIdCheckSdkActivityResultContract
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui.activity.toIdCheckSdkActivityParameters
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEffect
 
@@ -71,8 +74,8 @@ internal fun SyncIdCheckScreen(
                     SyncIdCheckScreenManualLauncherContent(
                         modifier = modifier,
                         launcherData = state.launcherData,
-                        selectedExitState = state.manualLauncher.selectedExitState,
-                        exitStateOptions = state.manualLauncher.exitStateOptions,
+                        selectedExitState = state.manualLauncher!!.selectedExitState,
+                        exitStateOptions = state.manualLauncher!!.exitStateOptions,
                         onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
                         onExitStateSelected = { viewModel.onStubExitStateSelected(it) },
                     )

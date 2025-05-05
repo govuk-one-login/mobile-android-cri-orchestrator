@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalui.activity
 
 import android.content.Context
 import android.content.Intent

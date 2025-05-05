@@ -5,6 +5,8 @@ import com.lemonappdev.konsist.api.ext.list.withImport
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkWrapperInternalPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
@@ -14,6 +16,8 @@ class IdCheckSdkEncapsulationTest {
         private val idCheckSdkPackage = """uk\.gov\.idcheck\..*""".toRegex()
         private val idCheckSdkWrapperInternalPackage =
             """uk\.gov\..*\.features\.idcheckwrapper.internal(\..*|$)""".toRegex()
+        private val idCheckSdkWrapperInternalUiPackage =
+            """uk\.gov\..*\.features\.idcheckwrapper.internalui(\..*|$)""".toRegex()
     }
 
     /**
@@ -22,8 +26,8 @@ class IdCheckSdkEncapsulationTest {
      * dedicated wrapper module.
      */
     @Test
-    fun `id check sdk is referenced inside of the dedicated wrapper module`() {
-        val filesImportingIdCheckSdk =
+    fun `id check sdk is referenced inside of the dedicated wrapper modules`() {
+        val internalFilesImportingIdCheckSdk =
             Konsist
                 .defaultScope()
                 .files
@@ -32,7 +36,17 @@ class IdCheckSdkEncapsulationTest {
                     it.hasNameMatching(idCheckSdkPackage)
                 }
 
-        Assertions.assertTrue(filesImportingIdCheckSdk.isNotEmpty())
+        val internalUiFilesImportingIdCheckSdk =
+            Konsist
+                .defaultScope()
+                .files
+                .withPackageMatching(idCheckSdkWrapperInternalPackage)
+                .withImport {
+                    it.hasNameMatching(idCheckSdkPackage)
+                }
+
+        Assertions.assertTrue(internalFilesImportingIdCheckSdk.isNotEmpty())
+        Assertions.assertTrue(internalUiFilesImportingIdCheckSdk.isNotEmpty())
     }
 
     @Test
@@ -43,7 +57,12 @@ class IdCheckSdkEncapsulationTest {
             .withImport {
                 it.hasNameMatching(idCheckSdkPackage)
             }.assertTrue {
-                it.hasPackageMatching(idCheckSdkWrapperInternalPackage)
+                it.hasPackageMatching(
+                    idCheckSdkWrapperInternalPackage,
+                ) ||
+                    it.hasPackageMatching(
+                        idCheckSdkWrapperInternalUiPackage,
+                    )
             }
     }
 }

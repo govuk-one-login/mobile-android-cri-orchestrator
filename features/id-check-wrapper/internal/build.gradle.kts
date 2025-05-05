@@ -1,13 +1,12 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
-    id("uk.gov.onelogin.criorchestrator.ui-config")
     id("uk.gov.onelogin.criorchestrator.imposter-test-config")
     id("uk.gov.onelogin.criorchestrator.analytics-report")
+    id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
     alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.uk.gov.idcheck.repositories.api)
     implementation(libs.uk.gov.idcheck.sdk)
     implementation(libs.uk.gov.idcheck.ui.presentation)
@@ -20,7 +19,6 @@ dependencies {
     implementation(projects.features.handback.internalApi)
     implementation(projects.features.error.internalApi)
     implementation(projects.features.config.internalApi)
-    implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
     implementation(libs.uk.gov.networking)
