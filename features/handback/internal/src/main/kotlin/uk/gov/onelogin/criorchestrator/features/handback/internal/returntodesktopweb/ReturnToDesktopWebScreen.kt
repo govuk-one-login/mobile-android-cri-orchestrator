@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -45,6 +47,8 @@ fun ReturnToDesktopWebScreenContent(modifier: Modifier = Modifier) {
                     text = stringResource(ReturnToDesktopWebConstants.titleId),
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                     textAlign = GdsHeadingAlignment.CenterAligned,
+                    customContentDescription =
+                        stringResource(R.string.handback_returntodesktopweb_title_content_description),
                 )
             },
             body = { horizontalPadding ->
@@ -59,13 +63,19 @@ fun ReturnToDesktopWebScreenContent(modifier: Modifier = Modifier) {
                     )
                 }
                 item {
+                    val customContentDescription =
+                        stringResource(R.string.handback_returntodesktopweb_body2_content_description)
+
                     Text(
                         text = stringResource(R.string.handback_returntodesktopweb_body2),
                         textAlign = TextAlign.Center,
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = horizontalPadding),
+                                .padding(horizontal = horizontalPadding)
+                                .semantics {
+                                    contentDescription = customContentDescription
+                                },
                     )
                 }
             },
