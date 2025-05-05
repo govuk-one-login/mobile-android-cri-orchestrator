@@ -41,9 +41,7 @@ class ProveYourIdentityModalAnalyticsTest {
                 ),
         )
 
-    // FIXME This content description should be "Cancel button"
-    //  https://govukverify.atlassian.net/browse/DCMAW-12003
-    private val closeButton = hasContentDescription("Close Button")
+    private val closeButton = hasContentDescription("Close")
 
     @Test
     fun `when modal close button is clicked, it sends analytics`() {
