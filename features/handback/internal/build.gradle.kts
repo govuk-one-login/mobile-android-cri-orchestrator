@@ -13,9 +13,10 @@ dependencies {
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
+    implementation(projects.features.session.internalApi)
 
     testImplementation(testFixtures(projects.libraries.analytics))
-
+    testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(libs.uk.gov.logging.testdouble)
 }
 

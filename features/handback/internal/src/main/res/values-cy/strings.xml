@@ -4,4 +4,11 @@
     <string name="handback_unrecoverableerror_body1">Ni allwch ddefnyddio’r ap hwn i brofi pwy ydych chi ar hyn o bryd.</string>
     <string name="handback_unrecoverableerror_body2">Gallwch roi cynnig arall yn nes ymlaen, neu wirio a allwch brofi pwy ydych chi mewn ffordd arall.</string>
     <string name="handback_unrecoverableerror_button">Gwiriwch a allwch brofi eich hunaniaeth mewn ffordd arall</string>
+
+    <string name="handback_returntomobileweb_title">Ewch yn ôl i GOV.UK i orffen profi pwy ydych chi</string>
+    <string name="handback_returntomobileweb_title_content_description">Ewch yn ôl i Gov dot yoo kay i orffen profi pwy ydych chi</string>
+    <string name="handback_returntomobileweb_body1">Rydych chi wedi cyflwyno’ch gwybodaeth yn llwyddiannus.</string>
+    <string name="handback_returntomobileweb_body2">Nawr gallwch orffen profi pwy ydych chi ar wefan GOV.UK.</string>
+    <string name="handback_returntomobileweb_body2_content_description">Nawr gallwch orffen profi pwy ydych chi ar wefan Gov dot yoo kay.</string>
+    <string name="handback_returntomobileweb_button">Parhau i wefan GOV.UK</string>
 </resources>
