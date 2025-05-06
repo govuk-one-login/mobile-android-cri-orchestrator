@@ -12,7 +12,7 @@ class ModuleArchitectureTest {
     companion object {
         private val libraryPackage = """uk\.gov\..*\.libraries\..*""".toRegex()
         private val featurePackageAny =
-            """(uk\.gov\..*\.features\..*)\.(?:internal|internalapi|publicapi|internalui)(?:\..*|$)""".toRegex()
+            """(uk\.gov\..*\.features\..*)\.(?:internal|internalapi|publicapi)(?:\..*|$)""".toRegex()
         private val featurePackageInternal =
             """(uk\.gov\..*\.features\..*)\.internal(?:\..*|$)""".toRegex()
         private val featurePackageApi =
