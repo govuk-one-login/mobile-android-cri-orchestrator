@@ -70,12 +70,13 @@ internal fun SyncIdCheckScreen(
     state.let { state ->
         when (state) {
             is SyncIdCheckState.Display -> {
-                if (state.manualLauncher != null) {
+                val manualLauncher = state.manualLauncher
+                if (manualLauncher != null) {
                     SyncIdCheckScreenManualLauncherContent(
                         modifier = modifier,
                         launcherData = state.launcherData,
-                        selectedExitState = state.manualLauncher!!.selectedExitState,
-                        exitStateOptions = state.manualLauncher!!.exitStateOptions,
+                        selectedExitState = manualLauncher.selectedExitState,
+                        exitStateOptions = manualLauncher.exitStateOptions,
                         onLaunchRequest = { viewModel.onIdCheckSdkLaunchRequest(state.launcherData) },
                         onExitStateSelected = { viewModel.onStubExitStateSelected(it) },
                     )
