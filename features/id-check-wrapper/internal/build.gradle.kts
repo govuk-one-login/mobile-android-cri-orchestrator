@@ -2,6 +2,7 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
     id("uk.gov.onelogin.criorchestrator.imposter-test-config")
+    id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
     id("uk.gov.onelogin.criorchestrator.analytics-report")
     alias(libs.plugins.kotlin.serialization)
 }
