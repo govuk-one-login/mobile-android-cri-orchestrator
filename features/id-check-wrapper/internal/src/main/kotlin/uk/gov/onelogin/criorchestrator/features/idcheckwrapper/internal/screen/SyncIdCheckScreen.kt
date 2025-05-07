@@ -126,11 +126,14 @@ private fun SyncIdCheckActionHandler(
                         HandbackDestinations.ReturnToDesktopWeb,
                     )
 
-                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
-                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
-                ->
+                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb ->
                     navController.navigate(
-                        HandbackDestinations.ConfirmAbort,
+                        HandbackDestinations.ConfirmAbortToDesktopWeb,
+                    )
+
+                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb ->
+                    navController.navigate(
+                        HandbackDestinations.ConfirmAbortToMobileWeb
                     )
 
                 SyncIdCheckAction.NavigateToRecoverableError -> {
