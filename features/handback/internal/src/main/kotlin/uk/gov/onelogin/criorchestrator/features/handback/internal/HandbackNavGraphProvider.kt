@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal
 
-import androidx.compose.material3.Text
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -8,6 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.ConfirmAbort
+import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.WebNavigator
@@ -27,6 +28,8 @@ class HandbackNavGraphProvider
         private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
         private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
+        @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
@@ -45,7 +48,9 @@ class HandbackNavGraphProvider
             }
 
             composable<HandbackDestinations.ReturnToDesktopWeb> {
-                Text("Return to GOV.UK to finish proving your identity | DCMAW-11596")
+                ReturnToDesktopWebScreen(
+                    viewModel = viewModel(factory = returnToDesktopViewModelFactory),
+                )
             }
 
             composable<HandbackDestinations.ConfirmAbort> {
