@@ -34,7 +34,6 @@ dependencies {
     implementation(projects.features.config.publicApi)
     implementation(projects.features.dev.publicApi)
     implementation(projects.sdk.publicApi)
-    implementation(projects.sdk.sharedApi)
     implementation(testwrapperlibs.firebase.analytics)
     implementation(testwrapperlibs.firebase.crashlytics)
     implementation(testwrapperlibs.hilt.android)
