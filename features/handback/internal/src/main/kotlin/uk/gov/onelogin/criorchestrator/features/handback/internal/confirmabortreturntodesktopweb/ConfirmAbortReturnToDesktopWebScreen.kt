@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -19,8 +20,15 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-fun ConfirmAbortReturnToDesktopWebScreen(modifier: Modifier = Modifier) {
+fun ConfirmAbortReturnToDesktopWebScreen(
+    viewModel: ConfirmAbortReturnToDesktopWebViewModel,
+    modifier: Modifier = Modifier,
+) {
     ConfirmAbortReturnToDesktopWebContent(modifier)
+
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+    }
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
@@ -34,7 +42,11 @@ internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier
             title = { horizontalPadding ->
                 GdsHeading(
                     text = stringResource(ConfirmAbortReturnToDesktopWebConstants.titleId),
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = horizontalPadding),
+                    customContentDescription =
+                        stringResource(R.string.handback_confirmabortreturntodesktopweb_title_content_description),
                 )
             },
             body = { horizontalPadding ->
