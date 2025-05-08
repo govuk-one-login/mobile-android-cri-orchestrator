@@ -45,6 +45,7 @@ class ReturnToDesktopWebScreenAnalyticsTest {
         composeTestRule.setContent {
             ReturnToDesktopWebScreen(
                 viewModel = viewModel,
+                reviewRequester = FakeReviewRequester(),
             )
         }
     }

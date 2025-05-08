@@ -15,6 +15,9 @@ dependencies {
     implementation(projects.libraries.navigation)
     implementation(projects.features.session.internalApi)
 
+    implementation(libs.google.play.review)
+    implementation(libs.google.play.review.kotlin)
+
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(libs.uk.gov.logging.testdouble)
