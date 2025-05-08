@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmaborttomobileweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

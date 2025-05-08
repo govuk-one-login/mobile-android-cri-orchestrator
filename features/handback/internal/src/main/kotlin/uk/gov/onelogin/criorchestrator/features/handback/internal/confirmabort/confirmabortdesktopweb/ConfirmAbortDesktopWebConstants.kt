@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortdesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb
 
 import androidx.annotation.StringRes
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R

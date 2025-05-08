@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortreturntodesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb
 
 import androidx.lifecycle.ViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
