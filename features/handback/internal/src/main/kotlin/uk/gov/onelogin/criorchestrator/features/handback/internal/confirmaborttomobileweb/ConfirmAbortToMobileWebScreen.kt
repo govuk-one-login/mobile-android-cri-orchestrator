@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -25,17 +26,40 @@ import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-internal fun ConfirmAbortToMobileWeb(modifier: Modifier = Modifier) {
-    ConfirmAbortToMobileWebContent(modifier)
+internal fun ConfirmAbortToMobileWeb(
+    viewModel: ConfirmAbortToMobileWebViewModel,
+    webNavigator: WebNavigator,
+    modifier: Modifier = Modifier,
+) {
+    ConfirmAbortToMobileWebContent(
+        onButtonClick = viewModel::onContinueToGovUk,
+        modifier = modifier,
+    )
+
+    LaunchedEffect(viewModel) {
+        viewModel.onScreenStart()
+
+        viewModel.actions.collect { action ->
+            when (action) {
+                is ConfirmAbortToMobileWebAction.ContinueToGovUk -> {
+                    webNavigator.openWebPage(action.redirectUri)
+                }
+            }
+        }
+    }
 }
 
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
+internal fun ConfirmAbortToMobileWebContent(
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         modifier = modifier,
         color = colorScheme.background,
@@ -78,7 +102,7 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
             primaryButton = {
                 GdsButton(
                     text = stringResource(ConfirmAbortToMobileWebConstants.buttonId),
-                    onClick = { },
+                    onClick = onButtonClick,
                     buttonType =
                         ButtonType.Icon(
                             buttonColors =
@@ -103,6 +127,6 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
 @Composable
 internal fun PreviewConfirmAbort() {
     GdsTheme {
-        ConfirmAbortToMobileWebContent()
+        ConfirmAbortToMobileWebContent(onButtonClick = {})
     }
 }

@@ -12,4 +12,5 @@ enum class HandbackScreenId(
 
     ConfirmAbortToDesktopWeb(rawId = "8d09e79f-f242-48c8-a456-4f302c23e6cb"),
     ConfirmAbortReturnToDesktopWeb(rawId = "8d09e79f-f242-48c8-a456-4f302c23e6cb"),
+    ConfirmAbortToMobileWeb(rawId = "c4b6167a-09b3-4671-b9d7-30f7acd02bdb"),
 }
