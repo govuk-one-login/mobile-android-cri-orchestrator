@@ -9,6 +9,7 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortdesktopweb.ConfirmAbortDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortdesktopweb.ConfirmAbortToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmaborttomobileweb.ConfirmAbortToMobileWeb
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
@@ -35,6 +36,8 @@ class HandbackNavGraphProvider
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmAbortDesktopWebViewModelModule.FACTORY_NAME)
         private val confirmAbortToDesktopWebViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmAbortReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        private val confirmAbortReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
@@ -66,7 +69,9 @@ class HandbackNavGraphProvider
             }
 
             composable<HandbackDestinations.ConfirmAbortReturnDesktopWeb> {
-                ConfirmAbortReturnToDesktopWebScreen()
+                ConfirmAbortReturnToDesktopWebScreen(
+                    viewModel = viewModel(factory = confirmAbortReturnToDesktopWebViewModelFactory),
+                )
             }
 
             composable<HandbackDestinations.ConfirmAbortToMobileWeb> {
