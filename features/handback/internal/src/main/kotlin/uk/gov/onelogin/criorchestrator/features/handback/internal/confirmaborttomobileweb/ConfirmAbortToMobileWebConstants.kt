@@ -9,5 +9,4 @@ internal object ConfirmAbortToMobileWebConstants {
 
     @StringRes
     val buttonId: Int = R.string.handback_confirmaborttomobileweb_button
-
 }
