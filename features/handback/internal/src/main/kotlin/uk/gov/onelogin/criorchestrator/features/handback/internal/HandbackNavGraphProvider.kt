@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb.ConfirmAbortToMobileWeb
@@ -25,6 +25,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
+@Suppress("LongParameterList")
 @ContributesMultibinding(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
     @Inject
@@ -65,7 +66,7 @@ class HandbackNavGraphProvider
             }
 
             composable<HandbackDestinations.ConfirmAbortDesktopWeb> {
-                ConfirmAbortToDesktopWebScreen(
+                ConfirmAbortDesktopWebScreen(
                     viewModel = viewModel(factory = confirmAbortToDesktopWebViewModelFactory),
                     navController = navController,
                 )

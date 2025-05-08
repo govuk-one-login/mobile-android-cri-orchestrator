@@ -24,7 +24,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.Handbac
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-fun ConfirmAbortToDesktopWebScreen(
+fun ConfirmAbortDesktopWebScreen(
     viewModel: ConfirmAbortDesktopWebViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
