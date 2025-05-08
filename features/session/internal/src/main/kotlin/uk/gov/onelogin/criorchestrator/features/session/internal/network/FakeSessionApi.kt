@@ -11,7 +11,6 @@ class FakeSessionApi
                 """
                 {
                     "sessionId": "test session ID",
-                    "redirectUri": "https://example/redirect",
                     "state": "11112222333344445555666677778888"
                 }
                 """.trimIndent(),

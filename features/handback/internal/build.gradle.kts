@@ -17,6 +17,7 @@ dependencies {
 
     implementation(libs.google.play.review)
     implementation(libs.google.play.review.kotlin)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(testFixtures(projects.features.session.internalApi))
