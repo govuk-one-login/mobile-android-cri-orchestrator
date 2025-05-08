@@ -19,6 +19,7 @@ dependencies {
 
     implementation(libs.google.play.review)
     implementation(libs.google.play.review.kotlin)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     testFixturesImplementation(testFixtures(projects.libraries.navigation))
 
