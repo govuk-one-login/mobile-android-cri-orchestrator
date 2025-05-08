@@ -1,0 +1,50 @@
+import android.content.Context
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.performClick
+import androidx.navigation.NavController
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebConstants
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+
+@RunWith(AndroidJUnit4::class)
+class ConfirmAbortDesktopWebScreenTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+    private val navController: NavController = mock()
+    private val context: Context = ApplicationProvider.getApplicationContext()
+    private val continueButton = hasText(context.getString(ConfirmAbortDesktopWebConstants.buttonId))
+
+    private val viewModel =
+        ConfirmAbortDesktopWebViewModel(
+            analytics = mock(),
+        )
+
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            ConfirmAbortDesktopWebScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
+        }
+    }
+
+    @Test
+    fun `when continue is clicked, it navigates to return to gov uk`() {
+        composeTestRule
+            .onNode(continueButton)
+            .performClick()
+
+        verify(navController).navigate(HandbackDestinations.ConfirmAbortReturnDesktopWeb)
+    }
+}
