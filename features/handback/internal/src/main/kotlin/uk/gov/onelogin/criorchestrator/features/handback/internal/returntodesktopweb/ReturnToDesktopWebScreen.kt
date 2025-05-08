@@ -1,5 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -24,6 +28,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 @Composable
 fun ReturnToDesktopWebScreen(
     viewModel: ReturnToDesktopWebViewModel,
+    reviewRequester: ReviewRequester,
     modifier: Modifier = Modifier,
 ) {
     BackHandler(enabled = true) {
@@ -38,6 +43,28 @@ fun ReturnToDesktopWebScreen(
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
+
+    val activity = LocalContext.current.findAndroidActivity()
+    LaunchedEffect(viewModel.actions) {
+        viewModel.actions.collect { action ->
+            when (action) {
+                is ReturnToDesktopWebAction.RequestReview -> {
+                    activity?.let {
+                        reviewRequester.requestReview(it)
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun Context.findAndroidActivity(): Activity? {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    return null
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
