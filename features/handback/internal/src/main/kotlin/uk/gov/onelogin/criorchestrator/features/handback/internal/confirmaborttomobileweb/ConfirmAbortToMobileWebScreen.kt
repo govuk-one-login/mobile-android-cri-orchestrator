@@ -25,15 +25,14 @@ import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmaborttodesktopweb.ConfirmAbortToDesktopWebConstants
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun ConfirmAbortToMobileWeb(modifier: Modifier = Modifier) {
-
     ConfirmAbortToMobileWebContent(modifier)
 }
 
+@Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
@@ -44,8 +43,8 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(ConfirmAbortToDesktopWebConstants.confirmAbortTitleId),
-                    modifier = Modifier.padding(horizontal = horizontalPadding)
+                    text = stringResource(ConfirmAbortToMobileWebConstants.titleId),
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },
             body = { horizontalPadding ->
@@ -55,12 +54,13 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
                     Text(
                         text = stringResource(R.string.handback_confirmabort_body1),
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = horizontalPadding)
-                            .semantics {
-                                contentDescription = customContentDescription
-                            }
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = horizontalPadding)
+                                .semantics {
+                                    contentDescription = customContentDescription
+                                },
                     )
                 }
 
@@ -68,9 +68,10 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
                     Text(
                         text = stringResource(R.string.handback_confirmabort_body2),
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = horizontalPadding)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = horizontalPadding),
                     )
                 }
             },
@@ -78,21 +79,22 @@ internal fun ConfirmAbortToMobileWebContent(modifier: Modifier = Modifier) {
                 GdsButton(
                     text = stringResource(ConfirmAbortToMobileWebConstants.buttonId),
                     onClick = { },
-                    buttonType = ButtonType.Icon(
-                        buttonColors =
-                            ButtonDefaults.buttonColors(
-                                containerColor = colorScheme.primary,
-                                contentColor = colorScheme.onPrimary,
-                                disabledContainerColor = m3_disabled,
-                                disabledContentColor = m3_onDisabled,
-                            ),
-                        fontWeight = FontWeight.Bold,
-                        iconImage = ImageVector.vectorResource(ic_external_site),
-                        contentDescription = "Opens in external browser"
-                    ),
-                    modifier = Modifier.fillMaxWidth()
+                    buttonType =
+                        ButtonType.Icon(
+                            buttonColors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = colorScheme.primary,
+                                    contentColor = colorScheme.onPrimary,
+                                    disabledContainerColor = m3_disabled,
+                                    disabledContentColor = m3_onDisabled,
+                                ),
+                            fontWeight = FontWeight.Bold,
+                            iconImage = ImageVector.vectorResource(ic_external_site),
+                            contentDescription = "Opens in external browser",
+                        ),
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            }
+            },
         )
     }
 }

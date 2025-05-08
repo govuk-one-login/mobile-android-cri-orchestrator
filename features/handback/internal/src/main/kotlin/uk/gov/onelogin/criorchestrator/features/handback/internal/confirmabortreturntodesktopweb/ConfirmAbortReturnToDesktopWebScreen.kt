@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmaborttodesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortreturntodesktopweb
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,7 +20,6 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 
 @Composable
 fun ConfirmAbortReturnToDesktopWebScreen(modifier: Modifier = Modifier) {
-
     ConfirmAbortReturnToDesktopWebContent(modifier)
 }
 
@@ -34,11 +33,10 @@ internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(ConfirmAbortToDesktopWebConstants.confirmAbortReturnTitleId),
-                    modifier = Modifier.padding(horizontal = horizontalPadding)
+                    text = stringResource(ConfirmAbortReturnToDesktopWebConstants.titleId),
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },
-
             body = { horizontalPadding ->
                 item {
                     val customContentDescription =
@@ -46,12 +44,13 @@ internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier
                     Text(
                         text = stringResource(R.string.handback_confirmabortreturntodesktopweb_body1),
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = horizontalPadding)
-                            .semantics {
-                                contentDescription = customContentDescription
-                            }
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = horizontalPadding)
+                                .semantics {
+                                    contentDescription = customContentDescription
+                                },
                     )
                 }
             },
@@ -61,7 +60,7 @@ internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier
 
 @Composable
 @LightDarkBothLocalesPreview
-private fun PreviewConfirmAbortReturnToDesktopWeb() {
+internal fun PreviewConfirmAbortReturnToDesktopWeb() {
     GdsTheme {
         ConfirmAbortReturnToDesktopWebContent()
     }

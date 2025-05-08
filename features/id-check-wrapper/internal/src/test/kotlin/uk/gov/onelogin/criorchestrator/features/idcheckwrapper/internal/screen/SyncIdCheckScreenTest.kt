@@ -138,7 +138,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortToDesktopWeb,
+            HandbackDestinations.ConfirmAbortDesktopWeb,
         )
     }
 
