@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="handback_unrecoverableerror_title">Sorry, there\'s a problem</string>
+    <string name="handback_unrecoverableerror_title">Sorry, there’s a problem</string>
     <string name="handback_unrecoverableerror_body1">You cannot use this app to prove your identity at the moment.</string>
     <string name="handback_unrecoverableerror_body2">You can try again later, or check if you can prove your identity another way.</string>
     <string name="handback_unrecoverableerror_button">Check if you can prove your identity another way</string>
 
     <string name="handback_returntomobileweb_title">Return to GOV.UK to finish proving your identity</string>
     <string name="handback_returntomobileweb_title_content_description">Return to Gov dot UK to finish proving your identity</string>
-    <string name="handback_returntomobileweb_body1">You\'ve successfully submitted your information.</string>
+    <string name="handback_returntomobileweb_body1">You’ve successfully submitted your information.</string>
     <string name="handback_returntomobileweb_body2">You can now finish proving your identity on the GOV.UK website.</string>
     <string name="handback_returntomobileweb_body2_content_description">You can now finish proving your identity on the Gov dot UK website.</string>
     <string name="handback_returntomobileweb_button">Continue to the GOV.UK website</string>
@@ -19,9 +19,9 @@
     <string name="handback_returntodesktopweb_body2_content_description">To finish proving your identity, you need to return to the Gov dot UK page you left open on your computer or tablet.</string>
 
     <string name="handback_confirmabort_title">Check if you can prove your identity another way</string>
-    <string name="handback_confirmabort_body1">You\'re about to leave this app and go back to the GOV.UK website.</string>
-    <string name="handback_confirmabort_body1_content_description">You\'re about to leave this app and go back to the Gov dot UK website</string>
-    <string name="handback_confirmabort_body2">Continuing will delete any progress you\'ve made in the app.</string>
+    <string name="handback_confirmabort_body1">You’re about to leave this app and go back to the GOV.UK website.</string>
+    <string name="handback_confirmabort_body1_content_description">You’re about to leave this app and go back to the Gov dot UK website</string>
+    <string name="handback_confirmabort_body2">Continuing will delete any progress you’ve made in the app.</string>
     <string name="handback_confirmaborttodesktopweb_button">Continue</string>
     <string name="handback_confirmaborttomobileweb_button">Continue to the GOV.UK website</string>
     <string name="handback_confirmabortreturntodesktopweb_title">Return to GOV.UK on your computer or tablet</string>
