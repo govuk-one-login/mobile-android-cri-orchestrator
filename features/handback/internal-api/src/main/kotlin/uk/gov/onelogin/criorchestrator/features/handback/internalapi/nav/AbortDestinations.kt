@@ -12,5 +12,4 @@ sealed interface AbortDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object ConfirmAbortMobile : AbortDestinations
-
 }

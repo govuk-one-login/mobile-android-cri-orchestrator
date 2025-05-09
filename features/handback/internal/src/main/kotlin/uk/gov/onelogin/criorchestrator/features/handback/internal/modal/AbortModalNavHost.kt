@@ -11,9 +11,9 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 fun AbortModalNavHost(
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
     startDestination: AbortDestinations,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) = CompositeNavHost(
     startDestination = startDestination,
     navGraphProviders = navGraphProviders,
-    modifier = modifier
+    modifier = modifier,
 )

@@ -20,8 +20,5 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data object ConfirmAbortDesktopWeb : HandbackDestinations
 
     @Serializable
-    data object ConfirmAbortReturnDesktopWeb : HandbackDestinations
-
-    @Serializable
     data object ConfirmAbortToMobileWeb : HandbackDestinations
 }

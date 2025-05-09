@@ -13,17 +13,17 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 fun AbortModal(
     startDestination: AbortDestinations,
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     FullScreenDialogue(
         onDismissRequest = onDismiss,
         topAppBar = {
             FullScreenDialogueTopAppBar(onCloseClick = onDismiss)
-        }
+        },
     ) {
         AbortModalNavHost(
             startDestination = startDestination,
-            navGraphProviders = navGraphProviders
+            navGraphProviders = navGraphProviders,
         )
     }
 }
