@@ -16,12 +16,13 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     @Serializable
     data object ReturnToDesktopWeb : HandbackDestinations
 
+    // This should be removed with DCMAW-13211
     @Serializable
     data object ConfirmAbort : HandbackDestinations
 
     @Serializable
-    data object ConfirmAbortDesktopWeb : HandbackDestinations
+    data object ConfirmAbortDesktop : HandbackDestinations
 
     @Serializable
-    data object ConfirmAbortToMobileWeb : HandbackDestinations
+    data object ConfirmAbortMobile : HandbackDestinations
 }

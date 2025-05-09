@@ -6,12 +6,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb.ConfirmAbortToMobileWeb
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb.ConfirmAbortToMobileWebViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktop.ConfirmAbortDesktopViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktop.ConfirmAbortDesktopWebScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile.ConfirmAbortMobileScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile.ConfirmAbortMobileViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop.ConfirmAbortReturnToDesktopViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop.ConfirmAbortReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
@@ -23,17 +23,17 @@ import javax.inject.Named
 class AbortNavGraphProvider
     @Inject
     constructor(
-        @Named(ConfirmAbortToMobileWebViewModelModule.FACTORY_NAME)
+        @Named(ConfirmAbortMobileViewModelModule.FACTORY_NAME)
         private val confirmAbortToMobileWebViewModelFactory: ViewModelProvider.Factory,
-        @Named(ConfirmAbortDesktopWebViewModelModule.FACTORY_NAME)
+        @Named(ConfirmAbortDesktopViewModelModule.FACTORY_NAME)
         private val confirmAbortToDesktopWebViewModelFactory: ViewModelProvider.Factory,
-        @Named(ConfirmAbortReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        @Named(ConfirmAbortReturnToDesktopViewModelModule.FACTORY_NAME)
         private val confirmAbortReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
             composable<AbortDestinations.ConfirmAbortMobile> {
-                ConfirmAbortToMobileWeb(
+                ConfirmAbortMobileScreen(
                     viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),
                     webNavigator = webNavigator,
                 )
