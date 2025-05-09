@@ -23,8 +23,12 @@ class ReturnToDesktopWebViewModel(
         )
 
         viewModelScope.launch {
-            delay(2_000)
+            delay(TWO_SECONDS)
             _actions.emit(ReturnToDesktopWebAction.RequestReview)
         }
+    }
+
+    companion object {
+        const val TWO_SECONDS = 2000L
     }
 }
