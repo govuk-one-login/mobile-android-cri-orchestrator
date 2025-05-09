@@ -26,60 +26,61 @@ import javax.inject.Named
 @Suppress("LongParameterList")
 @ContributesMultibinding(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
-@Inject
-constructor(
-    @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
-    private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
-    @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
-    private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
-    @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
-    private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
-    private val webNavigator: WebNavigator,
-    private val abortModalNavGraphProvider: AbortNavGraphProvider
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-        composable<HandbackDestinations.UnrecoverableError> {
-            UnrecoverableErrorScreen(
-                navController = navController,
-                viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
-            )
-        }
+    @Inject
+    constructor(
+        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
+        private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
+        @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
+        private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
+        @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
+        private val webNavigator: WebNavigator,
+        private val abortModalNavGraphProvider: AbortNavGraphProvider,
+    ) : ProveYourIdentityNavGraphProvider {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+            composable<HandbackDestinations.UnrecoverableError> {
+                UnrecoverableErrorScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
+                )
+            }
 
-        composable<HandbackDestinations.ReturnToMobileWeb> {
-            ReturnToMobileWebScreen(
-                viewModel = viewModel(factory = returnToMobileViewModelFactory),
-                webNavigator = webNavigator,
-            )
-        }
+            composable<HandbackDestinations.ReturnToMobileWeb> {
+                ReturnToMobileWebScreen(
+                    viewModel = viewModel(factory = returnToMobileViewModelFactory),
+                    webNavigator = webNavigator,
+                )
+            }
 
-        composable<HandbackDestinations.ReturnToDesktopWeb> {
-            ReturnToDesktopWebScreen(
-                viewModel = viewModel(factory = returnToDesktopViewModelFactory),
-            )
-        }
+            composable<HandbackDestinations.ReturnToDesktopWeb> {
+                ReturnToDesktopWebScreen(
+                    viewModel = viewModel(factory = returnToDesktopViewModelFactory),
+                )
+            }
 
-        composable<HandbackDestinations.ConfirmAbortDesktopWeb> {
-            AbortModal(
-                startDestination = AbortDestinations.ConfirmAbortDesktop,
-                navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                onDismiss = { navController.popBackStack() }
-            )
-        }
+            composable<HandbackDestinations.ConfirmAbortDesktopWeb> {
+                AbortModal(
+                    startDestination = AbortDestinations.ConfirmAbortDesktop,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismiss = { navController.popBackStack() },
+                )
+            }
 
-        composable<HandbackDestinations.ConfirmAbortToMobileWeb> {
-            AbortModal(
-                startDestination = AbortDestinations.ConfirmAbortMobile,
-                navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                onDismiss = { navController.popBackStack() }
-            )
-        }
+            composable<HandbackDestinations.ConfirmAbortToMobileWeb> {
+                AbortModal(
+                    startDestination = AbortDestinations.ConfirmAbortMobile,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismiss = { navController.popBackStack() },
+                )
+            }
 
-        composable<HandbackDestinations.ConfirmAbort> {
-            AbortModal(
-                startDestination = AbortDestinations.ConfirmAbortDesktop,
-                navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                onDismiss = { navController.popBackStack() }
-            )
+            // This should be removed with DCMAW-13211
+            composable<HandbackDestinations.ConfirmAbort> {
+                AbortModal(
+                    startDestination = AbortDestinations.ConfirmAbortDesktop,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismiss = { navController.popBackStack() },
+                )
+            }
         }
     }
-}

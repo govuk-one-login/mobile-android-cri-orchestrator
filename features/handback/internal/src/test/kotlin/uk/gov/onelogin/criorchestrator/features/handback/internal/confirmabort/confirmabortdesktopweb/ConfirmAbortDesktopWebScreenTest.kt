@@ -14,7 +14,7 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebConstants
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb.ConfirmAbortDesktopWebViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmAbortDesktopWebScreenTest {
@@ -45,6 +45,6 @@ class ConfirmAbortDesktopWebScreenTest {
             .onNode(continueButton)
             .performClick()
 
-        verify(navController).navigate(HandbackDestinations.ConfirmAbortReturnDesktopWeb)
+        verify(navController).navigate(AbortDestinations.ConfirmAbortReturnDesktop)
     }
 }

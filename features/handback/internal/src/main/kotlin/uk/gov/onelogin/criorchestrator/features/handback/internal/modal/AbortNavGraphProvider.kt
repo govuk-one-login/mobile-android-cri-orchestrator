@@ -14,7 +14,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.c
 import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb.ConfirmAbortToMobileWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -22,36 +21,35 @@ import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
 class AbortNavGraphProvider
-@Inject
-constructor(
-    @Named(ConfirmAbortToMobileWebViewModelModule.FACTORY_NAME)
-    private val confirmAbortToMobileWebViewModelFactory: ViewModelProvider.Factory,
-    @Named(ConfirmAbortDesktopWebViewModelModule.FACTORY_NAME)
-    private val confirmAbortToDesktopWebViewModelFactory: ViewModelProvider.Factory,
-    @Named(ConfirmAbortReturnToDesktopWebViewModelModule.FACTORY_NAME)
-    private val confirmAbortReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
-    private val webNavigator: WebNavigator,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
-        composable<AbortDestinations.ConfirmAbortMobile> {
-            ConfirmAbortToMobileWeb(
-                viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),
-                webNavigator = webNavigator,
-            )
-        }
+    @Inject
+    constructor(
+        @Named(ConfirmAbortToMobileWebViewModelModule.FACTORY_NAME)
+        private val confirmAbortToMobileWebViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmAbortDesktopWebViewModelModule.FACTORY_NAME)
+        private val confirmAbortToDesktopWebViewModelFactory: ViewModelProvider.Factory,
+        @Named(ConfirmAbortReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        private val confirmAbortReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
+        private val webNavigator: WebNavigator,
+    ) : ProveYourIdentityNavGraphProvider {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+            composable<AbortDestinations.ConfirmAbortMobile> {
+                ConfirmAbortToMobileWeb(
+                    viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),
+                    webNavigator = webNavigator,
+                )
+            }
 
-        composable<AbortDestinations.ConfirmAbortDesktop> {
-            ConfirmAbortDesktopWebScreen(
-                viewModel = viewModel(factory = confirmAbortToDesktopWebViewModelFactory),
-                navController = navController,
-            )
-        }
+            composable<AbortDestinations.ConfirmAbortDesktop> {
+                ConfirmAbortDesktopWebScreen(
+                    viewModel = viewModel(factory = confirmAbortToDesktopWebViewModelFactory),
+                    navController = navController,
+                )
+            }
 
-        composable<AbortDestinations.ConfirmAbortReturnDesktop> {
-            ConfirmAbortReturnToDesktopWebScreen(
-                viewModel = viewModel(factory = confirmAbortReturnToDesktopWebViewModelFactory),
-            )
+            composable<AbortDestinations.ConfirmAbortReturnDesktop> {
+                ConfirmAbortReturnToDesktopWebScreen(
+                    viewModel = viewModel(factory = confirmAbortReturnToDesktopWebViewModelFactory),
+                )
+            }
         }
     }
-
-}
