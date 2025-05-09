@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktop
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
@@ -12,11 +12,11 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)
-class ConfirmAbortDesktopWebViewModelTest {
+class ConfirmAbortDesktopViewModelTest {
     private val analytics = mock<HandbackAnalytics>()
 
     private val viewModel =
-        ConfirmAbortDesktopWebViewModel(
+        ConfirmAbortDesktopViewModel(
             analytics = analytics,
         )
 
@@ -26,8 +26,8 @@ class ConfirmAbortDesktopWebViewModelTest {
 
         verify(analytics)
             .trackScreen(
-                id = HandbackScreenId.ConfirmAbortToDesktopWeb,
-                title = ConfirmAbortDesktopWebConstants.titleId,
+                id = HandbackScreenId.ConfirmAbortDesktop,
+                title = ConfirmAbortDesktopConstants.titleId,
             )
     }
 
@@ -37,7 +37,7 @@ class ConfirmAbortDesktopWebViewModelTest {
 
         verify(analytics)
             .trackButtonEvent(
-                buttonText = ConfirmAbortDesktopWebConstants.buttonId,
+                buttonText = ConfirmAbortDesktopConstants.buttonId,
             )
     }
 
@@ -46,7 +46,7 @@ class ConfirmAbortDesktopWebViewModelTest {
         runTest {
             viewModel.actions.test {
                 viewModel.onContinueClicked()
-                assertEquals(ConfirmAbortDesktopWebActions.NavigateToReturnToDesktopWeb, awaitItem())
+                assertEquals(ConfirmAbortDesktopActions.NavigateToReturnToDesktop, awaitItem())
             }
         }
 }

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +21,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 
 @Composable
 fun ConfirmAbortReturnToDesktopWebScreen(
-    viewModel: ConfirmAbortReturnToDesktopWebViewModel,
+    viewModel: ConfirmAbortReturnToDesktopViewModel,
     modifier: Modifier = Modifier,
 ) {
     ConfirmAbortReturnToDesktopWebContent(modifier)
@@ -41,7 +41,7 @@ internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(ConfirmAbortReturnToDesktopWebConstants.titleId),
+                    text = stringResource(ConfirmAbortReturnToDesktopConstants.titleId),
                     modifier =
                         Modifier
                             .padding(horizontal = horizontalPadding),

@@ -1,55 +1,63 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortdesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavController
+import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.android.ui.theme.m3_disabled
+import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-fun ConfirmAbortDesktopWebScreen(
-    viewModel: ConfirmAbortDesktopWebViewModel,
-    navController: NavController,
+internal fun ConfirmAbortMobileScreen(
+    viewModel: ConfirmAbortMobileViewModel,
+    webNavigator: WebNavigator,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(Unit) {
+    ConfirmAbortToMobileWebContent(
+        onButtonClick = viewModel::onContinueToGovUk,
+        modifier = modifier,
+    )
+
+    LaunchedEffect(viewModel) {
         viewModel.onScreenStart()
 
-        viewModel.actions.collect {
-            when (it) {
-                ConfirmAbortDesktopWebActions.NavigateToReturnToDesktopWeb ->
-                    navController.navigate(AbortDestinations.ConfirmAbortReturnDesktop)
+        viewModel.actions.collect { action ->
+            when (action) {
+                is ConfirmAbortMobileAction.ContinueGovUk -> {
+                    webNavigator.openWebPage(action.redirectUri)
+                }
             }
         }
     }
-
-    ConfirmAbortToDesktopWebContent(
-        onContinueClicked = viewModel::onContinueClicked,
-        modifier = modifier,
-    )
 }
 
+@Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortToDesktopWebContent(
-    onContinueClicked: () -> Unit,
+internal fun ConfirmAbortToMobileWebContent(
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -59,7 +67,7 @@ internal fun ConfirmAbortToDesktopWebContent(
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(ConfirmAbortDesktopWebConstants.titleId),
+                    text = stringResource(ConfirmAbortMobileConstants.titleId),
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             },
@@ -93,9 +101,21 @@ internal fun ConfirmAbortToDesktopWebContent(
             },
             primaryButton = {
                 GdsButton(
-                    text = stringResource(ConfirmAbortDesktopWebConstants.buttonId),
-                    onClick = onContinueClicked,
-                    buttonType = ButtonType.Primary,
+                    text = stringResource(ConfirmAbortMobileConstants.buttonId),
+                    onClick = onButtonClick,
+                    buttonType =
+                        ButtonType.Icon(
+                            buttonColors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = colorScheme.primary,
+                                    contentColor = colorScheme.onPrimary,
+                                    disabledContainerColor = m3_disabled,
+                                    disabledContentColor = m3_onDisabled,
+                                ),
+                            fontWeight = FontWeight.Bold,
+                            iconImage = ImageVector.vectorResource(ic_external_site),
+                            contentDescription = "Opens in external browser",
+                        ),
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -103,12 +123,10 @@ internal fun ConfirmAbortToDesktopWebContent(
     }
 }
 
-@Composable
 @LightDarkBothLocalesPreview
-internal fun PreviewConfirmAbortToDesktopWeb() {
+@Composable
+internal fun PreviewConfirmAbort() {
     GdsTheme {
-        ConfirmAbortToDesktopWebContent(
-            onContinueClicked = {},
-        )
+        ConfirmAbortToMobileWebContent(onButtonClick = {})
     }
 }

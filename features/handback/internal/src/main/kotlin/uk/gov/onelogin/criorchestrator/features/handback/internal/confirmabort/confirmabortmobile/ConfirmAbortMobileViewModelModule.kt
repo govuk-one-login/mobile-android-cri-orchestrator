@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -13,7 +13,7 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object ConfirmAbortToMobileWebViewModelModule {
+object ConfirmAbortMobileViewModelModule {
     const val FACTORY_NAME = "ConfirmAbortToMobileWebViewModelFactory"
 
     @Provides
@@ -24,7 +24,7 @@ object ConfirmAbortToMobileWebViewModelModule {
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                ConfirmAbortToMobileWebViewModel(
+                ConfirmAbortMobileViewModel(
                     sessionStore,
                     analytics,
                 )

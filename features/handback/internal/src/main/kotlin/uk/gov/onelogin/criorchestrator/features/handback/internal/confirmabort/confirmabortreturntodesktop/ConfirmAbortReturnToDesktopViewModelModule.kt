@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -12,7 +12,7 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object ConfirmAbortReturnToDesktopWebViewModelModule {
+object ConfirmAbortReturnToDesktopViewModelModule {
     const val FACTORY_NAME = "ConfirmAbortReturnToDesktopWebViewModelModuleFactory"
 
     @Provides
@@ -20,7 +20,7 @@ object ConfirmAbortReturnToDesktopWebViewModelModule {
     fun provideViewModel(analytics: HandbackAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                ConfirmAbortReturnToDesktopWebViewModel(
+                ConfirmAbortReturnToDesktopViewModel(
                     analytics = analytics,
                 )
             }

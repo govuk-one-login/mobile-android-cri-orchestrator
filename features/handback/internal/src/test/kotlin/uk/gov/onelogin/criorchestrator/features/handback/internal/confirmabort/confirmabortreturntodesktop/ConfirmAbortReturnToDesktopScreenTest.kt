@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabortreturntodesktopweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop
 
 import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
@@ -12,17 +12,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebConstants
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktopweb.ConfirmAbortReturnToDesktopWebViewModel
 
 @RunWith(AndroidJUnit4::class)
-class ConfirmAbortReturnToDesktopWebScreenTest {
+class ConfirmAbortReturnToDesktopScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     private val viewModel =
-        ConfirmAbortReturnToDesktopWebViewModel(
+        ConfirmAbortReturnToDesktopViewModel(
             analytics = mock(),
         )
 
@@ -41,7 +38,7 @@ class ConfirmAbortReturnToDesktopWebScreenTest {
         val title =
             composeTestRule.onNode(
                 hasText(
-                    context.getString(ConfirmAbortReturnToDesktopWebConstants.titleId),
+                    context.getString(ConfirmAbortReturnToDesktopConstants.titleId),
                 ),
             )
         title.assertContentDescriptionContains("Gov dot UK", true)

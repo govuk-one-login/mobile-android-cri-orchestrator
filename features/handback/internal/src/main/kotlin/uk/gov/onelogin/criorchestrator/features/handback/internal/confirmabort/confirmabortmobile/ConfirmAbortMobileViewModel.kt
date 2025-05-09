@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmaborttomobileweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,22 +17,22 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-class ConfirmAbortToMobileWebViewModel(
+class ConfirmAbortMobileViewModel(
     private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
 ) : ViewModel() {
-    private val _actions = MutableSharedFlow<ConfirmAbortToMobileWebAction>()
-    val actions: SharedFlow<ConfirmAbortToMobileWebAction> = _actions.asSharedFlow()
+    private val _actions = MutableSharedFlow<ConfirmAbortMobileAction>()
+    val actions: SharedFlow<ConfirmAbortMobileAction> = _actions.asSharedFlow()
 
     fun onScreenStart() {
         analytics.trackScreen(
-            id = HandbackScreenId.ConfirmAbortToMobileWeb,
-            title = ConfirmAbortToMobileWebConstants.titleId,
+            id = HandbackScreenId.ConfirmAbortToMobile,
+            title = ConfirmAbortMobileConstants.titleId,
         )
     }
 
     fun onContinueToGovUk() {
-        analytics.trackButtonEvent(ConfirmAbortToMobileWebConstants.buttonId)
+        analytics.trackButtonEvent(ConfirmAbortMobileConstants.buttonId)
 
         viewModelScope.launch {
             val redirectUri =
@@ -43,7 +43,7 @@ class ConfirmAbortToMobileWebViewModel(
                     .redirectUri
 
             redirectUri?.let {
-                _actions.emit(ConfirmAbortToMobileWebAction.ContinueToGovUk(it))
+                _actions.emit(ConfirmAbortMobileAction.ContinueGovUk(it))
             }
         }
     }

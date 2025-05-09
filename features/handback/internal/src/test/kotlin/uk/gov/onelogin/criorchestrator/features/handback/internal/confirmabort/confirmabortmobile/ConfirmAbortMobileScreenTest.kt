@@ -1,5 +1,3 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb
-
 import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
@@ -11,8 +9,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile.ConfirmAbortMobileConstants
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile.ConfirmAbortMobileScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile.ConfirmAbortMobileViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
@@ -21,16 +23,20 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.creat
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class ReturnToMobileWebScreenTest {
+class ConfirmAbortMobileScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+    private val context: Context = ApplicationProvider.getApplicationContext()
+    private val continueButton = hasTextStartingWith(context.getString(ConfirmAbortMobileConstants.buttonId))
+    private val webNavigator = FakeWebNavigator()
 
     private val session =
         Session.createTestInstance(
             redirectUri = REDIRECT_URI,
         )
+
     private val viewModel =
-        ReturnToMobileWebViewModel(
+        ConfirmAbortMobileViewModel(
             analytics = mock(),
             sessionStore =
                 FakeSessionStore(
@@ -38,12 +44,10 @@ class ReturnToMobileWebScreenTest {
                 ),
         )
 
-    private val webNavigator = FakeWebNavigator()
-
     @Before
     fun setup() {
         composeTestRule.setContent {
-            ReturnToMobileWebScreen(
+            ConfirmAbortMobileScreen(
                 viewModel = viewModel,
                 webNavigator = webNavigator,
             )
@@ -51,12 +55,10 @@ class ReturnToMobileWebScreenTest {
     }
 
     @Test
-    fun `when continue to gov uk website button is clicked, it opens the session redirect uri`() {
-        val context: Context = ApplicationProvider.getApplicationContext()
+    fun `when continue is clicked, it navigates to return to gov uk`() {
         composeTestRule
-            .onNode(
-                hasTextStartingWith(context.getString(ReturnToMobileWebConstants.buttonId)),
-            ).performClick()
+            .onNode(continueButton)
+            .performClick()
 
         assertEquals(REDIRECT_URI, webNavigator.openUrl)
     }
@@ -64,14 +66,10 @@ class ReturnToMobileWebScreenTest {
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {
         val context: Context = ApplicationProvider.getApplicationContext()
-        val title =
-            composeTestRule
-                .onNode(hasText(context.getString(ReturnToMobileWebConstants.titleId)))
-        title.assertContentDescriptionContains("Gov dot UK", true)
 
         val body =
             composeTestRule
-                .onNode(hasText(context.getString(R.string.handback_returntomobileweb_body2)))
+                .onNode(hasText(context.getString(R.string.handback_confirmabort_body1)))
         body.assertContentDescriptionContains("Gov dot UK", true)
     }
 }

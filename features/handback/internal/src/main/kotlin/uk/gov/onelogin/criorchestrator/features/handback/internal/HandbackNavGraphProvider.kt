@@ -58,7 +58,7 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortDesktopWeb> {
+            composable<HandbackDestinations.ConfirmAbortDesktop> {
                 AbortModal(
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
@@ -66,7 +66,7 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortToMobileWeb> {
+            composable<HandbackDestinations.ConfirmAbortMobile> {
                 AbortModal(
                     startDestination = AbortDestinations.ConfirmAbortMobile,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
