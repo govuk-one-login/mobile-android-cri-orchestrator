@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
@@ -36,6 +37,11 @@ fun ReturnToMobileWebScreen(
     webNavigator: WebNavigator,
     modifier: Modifier = Modifier,
 ) {
+    BackHandler(enabled = true) {
+        // Back button should be disabled from this screen
+        // as the user must return to their desktop browser
+    }
+
     ReturnToMobileWebScreenContent(
         onButtonClick = viewModel::onContinueToGovUk,
         modifier = modifier,
