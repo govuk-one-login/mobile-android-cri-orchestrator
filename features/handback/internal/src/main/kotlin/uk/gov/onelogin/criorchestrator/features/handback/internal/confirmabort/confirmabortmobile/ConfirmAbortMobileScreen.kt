@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortmobile
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,11 +17,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
-import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
-import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3_disabled
@@ -32,24 +30,22 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobi
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
-fun ReturnToMobileWebScreen(
-    viewModel: ReturnToMobileWebViewModel,
+internal fun ConfirmAbortMobileScreen(
+    viewModel: ConfirmAbortMobileViewModel,
     webNavigator: WebNavigator,
     modifier: Modifier = Modifier,
 ) {
-    ReturnToMobileWebScreenContent(
+    ConfirmAbortToMobileWebContent(
         onButtonClick = viewModel::onContinueToGovUk,
         modifier = modifier,
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(viewModel) {
         viewModel.onScreenStart()
-    }
 
-    LaunchedEffect(viewModel.actions) {
         viewModel.actions.collect { action ->
             when (action) {
-                is ReturnToMobileWebAction.ContinueToGovUk -> {
+                is ConfirmAbortMobileAction.ContinueGovUk -> {
                     webNavigator.openWebPage(action.redirectUri)
                 }
             }
@@ -60,7 +56,7 @@ fun ReturnToMobileWebScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-private fun ReturnToMobileWebScreenContent(
+internal fun ConfirmAbortToMobileWebContent(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -71,29 +67,16 @@ private fun ReturnToMobileWebScreenContent(
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(ReturnToMobileWebConstants.titleId),
+                    text = stringResource(ConfirmAbortMobileConstants.titleId),
                     modifier = Modifier.padding(horizontal = horizontalPadding),
-                    textAlign = GdsHeadingAlignment.CenterAligned,
-                    customContentDescription =
-                        stringResource(R.string.handback_returntomobileweb_title_content_description),
                 )
             },
             body = { horizontalPadding ->
                 item {
-                    Text(
-                        text = stringResource(R.string.handback_returntomobileweb_body1),
-                        textAlign = TextAlign.Center,
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = horizontalPadding),
-                    )
-                }
-                item {
                     val customContentDescription =
-                        stringResource(R.string.handback_returntomobileweb_body2_content_description)
+                        stringResource(R.string.handback_confirmabort_body1_content_description)
                     Text(
-                        text = stringResource(R.string.handback_returntomobileweb_body2),
+                        text = stringResource(R.string.handback_confirmabort_body1),
                         textAlign = TextAlign.Center,
                         modifier =
                             Modifier
@@ -104,10 +87,22 @@ private fun ReturnToMobileWebScreenContent(
                                 },
                     )
                 }
+
+                item {
+                    Text(
+                        text = stringResource(R.string.handback_confirmabort_body2),
+                        textAlign = TextAlign.Center,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = horizontalPadding),
+                    )
+                }
             },
             primaryButton = {
                 GdsButton(
-                    text = stringResource(ReturnToMobileWebConstants.buttonId),
+                    text = stringResource(ConfirmAbortMobileConstants.buttonId),
+                    onClick = onButtonClick,
                     buttonType =
                         ButtonType.Icon(
                             buttonColors =
@@ -119,9 +114,8 @@ private fun ReturnToMobileWebScreenContent(
                                 ),
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
-                            contentDescription = stringResource(opens_in_external_browser),
+                            contentDescription = "Opens in external browser",
                         ),
-                    onClick = onButtonClick,
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -131,10 +125,8 @@ private fun ReturnToMobileWebScreenContent(
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewReturnToMobileWebScreen() {
+internal fun PreviewConfirmAbort() {
     GdsTheme {
-        ReturnToMobileWebScreenContent(
-            onButtonClick = {},
-        )
+        ConfirmAbortToMobileWebContent(onButtonClick = {})
     }
 }
