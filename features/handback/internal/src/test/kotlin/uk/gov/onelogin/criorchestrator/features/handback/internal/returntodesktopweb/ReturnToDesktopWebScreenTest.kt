@@ -6,6 +6,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -37,9 +38,11 @@ class ReturnToDesktopWebScreenTest {
     }
 
     @Test
-    fun `when I view the return to desktop screen, I am asked to review the app`() {
-        assertTrue(reviewRequester.requestedReview)
-    }
+    fun `when I view the return to desktop screen, I am asked to review the app`() =
+        runTest {
+            viewModel.onScreenStart()
+            assertTrue(reviewRequester.requestedReview)
+        }
 
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {
