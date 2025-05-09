@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun TestNavigationHost(
+    originText: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -27,7 +28,7 @@ fun TestNavigationHost(
                     navController.navigate("destination")
                 },
             ) {
-                Text("Hello World")
+                Text(originText)
             }
         }
 

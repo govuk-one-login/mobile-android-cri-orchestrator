@@ -7,16 +7,21 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 abstract class DisableBackButtonTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
+    private val originText = "Start destination"
+
     fun setContent(composable: @Composable () -> Unit) {
         composeTestRule.setContent {
-            TestNavigationHost {
+            TestNavigationHost(originText) {
                 composable()
             }
         }
@@ -25,12 +30,12 @@ abstract class DisableBackButtonTest {
     @Test
     fun `when the back button is pressed, the user remains on this screen`() {
         composeTestRule
-            .onNode(hasText("Hello World"))
+            .onNode(hasText(originText))
             .assertIsDisplayed()
             .performClick()
 
         composeTestRule
-            .onNode(hasText("Hello World"))
+            .onNode(hasText(originText))
             .assertIsNotDisplayed()
 
         composeTestRule.activityRule.scenario.onActivity { activity ->
@@ -38,7 +43,7 @@ abstract class DisableBackButtonTest {
         }
 
         composeTestRule
-            .onNode(hasText("Hello World"))
+            .onNode(hasText(originText))
             .assertIsNotDisplayed()
     }
 }

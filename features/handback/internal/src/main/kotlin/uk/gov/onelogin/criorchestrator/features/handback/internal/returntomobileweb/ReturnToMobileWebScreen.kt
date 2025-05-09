@@ -37,7 +37,7 @@ fun ReturnToMobileWebScreen(
     webNavigator: WebNavigator,
     modifier: Modifier = Modifier,
 ) {
-    BackHandler(true) {
+    BackHandler(enabled = true) {
         // Back button should be disabled from this screen
         // as the user must return to their desktop browser
     }
