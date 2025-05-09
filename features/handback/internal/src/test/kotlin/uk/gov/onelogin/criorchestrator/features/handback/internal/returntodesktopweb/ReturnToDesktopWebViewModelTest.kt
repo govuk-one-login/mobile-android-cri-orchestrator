@@ -1,5 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb
 
+import app.cash.turbine.test
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -23,5 +26,15 @@ class ReturnToDesktopWebViewModelTest {
                 id = HandbackScreenId.ReturnToDesktopWeb,
                 title = ReturnToDesktopWebConstants.titleId,
             )
+    }
+
+    @Test
+    fun `when screen starts, it triggers a review after two seconds`() {
+        runTest {
+            viewModel.actions.test {
+                viewModel.onScreenStart()
+                assertEquals(ReturnToDesktopWebAction.RequestReview, awaitItem())
+            }
+        }
     }
 }
