@@ -34,7 +34,7 @@ fun AbortModalNavHost(
         }
 
         composable<AbortDestinations.ConfirmAbortDesktopWeb> {
-            ConfirmAbortDesktopWebScreen(
+            AbortDesktop(
                 onNext = {
                     navController.navigate(AbortDestinations.ConfirmAbortReturnDesktopWeb)
                 },
@@ -43,7 +43,7 @@ fun AbortModalNavHost(
         }
 
         composable<AbortDestinations.ConfirmAbortReturnDesktopWeb> {
-            ConfirmAbortReturnToDesktopWebScreen(
+            AbortReturnDesktop(
                 onClose = { navController.popBackStack() }
             )
         }
@@ -57,6 +57,39 @@ fun AbortMobile(
 ) {
     Column(modifier = modifier.padding(spacingDouble)) {
         Text("Abort mobile")
+
+        Button(onClose) {
+            Text("Close")
+        }
+    }
+}
+
+@Composable
+fun AbortDesktop(
+    onClose: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.padding(spacingDouble)) {
+        Text("Abort desktop")
+
+        Button(onNext) {
+            Text("Next")
+        }
+
+        Button(onClose) {
+            Text("Close")
+        }
+    }
+}
+
+@Composable
+fun AbortReturnDesktop(
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.padding(spacingDouble)) {
+        Text("Abort return desktop")
 
         Button(onClose) {
             Text("Close")
