@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal
+package uk.gov.onelogin.criorchestrator.libraries.navigation
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun TestNavigationHost(
+fun TestNavHost(
     originText: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,

@@ -12,4 +12,6 @@ dependencies {
 
     testImplementation(libs.androidx.compose.material3)
     testImplementation(libs.kotlinx.serialization.json)
+
+    testFixturesImplementation(libs.androidx.compose.material3)
 }

@@ -16,6 +16,8 @@ dependencies {
     implementation(projects.features.session.internalApi)
 
     testImplementation(testFixtures(projects.libraries.analytics))
+    testImplementation(testFixtures(projects.libraries.navigation))
+    testFixturesImplementation(testFixtures(projects.libraries.navigation))
     testImplementation(testFixtures(projects.features.session.internalApi))
     testImplementation(libs.uk.gov.logging.testdouble)
 }

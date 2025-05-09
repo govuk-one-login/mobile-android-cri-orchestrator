@@ -11,17 +11,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import uk.gov.onelogin.criorchestrator.libraries.navigation.TestNavHost
 
 @RunWith(AndroidJUnit4::class)
 abstract class DisableBackButtonTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private val originText = "Start destination"
+    private val originText = "Go to second screen"
 
     fun setContent(composable: @Composable () -> Unit) {
         composeTestRule.setContent {
-            TestNavigationHost(originText) {
+            TestNavHost(originText) {
                 composable()
             }
         }
