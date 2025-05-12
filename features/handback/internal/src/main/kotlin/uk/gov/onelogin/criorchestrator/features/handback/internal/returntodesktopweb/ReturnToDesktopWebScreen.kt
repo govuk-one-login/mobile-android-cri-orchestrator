@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -25,6 +26,11 @@ fun ReturnToDesktopWebScreen(
     viewModel: ReturnToDesktopWebViewModel,
     modifier: Modifier = Modifier,
 ) {
+    BackHandler(enabled = true) {
+        // Back button should be disabled from this screen
+        // as the user must return to their desktop browser
+    }
+
     ReturnToDesktopWebScreenContent(
         modifier = modifier,
     )
