@@ -19,7 +19,10 @@ class ContinueToProveYourIdentityNavGraphProvider
         @Named(ContinueToProveYourIdentityViewModelModule.FACTORY_NAME)
         private val viewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
                 ContinueToProveYourIdentityScreen(
                     viewModel = viewModel(factory = viewModelFactory),

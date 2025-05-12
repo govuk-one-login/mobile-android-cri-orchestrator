@@ -21,7 +21,10 @@ class ErrorNavGraphProvider
         @Named(RecoverableErrorViewModelModule.FACTORY_NAME)
         private val recoverableErrorViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<ErrorDestinations.RecoverableError> {
                 RecoverableErrorScreen(
                     navController = navController,

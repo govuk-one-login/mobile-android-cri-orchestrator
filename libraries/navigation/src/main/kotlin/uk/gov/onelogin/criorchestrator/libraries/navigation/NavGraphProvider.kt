@@ -12,5 +12,8 @@ fun interface NavGraphProvider {
     /**
      * Calls functions on [NavGraphBuilder] to construct a navigation graph.
      */
-    fun NavGraphBuilder.contributeToGraph(navController: NavController)
+    fun NavGraphBuilder.contributeToGraph(
+        navController: NavController,
+        onFinish: () -> Unit,
+    )
 }

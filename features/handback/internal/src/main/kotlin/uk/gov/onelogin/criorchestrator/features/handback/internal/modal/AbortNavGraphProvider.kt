@@ -31,7 +31,10 @@ class AbortNavGraphProvider
         private val confirmAbortReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<AbortDestinations.ConfirmAbortMobile> {
                 ConfirmAbortMobileScreen(
                     viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),

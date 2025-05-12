@@ -12,8 +12,10 @@ fun AbortModalNavHost(
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
     startDestination: AbortDestinations,
     modifier: Modifier = Modifier,
+    onFinish: () -> Unit = {},
 ) = CompositeNavHost(
     startDestination = startDestination,
     navGraphProviders = navGraphProviders,
+    onFinish = onFinish,
     modifier = modifier,
 )
