@@ -10,3 +10,13 @@ fun Session.Companion.createTestInstance(
         redirectUri = redirectUri,
         state = state,
     )
+
+fun Session.Companion.createDesktopAppDesktopInstance(): Session =
+    Session.createTestInstance(
+        redirectUri = null,
+    )
+
+fun Session.Companion.createMobileAppMobileInstance(): Session =
+    Session.createTestInstance(
+        redirectUri = "http://mam-redirect-uri",
+    )

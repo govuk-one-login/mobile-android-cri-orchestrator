@@ -2,14 +2,21 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import kotlin.time.Duration.Companion.seconds
 
 class ConfirmNoChippedIDViewModel(
     private val analytics: SelectDocAnalytics,
+    private val sessionStore: SessionStore,
 ) : ViewModel() {
     private val _action = MutableSharedFlow<ConfirmNoChippedIDAction>()
     val action: Flow<ConfirmNoChippedIDAction> = _action
@@ -21,10 +28,24 @@ class ConfirmNoChippedIDViewModel(
         )
     }
 
+    @OptIn(FlowPreview::class)
     fun onConfirmClick() {
         analytics.trackButtonEvent(ConfirmNoChippedIDConstants.confirmButtonTextId)
+
         viewModelScope.launch {
-            _action.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbort)
+            val redirectUri =
+                sessionStore
+                    .read()
+                    .filterNotNull()
+                    .timeout(5.seconds)
+                    .first()
+                    .redirectUri
+
+            if (redirectUri.isNullOrEmpty()) {
+                _action.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbortDesktop)
+            } else {
+                _action.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbortMobile)
+            }
         }
     }
 }
