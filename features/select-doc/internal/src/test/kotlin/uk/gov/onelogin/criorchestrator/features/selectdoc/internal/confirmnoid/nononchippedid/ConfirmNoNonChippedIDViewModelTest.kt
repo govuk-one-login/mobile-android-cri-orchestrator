@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals

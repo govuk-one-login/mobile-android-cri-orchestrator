@@ -1,6 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model
-
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
 enum class JourneyType {
     MobileAppMobile,

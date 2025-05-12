@@ -19,9 +19,9 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytic
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReaderResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 

@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 import kotlin.time.Duration.Companion.seconds
 
 class ConfirmNoNonChippedIDViewModel(
@@ -32,15 +34,14 @@ class ConfirmNoNonChippedIDViewModel(
     fun onConfirmClick() {
         analytics.trackButtonEvent(ConfirmNoNonChippedIDConstants.confirmButtonTextId)
         viewModelScope.launch {
-            val redirectUri =
+            val session =
                 sessionStore
                     .read()
                     .filterNotNull()
                     .timeout(5.seconds)
                     .first()
-                    .redirectUri
 
-            if (redirectUri.isNullOrEmpty()) {
+            if (session.journeyType == JourneyType.DesktopAppDesktop) {
                 _action.emit(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortDesktop)
             } else {
                 _action.emit(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortMobile)
