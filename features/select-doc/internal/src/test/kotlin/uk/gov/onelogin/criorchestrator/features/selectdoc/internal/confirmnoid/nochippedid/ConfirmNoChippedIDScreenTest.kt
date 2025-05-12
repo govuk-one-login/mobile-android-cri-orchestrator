@@ -17,10 +17,8 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmNoChippedIDScreenTest {
@@ -36,9 +34,9 @@ class ConfirmNoChippedIDScreenTest {
         val viewModel =
             ConfirmNoChippedIDViewModel(
                 analytics = analytics,
-                sessionStore =
-                    FakeSessionStore(
-                        session = Session.createDesktopAppDesktopInstance(),
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.DesktopAppDesktop,
                     ),
             )
 
@@ -57,9 +55,9 @@ class ConfirmNoChippedIDScreenTest {
         val viewModel =
             ConfirmNoChippedIDViewModel(
                 analytics = analytics,
-                sessionStore =
-                    FakeSessionStore(
-                        session = Session.createMobileAppMobileInstance(),
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.MobileAppMobile,
                     ),
             )
 

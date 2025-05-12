@@ -25,6 +25,7 @@ dependencies {
     testImplementation(projects.features.config.publicApi)
     testImplementation(testFixtures(projects.features.config.internalApi))
     testImplementation(testFixtures(projects.libraries.analytics))
+    testImplementation(testFixtures(projects.features.session.internalApi))
 }
 
 mavenPublishingConfig {

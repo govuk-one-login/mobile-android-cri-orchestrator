@@ -19,10 +19,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDViewModel
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmNoNonChippedIDScreenTest {
@@ -38,10 +36,11 @@ class ConfirmNoNonChippedIDScreenTest {
     fun `when confirm is tapped and journey is MAM, it navigates to Confirm Abort Mobile screen`() {
         val viewModel =
             ConfirmNoChippedIDViewModel(
-                analytics,
-                FakeSessionStore(
-                    session = Session.createMobileAppMobileInstance(),
-                ),
+                analytics = analytics,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.MobileAppMobile,
+                    ),
             )
 
         composeTestRule.setContent(viewModel)
@@ -58,10 +57,11 @@ class ConfirmNoNonChippedIDScreenTest {
     fun `when confirm is tapped and journey is DAD, it navigates to Confirm Abort Desktop screen`() {
         val viewModel =
             ConfirmNoChippedIDViewModel(
-                analytics,
-                FakeSessionStore(
-                    session = Session.createDesktopAppDesktopInstance(),
-                ),
+                analytics = analytics,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.DesktopAppDesktop,
+                    ),
             )
 
         composeTestRule.setContent(viewModel)

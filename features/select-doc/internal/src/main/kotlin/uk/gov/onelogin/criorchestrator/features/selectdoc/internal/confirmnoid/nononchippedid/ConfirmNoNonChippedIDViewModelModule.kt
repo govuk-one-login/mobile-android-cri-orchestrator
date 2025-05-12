@@ -7,7 +7,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -20,13 +20,13 @@ object ConfirmNoNonChippedIDViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         analytics: SelectDocAnalytics,
-        sessionStore: SessionStore,
+        getJourneyType: GetJourneyType,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ConfirmNoNonChippedIDViewModel(
                     analytics = analytics,
-                    sessionStore = sessionStore,
+                    getJourneyType = getJourneyType,
                 )
             }
         }

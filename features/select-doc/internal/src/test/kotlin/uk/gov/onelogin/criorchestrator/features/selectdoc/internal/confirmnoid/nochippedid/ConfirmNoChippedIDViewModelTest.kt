@@ -10,10 +10,8 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -25,7 +23,7 @@ class ConfirmNoChippedIDViewModelTest {
         val viewModel =
             ConfirmNoChippedIDViewModel(
                 analytics = analyticsLogger,
-                sessionStore = FakeSessionStore(),
+                getJourneyType = StubGetJourneyType(),
             )
 
         viewModel.onScreenStart()
@@ -43,7 +41,7 @@ class ConfirmNoChippedIDViewModelTest {
             val viewModel =
                 ConfirmNoChippedIDViewModel(
                     analytics = analyticsLogger,
-                    sessionStore = FakeSessionStore(),
+                    getJourneyType = StubGetJourneyType(),
                 )
 
             viewModel.action.test {
@@ -62,9 +60,9 @@ class ConfirmNoChippedIDViewModelTest {
             val viewModel =
                 ConfirmNoChippedIDViewModel(
                     analytics = analyticsLogger,
-                    sessionStore =
-                        FakeSessionStore(
-                            session = Session.createMobileAppMobileInstance(),
+                    getJourneyType =
+                        StubGetJourneyType(
+                            journeyType = JourneyType.MobileAppMobile,
                         ),
                 )
 
@@ -84,9 +82,9 @@ class ConfirmNoChippedIDViewModelTest {
             val viewModel =
                 ConfirmNoChippedIDViewModel(
                     analytics = analyticsLogger,
-                    sessionStore =
-                        FakeSessionStore(
-                            session = Session.createDesktopAppDesktopInstance(),
+                    getJourneyType =
+                        StubGetJourneyType(
+                            journeyType = JourneyType.DesktopAppDesktop,
                         ),
                 )
 
