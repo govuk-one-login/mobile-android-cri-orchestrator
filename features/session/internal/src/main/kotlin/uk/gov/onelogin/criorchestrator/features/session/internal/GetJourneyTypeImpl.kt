@@ -28,10 +28,6 @@ class GetJourneyTypeImpl
                     .timeout(5.seconds)
                     .first()
 
-            return if (session.journeyType == JourneyType.DesktopAppDesktop) {
-                JourneyType.DesktopAppDesktop
-            } else {
-                JourneyType.MobileAppMobile
-            }
+            return session.journeyType
         }
     }
