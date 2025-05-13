@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internal
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -32,5 +33,20 @@ class GetJourneyTypeTest {
             val getJourneyType = GetJourneyTypeImpl(sessionStore)
 
             assertEquals(JourneyType.DesktopAppDesktop, getJourneyType())
+        }
+
+    @Test
+    fun `when active session is null, expected crash occurs`() =
+        runTest {
+            val sessionStore =
+                FakeSessionStore(
+                    session = null,
+                )
+
+            val exception =
+                assertThrows<IllegalStateException> {
+                    GetJourneyTypeImpl(sessionStore).invoke()
+                }
+            assertEquals("Session is not set", exception.message)
         }
 }
