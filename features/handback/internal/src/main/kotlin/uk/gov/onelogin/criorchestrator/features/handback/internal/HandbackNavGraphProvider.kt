@@ -53,7 +53,11 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbort> {
+            composable<HandbackDestinations.ConfirmAbortMobile> {
+                ConfirmAbort()
+            }
+
+            composable<HandbackDestinations.ConfirmAbortDesktop> {
                 ConfirmAbort()
             }
         }

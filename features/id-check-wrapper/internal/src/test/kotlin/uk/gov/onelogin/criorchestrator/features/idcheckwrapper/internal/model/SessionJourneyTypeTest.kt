@@ -2,9 +2,10 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
-import kotlin.invoke
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 
 class SessionJourneyTypeTest {
     @Test
