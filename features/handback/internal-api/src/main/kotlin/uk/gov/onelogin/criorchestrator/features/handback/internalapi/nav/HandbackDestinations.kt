@@ -1,8 +1,5 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav
 
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.EncodeDefault.Mode
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 

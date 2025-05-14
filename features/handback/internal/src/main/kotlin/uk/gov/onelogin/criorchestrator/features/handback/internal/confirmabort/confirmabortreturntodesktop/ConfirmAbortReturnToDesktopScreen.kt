@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.confirmabortreturntodesktop
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -34,6 +35,11 @@ fun ConfirmAbortReturnToDesktopWebScreen(
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortReturnToDesktopWebContent(modifier: Modifier = Modifier) {
+    BackHandler(enabled = true) {
+        // Do nothing as back button should be disabled from this screen
+        // as the user must return to their desktop browser
+    }
+
     Surface(
         modifier = modifier,
         color = colorScheme.background,
