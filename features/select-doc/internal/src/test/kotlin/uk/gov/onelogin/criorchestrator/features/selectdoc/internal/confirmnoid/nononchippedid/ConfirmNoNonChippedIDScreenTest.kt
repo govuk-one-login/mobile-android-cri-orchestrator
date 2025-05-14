@@ -50,7 +50,9 @@ class ConfirmNoNonChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(HandbackDestinations.ConfirmAbortMobile)
+        verify(navController).navigate(
+            HandbackDestinations.ConfirmAbortMobile()
+        )
     }
 
     @Test
@@ -72,9 +74,7 @@ class ConfirmNoNonChippedIDScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortDesktop(
-                finishJourney = false,
-            ),
+            HandbackDestinations.ConfirmAbortDesktop(),
         )
     }
 

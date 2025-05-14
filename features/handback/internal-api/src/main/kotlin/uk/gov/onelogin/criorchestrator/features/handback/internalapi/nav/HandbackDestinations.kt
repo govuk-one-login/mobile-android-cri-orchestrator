@@ -20,16 +20,12 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data object ReturnToDesktopWeb : HandbackDestinations
 
     @Serializable
-    @OptIn(ExperimentalSerializationApi::class)
     data class ConfirmAbortDesktop(
-        @EncodeDefault(Mode.ALWAYS)
         val finishJourney: Boolean = false,
     ) : HandbackDestinations
 
     @Serializable
-    @OptIn(ExperimentalSerializationApi::class)
     data class ConfirmAbortMobile(
-        @EncodeDefault(Mode.ALWAYS)
         val finishJourney: Boolean = false,
     ) : HandbackDestinations
 }
