@@ -17,8 +17,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
 import javax.inject.Provider
@@ -26,7 +25,7 @@ import javax.inject.Provider
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
     private val logger = SystemLogger()
-    private val sessionApi = spy(StubSessionApiImpl())
+    private val activeSessionApi = spy(StubActiveSessionApiImpl())
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -35,14 +34,14 @@ class RemoteSessionReaderTest {
         remoteSessionReader =
             RemoteSessionReader(
                 sessionStore = InMemorySessionStore(logger),
-                sessionApi = Provider { sessionApi },
+                activeSessionApi = Provider { activeSessionApi },
                 logger = logger,
             )
     }
 
     @AfterEach
     fun tearDown() {
-        sessionApi.setActiveSession(ApiResponse.Offline)
+        activeSessionApi.setActiveSession(ApiResponse.Offline)
     }
 
     @ParameterizedTest(name = "{0}")
@@ -52,7 +51,7 @@ class RemoteSessionReaderTest {
         logEntry: String,
         expectedIsActiveSession: Boolean,
     ) = runTest {
-        sessionApi.setActiveSession(apiResponse)
+        activeSessionApi.setActiveSession(apiResponse)
         val isActiveSession = remoteSessionReader.isActiveSession()
         assertEquals(expectedIsActiveSession, isActiveSession)
         assertTrue(logger.contains(logEntry))
@@ -62,7 +61,7 @@ class RemoteSessionReaderTest {
     fun `session API is called just once`() =
         runTest {
             remoteSessionReader.isActiveSession()
-            verify(sessionApi, times(1)).getActiveSession()
+            verify(activeSessionApi, times(1)).getActiveSession()
         }
 
     companion object {

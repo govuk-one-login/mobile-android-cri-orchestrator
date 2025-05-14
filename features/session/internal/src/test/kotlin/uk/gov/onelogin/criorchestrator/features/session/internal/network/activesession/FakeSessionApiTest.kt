@@ -1,16 +1,15 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import uk.gov.android.network.api.ApiResponse
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.FakeSessionApi
 
 class FakeSessionApiTest {
     @Test
     fun `verify fake session API returns intended response`() =
         runTest {
-            assertEquals(
+            Assertions.assertEquals(
                 ApiResponse.Success<String>(
                     """
                     {
@@ -20,7 +19,7 @@ class FakeSessionApiTest {
                     }
                     """.trimIndent(),
                 ),
-                FakeSessionApi().getActiveSession(),
+                FakeActiveSessionApi().getActiveSession(),
             )
         }
 }

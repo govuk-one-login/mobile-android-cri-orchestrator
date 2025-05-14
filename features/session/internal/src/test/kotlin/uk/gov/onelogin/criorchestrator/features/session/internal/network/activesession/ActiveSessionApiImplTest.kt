@@ -1,8 +1,8 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network
+package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import uk.gov.android.network.api.ApiResponse
@@ -13,10 +13,10 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SessionApiImplTest {
+class ActiveSessionApiImplTest {
     private val fakeConfigStore = FakeConfigStore()
 
-    private lateinit var sessionApiImpl: SessionApi
+    private lateinit var activeSessionApiImpl: ActiveSessionApi
 
     @BeforeEach
     fun setup() {
@@ -30,8 +30,8 @@ class SessionApiImplTest {
                     ),
             ),
         )
-        sessionApiImpl =
-            SessionApiImpl(
+        activeSessionApiImpl =
+            ActiveSessionApiImpl(
                 httpClient = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
@@ -47,7 +47,7 @@ class SessionApiImplTest {
                         "\"state\":\"11112222333344445555666677778888\"}",
                 )
 
-            val result = sessionApiImpl.getActiveSession()
-            assertEquals(expected, result)
+            val result = activeSessionApiImpl.getActiveSession()
+            Assertions.assertEquals(expected, result)
         }
 }

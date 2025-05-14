@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network
+package uk.gov.onelogin.criorchestrator.features.session.internal
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -6,7 +6,8 @@ import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.response.ActiveSessionApiResponse
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApi
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
@@ -22,7 +23,7 @@ class RemoteSessionReader
     @Inject
     constructor(
         private val sessionStore: SessionStore,
-        private val sessionApi: Provider<SessionApi>,
+        private val activeSessionApi: Provider<ActiveSessionApi>,
         private val logger: Logger,
     ) : SessionReader,
         LogTagProvider {
@@ -33,7 +34,7 @@ class RemoteSessionReader
         }
 
         override suspend fun isActiveSession(): Boolean {
-            val response = sessionApi.get().getActiveSession()
+            val response = activeSessionApi.get().getActiveSession()
             logResponse(response)
             val session = parseSession(response)
             sessionStore.write(session)
