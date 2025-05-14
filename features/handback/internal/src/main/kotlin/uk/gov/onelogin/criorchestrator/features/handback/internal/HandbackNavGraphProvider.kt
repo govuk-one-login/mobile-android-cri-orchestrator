@@ -93,17 +93,5 @@ class HandbackNavGraphProvider
                     },
                 )
             }
-
-            // This should be removed with DCMAW-13211
-            composable<HandbackDestinations.ConfirmAbort> { backStackEntry ->
-                val route = backStackEntry.toRoute<HandbackDestinations.ConfirmAbort>()
-                AbortModal(
-                    startDestination = AbortDestinations.ConfirmAbortDesktop,
-                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                    onDismissRequest = {
-                        onDismissAbortModal(finishJourney = route.finishJourney)
-                    },
-                )
-            }
         }
     }
