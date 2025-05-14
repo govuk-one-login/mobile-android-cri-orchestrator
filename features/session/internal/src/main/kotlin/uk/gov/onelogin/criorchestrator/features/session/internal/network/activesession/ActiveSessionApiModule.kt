@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network
+package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
@@ -9,16 +9,16 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-class SessionApiModule {
+class ActiveSessionApiModule {
     @Provides
-    fun providesSessionApi(
+    fun providesActiveSessionApi(
         config: ConfigStore,
-        realSessionApi: SessionApiImpl,
-        fakeSessionApi: FakeSessionApi,
-    ): SessionApi =
+        realActiveSessionApi: ActiveSessionApiImpl,
+        fakeActiveSessionApi: FakeActiveSessionApi,
+    ): ActiveSessionApi =
         if (config.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
-            fakeSessionApi
+            fakeActiveSessionApi
         } else {
-            realSessionApi
+            realActiveSessionApi
         }
 }

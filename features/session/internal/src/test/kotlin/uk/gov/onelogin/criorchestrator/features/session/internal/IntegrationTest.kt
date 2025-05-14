@@ -12,10 +12,10 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.RemoteSessionReader
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApi
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.SessionApiImpl
-import uk.gov.onelogin.criorchestrator.features.session.internal.network.data.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.RemoteSessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internal.data.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApi
+import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApiImpl
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
@@ -28,7 +28,7 @@ class IntegrationTest {
     private val logger = SystemLogger()
     private val imposter = Imposter.createMockEngine()
 
-    private lateinit var sessionApi: SessionApi
+    private lateinit var activeSessionApi: ActiveSessionApi
     private lateinit var remoteSessionReader: RemoteSessionReader
     private lateinit var sessionStore: SessionStore
 
@@ -44,8 +44,8 @@ class IntegrationTest {
                     ),
             ),
         )
-        sessionApi =
-            SessionApiImpl(
+        activeSessionApi =
+            ActiveSessionApiImpl(
                 httpClient = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
@@ -53,7 +53,7 @@ class IntegrationTest {
         remoteSessionReader =
             RemoteSessionReader(
                 sessionStore = sessionStore,
-                sessionApi = Provider { sessionApi },
+                activeSessionApi = Provider { activeSessionApi },
                 logger = logger,
             )
     }

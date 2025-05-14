@@ -1,11 +1,11 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.network
+package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
 import uk.gov.android.network.api.ApiResponse
 import javax.inject.Inject
 
-class FakeSessionApi
+class FakeActiveSessionApi
     @Inject
-    constructor() : SessionApi {
+    constructor() : ActiveSessionApi {
         override suspend fun getActiveSession(): ApiResponse =
             ApiResponse.Success<String>(
                 """
