@@ -33,10 +33,16 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 internal fun ConfirmAbortMobileScreen(
     viewModel: ConfirmAbortMobileViewModel,
     webNavigator: WebNavigator,
+    onFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    fun onButtonClick() {
+        viewModel.onContinueToGovUk()
+        onFinish()
+    }
+
     ConfirmAbortToMobileWebContent(
-        onButtonClick = viewModel::onContinueToGovUk,
+        onButtonClick = ::onButtonClick,
         modifier = modifier,
     )
 

@@ -39,6 +39,7 @@ class AbortNavGraphProvider
                 ConfirmAbortMobileScreen(
                     viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),
                     webNavigator = webNavigator,
+                    onFinish = onFinish,
                 )
             }
 

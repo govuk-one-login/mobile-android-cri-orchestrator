@@ -5,11 +5,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.collections.immutable.persistentSetOf
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
@@ -29,6 +29,8 @@ import javax.inject.Named
 class HandbackNavGraphProvider
     @Inject
     constructor(
+        @Named(AbortViewModelModule.FACTORY_NAME)
+        private val abortViewModelFactory: ViewModelProvider.Factory,
         @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
         private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
@@ -42,14 +44,6 @@ class HandbackNavGraphProvider
             navController: NavController,
             onFinish: () -> Unit,
         ) {
-            fun onDismissAbortModal(finishJourney: Boolean) {
-                if (finishJourney) {
-                    onFinish()
-                } else {
-                    navController.popBackStack()
-                }
-            }
-
             composable<HandbackDestinations.UnrecoverableError> {
                 UnrecoverableErrorScreen(
                     navController = navController,
@@ -71,26 +65,22 @@ class HandbackNavGraphProvider
             }
 
             composable<HandbackDestinations.ConfirmAbortDesktop> { backStackEntry ->
-                val route = backStackEntry.toRoute<HandbackDestinations.ConfirmAbortDesktop>()
                 AbortModal(
+                    abortViewModel = viewModel(factory = abortViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                    onDismissRequest = {
-                        onDismissAbortModal(
-                            finishJourney = route.finishJourney,
-                        )
-                    },
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
                 )
             }
 
             composable<HandbackDestinations.ConfirmAbortMobile> { backStackEntry ->
-                val route = backStackEntry.toRoute<HandbackDestinations.ConfirmAbortMobile>()
                 AbortModal(
+                    abortViewModel = viewModel(factory = abortViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortMobile,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
-                    onDismissRequest = {
-                        onDismissAbortModal(finishJourney = route.finishJourney)
-                    },
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
                 )
             }
         }

@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -16,7 +16,7 @@ class GetJourneyTypeTest {
         runTest {
             val sessionStore =
                 FakeSessionStore(
-                    session = Session.createMobileAppMobileInstance(),
+                    session = Session.Companion.createMobileAppMobileInstance(),
                 )
             val getJourneyType = GetJourneyTypeImpl(sessionStore)
 
@@ -28,7 +28,7 @@ class GetJourneyTypeTest {
         runTest {
             val sessionStore =
                 FakeSessionStore(
-                    session = Session.createDesktopAppDesktopInstance(),
+                    session = Session.Companion.createDesktopAppDesktopInstance(),
                 )
             val getJourneyType = GetJourneyTypeImpl(sessionStore)
 
