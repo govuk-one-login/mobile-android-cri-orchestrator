@@ -25,4 +25,7 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data class ConfirmAbortMobile(
         val finishJourney: Boolean = false,
     ) : HandbackDestinations
+
+    @Serializable
+    data object ConfirmAbortReturnDesktop : HandbackDestinations
 }

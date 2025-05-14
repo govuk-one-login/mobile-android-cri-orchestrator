@@ -83,5 +83,15 @@ class HandbackNavGraphProvider
                     onFinish = onFinish,
                 )
             }
+
+            composable<HandbackDestinations.ConfirmAbortReturnDesktop> { backStackEntry ->
+                AbortModal(
+                    abortViewModel = viewModel(factory = abortViewModelFactory),
+                    startDestination = AbortDestinations.ConfirmAbortReturnDesktop,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
         }
     }

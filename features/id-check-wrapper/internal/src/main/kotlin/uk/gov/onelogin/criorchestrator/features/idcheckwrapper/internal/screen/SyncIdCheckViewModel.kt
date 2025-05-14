@@ -22,11 +22,13 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.Ex
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
 class SyncIdCheckViewModel(
     private val configStore: ConfigStore,
+    private val sessionStore: SessionStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
@@ -122,11 +124,10 @@ class SyncIdCheckViewModel(
                 IdCheckSdkExitState.ConfirmationFailed,
                 is IdCheckSdkExitState.FaceScanLimitReached,
                 IdCheckSdkExitState.UnknownDocumentType,
-                ->
-                    when (journeyType) {
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
-                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb
-                    }
+                -> {
+                    sessionStore.write(null)
+                    SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
+                }
 
                 IdCheckSdkExitState.HappyPath ->
                     when (journeyType) {
