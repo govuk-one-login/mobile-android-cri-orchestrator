@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import uk.gov.android.network.api.ApiResponse
 
-class FakeSessionApiTest {
+class FakeActiveSessionApiTest {
     @Test
     fun `verify fake session API returns intended response`() =
         runTest {
