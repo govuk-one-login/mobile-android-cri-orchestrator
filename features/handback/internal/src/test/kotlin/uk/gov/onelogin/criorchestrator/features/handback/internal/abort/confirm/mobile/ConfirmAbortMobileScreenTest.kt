@@ -58,7 +58,7 @@ class ConfirmAbortMobileScreenTest {
     }
 
     @Test
-    fun `when continue is clicked, it navigates to return to gov uk`() {
+    fun `when continue is clicked, it navigates to redirect to mobile web holder screen`() {
         composeTestRule
             .onNode(continueButton)
             .performClick()
