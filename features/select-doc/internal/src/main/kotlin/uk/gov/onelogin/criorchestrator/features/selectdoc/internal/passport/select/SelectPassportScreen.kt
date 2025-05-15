@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
@@ -115,7 +116,7 @@ internal fun SelectPassportScreenContent(
                     GdsButton(
                         text = stringResource(SelectPassportConstants.readMoreButtonTextId),
                         buttonType = ButtonType.Secondary,
-                        onClick = onReadMoreClick,
+                        onClick = dropUnlessResumed { onReadMoreClick() },
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                         contentModifier = Modifier,
                         textAlign = TextAlign.Left,
@@ -144,11 +145,12 @@ internal fun SelectPassportScreenContent(
                 GdsButton(
                     text = stringResource(SelectPassportConstants.buttonTextId),
                     buttonType = ButtonType.Primary,
-                    onClick = {
-                        selectedItem?.let {
-                            onConfirmSelection(it)
-                        }
-                    },
+                    onClick =
+                        dropUnlessResumed {
+                            selectedItem?.let {
+                                onConfirmSelection(it)
+                            }
+                        },
                     enabled = selectedItem != null,
                     modifier = Modifier.fillMaxWidth(),
                 )

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.toPersistentList
 import uk.gov.android.ui.componentsv2.button.ButtonType
@@ -116,7 +117,7 @@ internal fun SelectDrivingLicenceScreenContent(
                         GdsButton(
                             text = stringResource(SelectDrivingLicenceConstants.readMoreButtonTextId),
                             buttonType = ButtonType.Secondary,
-                            onClick = onReadMoreClick,
+                            onClick = dropUnlessResumed { onReadMoreClick() },
                             modifier = Modifier.padding(horizontal = horizontalPadding),
                             contentModifier = Modifier,
                             textAlign = TextAlign.Left,

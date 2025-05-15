@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -126,7 +127,7 @@ internal fun SelectBrpScreenContent(
                 GdsButton(
                     text = stringResource(SelectBrpConstants.readMoreButtonTextId),
                     buttonType = ButtonType.Secondary,
-                    onClick = onReadMoreClicked,
+                    onClick = dropUnlessResumed { onReadMoreClicked() },
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                     textAlign = TextAlign.Start,
                     contentPosition = Arrangement.Start,
@@ -154,11 +155,12 @@ internal fun SelectBrpScreenContent(
             GdsButton(
                 stringResource(SelectBrpConstants.continueButtonTextId),
                 buttonType = ButtonType.Primary,
-                onClick = {
-                    selectedItem?.let {
-                        onContinueClicked(it)
-                    }
-                },
+                onClick =
+                    dropUnlessResumed {
+                        selectedItem?.let {
+                            onContinueClicked(it)
+                        }
+                    },
                 enabled = selectedItem != null,
                 modifier = Modifier.fillMaxWidth(),
             )
