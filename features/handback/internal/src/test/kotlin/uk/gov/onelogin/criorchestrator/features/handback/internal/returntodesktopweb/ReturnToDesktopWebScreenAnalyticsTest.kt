@@ -12,6 +12,7 @@ import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.DebugRequestAppReview
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
@@ -38,6 +39,10 @@ class ReturnToDesktopWebScreenAnalyticsTest {
     private val viewModel =
         ReturnToDesktopWebViewModel(
             analytics = analytics,
+            requestAppReview =
+                DebugRequestAppReview(
+                    context = context,
+                ),
         )
 
     @Before
@@ -45,7 +50,6 @@ class ReturnToDesktopWebScreenAnalyticsTest {
         composeTestRule.setContent {
             ReturnToDesktopWebScreen(
                 viewModel = viewModel,
-                reviewRequester = FakeReviewRequester(),
             )
         }
     }

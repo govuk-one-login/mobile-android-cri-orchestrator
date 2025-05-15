@@ -11,6 +11,7 @@ class ReturnToDesktopWebScreenDisableBackButtonTest : DisableBackButtonTest() {
     private val viewModel =
         ReturnToDesktopWebViewModel(
             analytics = mock(),
+            requestAppReview = mock(),
         )
 
     @Before

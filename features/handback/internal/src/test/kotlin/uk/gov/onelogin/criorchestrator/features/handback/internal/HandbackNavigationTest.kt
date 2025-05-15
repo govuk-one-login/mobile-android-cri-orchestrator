@@ -28,6 +28,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
+import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.FakeRequestAppReview
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
@@ -63,6 +64,7 @@ class HandbackNavigationTest {
     private val sessionStore = FakeSessionStore()
     private val webNavigator = FakeWebNavigator()
     private val abortSession = StubAbortSession()
+    private val requestAppReview = FakeRequestAppReview()
     private val logger = SystemLogger()
     private val navGraphProvider = createNavGraphProvider()
     private val onFinish = mock<() -> Unit>()
@@ -360,6 +362,7 @@ class HandbackNavigationTest {
             returnToDesktopViewModelFactory =
                 ReturnToDesktopWebViewModelModule.provideFactory(
                     analytics = analytics,
+                    requestAppReview = requestAppReview,
                 ),
             webNavigator = webNavigator,
             abortNavGraphProviders =

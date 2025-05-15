@@ -22,6 +22,10 @@ private val defaultConfig =
                     Config.Value.StringValue(SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS),
                 ),
                 Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.DebugAppReviewPrompts,
+                    Config.Value.BooleanValue(false),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
                     key = IdCheckWrapperConfigKey.EnableManualLauncher,
                     Config.Value.BooleanValue(false),
                 ),
@@ -39,6 +43,7 @@ fun Config.Companion.fromUserConfig(userConfig: Config): Config {
         listOf(
             SdkConfigKey.BypassIdCheckAsyncBackend,
             SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+            SdkConfigKey.DebugAppReviewPrompts,
             IdCheckWrapperConfigKey.EnableManualLauncher,
             NfcConfigKey.NfcAvailability,
         )
