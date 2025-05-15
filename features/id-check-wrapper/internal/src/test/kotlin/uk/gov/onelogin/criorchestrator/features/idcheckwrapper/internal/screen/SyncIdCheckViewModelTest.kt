@@ -44,6 +44,7 @@ class SyncIdCheckViewModelTest {
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
     private val analytics = mock<IdCheckWrapperAnalytics>()
+    private val sessionStore = FakeSessionStore(session)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session,
@@ -74,7 +75,7 @@ class SyncIdCheckViewModelTest {
                         ),
                 ),
             analytics = analytics,
-            sessionStore = FakeSessionStore(),
+            sessionStore = sessionStore,
         )
     }
 
@@ -125,11 +126,11 @@ class SyncIdCheckViewModelTest {
                                 Session.createDesktopAppDesktopInstance(),
                                 SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb,
                             ),
-//                            Arguments.of(
-//                                sdkResult,
-//                                Session.createMobileAppMobileInstance(),
-//                                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
-//                            ),
+                            Arguments.of(
+                                sdkResult,
+                                Session.createMobileAppMobileInstance(),
+                                SyncIdCheckAction.NavigateToAbortRedirectToMobileWebHolder,
+                            ),
                         ).stream()
                     }
             val happyPaths =
@@ -357,6 +358,6 @@ class SyncIdCheckViewModelTest {
                             enableManualLauncher = enableManualLauncher,
                         ),
                 ),
-            sessionStore = FakeSessionStore(),
+            sessionStore = sessionStore,
         )
 }

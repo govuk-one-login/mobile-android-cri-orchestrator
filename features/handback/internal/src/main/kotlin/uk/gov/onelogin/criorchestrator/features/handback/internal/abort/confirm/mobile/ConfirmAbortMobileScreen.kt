@@ -41,7 +41,7 @@ internal fun ConfirmAbortMobileScreen(
         viewModel.onContinueToGovUk()
     }
 
-    ConfirmAbortToMobileWebContent(
+    ConfirmAbortMobileWebContent(
         onButtonClick = ::onButtonClick,
         modifier = modifier,
     )
@@ -66,7 +66,7 @@ internal fun ConfirmAbortMobileScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortToMobileWebContent(
+internal fun ConfirmAbortMobileWebContent(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -135,8 +135,8 @@ internal fun ConfirmAbortToMobileWebContent(
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewConfirmAbortToMobileWeb() {
+internal fun PreviewConfirmAbortMobileWeb() {
     GdsTheme {
-        ConfirmAbortToMobileWebContent(onButtonClick = {})
+        ConfirmAbortMobileWebContent(onButtonClick = {})
     }
 }

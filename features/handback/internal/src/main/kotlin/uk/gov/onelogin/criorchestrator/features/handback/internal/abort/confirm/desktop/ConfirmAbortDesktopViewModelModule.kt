@@ -14,7 +14,7 @@ import javax.inject.Named
 @Module
 @ContributesTo(CriOrchestratorScope::class)
 object ConfirmAbortDesktopViewModelModule {
-    const val FACTORY_NAME = "ConfirmAbortToDesktopWebViewModelModuleFactory"
+    const val FACTORY_NAME = "ConfirmAbortDesktopWebViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)

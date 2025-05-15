@@ -9,11 +9,13 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSes
 class AbortViewModel(
     private val isSessionAbortedOrUnavailable: IsSessionAbortedOrUnavailable,
 ) : ViewModel() {
+    private lateinit var _isAborted: Flow<Boolean>
     lateinit var isAborted: Flow<Boolean>
 
     init {
         viewModelScope.launch {
-            isAborted = isSessionAbortedOrUnavailable()
+            _isAborted = isSessionAbortedOrUnavailable()
+            isAborted = _isAborted
         }
     }
 }

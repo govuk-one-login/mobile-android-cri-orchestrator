@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.FakeWebNavigator
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 
 @RunWith(AndroidJUnit4::class)

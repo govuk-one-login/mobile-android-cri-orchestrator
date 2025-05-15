@@ -27,7 +27,7 @@ class CompositeNavHostTest {
                         FakeNavGraph.Provider(),
                     ),
                 startDestination = FakeNavGraph.Destination.First,
-                {},
+                onFinish = { },
             )
         }
 

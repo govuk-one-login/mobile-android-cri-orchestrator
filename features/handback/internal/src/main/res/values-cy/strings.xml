@@ -22,8 +22,8 @@
     <string name="handback_confirmabort_body1">Rydych chi ar fin gadael yr ap yma a mynd yn ôl i wefan GOV.UK.</string>
     <string name="handback_confirmabort_body1_content_description">Rydych chi ar fin gadael yr ap yma a mynd yn ôl i wefan Gov dot yoo kay.</string>
     <string name="handback_confirmabort_body2">Bydd parhau yn dileu unrhyw gynnydd rydych chi wedi’i wneud yn yr ap.</string>
-    <string name="handback_confirmaborttodesktopweb_button">Parhau</string>
-    <string name="handback_confirmaborttomobileweb_button">Parhau i wefan GOV.UK</string>
+    <string name="handback_confirmabortdesktopweb_button">Parhau</string>
+    <string name="handback_confirmabortmobileweb_button">Parhau i wefan GOV.UK</string>
 
     <string name="handback_abortedreturntodesktopweb_title">Ewch yn ôl i GOV.UK ar eich cyfrifiadur neu dabled</string>
     <string name="handback_abortedreturntodesktopweb_title_content_description">Ewch yn ôl i Gov dot yoo kay ar eich cyfrifiadur neu dabled</string>

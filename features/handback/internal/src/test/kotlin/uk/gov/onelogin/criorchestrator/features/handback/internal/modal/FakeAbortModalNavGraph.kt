@@ -6,13 +6,7 @@ import androidx.navigation.compose.composable
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 
-/**
- * This test fixture uses string routes rather than type-safe
- * `@Serializable` destinations as the latter cannot live in test fixtures.
- *
- *  https://github.com/Kotlin/kotlinx.serialization/issues/2932
- */
-object FakeNavGraph {
+object FakeAbortModalNavGraph {
     class Provider : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,

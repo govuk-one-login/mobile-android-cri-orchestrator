@@ -41,7 +41,7 @@ fun ConfirmAbortDesktopWebScreen(
         }
     }
 
-    ConfirmAbortToDesktopWebContent(
+    ConfirmAbortDesktopWebContent(
         onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
     )
@@ -49,7 +49,7 @@ fun ConfirmAbortDesktopWebScreen(
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortToDesktopWebContent(
+internal fun ConfirmAbortDesktopWebContent(
     onContinueClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -106,9 +106,9 @@ internal fun ConfirmAbortToDesktopWebContent(
 
 @Composable
 @LightDarkBothLocalesPreview
-internal fun PreviewConfirmAbortToDesktopWeb() {
+internal fun PreviewConfirmAbortDesktopWeb() {
     GdsTheme {
-        ConfirmAbortToDesktopWebContent(
+        ConfirmAbortDesktopWebContent(
             onContinueClicked = {},
         )
     }

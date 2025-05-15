@@ -8,5 +8,5 @@ internal object ConfirmAbortDesktopConstants {
     val titleId: Int = R.string.handback_confirmabort_title
 
     @StringRes
-    val buttonId: Int = R.string.handback_confirmaborttodesktopweb_button
+    val buttonId: Int = R.string.handback_confirmabortdesktopweb_button
 }

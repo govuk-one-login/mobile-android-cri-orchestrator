@@ -22,8 +22,8 @@
     <string name="handback_confirmabort_body1">You’re about to leave this app and go back to the GOV.UK website.</string>
     <string name="handback_confirmabort_body1_content_description">You’re about to leave this app and go back to the Gov dot UK website</string>
     <string name="handback_confirmabort_body2">Continuing will delete any progress you’ve made in the app.</string>
-    <string name="handback_confirmaborttodesktopweb_button">Continue</string>
-    <string name="handback_confirmaborttomobileweb_button">Continue to the GOV.UK website</string>
+    <string name="handback_confirmabortdesktopweb_button">Continue</string>
+    <string name="handback_confirmabortmobileweb_button">Continue to the GOV.UK website</string>
 
     <string name="handback_abortedreturntodesktopweb_title">Return to GOV.UK on your computer or tablet</string>
     <string name="handback_abortedreturntodesktopweb_title_content_description">Return to Gov dot UK on your computer or tablet</string>

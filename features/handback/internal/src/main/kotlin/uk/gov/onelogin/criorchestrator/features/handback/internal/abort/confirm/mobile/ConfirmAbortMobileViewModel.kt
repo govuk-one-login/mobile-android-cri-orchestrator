@@ -28,7 +28,7 @@ class ConfirmAbortMobileViewModel(
 
     fun onScreenStart() {
         analytics.trackScreen(
-            id = HandbackScreenId.ConfirmAbortToMobile,
+            id = HandbackScreenId.ConfirmAbortMobile,
             title = ConfirmAbortMobileConstants.titleId,
         )
     }

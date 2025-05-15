@@ -8,5 +8,5 @@ internal object ConfirmAbortMobileConstants {
     val titleId: Int = R.string.handback_confirmabort_title
 
     @StringRes
-    val buttonId: Int = R.string.handback_confirmaborttomobileweb_button
+    val buttonId: Int = R.string.handback_confirmabortmobileweb_button
 }

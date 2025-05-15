@@ -42,7 +42,7 @@ class AbortModalTest {
             AbortModal(
                 abortViewModel = abortViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
-                navGraphProviders = persistentSetOf(FakeNavGraph.Provider()),
+                navGraphProviders = persistentSetOf(FakeAbortModalNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,
                 onFinish = ::onFinish,
             )
@@ -68,7 +68,7 @@ class AbortModalTest {
             AbortModal(
                 abortViewModel = abortViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
-                navGraphProviders = persistentSetOf(FakeNavGraph.Provider()),
+                navGraphProviders = persistentSetOf(FakeAbortModalNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,
                 onFinish = ::onFinish,
             )

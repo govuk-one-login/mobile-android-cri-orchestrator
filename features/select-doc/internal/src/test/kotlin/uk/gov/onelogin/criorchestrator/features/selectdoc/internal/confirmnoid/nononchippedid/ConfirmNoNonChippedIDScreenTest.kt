@@ -50,9 +50,7 @@ class ConfirmNoNonChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortMobile,
-        )
+        verify(navController).navigate(HandbackDestinations.ConfirmAbortMobile)
     }
 
     @Test
@@ -73,9 +71,7 @@ class ConfirmNoNonChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortDesktop,
-        )
+        verify(navController).navigate(HandbackDestinations.ConfirmAbortDesktop)
     }
 
     private fun ComposeContentTestRule.setContent(viewModel: ConfirmNoChippedIDViewModel) {

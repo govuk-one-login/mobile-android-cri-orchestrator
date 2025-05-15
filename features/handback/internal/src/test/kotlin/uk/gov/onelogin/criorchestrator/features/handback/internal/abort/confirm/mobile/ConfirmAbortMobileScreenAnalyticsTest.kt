@@ -64,7 +64,7 @@ class ConfirmAbortMobileScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = HandbackScreenId.ConfirmAbortToMobile.rawId,
+                    id = HandbackScreenId.ConfirmAbortMobile.rawId,
                     name = context.getString(ConfirmAbortMobileConstants.titleId),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()

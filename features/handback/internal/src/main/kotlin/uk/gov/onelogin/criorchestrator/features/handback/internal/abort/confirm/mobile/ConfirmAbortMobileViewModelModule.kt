@@ -15,7 +15,7 @@ import javax.inject.Named
 @Module
 @ContributesTo(CriOrchestratorScope::class)
 object ConfirmAbortMobileViewModelModule {
-    const val FACTORY_NAME = "ConfirmAbortToMobileWebViewModelFactory"
+    const val FACTORY_NAME = "ConfirmAbortMobileWebViewModelFactory"
 
     @Provides
     @Named(FACTORY_NAME)

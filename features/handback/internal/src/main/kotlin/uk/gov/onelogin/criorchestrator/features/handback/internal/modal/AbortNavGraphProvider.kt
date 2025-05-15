@@ -25,9 +25,9 @@ class AbortNavGraphProvider
     @Inject
     constructor(
         @Named(ConfirmAbortMobileViewModelModule.FACTORY_NAME)
-        private val confirmAbortToMobileWebViewModelFactory: ViewModelProvider.Factory,
+        private val confirmAbortMobileWebViewModelFactory: ViewModelProvider.Factory,
         @Named(ConfirmAbortDesktopViewModelModule.FACTORY_NAME)
-        private val confirmAbortToDesktopWebViewModelFactory: ViewModelProvider.Factory,
+        private val confirmAbortDesktopWebViewModelFactory: ViewModelProvider.Factory,
         @Named(AbortedReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val abortedReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
@@ -38,14 +38,14 @@ class AbortNavGraphProvider
         ) {
             composable<AbortDestinations.ConfirmAbortMobile> {
                 ConfirmAbortMobileScreen(
-                    viewModel = viewModel(factory = confirmAbortToMobileWebViewModelFactory),
+                    viewModel = viewModel(factory = confirmAbortMobileWebViewModelFactory),
                     navController = navController,
                 )
             }
 
             composable<AbortDestinations.ConfirmAbortDesktop> {
                 ConfirmAbortDesktopWebScreen(
-                    viewModel = viewModel(factory = confirmAbortToDesktopWebViewModelFactory),
+                    viewModel = viewModel(factory = confirmAbortDesktopWebViewModelFactory),
                     navController = navController,
                 )
             }
