@@ -1,20 +1,35 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb
 
-import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.RegisterExtension
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.RequestAppReview
+import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class ReturnToDesktopWebViewModelTest {
+    private val testScope = TestScope()
+
+    @JvmField
+    @RegisterExtension
+    val mainDispatcherExtension = MainDispatcherExtension(testScope)
+
     private val analytics = mock<HandbackAnalytics>()
+    private val requestAppReview = mock<RequestAppReview>()
 
     private val viewModel =
         ReturnToDesktopWebViewModel(
             analytics = analytics,
+            requestAppReview = requestAppReview,
         )
 
     @Test
@@ -28,13 +43,16 @@ class ReturnToDesktopWebViewModelTest {
             )
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when screen starts, it triggers a review after two seconds`() {
-        runTest {
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                assertEquals(ReturnToDesktopWebAction.RequestReview, awaitItem())
-            }
+    fun `when screen starts, it triggers a review after two seconds`() =
+        testScope.runTest {
+            viewModel.onScreenStart()
+
+            advanceTimeBy(2.seconds)
+            verifyNoInteractions(requestAppReview)
+
+            advanceTimeBy(1.milliseconds)
+            verify(requestAppReview).invoke()
         }
-    }
 }

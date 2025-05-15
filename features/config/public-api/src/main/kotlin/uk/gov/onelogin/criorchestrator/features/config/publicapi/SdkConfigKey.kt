@@ -58,4 +58,10 @@ sealed interface SdkConfigKey {
         const val OPTION_OFFLINE = "Offline error"
         const val OPTION_UNRECOVERABLE_ERROR = "Unrecoverable error"
     }
+
+    data object DebugAppReviewPrompts :
+        BooleanConfigKey(
+            name = "Debug app review prompts",
+        ),
+        SdkConfigKey
 }

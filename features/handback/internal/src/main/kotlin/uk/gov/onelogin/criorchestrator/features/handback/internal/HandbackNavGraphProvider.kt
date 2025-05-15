@@ -13,7 +13,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortMod
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReviewRequester
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
@@ -40,7 +39,6 @@ class HandbackNavGraphProvider
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-        private val reviewRequester: ReviewRequester,
         private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
@@ -64,7 +62,6 @@ class HandbackNavGraphProvider
             composable<HandbackDestinations.ReturnToDesktopWeb> {
                 ReturnToDesktopWebScreen(
                     viewModel = viewModel(factory = returnToDesktopViewModelFactory),
-                    reviewRequester = reviewRequester,
                 )
             }
 
