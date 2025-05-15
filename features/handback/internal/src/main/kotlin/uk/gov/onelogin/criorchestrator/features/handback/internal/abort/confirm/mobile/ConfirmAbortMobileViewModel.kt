@@ -45,7 +45,6 @@ class ConfirmAbortMobileViewModel(
             redirectUri?.let {
                 _actions.emit(ConfirmAbortMobileAction.ContinueGovUk(it))
             }
-            sessionStore.write(null)
         }
     }
 }

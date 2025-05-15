@@ -20,13 +20,11 @@ object ConfirmAbortDesktopViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         analytics: HandbackAnalytics,
-        sessionStore: SessionStore,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ConfirmAbortDesktopViewModel(
                     analytics = analytics,
-                    sessionStore = sessionStore,
                 )
             }
         }
