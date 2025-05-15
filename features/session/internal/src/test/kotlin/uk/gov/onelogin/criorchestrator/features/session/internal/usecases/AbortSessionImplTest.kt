@@ -19,7 +19,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.creat
 import kotlin.test.assertTrue
 
 class AbortSessionImplTest {
-    private val session = Session.Companion.createTestInstance()
+    private val session = Session.createTestInstance()
     private val sessionId = session.sessionId
     private val sessionStore =
         FakeSessionStore(
