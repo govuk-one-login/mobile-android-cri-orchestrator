@@ -100,7 +100,7 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "true with expected log entry when API response is Success with correct" +
-                                "response format - with redirectUri (mobile journey)",
+                            "response format - with redirectUri (mobile journey)",
                         ApiResponse.Success<String>(
                             """
                             {
@@ -117,7 +117,7 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "true with expected log entry when API response is Success with correct" +
-                                "response format - with new parameters",
+                            "response format - with new parameters",
                         ApiResponse.Success<String>(
                             """
                             {
@@ -135,7 +135,7 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "true with expected log entry when API response is Success with correct" +
-                                "response format - no redirectUri (desktop journey)",
+                            "response format - no redirectUri (desktop journey)",
                         ApiResponse.Success<String>(
                             """
                             {
@@ -151,7 +151,7 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "false with expected log entry when API response is Success but with " +
-                                "incorrect response format",
+                            "incorrect response format",
                         ApiResponse.Success<String>(
                             """
                             {

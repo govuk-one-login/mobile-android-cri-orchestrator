@@ -357,6 +357,6 @@ class SyncIdCheckViewModelTest {
                             enableManualLauncher = enableManualLauncher,
                         ),
                 ),
-            sessionStore = FakeSessionStore()
+            sessionStore = FakeSessionStore(),
         )
 }

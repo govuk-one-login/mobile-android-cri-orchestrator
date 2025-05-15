@@ -38,10 +38,11 @@ class ConfirmAbortDesktopScreenAnalyticsTest {
             analyticsLogger = analyticsLogger,
         )
 
-    private val viewmodel = ConfirmAbortDesktopViewModel(
-        analytics,
-        StubAbortSession(),
-    )
+    private val viewmodel =
+        ConfirmAbortDesktopViewModel(
+            analytics,
+            StubAbortSession(),
+        )
 
     @Before
     fun setup() {

@@ -52,11 +52,11 @@ internal fun ConfirmAbortMobileScreen(
         viewModel.actions.collect { action ->
             when (action) {
                 is ConfirmAbortMobileAction.ContinueGovUk -> {
-                navController.navigate(
-                       AbortDestinations.AbortRedirectToMobileWebHolder(
-                           redirectUri = action.redirectUri,
-                       )
-                   )
+                    navController.navigate(
+                        AbortDestinations.AbortRedirectToMobileWebHolder(
+                            redirectUri = action.redirectUri,
+                        ),
+                    )
                 }
             }
         }

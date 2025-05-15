@@ -21,7 +21,7 @@ class AbortSessionImpl
         private val abortSessionApi: AbortSessionApi,
         private val logger: Logger,
     ) : AbortSession,
-    LogTagProvider {
+        LogTagProvider {
         override suspend fun invoke(): AbortSession.Result {
             val session = sessionStore.read().first()
 

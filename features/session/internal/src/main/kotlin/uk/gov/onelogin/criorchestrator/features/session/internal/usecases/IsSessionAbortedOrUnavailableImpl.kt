@@ -3,9 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionAbortedOrUnavailable
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
@@ -16,7 +14,8 @@ class IsSessionAbortedOrUnavailableImpl
     constructor(
         private val sessionStore: SessionStore,
     ) : IsSessionAbortedOrUnavailable {
-        override suspend fun invoke(): Flow<Boolean> = sessionStore.read().map { value ->
-            value == null
-        }
+        override suspend fun invoke(): Flow<Boolean> =
+            sessionStore.read().map { value ->
+                value == null
+            }
     }

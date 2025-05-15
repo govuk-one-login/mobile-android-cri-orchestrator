@@ -133,7 +133,7 @@ private fun SyncIdCheckActionHandler(
                     navController.navigate(
                         AbortDestinations.AbortRedirectToMobileWebHolder(
                             redirectUri = redirectUri,
-                        )
+                        ),
                     )
 
                 SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb ->
