@@ -14,6 +14,8 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.hasAbortedSession
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isSuccess
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
@@ -115,24 +117,22 @@ class SyncIdCheckViewModel(
         }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        if (exitState.hasAbortedSession()) {
+            sessionStore.write(null)
+        }
+
         val journeyType = requireDisplayState().launcherData.sessionJourneyType
         val action =
-            when (exitState) {
-                is IdCheckSdkExitState.Nowhere,
-                is IdCheckSdkExitState.ConfirmAnotherWay,
-                is IdCheckSdkExitState.ConfirmationAbortedJourney,
-                IdCheckSdkExitState.ConfirmationFailed,
-                is IdCheckSdkExitState.FaceScanLimitReached,
-                IdCheckSdkExitState.UnknownDocumentType,
-                -> {
-                    sessionStore.write(null)
-                    SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
-                }
-
-                IdCheckSdkExitState.HappyPath ->
+            when (exitState.isSuccess()) {
+                true ->
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
                         JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                    }
+                false ->
+                    when (journeyType) {
+                        JourneyType.MobileAppMobile -> TODO()
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
                     }
             }
 
