@@ -27,7 +27,6 @@ import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
@@ -53,7 +52,7 @@ internal fun ConfirmAbortMobileScreen(
             when (action) {
                 is ConfirmAbortMobileAction.ContinueGovUk -> {
                 navController.navigate(
-                       AbortDestinations.HandbackToWebHolder(
+                       AbortDestinations.AbortRedirectToMobileWebHolder(
                            redirectUri = action.redirectUri,
                        )
                    )
