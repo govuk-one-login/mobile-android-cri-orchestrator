@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
@@ -63,7 +64,7 @@ internal fun ContinueToProveYourIdentityContent(
     primaryButton =
         CentreAlignedScreenButton(
             text = stringResource(R.string.continue_to_prove_your_identity_screen_button),
-            onClick = onContinueClick,
+            onClick = dropUnlessResumed { onContinueClick() },
         ),
 )
 

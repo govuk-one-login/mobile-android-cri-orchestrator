@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
@@ -101,7 +102,7 @@ internal fun ConfirmDrivingLicenceScreenContent(
                 GdsButton(
                     text = confirmButtonText,
                     buttonType = ButtonType.Primary,
-                    onClick = onPrimaryClick,
+                    onClick = dropUnlessResumed { onPrimaryClick() },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
