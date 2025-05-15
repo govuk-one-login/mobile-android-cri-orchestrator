@@ -135,7 +135,7 @@ internal fun ConfirmAbortToMobileWebContent(
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewConfirmAbort() {
+internal fun PreviewConfirmAbortToMobileWeb() {
     GdsTheme {
         ConfirmAbortToMobileWebContent(onButtonClick = {})
     }
