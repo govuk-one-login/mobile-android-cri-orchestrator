@@ -17,14 +17,10 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data object ReturnToDesktopWeb : HandbackDestinations
 
     @Serializable
-    data class ConfirmAbortDesktop(
-        val finishJourney: Boolean = false,
-    ) : HandbackDestinations
+    data object ConfirmAbortDesktop : HandbackDestinations
 
     @Serializable
-    data class ConfirmAbortMobile(
-        val finishJourney: Boolean = false,
-    ) : HandbackDestinations
+    data object ConfirmAbortMobile : HandbackDestinations
 
     @Serializable
     data object AbortedReturnToDesktopWeb : HandbackDestinations

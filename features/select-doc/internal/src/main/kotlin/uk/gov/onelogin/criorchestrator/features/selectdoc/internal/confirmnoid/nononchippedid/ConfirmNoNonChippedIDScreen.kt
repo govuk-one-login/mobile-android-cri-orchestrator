@@ -39,10 +39,10 @@ internal fun ConfirmNoNonChippedIDScreen(
         viewModel.action.collect { event ->
             when (event) {
                 ConfirmNoNonChippedIDAction.NavigateToConfirmAbortDesktop ->
-                    navController.navigate(HandbackDestinations.ConfirmAbortDesktop())
+                    navController.navigate(HandbackDestinations.ConfirmAbortDesktop)
 
                 ConfirmNoNonChippedIDAction.NavigateToConfirmAbortMobile ->
-                    navController.navigate(HandbackDestinations.ConfirmAbortMobile())
+                    navController.navigate(HandbackDestinations.ConfirmAbortMobile)
             }
         }
     }

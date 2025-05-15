@@ -51,7 +51,7 @@ class ConfirmNoNonChippedIDScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortMobile(),
+            HandbackDestinations.ConfirmAbortMobile,
         )
     }
 
@@ -74,7 +74,7 @@ class ConfirmNoNonChippedIDScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortDesktop(),
+            HandbackDestinations.ConfirmAbortDesktop,
         )
     }
 
