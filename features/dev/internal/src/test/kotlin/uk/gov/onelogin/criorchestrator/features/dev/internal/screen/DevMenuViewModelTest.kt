@@ -24,7 +24,9 @@ class DevMenuViewModelTest {
         runTest {
             viewModel.state.test {
                 assertEquals(
-                    DevMenuUiState(config = stubConfig()),
+                    DevMenuUiState(
+                        entries = stubConfig().entries,
+                    ),
                     awaitItem(),
                 )
             }
@@ -36,21 +38,20 @@ class DevMenuViewModelTest {
             val oldEntry = stubStringConfigEntry()
             val newEntry =
                 stubStringConfigEntry().copy(value = Config.Value.StringValue("updated value"))
-            val expectedConfig =
-                Config(
-                    entries =
-                        stubConfig()
-                            .entries
-                            .minus(oldEntry)
-                            .plus(newEntry)
-                            .toPersistentList(),
-                )
+            val expectedEntries =
+                stubConfig()
+                    .entries
+                    .minus(oldEntry)
+                    .plus(newEntry)
+                    .toPersistentList()
             viewModel.state.test {
                 skipItems(1)
                 viewModel.onEntryChange(newEntry)
                 val state = awaitItem()
                 assertEquals(
-                    DevMenuUiState(config = expectedConfig),
+                    DevMenuUiState(
+                        entries = expectedEntries,
+                    ),
                     state,
                 )
             }

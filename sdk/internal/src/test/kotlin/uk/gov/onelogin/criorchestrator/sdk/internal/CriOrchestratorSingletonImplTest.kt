@@ -50,6 +50,10 @@ class CriOrchestratorSingletonImplTest {
                                 key = SdkConfigKey.BypassIdCheckAsyncBackend,
                                 Config.Value.BooleanValue(false),
                             ),
+                            Config.Entry<Config.Value.StringValue>(
+                                key = SdkConfigKey.BypassJourneyType,
+                                Config.Value.StringValue(SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE),
+                            ),
                             Config.Entry<Config.Value.BooleanValue>(
                                 key = IdCheckWrapperConfigKey.EnableManualLauncher,
                                 Config.Value.BooleanValue(false),

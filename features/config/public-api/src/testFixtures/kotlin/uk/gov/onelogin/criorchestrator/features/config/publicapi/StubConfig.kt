@@ -56,8 +56,8 @@ fun stubBooleanConfigEntry(
 fun stubConfig(
     entries: ImmutableList<Config.Entry<Config.Value>> =
         persistentListOf(
-            stubStringConfigEntry(),
             stubBooleanConfigEntry(),
+            stubStringConfigEntry(),
         ),
 ) = Config(
     entries = entries,

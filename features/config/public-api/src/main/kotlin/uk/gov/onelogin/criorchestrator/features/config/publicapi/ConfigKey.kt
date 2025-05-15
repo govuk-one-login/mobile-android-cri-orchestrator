@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.ImmutableList
  */
 abstract class ConfigKey<out T : Config.Value>(
     val name: String,
+    val dependsOn: BooleanConfigKey? = null,
 ) {
     val id: String = this.javaClass.name
 
@@ -18,6 +19,7 @@ abstract class ConfigKey<out T : Config.Value>(
 
 abstract class BooleanConfigKey(
     name: String,
+    dependsOn: BooleanConfigKey? = null,
 ) : ConfigKey<Config.Value.BooleanValue>(name) {
     override fun requireValidValue(value: Config.Value) {
         require(value is Config.Value.BooleanValue) {
@@ -28,7 +30,8 @@ abstract class BooleanConfigKey(
 
 abstract class StringConfigKey(
     name: String,
-) : ConfigKey<Config.Value.StringValue>(name) {
+    dependsOn: BooleanConfigKey? = null,
+) : ConfigKey<Config.Value.StringValue>(name, dependsOn) {
     override fun requireValidValue(value: Config.Value) =
         require(value is Config.Value.StringValue) {
             "Value for $name must be a StringValue"
@@ -38,7 +41,8 @@ abstract class StringConfigKey(
 abstract class OptionConfigKey(
     name: String,
     val options: ImmutableList<String>,
-) : StringConfigKey(name) {
+    dependsOn: BooleanConfigKey? = null,
+) : StringConfigKey(name, dependsOn) {
     override fun requireValidValue(value: Config.Value) {
         super.requireValidValue(value)
         require((value as Config.Value.StringValue).value in options) {
