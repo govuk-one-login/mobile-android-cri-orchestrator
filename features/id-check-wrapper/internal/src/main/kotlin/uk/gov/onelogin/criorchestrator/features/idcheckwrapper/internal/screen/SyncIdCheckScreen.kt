@@ -126,7 +126,7 @@ private fun SyncIdCheckActionHandler(
                         HandbackDestinations.ReturnToDesktopWeb,
                     )
 
-                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb ->
+                SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb ->
                     navController.navigate(
                         HandbackDestinations.AbortedReturnToDesktopWeb,
                     )

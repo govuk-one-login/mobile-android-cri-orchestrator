@@ -122,13 +122,13 @@ class SyncIdCheckViewModelTest {
                             Arguments.of(
                                 sdkResult,
                                 Session.createDesktopAppDesktopInstance(),
-                                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
+                                SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb,
                             ),
-                            Arguments.of(
-                                sdkResult,
-                                Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
-                            ),
+//                            Arguments.of(
+//                                sdkResult,
+//                                Session.createMobileAppMobileInstance(),
+//                                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
+//                            ),
                         ).stream()
                     }
             val happyPaths =

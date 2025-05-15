@@ -132,7 +132,7 @@ class SyncIdCheckViewModel(
                 false ->
                     when (journeyType) {
                         JourneyType.MobileAppMobile -> TODO()
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
+                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
             }
 

@@ -17,5 +17,5 @@ sealed interface SyncIdCheckAction {
 
     data object NavigateToUnrecoverableError : SyncIdCheckAction
 
-    data object NavigateToConfirmAbortToDesktopWeb : SyncIdCheckAction
+    data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
 }
