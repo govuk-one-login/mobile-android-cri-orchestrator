@@ -19,6 +19,7 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
@@ -62,6 +63,7 @@ internal fun SyncIdCheckScreen(
         viewModel.actions,
         launcher,
         navController,
+        redirectUri = viewModel.redirectUri ?: "",
     )
 
     state.let { state ->
@@ -108,6 +110,7 @@ private fun SyncIdCheckActionHandler(
     actions: Flow<SyncIdCheckAction>,
     launcher: ManagedActivityResultLauncher<IdCheckSdkParameters, IdCheckSdkExitState>,
     navController: NavController,
+    redirectUri: String,
 ) {
     LaunchedEffect(Unit) {
         actions.collect { action ->
@@ -124,6 +127,13 @@ private fun SyncIdCheckActionHandler(
                 SyncIdCheckAction.NavigateToReturnToDesktopWeb ->
                     navController.navigate(
                         HandbackDestinations.ReturnToDesktopWeb,
+                    )
+
+                SyncIdCheckAction.NavigateToAbortRedirectToMobileWebHolder ->
+                    navController.navigate(
+                        AbortDestinations.AbortRedirectToMobileWebHolder(
+                            redirectUri = redirectUri,
+                        )
                     )
 
                 SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb ->
