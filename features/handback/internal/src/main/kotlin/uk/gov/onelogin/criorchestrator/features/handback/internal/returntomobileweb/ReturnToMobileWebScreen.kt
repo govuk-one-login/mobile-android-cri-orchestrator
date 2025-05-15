@@ -17,6 +17,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.dropUnlessResumed
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
 import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
 import uk.gov.android.ui.componentsv2.button.ButtonType
@@ -126,7 +127,7 @@ private fun ReturnToMobileWebScreenContent(
                             iconImage = ImageVector.vectorResource(ic_external_site),
                             contentDescription = stringResource(opens_in_external_browser),
                         ),
-                    onClick = onButtonClick,
+                    onClick = dropUnlessResumed { onButtonClick() },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },

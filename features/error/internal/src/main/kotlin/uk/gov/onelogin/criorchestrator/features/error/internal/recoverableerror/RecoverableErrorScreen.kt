@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreenBodyContent
@@ -70,7 +71,7 @@ internal fun RecoverableErrorScreenContent(
             primaryButton =
                 CentreAlignedScreenButton(
                     text = stringResource(RecoverableErrorConstants.buttonTextId),
-                    onClick = onButtonClick,
+                    onClick = dropUnlessResumed { onButtonClick() },
                 ),
         )
     }

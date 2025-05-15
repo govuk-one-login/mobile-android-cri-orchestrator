@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.componentsv2.button.ButtonType
@@ -100,7 +101,7 @@ internal fun ConfirmNoNonChippedIDContent(
                 GdsButton(
                     stringResource(ConfirmNoNonChippedIDConstants.confirmButtonTextId),
                     buttonType = ButtonType.Primary,
-                    onClick = onConfirmClick,
+                    onClick = dropUnlessResumed { onConfirmClick() },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
