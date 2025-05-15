@@ -14,7 +14,7 @@ class IsSessionAbortedOrUnavailableImpl
     constructor(
         private val sessionStore: SessionStore,
     ) : IsSessionAbortedOrUnavailable {
-        override suspend fun invoke(): Flow<Boolean> =
+        override fun invoke(): Flow<Boolean> =
             sessionStore.read().map { value ->
                 value == null
             }

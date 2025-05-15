@@ -64,7 +64,7 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortDesktop> { backStackEntry ->
+            composable<HandbackDestinations.ConfirmAbortDesktop> {
                 AbortModal(
                     abortViewModel = viewModel(factory = abortViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
@@ -74,7 +74,7 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortMobile> { backStackEntry ->
+            composable<HandbackDestinations.ConfirmAbortMobile> {
                 AbortModal(
                     abortViewModel = viewModel(factory = abortViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortMobile,
@@ -84,7 +84,7 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.AbortedReturnToDesktopWeb> { backStackEntry ->
+            composable<HandbackDestinations.AbortedReturnToDesktopWeb> {
                 AbortModal(
                     abortViewModel = viewModel(factory = abortViewModelFactory),
                     startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
