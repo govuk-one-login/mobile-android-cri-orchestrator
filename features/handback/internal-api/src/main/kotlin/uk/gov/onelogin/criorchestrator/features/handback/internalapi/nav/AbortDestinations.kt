@@ -12,4 +12,9 @@ sealed interface AbortDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object AbortedReturnToDesktopWeb : AbortDestinations
+
+    @Serializable
+    data class HandbackToWebHolder(
+        val redirectUri: String,
+    ) : AbortDestinations
 }

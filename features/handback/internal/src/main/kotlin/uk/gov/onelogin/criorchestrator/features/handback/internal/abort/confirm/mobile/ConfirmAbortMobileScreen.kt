@@ -16,6 +16,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
@@ -27,18 +28,17 @@ import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
 internal fun ConfirmAbortMobileScreen(
     viewModel: ConfirmAbortMobileViewModel,
-    webNavigator: WebNavigator,
-    onFinish: () -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     fun onButtonClick() {
         viewModel.onContinueToGovUk()
-        onFinish()
     }
 
     ConfirmAbortToMobileWebContent(
@@ -52,7 +52,11 @@ internal fun ConfirmAbortMobileScreen(
         viewModel.actions.collect { action ->
             when (action) {
                 is ConfirmAbortMobileAction.ContinueGovUk -> {
-                    webNavigator.openWebPage(action.redirectUri)
+                navController.navigate(
+                       AbortDestinations.HandbackToWebHolder(
+                           redirectUri = action.redirectUri,
+                       )
+                   )
                 }
             }
         }
