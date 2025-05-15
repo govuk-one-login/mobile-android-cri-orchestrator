@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
@@ -20,6 +21,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class ConfirmAbortMobileViewModel(
     private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
+    private val abortSession: AbortSession,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<ConfirmAbortMobileAction>()
     val actions: SharedFlow<ConfirmAbortMobileAction> = _actions.asSharedFlow()
@@ -42,6 +44,7 @@ class ConfirmAbortMobileViewModel(
                     .first()
                     .redirectUri
 
+            abortSession()
             redirectUri?.let {
                 _actions.emit(ConfirmAbortMobileAction.ContinueGovUk(it))
             }

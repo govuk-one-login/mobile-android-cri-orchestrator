@@ -7,6 +7,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -21,12 +22,14 @@ object ConfirmAbortMobileViewModelModule {
     fun provideFactory(
         sessionStore: SessionStore,
         analytics: HandbackAnalytics,
+        abortSession: AbortSession,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ConfirmAbortMobileViewModel(
                     sessionStore,
                     analytics,
+                    abortSession,
                 )
             }
         }

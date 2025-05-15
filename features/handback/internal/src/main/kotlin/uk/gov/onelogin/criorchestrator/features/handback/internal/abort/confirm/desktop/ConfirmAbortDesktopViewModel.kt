@@ -7,11 +7,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 
 class ConfirmAbortDesktopViewModel(
     private val analytics: Analytics,
+    private val abortSession: AbortSession,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<ConfirmAbortDesktopActions>()
     val actions: SharedFlow<ConfirmAbortDesktopActions> = _actions.asSharedFlow()
@@ -27,6 +29,7 @@ class ConfirmAbortDesktopViewModel(
         analytics.trackButtonEvent(ConfirmAbortDesktopConstants.buttonId)
 
         viewModelScope.launch {
+            abortSession()
             _actions.emit(ConfirmAbortDesktopActions.NavigateToReturnToDesktop)
         }
     }
