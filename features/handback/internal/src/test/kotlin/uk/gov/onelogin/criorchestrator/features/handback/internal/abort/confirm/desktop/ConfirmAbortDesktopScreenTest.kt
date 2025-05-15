@@ -47,7 +47,7 @@ class ConfirmAbortDesktopScreenTest {
             .onNode(continueButton)
             .performClick()
 
-        verify(navController).navigate(AbortDestinations.ConfirmAbortReturnDesktop)
+        verify(navController).navigate(AbortDestinations.AbortedReturnToDesktopWeb)
     }
 
     @Test

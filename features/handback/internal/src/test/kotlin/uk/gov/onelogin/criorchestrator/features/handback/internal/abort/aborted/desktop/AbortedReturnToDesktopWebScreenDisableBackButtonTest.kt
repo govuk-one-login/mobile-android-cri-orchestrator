@@ -7,9 +7,9 @@ import org.mockito.Mockito.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internal.DisableBackButtonTest
 
 @RunWith(AndroidJUnit4::class)
-class AbortedReturnToDesktopScreenDisableBackButtonTest : DisableBackButtonTest() {
+class AbortedReturnToDesktopWebScreenDisableBackButtonTest : DisableBackButtonTest() {
     private val viewModel =
-        AbortedReturnToDesktopViewModel(
+        AbortedReturnToDesktopWebViewModel(
             analytics = mock(),
         )
 

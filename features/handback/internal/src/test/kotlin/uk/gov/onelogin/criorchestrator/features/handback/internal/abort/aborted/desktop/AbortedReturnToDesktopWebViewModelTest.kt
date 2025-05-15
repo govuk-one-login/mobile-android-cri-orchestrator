@@ -6,11 +6,11 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import kotlin.test.Test
 
-class AbortedReturnToDesktopViewModelTest {
+class AbortedReturnToDesktopWebViewModelTest {
     private val analytics = mock<HandbackAnalytics>()
 
     private val viewModel =
-        AbortedReturnToDesktopViewModel(
+        AbortedReturnToDesktopWebViewModel(
             analytics = analytics,
         )
 
@@ -20,8 +20,8 @@ class AbortedReturnToDesktopViewModelTest {
 
         verify(analytics)
             .trackScreen(
-                id = HandbackScreenId.ConfirmAbortReturnToDesktop,
-                title = AbortedReturnToDesktopConstants.titleId,
+                id = HandbackScreenId.AbortedReturnToDesktopWeb,
+                title = AbortedReturnToDesktopWebConstants.titleId,
             )
     }
 }

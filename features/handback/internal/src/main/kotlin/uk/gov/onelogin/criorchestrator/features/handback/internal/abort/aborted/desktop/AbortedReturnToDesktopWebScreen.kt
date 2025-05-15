@@ -22,7 +22,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 
 @Composable
 fun AbortedReturnToDesktopWebScreen(
-    viewModel: AbortedReturnToDesktopViewModel,
+    viewModel: AbortedReturnToDesktopWebViewModel,
     modifier: Modifier = Modifier,
 ) {
     AbortedReturnToDesktopWebContent(modifier)
@@ -47,20 +47,20 @@ internal fun AbortedReturnToDesktopWebContent(modifier: Modifier = Modifier) {
         CentreAlignedScreen(
             title = { horizontalPadding ->
                 GdsHeading(
-                    text = stringResource(AbortedReturnToDesktopConstants.titleId),
+                    text = stringResource(AbortedReturnToDesktopWebConstants.titleId),
                     modifier =
                         Modifier
                             .padding(horizontal = horizontalPadding),
                     customContentDescription =
-                        stringResource(R.string.handback_confirmabortreturntodesktopweb_title_content_description),
+                        stringResource(R.string.handback_abortedreturntodesktopweb_title_content_description),
                 )
             },
             body = { horizontalPadding ->
                 item {
                     val customContentDescription =
-                        stringResource(R.string.handback_confirmabortreturntodesktopweb_body1_content_description)
+                        stringResource(R.string.handback_abortedreturntodesktopweb_body1_content_description)
                     Text(
-                        text = stringResource(R.string.handback_confirmabortreturntodesktopweb_body1),
+                        text = stringResource(R.string.handback_abortedreturntodesktopweb_body1),
                         textAlign = TextAlign.Center,
                         modifier =
                             Modifier

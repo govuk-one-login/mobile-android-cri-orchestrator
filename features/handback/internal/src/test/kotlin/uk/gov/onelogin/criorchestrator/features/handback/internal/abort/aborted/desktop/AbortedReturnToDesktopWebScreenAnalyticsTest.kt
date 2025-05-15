@@ -17,7 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLogge
 import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
-class AbortedReturnToDesktopScreenAnalyticsTest {
+class AbortedReturnToDesktopWebScreenAnalyticsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -36,7 +36,7 @@ class AbortedReturnToDesktopScreenAnalyticsTest {
         )
 
     private val viewModel =
-        AbortedReturnToDesktopViewModel(
+        AbortedReturnToDesktopWebViewModel(
             analytics = analytics,
         )
 
@@ -54,8 +54,8 @@ class AbortedReturnToDesktopScreenAnalyticsTest {
         val expectedEvent =
             ViewEvent
                 .Screen(
-                    id = HandbackScreenId.ConfirmAbortReturnToDesktop.rawId,
-                    name = context.getString(AbortedReturnToDesktopConstants.titleId),
+                    id = HandbackScreenId.AbortedReturnToDesktopWeb.rawId,
+                    name = context.getString(AbortedReturnToDesktopWebConstants.titleId),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
 

@@ -12,15 +12,15 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object AbortedReturnToDesktopViewModelModule {
-    const val FACTORY_NAME = "ConfirmAbortReturnToDesktopWebViewModelModuleFactory"
+object AbortedReturnToDesktopWebViewModelModule {
+    const val FACTORY_NAME = "AbortedReturnToDesktopWebViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)
     fun provideViewModel(analytics: HandbackAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                AbortedReturnToDesktopViewModel(
+                AbortedReturnToDesktopWebViewModel(
                     analytics = analytics,
                 )
             }

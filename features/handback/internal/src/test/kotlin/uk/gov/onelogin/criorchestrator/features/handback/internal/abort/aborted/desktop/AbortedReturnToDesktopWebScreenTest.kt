@@ -14,12 +14,12 @@ import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 
 @RunWith(AndroidJUnit4::class)
-class AbortedReturnToDesktopScreenTest {
+class AbortedReturnToDesktopWebScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     private val viewModel =
-        AbortedReturnToDesktopViewModel(
+        AbortedReturnToDesktopWebViewModel(
             analytics = mock(),
         )
 
@@ -38,7 +38,7 @@ class AbortedReturnToDesktopScreenTest {
         val title =
             composeTestRule.onNode(
                 hasText(
-                    context.getString(AbortedReturnToDesktopConstants.titleId),
+                    context.getString(AbortedReturnToDesktopWebConstants.titleId),
                 ),
             )
         title.assertContentDescriptionContains("Gov dot UK", true)
@@ -46,7 +46,7 @@ class AbortedReturnToDesktopScreenTest {
         val body =
             composeTestRule.onNode(
                 hasText(
-                    context.getString(R.string.handback_confirmabortreturntodesktopweb_body1),
+                    context.getString(R.string.handback_abortedreturntodesktopweb_body1),
                 ),
             )
 

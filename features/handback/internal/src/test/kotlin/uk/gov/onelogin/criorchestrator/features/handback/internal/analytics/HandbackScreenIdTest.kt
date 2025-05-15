@@ -10,7 +10,7 @@ class HandbackScreenIdTest {
         assertEquals("fff9c5fe-3eb2-45d4-a07a-fb6d21582c50", HandbackScreenId.ReturnToDesktopWeb.rawId)
         assertEquals("4a9fafaa-5359-4105-b223-a51d71df435f", HandbackScreenId.ReturnToMobileWeb.rawId)
         assertEquals("8d09e79f-f242-48c8-a456-4f302c23e6cb", HandbackScreenId.ConfirmAbortDesktop.rawId)
-        assertEquals("8d09e79f-f242-48c8-a456-4f302c23e6cb", HandbackScreenId.ConfirmAbortReturnToDesktop.rawId)
+        assertEquals("8d09e79f-f242-48c8-a456-4f302c23e6cb", HandbackScreenId.AbortedReturnToDesktopWeb.rawId)
         assertEquals("c4b6167a-09b3-4671-b9d7-30f7acd02bdb", HandbackScreenId.ConfirmAbortToMobile.rawId)
     }
 }

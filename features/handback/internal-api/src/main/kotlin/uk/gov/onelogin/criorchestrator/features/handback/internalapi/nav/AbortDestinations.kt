@@ -8,8 +8,8 @@ sealed interface AbortDestinations : ProveYourIdentityDestinations {
     data object ConfirmAbortDesktop : AbortDestinations
 
     @Serializable
-    data object ConfirmAbortReturnDesktop : AbortDestinations
+    data object ConfirmAbortMobile : AbortDestinations
 
     @Serializable
-    data object ConfirmAbortMobile : AbortDestinations
+    data object AbortedReturnToDesktopWeb : AbortDestinations
 }

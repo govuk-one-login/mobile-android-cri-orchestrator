@@ -35,7 +35,7 @@ fun ConfirmAbortDesktopWebScreen(
         viewModel.actions.collect {
             when (it) {
                 ConfirmAbortDesktopActions.NavigateToReturnToDesktop ->
-                    navController.navigate(AbortDestinations.ConfirmAbortReturnDesktop)
+                    navController.navigate(AbortDestinations.AbortedReturnToDesktopWeb)
             }
         }
     }

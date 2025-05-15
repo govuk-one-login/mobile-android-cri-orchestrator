@@ -84,10 +84,10 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortReturnDesktop> { backStackEntry ->
+            composable<HandbackDestinations.AbortedReturnToDesktopWeb> { backStackEntry ->
                 AbortModal(
                     abortViewModel = viewModel(factory = abortViewModelFactory),
-                    startDestination = AbortDestinations.ConfirmAbortReturnDesktop,
+                    startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
                     onDismissRequest = { navController.popBackStack() },
                     onFinish = onFinish,
