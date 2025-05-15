@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.flowOf
 
 class StubIsSessionAbortedOrUnavailable(
     val isSessionAbortedOrUnavailable: Boolean,
-): IsSessionAbortedOrUnavailable {
+) : IsSessionAbortedOrUnavailable {
     override fun invoke(): Flow<Boolean> = flowOf(isSessionAbortedOrUnavailable)
 }

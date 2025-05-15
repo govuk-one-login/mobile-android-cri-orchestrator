@@ -30,19 +30,21 @@ class AbortModalTest {
 
     @Test
     fun `when session is available, dismissing dialog goes calls onDismissRequest`() {
-        val isSessionAbortedOrUnavailable = StubIsSessionAbortedOrUnavailable(
-            false
-        )
-        val abortViewModel = AbortViewModel(
-            isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable
-        )
+        val isSessionAbortedOrUnavailable =
+            StubIsSessionAbortedOrUnavailable(
+                false,
+            )
+        val abortViewModel =
+            AbortViewModel(
+                isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+            )
         composeTestRule.setContent {
             AbortModal(
                 abortViewModel = abortViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
                 navGraphProviders = persistentSetOf(FakeNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,
-                onFinish = ::onFinish
+                onFinish = ::onFinish,
             )
         }
 
@@ -54,19 +56,21 @@ class AbortModalTest {
 
     @Test
     fun `when session is not available, dismissing dialog goes calls onFinish`() {
-        val isSessionAbortedOrUnavailable = StubIsSessionAbortedOrUnavailable(
-            true
-        )
-        val abortViewModel = AbortViewModel(
-            isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable
-        )
+        val isSessionAbortedOrUnavailable =
+            StubIsSessionAbortedOrUnavailable(
+                true,
+            )
+        val abortViewModel =
+            AbortViewModel(
+                isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+            )
         composeTestRule.setContent {
             AbortModal(
                 abortViewModel = abortViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
                 navGraphProviders = persistentSetOf(FakeNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,
-                onFinish = ::onFinish
+                onFinish = ::onFinish,
             )
         }
 
