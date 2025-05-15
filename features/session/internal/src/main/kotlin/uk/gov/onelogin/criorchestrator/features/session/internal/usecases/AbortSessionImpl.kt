@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +21,7 @@ class AbortSessionImpl
         private val abortSessionApi: AbortSessionApi,
         private val logger: Logger,
     ) : AbortSession,
-        LogTagProvider {
+    LogTagProvider {
         override suspend fun invoke(): AbortSession.Result {
             val session = sessionStore.read().first()
 

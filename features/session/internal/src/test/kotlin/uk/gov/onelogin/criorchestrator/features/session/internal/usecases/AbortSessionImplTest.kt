@@ -1,13 +1,13 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.mock
+import org.mockito.Mockito
 import org.mockito.kotlin.given
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
@@ -19,13 +19,13 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.creat
 import kotlin.test.assertTrue
 
 class AbortSessionImplTest {
-    private val session = Session.createTestInstance()
+    private val session = Session.Companion.createTestInstance()
     private val sessionId = session.sessionId
     private val sessionStore =
         FakeSessionStore(
             session = session,
         )
-    private val abortSessionApi = mock<AbortSessionApi>()
+    private val abortSessionApi = Mockito.mock<AbortSessionApi>()
     private val logger = SystemLogger()
 
     private val abortSession =
@@ -52,7 +52,7 @@ class AbortSessionImplTest {
 
             val result = abortSession()
 
-            assertEquals(AbortSession.Result.Success, result)
+            Assertions.assertEquals(AbortSession.Result.Success, result)
         }
 
     @Test
@@ -73,7 +73,7 @@ class AbortSessionImplTest {
 
             val result = abortSession()
 
-            assertEquals(AbortSession.Result.Success, result)
+            Assertions.assertEquals(AbortSession.Result.Success, result)
         }
 
     @Test
@@ -95,7 +95,7 @@ class AbortSessionImplTest {
 
             val result = abortSession()
 
-            assertEquals(AbortSession.Result.Error.Unrecoverable(exception), result)
+            Assertions.assertEquals(AbortSession.Result.Error.Unrecoverable(exception), result)
         }
 
     @Test
@@ -116,7 +116,7 @@ class AbortSessionImplTest {
 
             val result = abortSession()
 
-            assertEquals(AbortSession.Result.Error.Offline, result)
+            Assertions.assertEquals(AbortSession.Result.Error.Offline, result)
         }
 
     @Test
