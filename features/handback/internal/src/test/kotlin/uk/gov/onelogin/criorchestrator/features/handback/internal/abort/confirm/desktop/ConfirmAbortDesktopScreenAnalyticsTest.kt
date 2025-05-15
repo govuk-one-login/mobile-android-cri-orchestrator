@@ -16,6 +16,7 @@ import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
@@ -37,7 +38,10 @@ class ConfirmAbortDesktopScreenAnalyticsTest {
             analyticsLogger = analyticsLogger,
         )
 
-    private val viewmodel = ConfirmAbortDesktopViewModel(analytics)
+    private val viewmodel = ConfirmAbortDesktopViewModel(
+        analytics,
+        StubAbortSession(),
+    )
 
     @Before
     fun setup() {

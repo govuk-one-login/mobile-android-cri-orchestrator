@@ -3,19 +3,21 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -42,14 +44,17 @@ class ConfirmAbortMobileScreenAnalyticsTest {
         ConfirmAbortMobileViewModel(
             analytics = analytics,
             sessionStore = FakeSessionStore(),
+            abortSession = StubAbortSession(),
         )
+
+    private val navController = mock<NavController>()
 
     @Before
     fun setup() {
         composeTestRule.setContent {
             ConfirmAbortMobileScreen(
                 viewModel = viewmodel,
-                webNavigator = FakeWebNavigator(),
+                navController = navController,
             )
         }
     }

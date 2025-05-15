@@ -17,6 +17,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmAbortDesktopScreenTest {
@@ -29,6 +30,7 @@ class ConfirmAbortDesktopScreenTest {
     private val viewModel =
         ConfirmAbortDesktopViewModel(
             analytics = mock(),
+            abortSession = StubAbortSession(),
         )
 
     @Before

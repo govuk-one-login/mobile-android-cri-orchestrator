@@ -17,8 +17,10 @@ dependencies {
     implementation(projects.libraries.di)
 
     testFixturesImplementation(libs.kotlinx.coroutines)
+    testFixturesImplementation(libs.uk.gov.logging.testdouble)
     testFixturesImplementation(libs.uk.gov.networking)
     testFixturesImplementation(projects.features.session.internalApi)
+    testFixturesImplementation(testFixtures(projects.features.session.internalApi))
 
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.uk.gov.logging.testdouble)

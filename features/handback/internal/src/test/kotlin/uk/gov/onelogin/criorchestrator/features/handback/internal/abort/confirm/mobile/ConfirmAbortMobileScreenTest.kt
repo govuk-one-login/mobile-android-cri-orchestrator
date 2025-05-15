@@ -3,6 +3,7 @@ import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
@@ -10,12 +11,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileConstants
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -28,7 +32,7 @@ class ConfirmAbortMobileScreenTest {
     val composeTestRule = createComposeRule()
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val continueButton = hasTextStartingWith(context.getString(ConfirmAbortMobileConstants.buttonId))
-    private val webNavigator = FakeWebNavigator()
+    private val navController = mock<NavController>()
 
     private val session =
         Session.createTestInstance(
@@ -42,6 +46,7 @@ class ConfirmAbortMobileScreenTest {
                 FakeSessionStore(
                     session = session,
                 ),
+            abortSession = StubAbortSession(),
         )
 
     @Before
@@ -49,7 +54,7 @@ class ConfirmAbortMobileScreenTest {
         composeTestRule.setContent {
             ConfirmAbortMobileScreen(
                 viewModel = viewModel,
-                webNavigator = webNavigator,
+                navController = navController,
             )
         }
     }
@@ -60,7 +65,9 @@ class ConfirmAbortMobileScreenTest {
             .onNode(continueButton)
             .performClick()
 
-        assertEquals(REDIRECT_URI, webNavigator.openUrl)
+        verify(navController).navigate(
+            AbortDestinations.AbortRedirectToMobileWebHolder("https://example/redirect")
+        )
     }
 
     @Test

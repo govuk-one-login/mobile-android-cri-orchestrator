@@ -20,6 +20,7 @@ import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
@@ -121,9 +122,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortMobile(
-                finishJourney = true,
-            ),
+            AbortDestinations.AbortRedirectToMobileWebHolder(redirectUri = ""),
         )
     }
 
@@ -140,9 +139,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortDesktop(
-                finishJourney = true,
-            ),
+            HandbackDestinations.AbortedReturnToDesktopWeb,
         )
     }
 

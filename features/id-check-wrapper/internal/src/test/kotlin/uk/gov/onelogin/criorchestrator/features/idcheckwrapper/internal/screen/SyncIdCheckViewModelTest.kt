@@ -74,6 +74,7 @@ class SyncIdCheckViewModelTest {
                         ),
                 ),
             analytics = analytics,
+            sessionStore = FakeSessionStore(),
         )
     }
 
@@ -356,5 +357,6 @@ class SyncIdCheckViewModelTest {
                             enableManualLauncher = enableManualLauncher,
                         ),
                 ),
+            sessionStore = FakeSessionStore()
         )
 }
