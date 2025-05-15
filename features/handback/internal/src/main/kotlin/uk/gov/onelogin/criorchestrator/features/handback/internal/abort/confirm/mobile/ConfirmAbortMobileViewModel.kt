@@ -7,9 +7,10 @@ import dagger.Module
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import uk.gov.logging.api.LogTagProvider
+import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
@@ -22,7 +23,9 @@ class ConfirmAbortMobileViewModel(
     private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
     private val abortSession: AbortSession,
-) : ViewModel() {
+    private val logger: Logger,
+) : ViewModel(),
+    LogTagProvider {
     private val _actions = MutableSharedFlow<ConfirmAbortMobileAction>()
     val actions: SharedFlow<ConfirmAbortMobileAction> = _actions.asSharedFlow()
 
@@ -40,13 +43,22 @@ class ConfirmAbortMobileViewModel(
             val redirectUri =
                 sessionStore
                     .read()
-                    .filterNotNull()
                     .first()
-                    .redirectUri
+                    ?.redirectUri
 
-            abortSession()
-            redirectUri?.let {
-                _actions.emit(ConfirmAbortMobileAction.ContinueGovUk(it))
+            when (abortSession()) {
+                AbortSession.Result.Error.Offline ->
+                    _actions.emit(ConfirmAbortMobileAction.NavigateToOfflineError)
+                is AbortSession.Result.Error.Unrecoverable ->
+                    _actions.emit(ConfirmAbortMobileAction.NavigateToUnrecoverableError)
+                AbortSession.Result.Success -> {
+                    if (redirectUri == null) {
+                        logger.error(tag, "Can't continue to GOV.UK - no redirect URI")
+                        _actions.emit(ConfirmAbortMobileAction.NavigateToUnrecoverableError)
+                    } else {
+                        _actions.emit(ConfirmAbortMobileAction.ContinueGovUk(redirectUri))
+                    }
+                }
             }
         }
     }

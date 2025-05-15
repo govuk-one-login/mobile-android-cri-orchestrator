@@ -28,8 +28,15 @@ class ConfirmAbortDesktopViewModel(
         analytics.trackButtonEvent(ConfirmAbortDesktopConstants.buttonId)
 
         viewModelScope.launch {
-            abortSession()
-            _actions.emit(ConfirmAbortDesktopActions.NavigateToReturnToDesktop)
+            when (abortSession()) {
+                AbortSession.Result.Error.Offline ->
+                    _actions.emit(ConfirmAbortDesktopActions.NavigateToOfflineError)
+                is AbortSession.Result.Error.Unrecoverable ->
+                    _actions.emit(ConfirmAbortDesktopActions.NavigateToUnrecoverableError)
+                AbortSession.Result.Success -> {
+                    _actions.emit(ConfirmAbortDesktopActions.NavigateToReturnToDesktop)
+                }
+            }
         }
     }
 }

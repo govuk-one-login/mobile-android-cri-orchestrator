@@ -17,6 +17,7 @@ import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -48,6 +49,7 @@ class UnrecoverableErrorScreenAnalyticsTest {
     private val viewModel =
         UnrecoverableErrorViewModel(
             analytics = analytics,
+            getJourneyType = StubGetJourneyType(),
         )
 
     @Before

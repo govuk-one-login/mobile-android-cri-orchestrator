@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
+import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
@@ -23,13 +24,15 @@ object ConfirmAbortMobileViewModelModule {
         sessionStore: SessionStore,
         analytics: HandbackAnalytics,
         abortSession: AbortSession,
+        logger: Logger,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ConfirmAbortMobileViewModel(
-                    sessionStore,
-                    analytics,
-                    abortSession,
+                    sessionStore = sessionStore,
+                    analytics = analytics,
+                    abortSession = abortSession,
+                    logger = logger,
                 )
             }
         }

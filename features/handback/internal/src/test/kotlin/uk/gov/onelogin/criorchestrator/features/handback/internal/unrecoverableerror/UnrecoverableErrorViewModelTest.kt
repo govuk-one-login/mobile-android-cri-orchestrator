@@ -10,15 +10,19 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class UnrecoverableErrorViewModelTest {
     private val analyticsLogger = mock<HandbackAnalytics>()
+    private val getJourneyType = StubGetJourneyType()
 
     private val viewModel by lazy {
         UnrecoverableErrorViewModel(
             analytics = analyticsLogger,
+            getJourneyType = getJourneyType,
         )
     }
 
@@ -34,12 +38,25 @@ class UnrecoverableErrorViewModelTest {
     }
 
     @Test
-    fun `when button is clicked, navigate to abort`() {
+    fun `given MAM session, when button is clicked, navigate to abort`() {
         runTest {
+            getJourneyType.journeyType = JourneyType.MobileAppMobile("https://example.com")
             viewModel.actions.test {
                 viewModel.onButtonClick()
 
-                assertEquals(UnrecoverableErrorAction.NavigateToAbort, awaitItem())
+                assertEquals(UnrecoverableErrorAction.NavigateToConfirmAbortMobile, awaitItem())
+            }
+        }
+    }
+
+    @Test
+    fun `given DAD session, when button is clicked, navigate to abort`() {
+        runTest {
+            getJourneyType.journeyType = JourneyType.DesktopAppDesktop
+            viewModel.actions.test {
+                viewModel.onButtonClick()
+
+                assertEquals(UnrecoverableErrorAction.NavigateToConfirmAbortDesktop, awaitItem())
             }
         }
     }

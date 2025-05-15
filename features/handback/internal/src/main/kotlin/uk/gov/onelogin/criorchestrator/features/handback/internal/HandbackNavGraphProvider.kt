@@ -6,10 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
-import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
@@ -18,6 +17,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobile
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -38,7 +38,7 @@ class HandbackNavGraphProvider
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-        private val abortModalNavGraphProvider: AbortNavGraphProvider,
+        private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
@@ -64,31 +64,31 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortDesktop> {
+            composable<AbortDestinations.ConfirmAbortDesktop> {
                 AbortModal(
                     abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
-                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
                     onFinish = onFinish,
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortMobile> {
+            composable<AbortDestinations.ConfirmAbortMobile> {
                 AbortModal(
                     abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortMobile,
-                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
                     onFinish = onFinish,
                 )
             }
 
-            composable<HandbackDestinations.AbortedReturnToDesktopWeb> {
+            composable<AbortDestinations.AbortedReturnToDesktopWeb> {
                 AbortModal(
                     abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
-                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
                     onFinish = onFinish,
                 )

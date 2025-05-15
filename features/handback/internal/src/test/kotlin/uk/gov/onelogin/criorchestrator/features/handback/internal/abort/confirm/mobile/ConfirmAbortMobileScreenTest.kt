@@ -45,6 +45,7 @@ class ConfirmAbortMobileScreenTest {
                     session = session,
                 ),
             abortSession = StubAbortSession(),
+            logger = mock(),
         )
 
     @Before

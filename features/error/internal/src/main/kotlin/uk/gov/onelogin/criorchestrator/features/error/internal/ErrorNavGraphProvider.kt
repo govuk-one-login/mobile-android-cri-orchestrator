@@ -9,18 +9,21 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.error.internal.recoverableerror.RecoverableErrorScreen
 import uk.gov.onelogin.criorchestrator.features.error.internal.recoverableerror.RecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
-@ContributesMultibinding(CriOrchestratorScope::class)
+@ContributesMultibinding(CriOrchestratorScope::class, boundType = AbortNavGraphProvider::class)
+@ContributesMultibinding(CriOrchestratorScope::class, boundType = ProveYourIdentityNavGraphProvider::class)
 class ErrorNavGraphProvider
     @Inject
     constructor(
         @Named(RecoverableErrorViewModelModule.FACTORY_NAME)
         private val recoverableErrorViewModelFactory: ViewModelProvider.Factory,
-    ) : ProveYourIdentityNavGraphProvider {
+    ) : ProveYourIdentityNavGraphProvider,
+        AbortNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
             onFinish: () -> Unit,

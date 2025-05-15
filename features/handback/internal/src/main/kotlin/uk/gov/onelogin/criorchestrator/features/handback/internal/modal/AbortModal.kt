@@ -7,14 +7,14 @@ import kotlinx.collections.immutable.ImmutableSet
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogueTopAppBar
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
-import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AbortModal(
     abortModalViewModel: AbortModalViewModel,
     startDestination: AbortDestinations,
-    navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
+    navGraphProviders: ImmutableSet<AbortNavGraphProvider>,
     onDismissRequest: () -> Unit,
     onFinish: () -> Unit,
 ) {
