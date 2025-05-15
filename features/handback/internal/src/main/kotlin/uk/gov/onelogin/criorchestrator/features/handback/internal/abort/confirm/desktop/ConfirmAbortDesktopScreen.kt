@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
@@ -94,7 +95,7 @@ internal fun ConfirmAbortToDesktopWebContent(
             primaryButton = {
                 GdsButton(
                     text = stringResource(ConfirmAbortDesktopConstants.buttonId),
-                    onClick = onContinueClicked,
+                    onClick = dropUnlessResumed { onContinueClicked() },
                     buttonType = ButtonType.Primary,
                     modifier = Modifier.fillMaxWidth(),
                 )
