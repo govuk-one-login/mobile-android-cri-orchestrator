@@ -10,7 +10,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.creat
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import kotlin.test.assertEquals
 
-class GetJourneyTypeTest {
+class GetJourneyTypeImplTest {
     @Test
     fun `when active session has redirect uri, it returns MAM journey`() =
         runTest {
