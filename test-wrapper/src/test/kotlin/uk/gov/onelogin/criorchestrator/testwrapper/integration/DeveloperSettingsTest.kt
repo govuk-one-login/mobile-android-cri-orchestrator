@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasScrollToNodeAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -11,6 +13,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -133,6 +136,10 @@ class DeveloperSettingsTest {
         composeTestRule
             .onNodeWithText(DEVELOPER_SETTINGS, useUnmergedTree = true)
             .performClick()
+
+        composeTestRule
+            .onNode(hasScrollToNodeAction())
+            .performScrollToNode(hasText(NfcConfigKey.NfcAvailability.name))
 
         composeTestRule
             .onNodeWithText(NfcConfigKey.NfcAvailability.name)
