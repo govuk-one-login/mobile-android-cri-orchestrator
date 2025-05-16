@@ -12,15 +12,15 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object AbortViewModelModule {
-    const val FACTORY_NAME = "AbortViewModelModuleFactory"
+object AbortModalViewModelModule {
+    const val FACTORY_NAME = "AbortModalViewModelModuleFactory"
 
     @Provides
     @Named(FACTORY_NAME)
     fun provideViewModel(isSessionAbortedOrUnavailable: IsSessionAbortedOrUnavailable): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                AbortViewModel(
+                AbortModalViewModel(
                     isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
                 )
             }

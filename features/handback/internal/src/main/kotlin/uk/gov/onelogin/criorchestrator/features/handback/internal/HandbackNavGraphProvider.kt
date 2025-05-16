@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.collections.immutable.persistentSetOf
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
@@ -29,8 +29,8 @@ import javax.inject.Named
 class HandbackNavGraphProvider
     @Inject
     constructor(
-        @Named(AbortViewModelModule.FACTORY_NAME)
-        private val abortViewModelFactory: ViewModelProvider.Factory,
+        @Named(AbortModalViewModelModule.FACTORY_NAME)
+        private val abortModalViewModelFactory: ViewModelProvider.Factory,
         @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
         private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
@@ -66,7 +66,7 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.ConfirmAbortDesktop> {
                 AbortModal(
-                    abortViewModel = viewModel(factory = abortViewModelFactory),
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
                     onDismissRequest = { navController.popBackStack() },
@@ -76,7 +76,7 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.ConfirmAbortMobile> {
                 AbortModal(
-                    abortViewModel = viewModel(factory = abortViewModelFactory),
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.ConfirmAbortMobile,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
                     onDismissRequest = { navController.popBackStack() },
@@ -86,7 +86,7 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.AbortedReturnToDesktopWeb> {
                 AbortModal(
-                    abortViewModel = viewModel(factory = abortViewModelFactory),
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
                     navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
                     onDismissRequest = { navController.popBackStack() },

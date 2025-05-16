@@ -34,13 +34,13 @@ class AbortModalTest {
             StubIsSessionAbortedOrUnavailable(
                 false,
             )
-        val abortViewModel =
-            AbortViewModel(
+        val abortModalViewModel =
+            AbortModalViewModel(
                 isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
             )
         composeTestRule.setContent {
             AbortModal(
-                abortViewModel = abortViewModel,
+                abortModalViewModel = abortModalViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
                 navGraphProviders = persistentSetOf(FakeAbortModalNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,
@@ -60,13 +60,13 @@ class AbortModalTest {
             StubIsSessionAbortedOrUnavailable(
                 true,
             )
-        val abortViewModel =
-            AbortViewModel(
+        val abortModalViewModel =
+            AbortModalViewModel(
                 isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
             )
         composeTestRule.setContent {
             AbortModal(
-                abortViewModel = abortViewModel,
+                abortModalViewModel = abortModalViewModel,
                 startDestination = AbortDestinations.ConfirmAbortMobile,
                 navGraphProviders = persistentSetOf(FakeAbortModalNavGraph.Provider()),
                 onDismissRequest = ::onDismissRequest,

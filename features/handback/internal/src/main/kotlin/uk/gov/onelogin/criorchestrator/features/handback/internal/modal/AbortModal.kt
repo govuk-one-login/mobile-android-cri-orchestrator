@@ -12,13 +12,13 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AbortModal(
-    abortViewModel: AbortViewModel,
+    abortModalViewModel: AbortModalViewModel,
     startDestination: AbortDestinations,
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
     onDismissRequest: () -> Unit,
     onFinish: () -> Unit,
 ) {
-    val isAbortedState = abortViewModel.isAborted.collectAsState(false)
+    val isAbortedState = abortModalViewModel.isAborted.collectAsState(false)
 
     val handleDismissRequest = {
         if (isAbortedState.value) {
