@@ -19,7 +19,7 @@ data class LauncherData(
     val journeyType: IdCheckJourneyType =
         when (session.journeyType) {
             JourneyType.DesktopAppDesktop -> IdCheckJourneyType.DESKTOP_APP_DESKTOP
-            JourneyType.MobileAppMobile -> IdCheckJourneyType.MOBILE_APP_MOBILE
+            is JourneyType.MobileAppMobile -> IdCheckJourneyType.MOBILE_APP_MOBILE
         }
 
     val sessionJourneyType: JourneyType = session.journeyType

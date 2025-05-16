@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

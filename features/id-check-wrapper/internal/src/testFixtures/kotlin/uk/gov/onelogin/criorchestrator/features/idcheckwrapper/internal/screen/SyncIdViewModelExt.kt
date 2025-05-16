@@ -12,8 +12,10 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
 fun SyncIdCheckViewModel.Companion.createTestInstance(
+    sessionStore: SessionStore = FakeSessionStore(),
     configStore: ConfigStore =
         FakeConfigStore(
             initialConfig =
@@ -23,7 +25,7 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
         ),
     launcherDataReader: LauncherDataReader =
         LauncherDataReader(
-            sessionStore = FakeSessionStore(),
+            sessionStore = sessionStore,
             biometricTokenReader =
                 StubBiometricTokenReader(
                     biometricTokenResult =
@@ -38,4 +40,5 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
     launcherDataReader = launcherDataReader,
     logger = logger,
     analytics = mock(),
+    sessionStore = sessionStore,
 )

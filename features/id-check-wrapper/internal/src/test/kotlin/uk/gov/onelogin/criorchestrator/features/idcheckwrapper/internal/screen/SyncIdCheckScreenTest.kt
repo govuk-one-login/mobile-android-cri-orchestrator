@@ -20,6 +20,7 @@ import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
@@ -29,6 +30,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.Lau
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import kotlin.test.assertEquals
@@ -45,6 +47,7 @@ class SyncIdCheckScreenTest {
     private val navController: NavController = mock()
 
     private var session: Session = Session.createMobileAppMobileInstance()
+    private var sessionStore: SessionStore = FakeSessionStore(session)
     private var enableManualLauncher = false
     private var biometricTokenResult: BiometricTokenResult =
         BiometricTokenResult.Success(
@@ -55,11 +58,10 @@ class SyncIdCheckScreenTest {
 
     private val viewModel by lazy {
         SyncIdCheckViewModel.createTestInstance(
+            sessionStore = sessionStore,
             launcherDataReader =
                 LauncherDataReader(
-                    FakeSessionStore(
-                        session = session,
-                    ),
+                    sessionStore,
                     biometricTokenReader =
                         StubBiometricTokenReader(
                             biometricTokenResult = biometricTokenResult,
@@ -81,6 +83,7 @@ class SyncIdCheckScreenTest {
     fun `given manual launcher and MAM session, when happy path launched, it navigates to mobile handback`() {
         enableManualLauncher = true
         session = Session.createMobileAppMobileInstance()
+        sessionStore = FakeSessionStore(session)
         composeTestRule.setScreenContent(viewModel)
 
         composeTestRule.selectOption(happyPathOption)
@@ -97,6 +100,7 @@ class SyncIdCheckScreenTest {
     fun `given manual launcher and DAD session, when happy path launched, it navigates to desktop handback`() {
         enableManualLauncher = true
         session = Session.createDesktopAppDesktopInstance()
+        sessionStore = FakeSessionStore(session)
         composeTestRule.setScreenContent(viewModel)
 
         composeTestRule.selectOption(happyPathOption)
@@ -113,6 +117,7 @@ class SyncIdCheckScreenTest {
     fun `manual launch with MAM session, when launch unhappy path, navigates to confirm abort MAM`() {
         enableManualLauncher = true
         session = Session.createMobileAppMobileInstance()
+        sessionStore = FakeSessionStore(session)
         composeTestRule.setScreenContent(viewModel)
 
         composeTestRule.selectOption(unhappyPathOption)
@@ -121,7 +126,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortMobile,
+            AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri = "http://mam-redirect-uri"),
         )
     }
 
@@ -130,6 +135,7 @@ class SyncIdCheckScreenTest {
     fun `manual launch with DAD session, when launch unhappy path, navigates to confirm abort DAD`() {
         enableManualLauncher = true
         session = Session.createDesktopAppDesktopInstance()
+        sessionStore = FakeSessionStore(session)
         composeTestRule.setScreenContent(viewModel)
 
         composeTestRule.selectOption(unhappyPathOption)
@@ -138,7 +144,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            HandbackDestinations.ConfirmAbortDesktop,
+            HandbackDestinations.AbortedReturnToDesktopWeb,
         )
     }
 

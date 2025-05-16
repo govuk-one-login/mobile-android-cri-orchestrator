@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb
+package uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb
 
 class FakeWebNavigator : WebNavigator {
     var openUrl: String? = null

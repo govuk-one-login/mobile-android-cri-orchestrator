@@ -91,7 +91,7 @@ fun ReturnToDesktopWebScreenContent(modifier: Modifier = Modifier) {
 
 @LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewReturnToMobileWebScreen() {
+internal fun PreviewReturnToDesktopWebScreen() {
     GdsTheme {
         ReturnToDesktopWebScreenContent()
     }

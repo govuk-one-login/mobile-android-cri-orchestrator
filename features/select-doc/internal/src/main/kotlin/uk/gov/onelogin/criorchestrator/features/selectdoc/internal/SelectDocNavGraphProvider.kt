@@ -54,7 +54,10 @@ class SelectDocNavGraphProvider
         @Named(TypesOfPhotoIDViewModelModule.FACTORY_NAME)
         private val typesOfPhotoIDViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<SelectDocDestinations.Passport> {
                 SelectPassportScreen(
                     navController = navController,

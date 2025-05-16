@@ -19,6 +19,7 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
@@ -126,14 +127,16 @@ private fun SyncIdCheckActionHandler(
                         HandbackDestinations.ReturnToDesktopWeb,
                     )
 
-                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb ->
+                is SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder ->
                     navController.navigate(
-                        HandbackDestinations.ConfirmAbortDesktop,
+                        AbortDestinations.AbortedRedirectToMobileWebHolder(
+                            redirectUri = action.redirectUri,
+                        ),
                     )
 
-                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb ->
+                SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb ->
                     navController.navigate(
-                        HandbackDestinations.ConfirmAbortMobile,
+                        HandbackDestinations.AbortedReturnToDesktopWeb,
                     )
 
                 SyncIdCheckAction.NavigateToRecoverableError -> {

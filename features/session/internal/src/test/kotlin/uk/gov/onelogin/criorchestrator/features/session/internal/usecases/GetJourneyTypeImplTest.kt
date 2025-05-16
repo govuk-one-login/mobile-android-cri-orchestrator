@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -7,20 +7,25 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeS
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import kotlin.test.assertEquals
 
-class GetJourneyTypeTest {
+class GetJourneyTypeImplTest {
     @Test
     fun `when active session has redirect uri, it returns MAM journey`() =
         runTest {
+            val redirectUri = "https://example.com"
+            val session =
+                Session.createTestInstance(
+                    redirectUri = redirectUri,
+                )
             val sessionStore =
                 FakeSessionStore(
-                    session = Session.createMobileAppMobileInstance(),
+                    session = session,
                 )
             val getJourneyType = GetJourneyTypeImpl(sessionStore)
 
-            assertEquals(JourneyType.MobileAppMobile, getJourneyType())
+            assertEquals(JourneyType.MobileAppMobile(redirectUri), getJourneyType())
         }
 
     @Test
@@ -28,7 +33,7 @@ class GetJourneyTypeTest {
         runTest {
             val sessionStore =
                 FakeSessionStore(
-                    session = Session.createDesktopAppDesktopInstance(),
+                    session = Session.Companion.createDesktopAppDesktopInstance(),
                 )
             val getJourneyType = GetJourneyTypeImpl(sessionStore)
 

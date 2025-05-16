@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -10,6 +10,7 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -22,6 +23,7 @@ object SyncIdCheckViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         configStore: ConfigStore,
+        sessionStore: SessionStore,
         launcherDataReader: LauncherDataReader,
         logger: Logger,
         analytics: IdCheckWrapperAnalytics,
@@ -30,6 +32,7 @@ object SyncIdCheckViewModelModule {
             initializer {
                 SyncIdCheckViewModel(
                     configStore = configStore,
+                    sessionStore = sessionStore,
                     launcherDataReader = launcherDataReader,
                     logger = logger,
                     analytics = analytics,

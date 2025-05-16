@@ -14,6 +14,8 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.hasAbortedSession
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isSuccess
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
@@ -22,11 +24,13 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.Ex
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
 class SyncIdCheckViewModel(
     private val configStore: ConfigStore,
+    private val sessionStore: SessionStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
@@ -113,25 +117,26 @@ class SyncIdCheckViewModel(
         }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        if (exitState.hasAbortedSession()) {
+            sessionStore.write(null)
+        }
+
         val journeyType = requireDisplayState().launcherData.sessionJourneyType
         val action =
-            when (exitState) {
-                is IdCheckSdkExitState.Nowhere,
-                is IdCheckSdkExitState.ConfirmAnotherWay,
-                is IdCheckSdkExitState.ConfirmationAbortedJourney,
-                IdCheckSdkExitState.ConfirmationFailed,
-                is IdCheckSdkExitState.FaceScanLimitReached,
-                IdCheckSdkExitState.UnknownDocumentType,
-                ->
+            when (exitState.isSuccess()) {
+                true ->
                     when (journeyType) {
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb
-                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToReturnToMobileWeb
                     }
-
-                IdCheckSdkExitState.HappyPath ->
+                false ->
                     when (journeyType) {
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
             }
 
