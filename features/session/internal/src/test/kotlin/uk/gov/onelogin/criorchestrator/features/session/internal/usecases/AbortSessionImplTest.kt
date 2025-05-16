@@ -77,14 +77,14 @@ class AbortSessionImplTest {
         }
 
     @Test
-    fun `given api response is unrecoverable error, it clears the session store`() =
+    fun `given api response is unrecoverable error, it doesn't clear the session store`() =
         runTest {
             givenResponse(ApiResponse.Failure(401, error = Exception("error")))
             assertNotNull(sessionStore.read().first())
 
             abortSession()
 
-            assertNull(sessionStore.read().first())
+            assertNotNull(sessionStore.read().first())
         }
 
     @Test
