@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -20,7 +21,7 @@ import uk.gov.onelogin.criorchestrator.features.dev.internal.R
 
 @Composable
 internal fun DevMenu(
-    config: Config,
+    entries: ImmutableList<Config.Entry<Config.Value>>,
     onEntryChange: (Config.Entry<Config.Value>) -> Unit,
     modifier: Modifier = Modifier,
 ) = Surface(
@@ -42,7 +43,7 @@ internal fun DevMenu(
             )
         }
         items(
-            items = config.entries.sortedBy { it.key.toString() },
+            items = entries,
             key = { it.key.id },
             itemContent = { entry ->
                 ConfigEntry(
@@ -59,7 +60,7 @@ internal fun DevMenu(
 internal fun DevMenuPreview() =
     GdsTheme {
         DevMenu(
-            config = previewConfig,
+            entries = previewConfig.entries,
             onEntryChange = {},
         )
     }
