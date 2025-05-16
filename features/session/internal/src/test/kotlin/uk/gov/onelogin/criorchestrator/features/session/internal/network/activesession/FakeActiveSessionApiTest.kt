@@ -29,11 +29,11 @@ class FakeActiveSessionApiTest {
                 ApiResponse.Success<String>(
                     """
                     {
-                        "sessionId": "test session ID",
+                        "sessionId": "test-session-id",
                         "redirectUri": "https://example/redirect",
                         "state": "11112222333344445555666677778888"
                     }
-                    """.trimIndent(),
+                    """.replace("\\s".toRegex(), ""),
                 ),
                 activeSessionApi.getActiveSession(),
             )
@@ -53,11 +53,10 @@ class FakeActiveSessionApiTest {
                 ApiResponse.Success<String>(
                     """
                     {
-                        "sessionId": "test session ID",
-                        "redirectUri": null,
+                        "sessionId": "test-session-id",
                         "state": "11112222333344445555666677778888"
                     }
-                    """.trimIndent(),
+                    """.replace("\\s".toRegex(), ""),
                 ),
                 activeSessionApi.getActiveSession(),
             )
