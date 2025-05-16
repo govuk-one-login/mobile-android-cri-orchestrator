@@ -17,8 +17,6 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDScreen
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDViewModel
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 
@@ -29,19 +27,19 @@ class ConfirmNoNonChippedIDScreenTest {
 
     private val navController: NavController = mock()
     private val analytics: SelectDocAnalytics = mock()
-    val context: Context = ApplicationProvider.getApplicationContext()
-    val confirmButton = hasText(context.getString(R.string.confirm_nononchippedid_confirmbutton))
+    private val context: Context = ApplicationProvider.getApplicationContext()
+    private val confirmButton = hasText(context.getString(R.string.confirm_nononchippedid_confirmbutton))
+    private val getJourneyType = StubGetJourneyType()
+    private val viewModel by lazy {
+        ConfirmNoNonChippedIDViewModel(
+            analytics = analytics,
+            getJourneyType = getJourneyType,
+        )
+    }
 
     @Test
     fun `when confirm is tapped and journey is MAM, it navigates to Confirm Abort Mobile screen`() {
-        val viewModel =
-            ConfirmNoChippedIDViewModel(
-                analytics = analytics,
-                getJourneyType =
-                    StubGetJourneyType(
-                        journeyType = JourneyType.MobileAppMobile("https://example.com"),
-                    ),
-            )
+        getJourneyType.journeyType = JourneyType.MobileAppMobile("https://example.com")
 
         composeTestRule.setContent(viewModel)
 
@@ -55,14 +53,7 @@ class ConfirmNoNonChippedIDScreenTest {
 
     @Test
     fun `when confirm is tapped and journey is DAD, it navigates to Confirm Abort Desktop screen`() {
-        val viewModel =
-            ConfirmNoChippedIDViewModel(
-                analytics = analytics,
-                getJourneyType =
-                    StubGetJourneyType(
-                        journeyType = JourneyType.DesktopAppDesktop,
-                    ),
-            )
+        getJourneyType.journeyType = JourneyType.DesktopAppDesktop
 
         composeTestRule.setContent(viewModel)
 
@@ -74,9 +65,9 @@ class ConfirmNoNonChippedIDScreenTest {
         verify(navController).navigate(AbortDestinations.ConfirmAbortDesktop)
     }
 
-    private fun ComposeContentTestRule.setContent(viewModel: ConfirmNoChippedIDViewModel) {
+    private fun ComposeContentTestRule.setContent(viewModel: ConfirmNoNonChippedIDViewModel) {
         composeTestRule.setContent {
-            ConfirmNoChippedIDScreen(
+            ConfirmNoNonChippedIDScreen(
                 viewModel = viewModel,
                 navController = navController,
             )
