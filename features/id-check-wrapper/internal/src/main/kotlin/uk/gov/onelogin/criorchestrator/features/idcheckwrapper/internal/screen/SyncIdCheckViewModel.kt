@@ -41,8 +41,6 @@ class SyncIdCheckViewModel(
     private val _actions = MutableSharedFlow<SyncIdCheckAction>()
     val actions = _actions.asSharedFlow()
 
-    val redirectUri = sessionStore.read().value?.redirectUri
-
     companion object;
 
     fun onScreenStart(documentVariety: DocumentVariety) {
@@ -130,13 +128,13 @@ class SyncIdCheckViewModel(
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        JourneyType.MobileAppMobile ->
+                        is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToReturnToMobileWeb
                     }
                 false ->
                     when (journeyType) {
-                        JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(redirectUri!!)
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }

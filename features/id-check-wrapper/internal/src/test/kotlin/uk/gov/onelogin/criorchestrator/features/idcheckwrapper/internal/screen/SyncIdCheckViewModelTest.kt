@@ -110,6 +110,12 @@ class SyncIdCheckViewModelTest {
     )
 
     companion object {
+        private const val REDIRECT_URI = "http://mam-redirect-uri"
+        private val mamSession =
+            Session.createTestInstance(
+                redirectUri = REDIRECT_URI,
+            )
+
         @JvmStatic
         fun provideSdkResultActionParams(): Stream<Arguments> {
             val unhappyPaths =
@@ -128,8 +134,10 @@ class SyncIdCheckViewModelTest {
                             ),
                             Arguments.of(
                                 sdkResult,
-                                Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder,
+                                mamSession,
+                                SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(
+                                    redirectUri = REDIRECT_URI,
+                                ),
                             ),
                         ).stream()
                     }
