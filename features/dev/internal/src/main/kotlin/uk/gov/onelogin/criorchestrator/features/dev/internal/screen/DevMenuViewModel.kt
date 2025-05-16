@@ -37,7 +37,7 @@ internal class DevMenuViewModel(
         entries
             .filterNot {
                 // Hide entries where the dependent configuration is not enabled
-                it.key.dependsOn?.let { get(it).value } == false
+                it.key.dependsOn?.let { this[it].value } == false
             }.sortedWith { a, b ->
                 compareConfigKeys(a.key, b.key)
             }.toPersistentList()
