@@ -64,7 +64,7 @@ class ConfirmAbortMobileScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            AbortDestinations.AbortRedirectToMobileWebHolder("https://example/redirect"),
+            AbortDestinations.AbortedRedirectToMobileWebHolder("https://example/redirect"),
         )
     }
 

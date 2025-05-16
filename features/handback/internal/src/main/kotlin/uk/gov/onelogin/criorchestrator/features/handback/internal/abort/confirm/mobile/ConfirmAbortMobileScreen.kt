@@ -53,7 +53,7 @@ internal fun ConfirmAbortMobileScreen(
             when (action) {
                 is ConfirmAbortMobileAction.ContinueGovUk -> {
                     navController.navigate(
-                        AbortDestinations.AbortRedirectToMobileWebHolder(
+                        AbortDestinations.AbortedRedirectToMobileWebHolder(
                             redirectUri = action.redirectUri,
                         ),
                     )

@@ -128,13 +128,17 @@ class SyncIdCheckViewModel(
             when (exitState.isSuccess()) {
                 true ->
                     when (journeyType) {
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToReturnToMobileWeb
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                        JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToReturnToMobileWeb
                     }
                 false ->
                     when (journeyType) {
-                        JourneyType.MobileAppMobile -> SyncIdCheckAction.NavigateToAbortRedirectToMobileWebHolder
-                        JourneyType.DesktopAppDesktop -> SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
+                        JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(redirectUri!!)
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
             }
 

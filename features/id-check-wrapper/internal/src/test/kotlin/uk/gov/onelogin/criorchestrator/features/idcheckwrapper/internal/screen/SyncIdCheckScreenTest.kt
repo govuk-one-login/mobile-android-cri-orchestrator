@@ -126,7 +126,7 @@ class SyncIdCheckScreenTest {
         composeTestRule.waitForIdle()
 
         verify(navController).navigate(
-            AbortDestinations.AbortRedirectToMobileWebHolder(redirectUri = "http://mam-redirect-uri"),
+            AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri = "http://mam-redirect-uri"),
         )
     }
 

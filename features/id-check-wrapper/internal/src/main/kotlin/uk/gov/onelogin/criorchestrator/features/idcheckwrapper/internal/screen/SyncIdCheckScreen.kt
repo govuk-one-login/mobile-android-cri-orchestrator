@@ -63,7 +63,6 @@ internal fun SyncIdCheckScreen(
         viewModel.actions,
         launcher,
         navController,
-        redirectUri = viewModel.redirectUri ?: "",
     )
 
     state.let { state ->
@@ -110,7 +109,6 @@ private fun SyncIdCheckActionHandler(
     actions: Flow<SyncIdCheckAction>,
     launcher: ManagedActivityResultLauncher<IdCheckSdkParameters, IdCheckSdkExitState>,
     navController: NavController,
-    redirectUri: String,
 ) {
     LaunchedEffect(Unit) {
         actions.collect { action ->
@@ -129,10 +127,10 @@ private fun SyncIdCheckActionHandler(
                         HandbackDestinations.ReturnToDesktopWeb,
                     )
 
-                SyncIdCheckAction.NavigateToAbortRedirectToMobileWebHolder ->
+                is SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder ->
                     navController.navigate(
-                        AbortDestinations.AbortRedirectToMobileWebHolder(
-                            redirectUri = redirectUri,
+                        AbortDestinations.AbortedRedirectToMobileWebHolder(
+                            redirectUri = action.redirectUri,
                         ),
                     )
 

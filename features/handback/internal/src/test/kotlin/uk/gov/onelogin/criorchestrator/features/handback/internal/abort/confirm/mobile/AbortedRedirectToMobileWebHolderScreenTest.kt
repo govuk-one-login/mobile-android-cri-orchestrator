@@ -12,7 +12,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 
 @RunWith(AndroidJUnit4::class)
-class AbortRedirectToMobileWebHolderScreenTest {
+class AbortedRedirectToMobileWebHolderScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     private val webNavigator = FakeWebNavigator()
@@ -22,7 +22,7 @@ class AbortRedirectToMobileWebHolderScreenTest {
     fun setup() {
         hasFinished = false
         composeTestRule.setContent {
-            AbortRedirectToMobileWebHolderScreen(
+            AbortedRedirectToMobileWebHolderScreen(
                 redirectUri = REDIRECT_URI,
                 webNavigator = webNavigator,
                 onFinish = ::onFinish,

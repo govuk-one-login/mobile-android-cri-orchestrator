@@ -17,7 +17,9 @@ sealed interface SyncIdCheckAction {
 
     data object NavigateToUnrecoverableError : SyncIdCheckAction
 
-    data object NavigateToAbortRedirectToMobileWebHolder : SyncIdCheckAction
+    data class NavigateToAbortedRedirectToMobileWebHolder(
+        val redirectUri: String,
+    ) : SyncIdCheckAction
 
     data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
 }

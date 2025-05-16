@@ -129,7 +129,7 @@ class SyncIdCheckViewModelTest {
                             Arguments.of(
                                 sdkResult,
                                 Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToAbortRedirectToMobileWebHolder,
+                                SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder,
                             ),
                         ).stream()
                     }

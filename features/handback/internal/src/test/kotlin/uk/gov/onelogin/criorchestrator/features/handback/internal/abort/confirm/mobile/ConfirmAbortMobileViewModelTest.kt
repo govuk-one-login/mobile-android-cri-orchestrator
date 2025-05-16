@@ -49,7 +49,7 @@ class ConfirmAbortMobileViewModelTest {
     }
 
     @Test
-    fun `when continue to GOV UK is clicked, it navigates to AbortRedirectToMobileWebHolder screen`() =
+    fun `when continue to GOV UK is clicked, it navigates to AbortedRedirectToMobileWebHolder screen`() =
         runTest {
             sessionStore = FakeSessionStore(Session.Companion.createMobileAppMobileInstance())
             viewModel.actions.test {

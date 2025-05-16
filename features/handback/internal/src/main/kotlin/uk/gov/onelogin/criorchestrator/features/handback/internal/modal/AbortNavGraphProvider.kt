@@ -5,12 +5,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.AbortRedirectToMobileWebHolderScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.AbortedRedirectToMobileWebHolderScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
@@ -56,11 +57,14 @@ class AbortNavGraphProvider
                 )
             }
 
-            composable<AbortDestinations.AbortRedirectToMobileWebHolder> { backStackEntry ->
-                val redirectUri = backStackEntry.arguments?.getString("redirectUri")
-                AbortRedirectToMobileWebHolderScreen(
+            composable<AbortDestinations.AbortedRedirectToMobileWebHolder> { backStackEntry ->
+                val redirectUri =
+                    backStackEntry
+                        .toRoute<AbortDestinations.AbortedRedirectToMobileWebHolder>()
+                        .redirectUri
+                AbortedRedirectToMobileWebHolderScreen(
                     webNavigator = webNavigator,
-                    redirectUri = redirectUri ?: "",
+                    redirectUri = redirectUri,
                     onFinish = onFinish,
                 )
             }
