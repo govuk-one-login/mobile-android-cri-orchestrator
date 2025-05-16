@@ -54,12 +54,16 @@ internal fun ProveYourIdentityModal(
 @Composable
 internal fun ProveYourIdentityModalNavHost(
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
+    onFinish: () -> Unit,
     modifier: Modifier = Modifier,
-) = CompositeNavHost(
-    startDestination = ProveYourIdentityDestinations.ContinueToProveYourIdentity,
-    navGraphProviders = navGraphProviders,
-    modifier = modifier,
-)
+) {
+    CompositeNavHost(
+        startDestination = ProveYourIdentityDestinations.ContinueToProveYourIdentity,
+        navGraphProviders = navGraphProviders,
+        onFinish = onFinish,
+        modifier = modifier,
+    )
+}
 
 internal data class PreviewParams(
     val state: ProveYourIdentityModalState,

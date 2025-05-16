@@ -6,24 +6,31 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.squareup.anvil.annotations.ContributesMultibinding
-import uk.gov.onelogin.criorchestrator.features.handback.internal.confirmabort.ConfirmAbort
+import kotlinx.collections.immutable.persistentSetOf
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
+@Suppress("LongParameterList")
 @ContributesMultibinding(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
     @Inject
     constructor(
+        @Named(AbortModalViewModelModule.FACTORY_NAME)
+        private val abortModalViewModelFactory: ViewModelProvider.Factory,
         @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
         private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
@@ -31,8 +38,12 @@ class HandbackNavGraphProvider
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
+        private val abortModalNavGraphProvider: AbortNavGraphProvider,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<HandbackDestinations.UnrecoverableError> {
                 UnrecoverableErrorScreen(
                     navController = navController,
@@ -53,12 +64,34 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ConfirmAbortMobile> {
-                ConfirmAbort()
+            composable<HandbackDestinations.ConfirmAbortDesktop> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.ConfirmAbortDesktop,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
             }
 
-            composable<HandbackDestinations.ConfirmAbortDesktop> {
-                ConfirmAbort()
+            composable<HandbackDestinations.ConfirmAbortMobile> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.ConfirmAbortMobile,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
+
+            composable<HandbackDestinations.AbortedReturnToDesktopWeb> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
+                    navGraphProviders = persistentSetOf(abortModalNavGraphProvider),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
             }
         }
     }

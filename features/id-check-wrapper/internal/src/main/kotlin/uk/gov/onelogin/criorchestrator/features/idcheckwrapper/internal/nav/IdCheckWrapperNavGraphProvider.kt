@@ -22,7 +22,10 @@ class IdCheckWrapperNavGraphProvider
         @Named(SyncIdCheckViewModelModule.FACTORY_NAME)
         private val syncIdCheckViewModelFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(navController: NavController) {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
             composable<IdCheckWrapperDestinations.SyncIdCheckScreen> {
                 val args = it.toRoute<IdCheckWrapperDestinations.SyncIdCheckScreen>()
                 SyncIdCheckScreen(

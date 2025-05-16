@@ -44,6 +44,7 @@ class SyncIdCheckViewModelTest {
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
     private val analytics = mock<IdCheckWrapperAnalytics>()
+    private val sessionStore = FakeSessionStore(session)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session,
@@ -74,6 +75,7 @@ class SyncIdCheckViewModelTest {
                         ),
                 ),
             analytics = analytics,
+            sessionStore = sessionStore,
         )
     }
 
@@ -108,6 +110,12 @@ class SyncIdCheckViewModelTest {
     )
 
     companion object {
+        private const val REDIRECT_URI = "http://mam-redirect-uri"
+        private val mamSession =
+            Session.createTestInstance(
+                redirectUri = REDIRECT_URI,
+            )
+
         @JvmStatic
         fun provideSdkResultActionParams(): Stream<Arguments> {
             val unhappyPaths =
@@ -122,12 +130,14 @@ class SyncIdCheckViewModelTest {
                             Arguments.of(
                                 sdkResult,
                                 Session.createDesktopAppDesktopInstance(),
-                                SyncIdCheckAction.NavigateToConfirmAbortToDesktopWeb,
+                                SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb,
                             ),
                             Arguments.of(
                                 sdkResult,
-                                Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToConfirmAbortToMobileWeb,
+                                mamSession,
+                                SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(
+                                    redirectUri = REDIRECT_URI,
+                                ),
                             ),
                         ).stream()
                     }
@@ -356,5 +366,6 @@ class SyncIdCheckViewModelTest {
                             enableManualLauncher = enableManualLauncher,
                         ),
                 ),
+            sessionStore = sessionStore,
         )
 }

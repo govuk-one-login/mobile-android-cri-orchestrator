@@ -17,4 +17,16 @@
     <string name="handback_returntodesktopweb_body1">Rydych chi wedi cyflwyno’ch gwybodaeth yn llwyddiannus.</string>
     <string name="handback_returntodesktopweb_body2">I orffen profi pwy ydych chi, mae angen i chi ddychwelyd i’r dudalen GOV.UK a adawsoch ar agor ar eich cyfrifiadur neu dabled.</string>
     <string name="handback_returntodesktopweb_body2_content_description">I orffen profi pwy ydych chi, mae angen i chi ddychwelyd i’r dudalen Gov dot yoo kay a adawsoch ar agor ar eich cyfrifiadur neu dabled.</string>
+
+    <string name="handback_confirmabort_title">Gwiriwch a allwch brofi eich hunaniaeth mewn ffordd arall</string>
+    <string name="handback_confirmabort_body1">Rydych chi ar fin gadael yr ap yma a mynd yn ôl i wefan GOV.UK.</string>
+    <string name="handback_confirmabort_body1_content_description">Rydych chi ar fin gadael yr ap yma a mynd yn ôl i wefan Gov dot yoo kay.</string>
+    <string name="handback_confirmabort_body2">Bydd parhau yn dileu unrhyw gynnydd rydych chi wedi’i wneud yn yr ap.</string>
+    <string name="handback_confirmabortdesktopweb_button">Parhau</string>
+    <string name="handback_confirmabortmobileweb_button">Parhau i wefan GOV.UK</string>
+
+    <string name="handback_abortedreturntodesktopweb_title">Ewch yn ôl i GOV.UK ar eich cyfrifiadur neu dabled</string>
+    <string name="handback_abortedreturntodesktopweb_title_content_description">Ewch yn ôl i Gov dot yoo kay ar eich cyfrifiadur neu dabled</string>
+    <string name="handback_abortedreturntodesktopweb_body1">Dychwelwch i’r dudalen GOV.UK a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
+    <string name="handback_abortedreturntodesktopweb_body1_content_description">Dychwelwch i’r dudalen Gov dot yoo kay a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
 </resources>

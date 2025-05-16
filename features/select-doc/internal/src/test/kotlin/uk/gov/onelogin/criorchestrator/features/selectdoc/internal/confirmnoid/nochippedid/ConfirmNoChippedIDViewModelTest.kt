@@ -62,7 +62,7 @@ class ConfirmNoChippedIDViewModelTest {
                     analytics = analyticsLogger,
                     getJourneyType =
                         StubGetJourneyType(
-                            journeyType = JourneyType.MobileAppMobile,
+                            journeyType = JourneyType.MobileAppMobile("https://example.com"),
                         ),
                 )
 

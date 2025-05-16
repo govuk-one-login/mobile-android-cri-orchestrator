@@ -46,6 +46,7 @@ internal fun ProveYourIdentityRoot(
         modalContent = {
             ProveYourIdentityModalNavHost(
                 navGraphProviders = navGraphProviders,
+                onFinish = { modalState.onDismissRequest() },
             )
         },
     )

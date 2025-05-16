@@ -11,12 +11,15 @@ import kotlinx.collections.immutable.ImmutableSet
  *
  * @param[navGraphProviders] Set of navigation graph providers that contribute to the final graph
  * @param[startDestination] The route for the start destination
+ * @param[onFinish] Action to perform when a screen within the nav host notifies the host that the journey it's
+ *   part of is finished.
  * @param[modifier] A [Modifier] to apply to the layout
  */
 @Composable
 fun CompositeNavHost(
     navGraphProviders: ImmutableSet<NavGraphProvider>,
     startDestination: NavigationDestination,
+    onFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val navController = rememberNavController()
@@ -28,7 +31,10 @@ fun CompositeNavHost(
     ) {
         for (navGraphProvider in navGraphProviders) {
             with(navGraphProvider) {
-                contributeToGraph(navController)
+                contributeToGraph(
+                    navController = navController,
+                    onFinish = onFinish,
+                )
             }
         }
     }

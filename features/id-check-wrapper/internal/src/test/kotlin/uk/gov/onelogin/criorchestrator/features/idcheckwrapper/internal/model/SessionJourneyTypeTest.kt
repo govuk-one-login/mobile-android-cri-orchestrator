@@ -15,7 +15,7 @@ class SessionJourneyTypeTest {
                 redirectUri = "https://example.com",
             )
 
-        assertEquals(session.journeyType, JourneyType.MobileAppMobile)
+        assertEquals(session.journeyType, JourneyType.MobileAppMobile("https://example.com"))
     }
 
     @Test
@@ -25,7 +25,7 @@ class SessionJourneyTypeTest {
                 redirectUri = " ",
             )
 
-        assertEquals(session.journeyType, JourneyType.MobileAppMobile)
+        assertEquals(session.journeyType, JourneyType.MobileAppMobile(" "))
     }
 
     @Test

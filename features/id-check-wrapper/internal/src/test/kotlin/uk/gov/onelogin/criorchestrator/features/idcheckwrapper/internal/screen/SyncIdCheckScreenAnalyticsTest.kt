@@ -42,7 +42,7 @@ class SyncIdCheckScreenAnalyticsTest {
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val context: Context = ApplicationProvider.getApplicationContext()
-
+    private val sessionStore = FakeSessionStore()
     private val analytics =
         IdCheckWrapperAnalytics(
             resourceProvider =
@@ -74,9 +74,10 @@ class SyncIdCheckScreenAnalyticsTest {
                 navController = rememberNavController(),
                 viewModel =
                     SyncIdCheckViewModel(
+                        sessionStore = sessionStore,
                         launcherDataReader =
                             LauncherDataReader(
-                                sessionStore = FakeSessionStore(),
+                                sessionStore = sessionStore,
                                 biometricTokenReader =
                                     StubBiometricTokenReader(
                                         BiometricTokenResult.Success(

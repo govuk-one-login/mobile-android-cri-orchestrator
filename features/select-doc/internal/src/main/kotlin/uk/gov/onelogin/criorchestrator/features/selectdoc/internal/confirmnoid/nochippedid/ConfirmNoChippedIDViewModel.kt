@@ -31,7 +31,7 @@ class ConfirmNoChippedIDViewModel(
 
         viewModelScope.launch {
             when (getJourneyType()) {
-                JourneyType.MobileAppMobile ->
+                is JourneyType.MobileAppMobile ->
                     _action.emit(ConfirmNoChippedIDAction.NavigateToConfirmAbortMobile)
 
                 JourneyType.DesktopAppDesktop ->
