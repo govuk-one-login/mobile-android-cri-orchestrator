@@ -22,6 +22,6 @@ internal fun DevMenuScreen(
     DevMenu(
         modifier = modifier,
         onEntryChange = viewModel::onEntryChange,
-        config = state.config,
+        entries = state.entries,
     )
 }
