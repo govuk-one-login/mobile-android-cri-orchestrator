@@ -56,14 +56,13 @@ class AbortSessionImpl
                 }
 
             when (result) {
-                AbortSession.Result.Error.Offline -> {
+                AbortSession.Result.Error.Offline,
+                is AbortSession.Result.Error.Unrecoverable,
+                -> {
                     // Don't clear the session store
                 }
-                is AbortSession.Result.Error.Unrecoverable,
-                AbortSession.Result.Success,
-                -> {
+                AbortSession.Result.Success ->
                     sessionStore.write(null)
-                }
             }
 
             return result

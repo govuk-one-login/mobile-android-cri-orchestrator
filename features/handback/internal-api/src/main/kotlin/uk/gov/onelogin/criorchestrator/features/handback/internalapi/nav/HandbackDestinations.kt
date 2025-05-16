@@ -8,20 +8,8 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data object UnrecoverableError : HandbackDestinations
 
     @Serializable
-    data object Abort : HandbackDestinations
-
-    @Serializable
     data object ReturnToMobileWeb : HandbackDestinations
 
     @Serializable
     data object ReturnToDesktopWeb : HandbackDestinations
-
-    @Serializable
-    data object ConfirmAbortDesktop : HandbackDestinations
-
-    @Serializable
-    data object ConfirmAbortMobile : HandbackDestinations
-
-    @Serializable
-    data object AbortedReturnToDesktopWeb : HandbackDestinations
 }

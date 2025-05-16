@@ -136,7 +136,7 @@ private fun SyncIdCheckActionHandler(
 
                 SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb ->
                     navController.navigate(
-                        HandbackDestinations.AbortedReturnToDesktopWeb,
+                        AbortDestinations.AbortedReturnToDesktopWeb,
                     )
 
                 SyncIdCheckAction.NavigateToRecoverableError -> {

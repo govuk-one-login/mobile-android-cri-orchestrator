@@ -7,6 +7,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -17,10 +18,16 @@ object UnrecoverableErrorViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(analytics: HandbackAnalytics): ViewModelProvider.Factory =
+    fun provideFactory(
+        analytics: HandbackAnalytics,
+        getJourneyType: GetJourneyType,
+    ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                UnrecoverableErrorViewModel(analytics)
+                UnrecoverableErrorViewModel(
+                    analytics = analytics,
+                    getJourneyType = getJourneyType,
+                )
             }
         }
 }

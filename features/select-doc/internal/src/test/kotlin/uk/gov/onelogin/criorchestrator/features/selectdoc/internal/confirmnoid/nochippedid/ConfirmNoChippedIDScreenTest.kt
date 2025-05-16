@@ -14,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
@@ -47,7 +47,7 @@ class ConfirmNoChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(HandbackDestinations.ConfirmAbortDesktop)
+        verify(navController).navigate(AbortDestinations.ConfirmAbortDesktop)
     }
 
     @Test
@@ -68,7 +68,7 @@ class ConfirmNoChippedIDScreenTest {
             .assertIsEnabled()
             .performClick()
 
-        verify(navController).navigate(HandbackDestinations.ConfirmAbortMobile)
+        verify(navController).navigate(AbortDestinations.ConfirmAbortMobile)
     }
 
     private fun ComposeContentTestRule.setContent(viewModel: ConfirmNoChippedIDViewModel) {

@@ -45,6 +45,7 @@ class ConfirmAbortMobileScreenAnalyticsTest {
             analytics = analytics,
             sessionStore = FakeSessionStore(),
             abortSession = StubAbortSession(),
+            logger = mock(),
         )
 
     private val navController = mock<NavController>()
