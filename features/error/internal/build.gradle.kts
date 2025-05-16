@@ -10,6 +10,7 @@ dependencies {
 
     implementation(projects.features.error.internalApi)
     implementation(projects.features.resume.internalApi)
+    implementation(projects.features.handback.internalApi)
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)

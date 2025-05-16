@@ -7,9 +7,12 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 
 internal class UnrecoverableErrorViewModel(
     private val analytics: HandbackAnalytics,
+    private val getJourneyType: GetJourneyType,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<UnrecoverableErrorAction>()
     val actions: Flow<UnrecoverableErrorAction> = _actions
@@ -27,7 +30,15 @@ internal class UnrecoverableErrorViewModel(
         )
 
         viewModelScope.launch {
-            _actions.emit(UnrecoverableErrorAction.NavigateToAbort)
+            val action =
+                when (getJourneyType()) {
+                    JourneyType.DesktopAppDesktop ->
+                        UnrecoverableErrorAction.NavigateToConfirmAbortDesktop
+                    is JourneyType.MobileAppMobile ->
+                        UnrecoverableErrorAction.NavigateToConfirmAbortMobile
+                }
+
+            _actions.emit(action)
         }
     }
 }

@@ -15,14 +15,17 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
-import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Inject
 import javax.inject.Named
 
 @ContributesMultibinding(CriOrchestratorScope::class)
-class AbortNavGraphProvider
+class AbortModalNavGraphProvider
     @Inject
     constructor(
         @Named(ConfirmAbortMobileViewModelModule.FACTORY_NAME)
@@ -31,8 +34,10 @@ class AbortNavGraphProvider
         private val confirmAbortDesktopWebViewModelFactory: ViewModelProvider.Factory,
         @Named(AbortedReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val abortedReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
+        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
+        private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-    ) : ProveYourIdentityNavGraphProvider {
+    ) : AbortNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
             onFinish: () -> Unit,
@@ -66,6 +71,13 @@ class AbortNavGraphProvider
                     webNavigator = webNavigator,
                     redirectUri = redirectUri,
                     onFinish = onFinish,
+                )
+            }
+
+            composable<HandbackDestinations.UnrecoverableError> {
+                UnrecoverableErrorScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
                 )
             }
         }

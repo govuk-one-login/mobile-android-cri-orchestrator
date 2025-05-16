@@ -1,7 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
 class StubGetJourneyType(
-    val journeyType: JourneyType = JourneyType.DesktopAppDesktop,
+    var journeyType: JourneyType = JourneyType.DesktopAppDesktop,
 ) : GetJourneyType {
     @Suppress("UNUSED")
     constructor(

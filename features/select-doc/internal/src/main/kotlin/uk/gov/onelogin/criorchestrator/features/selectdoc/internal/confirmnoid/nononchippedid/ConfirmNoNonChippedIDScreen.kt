@@ -23,7 +23,7 @@ import uk.gov.android.ui.componentsv2.list.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
@@ -39,10 +39,10 @@ internal fun ConfirmNoNonChippedIDScreen(
         viewModel.action.collect { event ->
             when (event) {
                 ConfirmNoNonChippedIDAction.NavigateToConfirmAbortDesktop ->
-                    navController.navigate(HandbackDestinations.ConfirmAbortDesktop)
+                    navController.navigate(AbortDestinations.ConfirmAbortDesktop)
 
                 ConfirmNoNonChippedIDAction.NavigateToConfirmAbortMobile ->
-                    navController.navigate(HandbackDestinations.ConfirmAbortMobile)
+                    navController.navigate(AbortDestinations.ConfirmAbortMobile)
             }
         }
     }

@@ -18,7 +18,7 @@ import uk.gov.android.ui.patterns.errorscreen.ErrorScreenIcon
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
@@ -34,9 +34,20 @@ internal fun UnrecoverableErrorScreen(
     LaunchedEffect(Unit) {
         viewModel.actions.collect { action ->
             when (action) {
-                UnrecoverableErrorAction.NavigateToAbort -> {
-                    navController.navigate(HandbackDestinations.Abort)
+                UnrecoverableErrorAction.NavigateToConfirmAbortMobile -> {
+                    navController.navigate(AbortDestinations.ConfirmAbortMobile) {
+                        popUpTo(AbortDestinations.ConfirmAbortMobile) {
+                            inclusive = true
+                        }
+                    }
                 }
+
+                UnrecoverableErrorAction.NavigateToConfirmAbortDesktop ->
+                    navController.navigate(AbortDestinations.ConfirmAbortDesktop) {
+                        popUpTo(AbortDestinations.ConfirmAbortDesktop) {
+                            inclusive = true
+                        }
+                    }
             }
         }
     }
