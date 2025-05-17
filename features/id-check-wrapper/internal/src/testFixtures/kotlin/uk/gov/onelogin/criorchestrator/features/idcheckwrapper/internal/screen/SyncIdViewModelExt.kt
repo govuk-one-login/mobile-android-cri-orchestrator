@@ -33,6 +33,7 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
                             BiometricToken.createTestToken(),
                         ),
                 ),
+            configStore = configStore,
         ),
     logger: Logger = mock(),
 ) = SyncIdCheckViewModel(

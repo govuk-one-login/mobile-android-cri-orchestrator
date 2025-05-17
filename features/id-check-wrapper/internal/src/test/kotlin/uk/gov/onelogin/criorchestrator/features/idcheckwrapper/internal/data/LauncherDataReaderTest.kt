@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertInstanceOf
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
+import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.StubBiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
@@ -36,6 +38,7 @@ class LauncherDataReaderTest {
                     session = session,
                     biometricToken = biometricToken,
                     documentType = DocumentType.NFC_PASSPORT,
+                    backendMode = BackendMode.V2,
                 ),
             )
 
@@ -54,6 +57,7 @@ class LauncherDataReaderTest {
                         biometricToken,
                     ),
                 ),
+            configStore = FakeConfigStore(),
         )
 
     @Test

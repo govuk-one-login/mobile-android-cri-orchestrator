@@ -84,6 +84,7 @@ class SyncIdCheckScreenAnalyticsTest {
                                             BiometricToken.createTestToken(),
                                         ),
                                     ),
+                                configStore = FakeConfigStore(),
                             ),
                         logger = SystemLogger(),
                         analytics = analytics,
