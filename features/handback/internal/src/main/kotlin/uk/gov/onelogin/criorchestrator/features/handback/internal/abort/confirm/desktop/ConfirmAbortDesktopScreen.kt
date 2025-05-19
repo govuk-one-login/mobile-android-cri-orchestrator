@@ -7,6 +7,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -18,20 +20,26 @@ import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
+import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortDisplayState
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.LOADING_SCREEN
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.Loading
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
+@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 fun ConfirmAbortDesktopWebScreen(
     viewModel: ConfirmAbortDesktopViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.displayState.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -44,16 +52,24 @@ fun ConfirmAbortDesktopWebScreen(
                     navController.navigate(
                         ErrorDestinations.RecoverableError,
                     )
+
                 ConfirmAbortDesktopActions.NavigateToUnrecoverableError ->
                     navController.navigate(HandbackDestinations.UnrecoverableError)
             }
         }
     }
 
-    ConfirmAbortDesktopWebContent(
-        onContinueClicked = viewModel::onContinueClicked,
-        modifier = modifier,
-    )
+    state.let {
+        when (state) {
+            ConfirmAbortDisplayState.Loading -> Loading()
+
+            ConfirmAbortDisplayState.Display ->
+                ConfirmAbortDesktopWebContent(
+                    onContinueClicked = viewModel::onContinueClicked,
+                    modifier = modifier,
+                )
+        }
+    }
 }
 
 @OptIn(UnstableDesignSystemAPI::class)

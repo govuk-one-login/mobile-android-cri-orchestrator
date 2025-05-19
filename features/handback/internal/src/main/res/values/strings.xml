@@ -29,4 +29,6 @@
     <string name="handback_abortedreturntodesktopweb_title_content_description">Return to Gov dot UK on your computer or tablet</string>
     <string name="handback_abortedreturntodesktopweb_body1">Return to the GOV.UK page you left open on your computer or tablet to check if you can prove your identity another way.</string>
     <string name="handback_abortedreturntodesktopweb_body1_content_description">Return to the Gov dot UK page you left open on your computer or tablet to check if you can prove your identity another way.</string>
+
+    <string name="loading">Loading</string>
 </resources>
