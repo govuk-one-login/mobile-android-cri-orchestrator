@@ -29,5 +29,7 @@ dependencies {
     testImplementation(libs.org.junit.junit4)
     testImplementation(libs.org.robolectric.robolectric)
 
+    testImplementation(testFixtures(project(":libraries:compose-utils")))
+
     uiTestDependencies(libs).forEach(::testImplementation)
 }

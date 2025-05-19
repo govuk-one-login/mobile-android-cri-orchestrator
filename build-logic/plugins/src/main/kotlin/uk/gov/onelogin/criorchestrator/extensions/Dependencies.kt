@@ -114,7 +114,7 @@ internal fun DependencyHandlerScope.androidTestDependencies(libs: LibrariesForLi
     androidTestUtil(libs.androidx.test.orchestrator)
 }
 
-internal fun DependencyHandlerScope.uiTestDependencies(libs: LibrariesForLibs) =
+fun DependencyHandlerScope.uiTestDependencies(libs: LibrariesForLibs) =
     listOf(
         libs.androidx.test.core.ktx,
         libs.androidx.espresso.core,
