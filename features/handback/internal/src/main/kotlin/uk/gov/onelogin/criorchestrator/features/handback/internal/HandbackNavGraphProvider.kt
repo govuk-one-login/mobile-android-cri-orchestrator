@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
@@ -88,6 +89,20 @@ class HandbackNavGraphProvider
                 AbortModal(
                     abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
+
+            composable<AbortDestinations.AbortedRedirectToMobileWebHolder> { backStackEntry ->
+                val redirectUri =
+                    backStackEntry
+                        .toRoute<AbortDestinations.AbortedRedirectToMobileWebHolder>()
+                        .redirectUri
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri),
                     navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
                     onFinish = onFinish,

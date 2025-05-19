@@ -4,6 +4,9 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.timeout
+import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
@@ -18,6 +21,7 @@ class LauncherDataReader
     constructor(
         private val sessionStore: SessionStore,
         private val biometricTokenReader: BiometricTokenReader,
+        private val configStore: ConfigStore,
     ) {
         @OptIn(FlowPreview::class)
         suspend fun read(documentVariety: DocumentVariety): LauncherDataReaderResult {
@@ -31,6 +35,12 @@ class LauncherDataReader
                     .first()
 
             val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety)
+            val backendMode =
+                if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
+                    BackendMode.Bypass
+                } else {
+                    BackendMode.V2
+                }
             return when (result) {
                 is BiometricTokenResult.Error -> {
                     LauncherDataReaderResult.UnrecoverableError(
@@ -61,6 +71,7 @@ class LauncherDataReader
                             session = session,
                             biometricToken = result.token,
                             documentType = documentVariety.toDocumentType(),
+                            backendMode = backendMode,
                         ),
                     )
                 }

@@ -73,6 +73,7 @@ class SyncIdCheckViewModelTest {
                                 biometricToken,
                             ),
                         ),
+                    configStore = FakeConfigStore(),
                 ),
             analytics = analytics,
             sessionStore = sessionStore,
@@ -357,6 +358,7 @@ class SyncIdCheckViewModelTest {
                         StubBiometricTokenReader(
                             biometricTokenResult = biometricTokenResult,
                         ),
+                    configStore = FakeConfigStore(),
                 ),
             analytics = analytics,
             configStore =

@@ -67,6 +67,7 @@ class SyncIdCheckScreenTest {
                             biometricTokenResult = biometricTokenResult,
                             delay = readerDelay,
                         ),
+                    configStore = FakeConfigStore(),
                 ),
             configStore =
                 FakeConfigStore(
