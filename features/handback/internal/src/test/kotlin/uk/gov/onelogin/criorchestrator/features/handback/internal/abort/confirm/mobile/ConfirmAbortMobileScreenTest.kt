@@ -2,6 +2,7 @@ import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
@@ -14,6 +15,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.LOADING_SCREEN
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileConstants
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
@@ -70,6 +72,23 @@ class ConfirmAbortMobileScreenTest {
             composeTestRule
                 .onNode(hasText(context.getString(R.string.handback_confirmabort_body1)))
         body.assertContentDescriptionContains("Gov dot UK", true)
+    }
+
+    @Test
+    fun `when screen is launched, the screen displays desired content`() {
+        composeTestRule
+            .onNodeWithContentDescription(
+                context.getString(R.string.handback_confirmabort_body1_content_description),
+            ).assertExists()
+    }
+
+    @Test
+    fun `when continue is clicked, initially the screen displays loading screen`() {
+        composeTestRule
+            .onNode(continueButton)
+            .performClick()
+
+        composeTestRule.onNodeWithContentDescription(LOADING_SCREEN).assertExists()
     }
 
     @Test
