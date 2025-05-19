@@ -3,6 +3,7 @@ import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
@@ -88,7 +89,7 @@ class ConfirmAbortMobileScreenTest {
             .onNode(continueButton)
             .performClick()
 
-        composeTestRule.onNodeWithContentDescription(LOADING_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(LOADING_SCREEN).assertExists()
     }
 
     @Test

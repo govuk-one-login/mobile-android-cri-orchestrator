@@ -2,9 +2,8 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -13,14 +12,10 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-fun Loading(
-    modifier: Modifier = Modifier
-) {
+fun Loading(modifier: Modifier = Modifier) {
     LoadingScreen(
         stringResource(R.string.loading),
-        modifier = modifier.semantics {
-            contentDescription = LOADING_SCREEN
-        }
+        modifier = modifier.testTag(LOADING_SCREEN),
     )
 }
 
