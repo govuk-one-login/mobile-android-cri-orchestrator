@@ -6,8 +6,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
+import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
@@ -23,3 +25,11 @@ fun Loading(
 }
 
 const val LOADING_SCREEN = "Loading Screen"
+
+@Composable
+@LightDarkBothLocalesPreview
+internal fun PreviewLoading() {
+    GdsTheme {
+        Loading()
+    }
+}
