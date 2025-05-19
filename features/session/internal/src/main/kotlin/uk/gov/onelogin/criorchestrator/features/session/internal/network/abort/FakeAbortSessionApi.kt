@@ -7,6 +7,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import javax.inject.Inject
 
 private const val BAD_REQUEST = 400
+private const val DELAY = 300L
 
 class FakeAbortSessionApi
     @Inject
@@ -26,9 +27,5 @@ class FakeAbortSessionApi
 
                 else -> error("Unknown bypass abort session API call result configuration")
             }
-        }
-
-        companion object {
-            const val DELAY = 300L
         }
     }
