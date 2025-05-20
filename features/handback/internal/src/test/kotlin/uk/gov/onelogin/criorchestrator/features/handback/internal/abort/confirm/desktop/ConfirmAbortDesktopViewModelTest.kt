@@ -2,17 +2,17 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
-import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)
 class ConfirmAbortDesktopViewModelTest {
@@ -37,6 +37,13 @@ class ConfirmAbortDesktopViewModelTest {
     }
 
     @Test
+    fun `when screen starts, display state is set to display`() {
+        viewModel.onScreenStart()
+
+        assertEquals(ConfirmAbortState.Display, viewModel.state.value)
+    }
+
+    @Test
     fun `when continue is clicked, send analytics`() {
         viewModel.onContinueClicked()
 
@@ -47,12 +54,19 @@ class ConfirmAbortDesktopViewModelTest {
     }
 
     @Test
+    fun `when continue is clicked, display state is set to loading`() {
+        viewModel.onContinueClicked()
+
+        assertEquals(ConfirmAbortState.Loading, viewModel.state.value)
+    }
+
+    @Test
     fun `given continue is clicked, when abort call successful, then emit navigation action to return to desktop`() =
         runTest {
             abortSession.result = AbortSession.Result.Success
             viewModel.actions.test {
                 viewModel.onContinueClicked()
-                Assertions.assertEquals(
+                assertEquals(
                     ConfirmAbortDesktopActions.NavigateToReturnToDesktop,
                     awaitItem(),
                 )
@@ -65,7 +79,7 @@ class ConfirmAbortDesktopViewModelTest {
             abortSession.result = AbortSession.Result.Error.Unrecoverable(exception = Exception("exception"))
             viewModel.actions.test {
                 viewModel.onContinueClicked()
-                Assertions.assertEquals(
+                assertEquals(
                     ConfirmAbortDesktopActions.NavigateToUnrecoverableError,
                     awaitItem(),
                 )
@@ -78,7 +92,7 @@ class ConfirmAbortDesktopViewModelTest {
             abortSession.result = AbortSession.Result.Error.Offline
             viewModel.actions.test {
                 viewModel.onContinueClicked()
-                Assertions.assertEquals(
+                assertEquals(
                     ConfirmAbortDesktopActions.NavigateToOfflineError,
                     awaitItem(),
                 )

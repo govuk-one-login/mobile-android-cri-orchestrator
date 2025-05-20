@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
@@ -55,6 +57,23 @@ class ConfirmAbortDesktopScreenTest {
             composeTestRule
                 .onNode(hasText(context.getString(R.string.handback_confirmabort_body1)))
         body.assertContentDescriptionContains("Gov dot UK", true)
+    }
+
+    @Test
+    fun `when screen is launched, the screen displays desired content`() {
+        composeTestRule
+            .onNodeWithContentDescription(
+                context.getString(R.string.handback_confirmabort_body1_content_description),
+            ).assertExists()
+    }
+
+    @Test
+    fun `when continue is clicked, initially the screen displays loading screen`() {
+        composeTestRule
+            .onNode(continueButton)
+            .performClick()
+
+        composeTestRule.onNodeWithText("Loading").assertExists()
     }
 
     @Test

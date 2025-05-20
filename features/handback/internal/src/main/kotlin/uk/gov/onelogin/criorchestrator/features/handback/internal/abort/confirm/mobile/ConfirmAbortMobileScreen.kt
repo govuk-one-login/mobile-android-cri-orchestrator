@@ -8,6 +8,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -23,30 +25,40 @@ import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
+import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
+@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortMobileScreen(
     viewModel: ConfirmAbortMobileViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsState()
+
     fun onButtonClick() {
         viewModel.onContinueToGovUk()
     }
 
-    ConfirmAbortMobileWebContent(
-        onButtonClick = ::onButtonClick,
-        modifier = modifier,
-    )
+    when (state) {
+        ConfirmAbortState.Loading -> LoadingScreen()
+
+        ConfirmAbortState.Display ->
+            ConfirmAbortMobileWebContent(
+                onButtonClick = ::onButtonClick,
+                modifier = modifier,
+            )
+    }
 
     LaunchedEffect(viewModel) {
         viewModel.onScreenStart()
