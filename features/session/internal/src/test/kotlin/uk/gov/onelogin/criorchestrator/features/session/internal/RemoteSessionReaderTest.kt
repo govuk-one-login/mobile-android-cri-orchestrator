@@ -18,6 +18,7 @@ import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.data.InMemorySessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import java.util.stream.Stream
 import javax.inject.Provider
@@ -26,6 +27,7 @@ import javax.inject.Provider
 class RemoteSessionReaderTest {
     private val logger = SystemLogger()
     private val activeSessionApi = spy(StubActiveSessionApiImpl())
+    private val sessionStore = InMemorySessionStore(logger)
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -33,7 +35,7 @@ class RemoteSessionReaderTest {
     fun setUp() {
         remoteSessionReader =
             RemoteSessionReader(
-                sessionStore = InMemorySessionStore(logger),
+                sessionStore = sessionStore,
                 activeSessionApi = Provider { activeSessionApi },
                 logger = logger,
             )
@@ -44,16 +46,18 @@ class RemoteSessionReaderTest {
         activeSessionApi.setActiveSession(ApiResponse.Offline)
     }
 
-    @ParameterizedTest(name = "{0}")
+    @ParameterizedTest(name = "{0} and correctly writes to session store")
     @MethodSource("assertCorrectApiResponseHandling")
     fun `session reader returns `(
         apiResponse: ApiResponse,
         logEntry: String,
         expectedIsActiveSession: Boolean,
+        session: Session?,
     ) = runTest {
         activeSessionApi.setActiveSession(apiResponse)
         val isActiveSession = remoteSessionReader.isActiveSession()
         assertEquals(expectedIsActiveSession, isActiveSession)
+        assertEquals(session, sessionStore.read().value)
         assertTrue(logger.contains(logEntry))
     }
 
@@ -79,6 +83,7 @@ class RemoteSessionReaderTest {
                     ),
                     "Failed to fetch active session",
                     false,
+                    null,
                 ),
                 arguments(
                     named(
@@ -87,6 +92,7 @@ class RemoteSessionReaderTest {
                     ),
                     "Loading ... fetching active session ...",
                     false,
+                    null,
                 ),
                 arguments(
                     named(
@@ -95,6 +101,7 @@ class RemoteSessionReaderTest {
                     ),
                     "Failed to fetch active session - device is offline",
                     false,
+                    null,
                 ),
                 // This test will also fail if the serialization plugin isn't applied
                 arguments(
@@ -113,6 +120,11 @@ class RemoteSessionReaderTest {
                     ),
                     "Got active session",
                     true,
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?11112222333344445555666677778888",
+                        state = "11112222333344445555666677778888",
+                    ),
                 ),
                 arguments(
                     named(
@@ -131,6 +143,11 @@ class RemoteSessionReaderTest {
                     ),
                     "Got active session",
                     true,
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?11112222333344445555666677778888",
+                        state = "11112222333344445555666677778888",
+                    ),
                 ),
                 arguments(
                     named(
@@ -147,6 +164,11 @@ class RemoteSessionReaderTest {
                     ),
                     "Got active session",
                     true,
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = null,
+                        state = "11112222333344445555666677778888",
+                    ),
                 ),
                 arguments(
                     named(
@@ -164,6 +186,7 @@ class RemoteSessionReaderTest {
                     ),
                     "Failed to parse active session response",
                     false,
+                    null,
                 ),
             )
     }

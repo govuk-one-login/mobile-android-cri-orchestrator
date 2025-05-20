@@ -52,7 +52,13 @@ class RemoteSessionReader
                     json.decodeFromString(response.response.toString())
                 Session(
                     sessionId = parsedResponse.sessionId,
-                    redirectUri = parsedResponse.redirectUri,
+                    // IPV needs the redirect URI to have the state as a query parameter
+                    redirectUri =
+                        if (parsedResponse.redirectUri.isNullOrBlank()) {
+                            null
+                        } else {
+                            "${parsedResponse.redirectUri}?${parsedResponse.state}"
+                        },
                     state = parsedResponse.state,
                 )
             } catch (e: IllegalArgumentException) {
