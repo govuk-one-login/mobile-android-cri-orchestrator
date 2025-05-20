@@ -106,7 +106,7 @@ class RemoteSessionReaderTest {
                 // This test will also fail if the serialization plugin isn't applied
                 arguments(
                     named(
-                        "true with expected log entry when API response is Success with correct" +
+                        "true with expected log entry when API response is Success with correct " +
                             "response format - with redirectUri (mobile journey)",
                         ApiResponse.Success<String>(
                             """
@@ -127,7 +127,7 @@ class RemoteSessionReaderTest {
                 ),
                 arguments(
                     named(
-                        "true with expected log entry when API response is Success with correct" +
+                        "true with expected log entry when API response is Success with correct " +
                             "response format - with new parameters",
                         ApiResponse.Success<String>(
                             """
@@ -149,7 +149,7 @@ class RemoteSessionReaderTest {
                 ),
                 arguments(
                     named(
-                        "true with expected log entry when API response is Success with correct" +
+                        "true with expected log entry when API response is Success with correct " +
                             "response format - with existing query parameters on the redirect URI",
                         ApiResponse.Success<String>(
                             """
@@ -170,7 +170,7 @@ class RemoteSessionReaderTest {
                 ),
                 arguments(
                     named(
-                        "true with expected log entry when API response is Success with correct" +
+                        "true with expected log entry when API response is Success with correct " +
                             "response format - with state that requires URI encoding",
                         ApiResponse.Success<String>(
                             """
@@ -191,7 +191,7 @@ class RemoteSessionReaderTest {
                 ),
                 arguments(
                     named(
-                        "true with expected log entry when API response is Success with correct" +
+                        "true with expected log entry when API response is Success with correct " +
                             "response format - no redirectUri (desktop journey)",
                         ApiResponse.Success<String>(
                             """
