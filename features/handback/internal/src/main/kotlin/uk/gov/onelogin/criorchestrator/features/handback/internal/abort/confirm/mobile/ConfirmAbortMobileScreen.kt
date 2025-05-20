@@ -25,6 +25,7 @@ import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
+import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
@@ -32,7 +33,6 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.Loading
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
@@ -51,13 +51,13 @@ internal fun ConfirmAbortMobileScreen(
     }
 
     when (state) {
+        ConfirmAbortState.Loading -> LoadingScreen()
+
         ConfirmAbortState.Display ->
             ConfirmAbortMobileWebContent(
                 onButtonClick = ::onButtonClick,
                 modifier = modifier,
             )
-
-        ConfirmAbortState.Loading -> Loading()
     }
 
     LaunchedEffect(viewModel) {
