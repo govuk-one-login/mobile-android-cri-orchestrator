@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortDisplayState
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
@@ -17,13 +17,13 @@ class ConfirmAbortDesktopViewModel(
     private val analytics: Analytics,
     private val abortSession: AbortSession,
 ) : ViewModel() {
-    private val _displayState = MutableStateFlow<ConfirmAbortDisplayState>(ConfirmAbortDisplayState.Display)
-    val displayState = _displayState.asStateFlow()
+    private val _state = MutableStateFlow<ConfirmAbortState>(ConfirmAbortState.Display)
+    val state = _state.asStateFlow()
     private val _actions = MutableSharedFlow<ConfirmAbortDesktopActions>()
     val actions: SharedFlow<ConfirmAbortDesktopActions> = _actions.asSharedFlow()
 
     fun onScreenStart() {
-        _displayState.value = ConfirmAbortDisplayState.Display
+        _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
             id = HandbackScreenId.ConfirmAbortDesktop,
             title = ConfirmAbortDesktopConstants.titleId,
@@ -31,7 +31,7 @@ class ConfirmAbortDesktopViewModel(
     }
 
     fun onContinueClicked() {
-        _displayState.value = ConfirmAbortDisplayState.Loading
+        _state.value = ConfirmAbortState.Loading
         analytics.trackButtonEvent(ConfirmAbortDesktopConstants.buttonId)
 
         viewModelScope.launch {

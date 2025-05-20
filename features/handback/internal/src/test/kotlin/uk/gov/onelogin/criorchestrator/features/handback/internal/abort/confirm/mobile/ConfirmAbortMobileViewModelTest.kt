@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortDisplayState
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
@@ -58,7 +58,7 @@ class ConfirmAbortMobileViewModelTest {
     fun `when screen starts, display state is set to display`() {
         viewModel.onScreenStart()
 
-        assertEquals(ConfirmAbortDisplayState.Display, viewModel.displayState.value)
+        assertEquals(ConfirmAbortState.Display, viewModel.state.value)
     }
 
     @Test
@@ -75,7 +75,7 @@ class ConfirmAbortMobileViewModelTest {
     fun `when continue to GOV UK is clicked, display state is set to loading`() {
         viewModel.onContinueToGovUk()
 
-        assertEquals(ConfirmAbortDisplayState.Loading, viewModel.displayState.value)
+        assertEquals(ConfirmAbortState.Loading, viewModel.state.value)
     }
 
     @Test

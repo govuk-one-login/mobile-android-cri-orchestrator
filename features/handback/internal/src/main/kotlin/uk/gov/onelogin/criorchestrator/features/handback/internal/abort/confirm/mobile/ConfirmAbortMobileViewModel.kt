@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortDisplayState
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
@@ -29,13 +29,13 @@ class ConfirmAbortMobileViewModel(
     private val logger: Logger,
 ) : ViewModel(),
     LogTagProvider {
-    private val _displayState = MutableStateFlow<ConfirmAbortDisplayState>(ConfirmAbortDisplayState.Display)
-    val displayState = _displayState.asStateFlow()
+    private val _state = MutableStateFlow<ConfirmAbortState>(ConfirmAbortState.Display)
+    val state = _state.asStateFlow()
     private val _actions = MutableSharedFlow<ConfirmAbortMobileAction>()
     val actions: SharedFlow<ConfirmAbortMobileAction> = _actions.asSharedFlow()
 
     fun onScreenStart() {
-        _displayState.value = ConfirmAbortDisplayState.Display
+        _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
             id = HandbackScreenId.ConfirmAbortMobile,
             title = ConfirmAbortMobileConstants.titleId,
@@ -43,7 +43,7 @@ class ConfirmAbortMobileViewModel(
     }
 
     fun onContinueToGovUk() {
-        _displayState.value = ConfirmAbortDisplayState.Loading
+        _state.value = ConfirmAbortState.Loading
         analytics.trackButtonEvent(ConfirmAbortMobileConstants.buttonId)
 
         viewModelScope.launch {

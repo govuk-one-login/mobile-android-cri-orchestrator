@@ -24,7 +24,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortDisplayState
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.Loading
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -37,7 +37,7 @@ fun ConfirmAbortDesktopWebScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.displayState.collectAsState()
+    val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -59,9 +59,9 @@ fun ConfirmAbortDesktopWebScreen(
 
     state.let {
         when (state) {
-            ConfirmAbortDisplayState.Loading -> Loading()
+            ConfirmAbortState.Loading -> Loading()
 
-            ConfirmAbortDisplayState.Display ->
+            ConfirmAbortState.Display ->
                 ConfirmAbortDesktopWebContent(
                     onContinueClicked = viewModel::onContinueClicked,
                     modifier = modifier,
