@@ -57,16 +57,14 @@ fun ConfirmAbortDesktopWebScreen(
         }
     }
 
-    state.let {
-        when (state) {
-            ConfirmAbortState.Loading -> Loading()
+    when (state) {
+        ConfirmAbortState.Loading -> Loading()
 
-            ConfirmAbortState.Display ->
-                ConfirmAbortDesktopWebContent(
-                    onContinueClicked = viewModel::onContinueClicked,
-                    modifier = modifier,
-                )
-        }
+        ConfirmAbortState.Display ->
+            ConfirmAbortDesktopWebContent(
+                onContinueClicked = viewModel::onContinueClicked,
+                modifier = modifier,
+            )
     }
 }
 
