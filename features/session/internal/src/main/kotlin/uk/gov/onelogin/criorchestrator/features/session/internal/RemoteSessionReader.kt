@@ -57,7 +57,7 @@ class RemoteSessionReader
                         if (parsedResponse.redirectUri.isNullOrBlank()) {
                             null
                         } else {
-                            "${parsedResponse.redirectUri}?${parsedResponse.state}"
+                            "${parsedResponse.redirectUri}?state=${parsedResponse.state}"
                         },
                 )
             } catch (e: IllegalArgumentException) {
