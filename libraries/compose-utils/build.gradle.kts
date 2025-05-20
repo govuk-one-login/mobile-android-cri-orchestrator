@@ -1,3 +1,5 @@
+import uk.gov.onelogin.criorchestrator.extensions.uiTestDependencies
+
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.base-compose-config")
@@ -9,4 +11,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
 
     testImplementation(libs.androidx.navigation.compose)
+
+    uiTestDependencies(libs).forEach(::testFixturesImplementation)
 }

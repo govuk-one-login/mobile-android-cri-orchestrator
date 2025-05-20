@@ -15,7 +15,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -24,6 +23,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.createTestInstance
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 import uk.gov.onelogin.criorchestrator.testwrapper.MainContent
@@ -125,12 +125,6 @@ class DeveloperSettingsTest {
             .onNodeWithText(CONTINUE_TO_PROVE_YOUR_IDENTITY)
             .assertIsNotDisplayed()
     }
-
-    private fun ComposeTestRule.goBack(times: Int = 1) =
-        repeat(times) {
-            pressBack()
-            composeTestRule.waitForIdle()
-        }
 
     private fun ComposeTestRule.setNfcAvailableDeveloperSetting(isNfcAvailable: Boolean) {
         composeTestRule
