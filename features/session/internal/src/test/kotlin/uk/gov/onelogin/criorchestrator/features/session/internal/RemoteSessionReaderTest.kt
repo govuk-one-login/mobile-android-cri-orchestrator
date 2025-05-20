@@ -150,6 +150,48 @@ class RemoteSessionReaderTest {
                 arguments(
                     named(
                         "true with expected log entry when API response is Success with correct" +
+                            "response format - with existing query parameters on the redirect URI",
+                        ApiResponse.Success<String>(
+                            """
+                            {
+                                "sessionId": "test session ID",
+                                "redirectUri": "https://example/redirect?test=test",
+                                "state": "11112222333344445555666677778888"
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    "Got active session",
+                    true,
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?test=test&state=11112222333344445555666677778888",
+                    ),
+                ),
+                arguments(
+                    named(
+                        "true with expected log entry when API response is Success with correct" +
+                            "response format - with state that requires URI encoding",
+                        ApiResponse.Success<String>(
+                            """
+                            {
+                                "sessionId": "test session ID",
+                                "redirectUri": "https://example/redirect",
+                                "state": "&?%:/"
+                            }
+                            """.trimIndent(),
+                        ),
+                    ),
+                    "Got active session",
+                    true,
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?state=%26%3F%25%3A%2F",
+                    ),
+                ),
+                arguments(
+                    named(
+                        "true with expected log entry when API response is Success with correct" +
                             "response format - no redirectUri (desktop journey)",
                         ApiResponse.Success<String>(
                             """

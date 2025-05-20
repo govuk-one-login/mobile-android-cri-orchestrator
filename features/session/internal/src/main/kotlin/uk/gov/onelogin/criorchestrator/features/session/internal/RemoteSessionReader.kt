@@ -13,6 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -52,13 +53,7 @@ class RemoteSessionReader
                     json.decodeFromString(response.response.toString())
                 Session(
                     sessionId = parsedResponse.sessionId,
-                    // IPV needs the redirect URI to have the state as a query parameter
-                    redirectUri =
-                        if (parsedResponse.redirectUri.isNullOrBlank()) {
-                            null
-                        } else {
-                            "${parsedResponse.redirectUri}?state=${parsedResponse.state}"
-                        },
+                    redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
                 )
             } catch (e: IllegalArgumentException) {
                 logger.error(tag, "Failed to parse active session response", e)
@@ -81,4 +76,17 @@ class RemoteSessionReader
                     logger.debug(tag, "Failed to fetch active session - device is offline")
             }
         }
+
+        // IPV needs the redirect URI to have the encoded state as a query parameter
+        private fun generateRedirectUri(
+            redirectUri: String?,
+            state: String,
+        ): String? =
+            if (redirectUri.isNullOrBlank()) {
+                null
+            } else {
+                val encodedState = URLEncoder.encode(state, "utf-8")
+                val separator = if (redirectUri.contains('?')) '&' else '?'
+                "${redirectUri}${separator}state=$encodedState"
+            }
     }
