@@ -123,7 +123,6 @@ class RemoteSessionReaderTest {
                     Session(
                         sessionId = "test session ID",
                         redirectUri = "https://example/redirect?11112222333344445555666677778888",
-                        state = "11112222333344445555666677778888",
                     ),
                 ),
                 arguments(
@@ -146,7 +145,6 @@ class RemoteSessionReaderTest {
                     Session(
                         sessionId = "test session ID",
                         redirectUri = "https://example/redirect?11112222333344445555666677778888",
-                        state = "11112222333344445555666677778888",
                     ),
                 ),
                 arguments(
@@ -167,7 +165,6 @@ class RemoteSessionReaderTest {
                     Session(
                         sessionId = "test session ID",
                         redirectUri = null,
-                        state = "11112222333344445555666677778888",
                     ),
                 ),
                 arguments(

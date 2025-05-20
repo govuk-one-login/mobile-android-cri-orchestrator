@@ -59,7 +59,6 @@ class RemoteSessionReader
                         } else {
                             "${parsedResponse.redirectUri}?${parsedResponse.state}"
                         },
-                    state = parsedResponse.state,
                 )
             } catch (e: IllegalArgumentException) {
                 logger.error(tag, "Failed to parse active session response", e)
