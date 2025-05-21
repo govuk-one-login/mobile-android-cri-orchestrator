@@ -21,7 +21,6 @@ class InMemorySessionStoreTest {
             Session(
                 sessionId = "test session ID",
                 redirectUri = "test redirect URI",
-                state = "test state",
             )
 
         sessionStore.write(newSession)

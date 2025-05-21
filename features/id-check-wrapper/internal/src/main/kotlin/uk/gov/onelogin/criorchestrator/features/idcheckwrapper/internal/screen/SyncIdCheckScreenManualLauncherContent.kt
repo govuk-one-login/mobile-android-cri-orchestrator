@@ -127,7 +127,6 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
                     session =
                         Session(
                             sessionId = "test session ID",
-                            state = "test state",
                         ),
                     biometricToken =
                         BiometricToken(

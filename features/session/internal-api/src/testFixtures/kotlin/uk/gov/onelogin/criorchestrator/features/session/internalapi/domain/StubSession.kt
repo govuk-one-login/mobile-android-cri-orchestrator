@@ -5,12 +5,10 @@ const val REDIRECT_URI = "https://example/redirect"
 fun Session.Companion.createTestInstance(
     sessionId: String = "test-session-id",
     redirectUri: String? = null,
-    state: String = "test-state",
 ): Session =
     Session(
         sessionId = sessionId,
         redirectUri = redirectUri,
-        state = state,
     )
 
 fun Session.Companion.createDesktopAppDesktopInstance(): Session =
@@ -18,7 +16,9 @@ fun Session.Companion.createDesktopAppDesktopInstance(): Session =
         redirectUri = null,
     )
 
-fun Session.Companion.createMobileAppMobileInstance(redirectUri: String = "http://mam-redirect-uri"): Session =
+fun Session.Companion.createMobileAppMobileInstance(
+    redirectUri: String = "http://mam-redirect-uri?state=mock-state",
+): Session =
     Session.createTestInstance(
         redirectUri = redirectUri,
     )
