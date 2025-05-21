@@ -11,9 +11,9 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.actives
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.libraries.androidutils.UriBuilder
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -26,6 +26,7 @@ class RemoteSessionReader
         private val sessionStore: SessionStore,
         private val activeSessionApi: Provider<ActiveSessionApi>,
         private val logger: Logger,
+        private val uriBuilder: UriBuilder,
     ) : SessionReader,
         LogTagProvider {
         private val json: Json by lazy {
@@ -85,8 +86,10 @@ class RemoteSessionReader
             if (redirectUri.isNullOrBlank()) {
                 null
             } else {
-                val encodedState = URLEncoder.encode(state, "utf-8")
-                val separator = if (redirectUri.contains('?')) '&' else '?'
-                "${redirectUri}${separator}state=$encodedState"
+                uriBuilder.buildUri(
+                    baseUri = redirectUri,
+                    queryKey = "state",
+                    queryValue = state,
+                )
             }
     }
