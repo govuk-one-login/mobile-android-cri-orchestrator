@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
+import androidx.core.net.toUri
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.json.Json
@@ -13,7 +14,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -85,8 +85,11 @@ class RemoteSessionReader
             if (redirectUri.isNullOrBlank()) {
                 null
             } else {
-                val encodedState = URLEncoder.encode(state, "utf-8")
-                val separator = if (redirectUri.contains('?')) '&' else '?'
-                "${redirectUri}${separator}state=$encodedState"
+                redirectUri
+                    .toUri()
+                    .buildUpon()
+                    .appendQueryParameter("state", state)
+                    .build()
+                    .toString()
             }
     }
