@@ -6,8 +6,6 @@ plugins {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(projects.libraries.di)
-    testImplementation(libs.org.junit.jupiter.api)
-    testImplementation(platform(libs.org.junit.bom))
 }
 
 mavenPublishingConfig {
