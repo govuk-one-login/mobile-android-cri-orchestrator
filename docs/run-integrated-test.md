@@ -55,5 +55,5 @@ export AWS_PROFILE=id-check
 3. Run the helper script to create a session:
 
 ```bash
-sh create-session.sh
+sh ./scripts/create-session.sh
 ```
