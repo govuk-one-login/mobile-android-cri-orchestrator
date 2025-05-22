@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.features.config.internalApi)
     implementation(projects.features.session.internalApi)
     implementation(projects.libraries.analytics)
+    implementation(projects.libraries.androidUtils)
     implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.di)
@@ -27,6 +28,7 @@ dependencies {
     testImplementation(projects.features.config.publicApi)
     testImplementation(testFixtures(projects.features.config.internalApi))
     testImplementation(testFixtures(projects.libraries.analytics))
+    testImplementation(testFixtures(projects.libraries.androidUtils))
     testImplementation(testFixtures(projects.features.session.internalApi))
 }
 

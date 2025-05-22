@@ -41,6 +41,7 @@ dependencies {
     implementation(projects.features.selectDoc.internal)
     implementation(projects.features.selectDoc.internalApi)
     implementation(projects.libraries.analytics)
+    implementation(projects.libraries.androidUtils)
     implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.navigation)
