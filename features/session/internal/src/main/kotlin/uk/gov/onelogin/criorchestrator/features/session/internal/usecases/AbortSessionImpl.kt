@@ -61,8 +61,9 @@ class AbortSessionImpl
                 -> {
                     // Don't clear the session store
                 }
-                AbortSession.Result.Success ->
-                    sessionStore.write(null)
+                AbortSession.Result.Success -> {
+                    sessionStore.updateToAborted()
+                }
             }
 
             return result
