@@ -14,29 +14,11 @@ class ProveYourIdentityModalStateTest {
     val moleculePaparazziCompatRule = createMoleculePaparazziCompatRule()
 
     @Test
-    fun `given initially allowed to show, initial state is allowed to show`() =
+    fun `initial state is not allowed to show`() =
         runTest {
             moleculeFlow(RecompositionMode.Immediate) {
                 val state =
-                    rememberProveYourIdentityModalState(
-                        initiallyAllowedToShow = true,
-                    )
-                state to state.allowedToShow
-            }.test {
-                awaitItem().also { (_, allowedToShow) ->
-                    assertEquals(allowedToShow, true)
-                }
-            }
-        }
-
-    @Test
-    fun `given not initially allowed to show, initial state is not allowed to show`() =
-        runTest {
-            moleculeFlow(RecompositionMode.Immediate) {
-                val state =
-                    rememberProveYourIdentityModalState(
-                        initiallyAllowedToShow = false,
-                    )
+                    rememberProveYourIdentityModalState()
                 state to state.allowedToShow
             }.test {
                 awaitItem().also { (_, allowedToShow) ->
@@ -46,18 +28,15 @@ class ProveYourIdentityModalStateTest {
         }
 
     @Test
-    fun `when dismissed, it is not allowed to show`() =
+    fun `when shown and dismissed, it is not allowed to show`() =
         runTest {
             moleculeFlow(RecompositionMode.Immediate) {
                 val state =
-                    rememberProveYourIdentityModalState(
-                        initiallyAllowedToShow = true,
-                    )
+                    rememberProveYourIdentityModalState()
                 state to state.allowedToShow
             }.test {
-                awaitItem().also { (state, _) ->
-                    state.onDismissRequest()
-                }
+                awaitItem().also { (state, _) -> state.allowToShow() }
+                awaitItem().also { (state, _) -> state.onDismissRequest() }
 
                 awaitItem().also { (_, allowedToShow) ->
                     assertEquals(allowedToShow, false)
@@ -70,11 +49,10 @@ class ProveYourIdentityModalStateTest {
         runTest {
             moleculeFlow(RecompositionMode.Immediate) {
                 val state =
-                    rememberProveYourIdentityModalState(
-                        initiallyAllowedToShow = true,
-                    )
+                    rememberProveYourIdentityModalState()
                 state to state.allowedToShow
             }.test {
+                awaitItem().also { (state, _) -> state.allowToShow() }
                 awaitItem().also { (state, _) -> state.onDismissRequest() }
                 awaitItem().also { (state, _) -> state.allowToShow() }
 

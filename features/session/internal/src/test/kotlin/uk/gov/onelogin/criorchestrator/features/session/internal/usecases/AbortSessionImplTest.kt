@@ -5,7 +5,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
-import org.junit.jupiter.api.assertNull
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.given
@@ -38,7 +37,7 @@ class AbortSessionImplTest {
     @Test
     fun `given session is null, it logs an error`() =
         runTest {
-            sessionStore.write(null)
+            sessionStore.clear()
 
             abortSession()
 
@@ -48,7 +47,7 @@ class AbortSessionImplTest {
     @Test
     fun `given session is null, it returns success`() =
         runTest {
-            sessionStore.write(null)
+            sessionStore.clear()
 
             val result = abortSession()
 
@@ -56,14 +55,17 @@ class AbortSessionImplTest {
         }
 
     @Test
-    fun `given api response is success, it clears the session store`() =
+    fun `given api response is success, it updates the session to aborted`() =
         runTest {
             givenResponse(ApiResponse.Success(""))
             assertNotNull(sessionStore.read().first())
 
             abortSession()
 
-            assertNull(sessionStore.read().first())
+            assertEquals(
+                session.copy(sessionState = Session.State.Aborted),
+                sessionStore.read().first(),
+            )
         }
 
     @Test

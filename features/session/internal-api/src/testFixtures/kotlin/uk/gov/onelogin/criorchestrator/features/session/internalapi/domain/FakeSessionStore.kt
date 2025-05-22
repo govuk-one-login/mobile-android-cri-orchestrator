@@ -10,7 +10,21 @@ class FakeSessionStore(
 
     override fun read(): StateFlow<Session?> = sessionFlow
 
-    override fun write(value: Session?) {
+    override fun write(value: Session) {
         sessionFlow.value = value
     }
+
+    override fun clear() {
+        sessionFlow.value = null
+    }
+
+    override fun updateToAborted() =
+        with(sessionFlow) {
+            value = value?.copyUpdateState { advanceAtLeastAborted() }
+        }
+
+    override fun updateToDocumentSelected() =
+        with(sessionFlow) {
+            value = value?.copyUpdateState { advanceAtLeastDocumentSelected() }
+        }
 }

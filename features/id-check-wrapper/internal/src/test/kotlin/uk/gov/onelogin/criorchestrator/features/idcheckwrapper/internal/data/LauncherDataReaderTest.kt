@@ -2,14 +2,10 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data
 
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertInstanceOf
+import org.junit.jupiter.api.assertThrows
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -30,7 +26,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
-import kotlin.time.Duration.Companion.seconds
 
 class LauncherDataReaderTest {
     private var initialConfig =
@@ -56,13 +51,16 @@ class LauncherDataReaderTest {
     }
 
     private companion object {
-        private val session = Session.createTestInstance()
+        private val session =
+            Session.createTestInstance(
+                sessionState = Session.State.Created,
+            )
         private val biometricToken = BiometricToken.createTestToken()
         private val documentVariety = DocumentVariety.NFC_PASSPORT
         private val expectedLauncherDataResult =
             LauncherDataReaderResult.Success(
                 LauncherData(
-                    session = session,
+                    session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
                     biometricToken = biometricToken,
                     documentType = DocumentType.NFC_PASSPORT,
                     backendMode = BackendMode.V2,
@@ -199,49 +197,18 @@ class LauncherDataReaderTest {
             assertEquals(JourneyType.DESKTOP_APP_DESKTOP, journeyType)
         }
 
-    @Test
-    fun `given session is initially null, it waits for a good value`() =
-        runTest {
-            val sessionStore = FakeSessionStore(null)
-            val launcherDataReader =
-                createLauncherDataReader(
-                    sessionStore = sessionStore,
-                )
-            val asyncLauncherData =
-                async {
-                    launcherDataReader.read(documentVariety)
-                }
-
-            launch {
-                sessionStore.write(session)
-            }
-
-            val launcherDataResult = asyncLauncherData.await()
-
-            assertEquals(
-                expectedLauncherDataResult,
-                launcherDataResult,
-            )
-        }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `if session is never loaded, it throws`() =
+    fun `if session is null, it throws`() =
         runTest {
             val sessionStore = FakeSessionStore(null)
             val launcherDataReader =
                 createLauncherDataReader(
                     sessionStore = sessionStore,
                 )
-            val asyncLauncherData =
-                async {
-                    launcherDataReader.read(documentVariety)
-                }
 
-            advanceTimeBy(11.seconds)
-
-            assertInstanceOf<TimeoutCancellationException>(
-                asyncLauncherData.getCompletionExceptionOrNull(),
-            )
+            assertThrows<IllegalStateException> {
+                launcherDataReader.read(documentVariety)
+            }
         }
 }

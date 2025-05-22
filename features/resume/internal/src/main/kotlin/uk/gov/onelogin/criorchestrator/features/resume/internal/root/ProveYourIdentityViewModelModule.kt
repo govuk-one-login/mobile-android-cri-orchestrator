@@ -8,7 +8,8 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionResumable
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.RefreshActiveSession
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -21,13 +22,15 @@ object ProveYourIdentityViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         resumeAnalytics: ResumeAnalytics,
-        sessionReader: SessionReader,
+        refreshActiveSession: RefreshActiveSession,
+        isSessionResumable: IsSessionResumable,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ProveYourIdentityViewModel(
                     analytics = resumeAnalytics,
-                    sessionReader = sessionReader,
+                    isSessionResumable = isSessionResumable,
+                    refreshActiveSession = refreshActiveSession,
                     savedStateHandle = createSavedStateHandle(),
                 )
             }
