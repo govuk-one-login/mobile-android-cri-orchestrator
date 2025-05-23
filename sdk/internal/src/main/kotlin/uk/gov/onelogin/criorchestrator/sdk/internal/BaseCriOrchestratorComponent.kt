@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
+import android.app.Activity
 import android.content.Context
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
@@ -28,6 +29,7 @@ interface BaseCriOrchestratorComponent {
             configComponent: ConfigComponent,
             sessionComponent: SessionComponent,
             @BindsInstance context: Context,
+            @BindsInstance activity: Activity,
         ): BaseCriOrchestratorComponent
     }
 }

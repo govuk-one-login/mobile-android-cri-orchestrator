@@ -59,6 +59,10 @@ class CriOrchestratorSingletonImplTest {
                                 Config.Value.StringValue(SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS),
                             ),
                             Config.Entry<Config.Value.BooleanValue>(
+                                key = SdkConfigKey.DebugAppReviewPrompts,
+                                Config.Value.BooleanValue(false),
+                            ),
+                            Config.Entry<Config.Value.BooleanValue>(
                                 key = IdCheckWrapperConfigKey.EnableManualLauncher,
                                 Config.Value.BooleanValue(false),
                             ),

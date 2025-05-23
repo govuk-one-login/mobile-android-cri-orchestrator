@@ -14,6 +14,7 @@ composable-preview-scanner = "0.6.1"
 compose-lint-checks = "1.4.2"
 dagger = "2.56.2"
 espressoCore = "3.6.1"
+google-play-review= "2.0.2"
 imposter = "4.6.2" # https://github.com/imposter-project/imposter-jvm-engine/releases/tag/v4.6.2
 junit = "5.12.2"
 junit4 = "4.13.2"
@@ -70,6 +71,8 @@ com-slack-lint-compose = { module = "com.slack.lint.compose:compose-lint-checks"
 composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composable-preview-scanner" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+google-play-review = { module = "com.google.android.play:review", version.ref = "google-play-review" }
+google-play-review-kotlin = { module = "com.google.android.play:review-ktx", version.ref = "google-play-review" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testparameterinjector" }
 imposter-config-parser = { group = "io.gatehill.imposter", name = "config-dynamic", version.ref = "imposter" }
 imposter-main = { group = "io.gatehill.imposter", name = "distro-embedded", version.ref = "imposter" }
@@ -77,6 +80,7 @@ imposter-openapi-plugin = { group = "io.gatehill.imposter", name = "mock-openapi
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
