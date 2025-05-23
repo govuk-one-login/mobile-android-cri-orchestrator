@@ -33,6 +33,7 @@ class ProveYourIdentityCardAnalyticsTest {
 
     @get:Rule
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
+
     val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
 
     private val context: Context = ApplicationProvider.getApplicationContext()

@@ -9,13 +9,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 
 @Composable
-internal fun rememberProveYourIdentityModalState(initiallyAllowedToShow: Boolean): ProveYourIdentityModalState =
+internal fun rememberProveYourIdentityModalState(): ProveYourIdentityModalState =
     rememberSaveable(
-        initiallyAllowedToShow,
         saver = proveYourIdentityModalStateSaver,
     ) {
         ProveYourIdentityModalState(
-            allowedToShow = initiallyAllowedToShow,
+            allowedToShow = false,
         )
     }
 

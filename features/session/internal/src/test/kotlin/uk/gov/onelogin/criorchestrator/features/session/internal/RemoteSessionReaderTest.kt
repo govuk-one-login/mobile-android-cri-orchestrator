@@ -17,9 +17,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.logging.testdouble.SystemLogger
-import uk.gov.onelogin.criorchestrator.features.session.internal.data.InMemorySessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionReader
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.FakeUriBuilderImpl
 import java.util.stream.Stream
 import javax.inject.Provider
@@ -28,7 +26,6 @@ import javax.inject.Provider
 class RemoteSessionReaderTest {
     private val logger = SystemLogger()
     private val activeSessionApi = spy(StubActiveSessionApiImpl())
-    private val sessionStore = InMemorySessionStore(logger)
 
     private lateinit var remoteSessionReader: SessionReader
 
@@ -36,7 +33,6 @@ class RemoteSessionReaderTest {
     fun setUp() {
         remoteSessionReader =
             RemoteSessionReader(
-                sessionStore = sessionStore,
                 activeSessionApi = Provider { activeSessionApi },
                 logger = logger,
                 uriBuilder = FakeUriBuilderImpl(),
@@ -53,13 +49,11 @@ class RemoteSessionReaderTest {
     fun `session reader returns `(
         apiResponse: ApiResponse,
         logEntry: String,
-        expectedIsActiveSession: Boolean,
-        session: Session?,
+        expectedResult: SessionReader.Result,
     ) = runTest {
         activeSessionApi.setActiveSession(apiResponse)
         val isActiveSession = remoteSessionReader.isActiveSession()
-        assertEquals(expectedIsActiveSession, isActiveSession)
-        assertEquals(session, sessionStore.read().value)
+        assertEquals(expectedResult, isActiveSession)
         assertTrue(logger.contains(logEntry))
     }
 
@@ -84,8 +78,18 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Failed to fetch active session",
-                    false,
-                    null,
+                    SessionReader.Result.Unknown,
+                ),
+                arguments(
+                    named(
+                        "false with expected log entry when API response is 404 not found",
+                        ApiResponse.Failure(
+                            status = 404,
+                            error = Exception("test exception"),
+                        ),
+                    ),
+                    "Failed to fetch active session",
+                    SessionReader.Result.IsNotActive,
                 ),
                 arguments(
                     named(
@@ -93,7 +97,7 @@ class RemoteSessionReaderTest {
                         ApiResponse.Loading,
                     ),
                     "Loading ... fetching active session ...",
-                    false,
+                    SessionReader.Result.Unknown,
                     null,
                 ),
                 arguments(
@@ -102,8 +106,7 @@ class RemoteSessionReaderTest {
                         ApiResponse.Offline,
                     ),
                     "Failed to fetch active session - device is offline",
-                    false,
-                    null,
+                    SessionReader.Result.Unknown,
                 ),
                 // This test will also fail if the serialization plugin isn't applied
                 arguments(
@@ -121,10 +124,11 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Got active session",
-                    true,
-                    Session(
-                        sessionId = "test session ID",
-                        redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                    SessionReader.Result.IsActive(
+                        Session(
+                            sessionId = "test session ID",
+                            redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                        ),
                     ),
                 ),
                 arguments(
@@ -143,10 +147,11 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Got active session",
-                    true,
-                    Session(
-                        sessionId = "test session ID",
-                        redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                    SessionReader.Result.IsActive(
+                        Session(
+                            sessionId = "test session ID",
+                            redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                        ),
                     ),
                 ),
                 arguments(
@@ -164,10 +169,11 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Got active session",
-                    true,
-                    Session(
-                        sessionId = "test session ID",
-                        redirectUri = "https://example/redirect?test=test&state=11112222333344445555666677778888",
+                    SessionReader.Result.IsActive(
+                        Session(
+                            sessionId = "test session ID",
+                            redirectUri = "https://example/redirect?test=test&state=11112222333344445555666677778888",
+                        ),
                     ),
                 ),
                 arguments(
@@ -185,10 +191,11 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Got active session",
-                    true,
-                    Session(
-                        sessionId = "test session ID",
-                        redirectUri = "https://example/redirect?state=%26%3F%25%3A%2F",
+                    SessionReader.Result.IsActive(
+                        Session(
+                            sessionId = "test session ID",
+                            redirectUri = "https://example/redirect?state=%26%3F%25%3A%2F",
+                        ),
                     ),
                 ),
                 arguments(
@@ -205,10 +212,11 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Got active session",
-                    true,
-                    Session(
-                        sessionId = "test session ID",
-                        redirectUri = null,
+                    SessionReader.Result.IsActive(
+                        Session(
+                            sessionId = "test session ID",
+                            redirectUri = null,
+                        ),
                     ),
                 ),
                 arguments(
@@ -226,8 +234,7 @@ class RemoteSessionReaderTest {
                         ),
                     ),
                     "Failed to parse active session response",
-                    false,
-                    null,
+                    SessionReader.Result.Unknown,
                 ),
             )
     }

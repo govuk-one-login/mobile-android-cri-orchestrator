@@ -5,5 +5,11 @@ import kotlinx.coroutines.flow.StateFlow
 interface SessionStore {
     fun read(): StateFlow<Session?>
 
-    fun write(value: Session?)
+    fun write(value: Session)
+
+    fun clear()
+
+    fun updateToDocumentSelected()
+
+    fun updateToAborted()
 }

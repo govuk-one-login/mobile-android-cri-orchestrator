@@ -90,7 +90,7 @@ class ProveYourIdentityRootTest {
             .onNode(modal)
             .assertIsDisplayed()
 
-        verify(viewModel).start()
+        verify(viewModel).onStartClick()
     }
 
     private fun ComposeContentTestRule.displayProveYourIdentityRoot() =

@@ -47,7 +47,7 @@ class SyncIdCheckViewModelTest {
     private val sessionStore = FakeSessionStore(session)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
-            session = session,
+            session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
         )
     }
 

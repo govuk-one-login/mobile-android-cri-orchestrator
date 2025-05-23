@@ -1,9 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data
 
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.timeout
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -12,9 +10,9 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 class LauncherDataReader
     @Inject
@@ -25,16 +23,15 @@ class LauncherDataReader
     ) {
         @OptIn(FlowPreview::class)
         suspend fun read(documentVariety: DocumentVariety): LauncherDataReaderResult {
-            val session =
-                sessionStore
-                    .read()
-                    .filterNotNull()
-                    // The session store should return very quickly as it's stored locally.
-                    // If there is a timeout, then the session presumably lost due to process death.
-                    .timeout(10.seconds)
-                    .first()
+            val sessionId = requireLatestSession().sessionId
 
-            val result = biometricTokenReader.getBiometricToken(session.sessionId, documentVariety)
+            val result = biometricTokenReader.getBiometricToken(sessionId, documentVariety)
+
+            if (result is BiometricTokenResult.Success) {
+                sessionStore.updateToDocumentSelected()
+            }
+            val session = requireLatestSession()
+
             val backendMode =
                 if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
                     BackendMode.Bypass
@@ -77,6 +74,9 @@ class LauncherDataReader
                 }
             }
         }
+
+        private suspend fun requireLatestSession(): Session =
+            sessionStore.read().first() ?: error("Session doesn't exist")
     }
 
 sealed interface LauncherDataReaderResult {
