@@ -4,14 +4,14 @@ import uk.gov.idcheck.sdk.IdCheckSdkExitState
 
 fun IdCheckSdkExitState.hasAbortedSession(): Boolean =
     when (this) {
-        is IdCheckSdkExitState.Nowhere,
         is IdCheckSdkExitState.ConfirmAnotherWay,
         is IdCheckSdkExitState.ConfirmationAbortedJourney,
+        -> true
+
+        is IdCheckSdkExitState.Nowhere,
         IdCheckSdkExitState.ConfirmationFailed,
         is IdCheckSdkExitState.FaceScanLimitReached,
         IdCheckSdkExitState.UnknownDocumentType,
-        -> true
-
         IdCheckSdkExitState.HappyPath -> false
     }
 
