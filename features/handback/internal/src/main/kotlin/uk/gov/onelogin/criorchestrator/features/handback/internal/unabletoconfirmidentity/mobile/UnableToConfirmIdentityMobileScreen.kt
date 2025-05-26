@@ -60,7 +60,7 @@ internal fun UnableToConfirmIdentityMobileScreen(
 
         viewModel.actions.collect { action ->
             when (action) {
-                is UnableToConfirmIdentityMobileAction.ContinueGovUk -> {
+                is UnableToConfirmIdentityMobileActions.ContinueGovUk -> {
                     navController.navigate(
                         AbortDestinations.AbortedRedirectToMobileWebHolder(
                             redirectUri = action.redirectUri,
@@ -68,12 +68,12 @@ internal fun UnableToConfirmIdentityMobileScreen(
                     )
                 }
 
-                UnableToConfirmIdentityMobileAction.NavigateToOfflineError ->
+                UnableToConfirmIdentityMobileActions.NavigateToOfflineError ->
                     navController.navigate(
                         ErrorDestinations.RecoverableError,
                     )
 
-                UnableToConfirmIdentityMobileAction.NavigateToUnrecoverableError ->
+                UnableToConfirmIdentityMobileActions.NavigateToUnrecoverableError ->
                     navController.navigate(
                         HandbackDestinations.UnrecoverableError,
                     )

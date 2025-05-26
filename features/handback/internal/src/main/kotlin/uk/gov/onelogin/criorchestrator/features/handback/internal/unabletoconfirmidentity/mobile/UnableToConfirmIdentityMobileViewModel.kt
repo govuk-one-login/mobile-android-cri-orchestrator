@@ -31,8 +31,8 @@ class UnableToConfirmIdentityMobileViewModel(
     LogTagProvider {
     private val _state = MutableStateFlow<ConfirmAbortState>(ConfirmAbortState.Display)
     val state = _state.asStateFlow()
-    private val _actions = MutableSharedFlow<UnableToConfirmIdentityMobileAction>()
-    val actions: SharedFlow<UnableToConfirmIdentityMobileAction> = _actions.asSharedFlow()
+    private val _actions = MutableSharedFlow<UnableToConfirmIdentityMobileActions>()
+    val actions: SharedFlow<UnableToConfirmIdentityMobileActions> = _actions.asSharedFlow()
 
     fun onScreenStart() {
         _state.value = ConfirmAbortState.Display
@@ -55,15 +55,15 @@ class UnableToConfirmIdentityMobileViewModel(
 
             when (abortSession()) {
                 AbortSession.Result.Error.Offline ->
-                    _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToOfflineError)
+                    _actions.emit(UnableToConfirmIdentityMobileActions.NavigateToOfflineError)
                 is AbortSession.Result.Error.Unrecoverable ->
-                    _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToUnrecoverableError)
+                    _actions.emit(UnableToConfirmIdentityMobileActions.NavigateToUnrecoverableError)
                 AbortSession.Result.Success -> {
                     if (redirectUri == null) {
                         logger.error(tag, "Can't continue to GOV.UK - no redirect URI")
-                        _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToUnrecoverableError)
+                        _actions.emit(UnableToConfirmIdentityMobileActions.NavigateToUnrecoverableError)
                     } else {
-                        _actions.emit(UnableToConfirmIdentityMobileAction.ContinueGovUk(redirectUri))
+                        _actions.emit(UnableToConfirmIdentityMobileActions.ContinueGovUk(redirectUri))
                     }
                 }
             }
