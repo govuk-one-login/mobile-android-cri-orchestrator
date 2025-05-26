@@ -19,12 +19,12 @@ fun IdCheckSdkExitState.handle(): IdCheckExitStateGroups =
     when (this) {
         IdCheckSdkExitState.HappyPath -> IdCheckExitStateGroups.SUCCESS
 
-        is IdCheckSdkExitState.Nowhere,
         is IdCheckSdkExitState.ConfirmAnotherWay,
         is IdCheckSdkExitState.ConfirmationAbortedJourney,
-        IdCheckSdkExitState.UnknownDocumentType,
         -> IdCheckExitStateGroups.ABORT
 
+        is IdCheckSdkExitState.Nowhere,
+        IdCheckSdkExitState.UnknownDocumentType,
         IdCheckSdkExitState.ConfirmationFailed,
         is IdCheckSdkExitState.FaceScanLimitReached,
         -> IdCheckExitStateGroups.FACE_SCAN_LIMIT_REACHED

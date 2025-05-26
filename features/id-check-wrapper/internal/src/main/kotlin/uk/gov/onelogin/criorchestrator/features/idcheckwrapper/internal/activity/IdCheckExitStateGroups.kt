@@ -3,5 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activit
 enum class IdCheckExitStateGroups {
     SUCCESS,
     ABORT,
-    FACE_SCAN_LIMIT_REACHED
+    // DCMAW-13562: Refactor to better represent caught exit states
+    FACE_SCAN_LIMIT_REACHED,
 }
