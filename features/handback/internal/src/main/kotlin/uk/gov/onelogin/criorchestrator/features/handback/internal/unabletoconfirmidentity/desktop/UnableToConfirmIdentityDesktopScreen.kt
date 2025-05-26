@@ -83,15 +83,17 @@ internal fun UnableToConfirmIdentityDesktopContent(
         ErrorScreen(
             icon = ErrorScreenIcon.ErrorIcon,
             title = stringResource(titleId),
-            body = persistentListOf(
-                CentreAlignedScreenBodyContent.Text(
-                    bodyText = stringResource(R.string.handback_unabletoconfirmidentity_body),
+            body =
+                persistentListOf(
+                    CentreAlignedScreenBodyContent.Text(
+                        bodyText = stringResource(R.string.handback_unabletoconfirmidentity_body),
+                    ),
                 ),
-            ),
-            primaryButton = CentreAlignedScreenButton(
-                text = stringResource(UnableToConfirmIdentityDesktopConstants.buttonId),
-                onClick = dropUnlessResumed { onButtonClick() },
-            ),
+            primaryButton =
+                CentreAlignedScreenButton(
+                    text = stringResource(UnableToConfirmIdentityDesktopConstants.buttonId),
+                    onClick = dropUnlessResumed { onButtonClick() },
+                ),
         )
     }
 }

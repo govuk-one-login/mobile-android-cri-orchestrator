@@ -20,6 +20,7 @@ import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.UnableToConfirmIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.UnavailableIdCheckSdkActivityResultContract
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.toIdCheckSdkActivityParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
@@ -143,10 +144,10 @@ private fun SyncIdCheckActionHandler(
                     navController.navigate(HandbackDestinations.UnrecoverableError)
 
                 SyncIdCheckAction.NavigateToUnableToConfirmIdentityDesktop ->
-                    navController.navigate(AbortDestinations.UnableToConfirmIdentityDesktop)
+                    navController.navigate(UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop)
 
                 SyncIdCheckAction.NavigateToUnableToConfirmIdentityMobile ->
-                    navController.navigate(AbortDestinations.UnableToConfirmIdentityMobile)
+                    navController.navigate(UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile)
             }
         }
     }

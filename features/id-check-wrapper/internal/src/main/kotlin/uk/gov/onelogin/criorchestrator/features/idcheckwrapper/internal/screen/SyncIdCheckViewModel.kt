@@ -179,7 +179,7 @@ class SyncIdCheckViewModel(
                 )
 
             is LauncherDataReaderResult.UnrecoverableError,
-                ->
+            ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToUnrecoverableError,
                 )
