@@ -17,7 +17,9 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckExitStateGroups
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.handle
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
@@ -118,11 +120,33 @@ class SyncIdCheckViewModelTest {
             )
 
         @JvmStatic
+        @Suppress("LongMethod")
         fun provideSdkResultActionParams(): Stream<Arguments> {
-            val unhappyPaths =
+            val nonAbortUnhappyPaths =
                 ExitStateOption.entries
                     .filter {
-                        it.exitState !is IdCheckSdkExitState.HappyPath
+                        it.exitState?.handle() == IdCheckExitStateGroups.UNABLE_TO_CONFIRM_IDENTITY
+                    }.mapNotNull {
+                        it.exitState
+                    }.stream()
+                    .flatMap { sdkResult ->
+                        listOf(
+                            Arguments.of(
+                                sdkResult,
+                                Session.createDesktopAppDesktopInstance(),
+                                SyncIdCheckAction.NavigateToUnableToConfirmIdentityDesktop,
+                            ),
+                            Arguments.of(
+                                sdkResult,
+                                mamSession,
+                                SyncIdCheckAction.NavigateToUnableToConfirmIdentityMobile,
+                            ),
+                        ).stream()
+                    }
+            val abortPaths =
+                ExitStateOption.entries
+                    .filter {
+                        it.exitState?.handle() == IdCheckExitStateGroups.ABORT
                     }.mapNotNull {
                         it.exitState
                     }.stream()
@@ -145,7 +169,7 @@ class SyncIdCheckViewModelTest {
             val happyPaths =
                 ExitStateOption.entries
                     .filter {
-                        it.exitState is IdCheckSdkExitState.HappyPath
+                        it.exitState?.handle() == IdCheckExitStateGroups.SUCCESS
                     }.mapNotNull {
                         it.exitState
                     }.stream()
@@ -164,7 +188,7 @@ class SyncIdCheckViewModelTest {
                         ).stream()
                     }
 
-            return Stream.concat(happyPaths, unhappyPaths)
+            return Stream.of(happyPaths, abortPaths, nonAbortUnhappyPaths).flatMap { it }
         }
     }
 

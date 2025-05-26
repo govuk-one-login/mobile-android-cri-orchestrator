@@ -33,9 +33,13 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortMod
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.UnableToConfirmIdentityModalNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.desktop.UnableToConfirmIdentityDesktopViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.mobile.UnableToConfirmIdentityMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
@@ -341,6 +345,32 @@ class HandbackNavigationTest {
         isSessionAbortedOrUnavailable.state.value = true
     }
 
+    private fun createAbortNavGraphProvider(): AbortNavGraphProvider =
+        AbortModalNavGraphProvider(
+            confirmAbortDesktopWebViewModelFactory =
+                ConfirmAbortDesktopViewModelModule.provideFactory(
+                    analytics = analytics,
+                    abortSession = abortSession,
+                ),
+            confirmAbortMobileWebViewModelFactory =
+                ConfirmAbortMobileViewModelModule.provideFactory(
+                    sessionStore = sessionStore,
+                    analytics = analytics,
+                    abortSession = abortSession,
+                    logger = logger,
+                ),
+            abortedReturnToDesktopWebViewModelFactory =
+                AbortedReturnToDesktopWebViewModelModule.provideViewModel(
+                    analytics = analytics,
+                ),
+            unrecoverableErrorViewModelFactory =
+                UnrecoverableErrorViewModelModule.provideFactory(
+                    getJourneyType = getJourneyType,
+                    analytics = analytics,
+                ),
+            webNavigator = webNavigator,
+        )
+
     private fun createNavGraphProvider(): HandbackNavGraphProvider =
         HandbackNavGraphProvider(
             abortModalViewModelFactory =
@@ -362,31 +392,29 @@ class HandbackNavigationTest {
                     analytics = analytics,
                 ),
             webNavigator = webNavigator,
-            abortNavGraphProviders =
+            abortNavGraphProviders = persistentSetOf(createAbortNavGraphProvider()),
+            unableToConfirmIdentityNavGraphProviders =
                 persistentSetOf(
-                    AbortModalNavGraphProvider(
-                        confirmAbortDesktopWebViewModelFactory =
-                            ConfirmAbortDesktopViewModelModule.provideFactory(
-                                analytics = analytics,
-                                abortSession = abortSession,
+                    UnableToConfirmIdentityModalNavGraphProvider(
+                        abortModalViewModelFactory =
+                            AbortModalViewModelModule.provideViewModel(
+                                isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
                             ),
-                        confirmAbortMobileWebViewModelFactory =
-                            ConfirmAbortMobileViewModelModule.provideFactory(
-                                sessionStore = sessionStore,
-                                analytics = analytics,
-                                abortSession = abortSession,
-                                logger = logger,
-                            ),
-                        abortedReturnToDesktopWebViewModelFactory =
-                            AbortedReturnToDesktopWebViewModelModule.provideViewModel(
-                                analytics = analytics,
-                            ),
-                        unrecoverableErrorViewModelFactory =
-                            UnrecoverableErrorViewModelModule.provideFactory(
-                                getJourneyType = getJourneyType,
-                                analytics = analytics,
-                            ),
-                        webNavigator = webNavigator,
+                        unableToConfirmIdentityDesktopViewModelFactory =
+                            UnableToConfirmIdentityDesktopViewModelModule
+                                .provideFactory(
+                                    analytics = analytics,
+                                    abortSession = abortSession,
+                                ),
+                        unableToConfirmIdentityMobileViewModelFactory =
+                            UnableToConfirmIdentityMobileViewModelModule
+                                .provideFactory(
+                                    analytics = analytics,
+                                    sessionStore = sessionStore,
+                                    abortSession = abortSession,
+                                    logger = logger,
+                                ),
+                        abortNavGraphProviders = persistentSetOf(createAbortNavGraphProvider()),
                     ),
                 ),
         )
