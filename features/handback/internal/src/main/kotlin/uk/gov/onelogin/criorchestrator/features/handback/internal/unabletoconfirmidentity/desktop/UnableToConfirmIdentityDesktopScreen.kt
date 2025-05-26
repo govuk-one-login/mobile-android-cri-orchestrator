@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.desktop
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -22,70 +22,57 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileConstants.buttonId
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileConstants.titleId
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.desktop.UnableToConfirmIdentityDesktopConstants.titleId
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun FaceScanLimitReachedMobileScreen(
-    viewModel: FaceScanLimitReachedMobileViewModel,
+fun UnableToConfirmIdentityDesktopScreen(
+    viewModel: UnableToConfirmIdentityDesktopViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
 
-    fun onButtonClick() {
-        viewModel.onContinueToGovUk()
+    BackHandler {
+        // Do nothing since user shouldn't be able to go back as they have already exited the SDK.
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.onScreenStart()
+
+        viewModel.actions.collect {
+            when (it) {
+                UnableToConfirmIdentityDesktopActions.NavigateToReturnToDesktop ->
+                    navController.navigate(AbortDestinations.AbortedReturnToDesktopWeb)
+
+                UnableToConfirmIdentityDesktopActions.NavigateToOfflineError ->
+                    navController.navigate(
+                        ErrorDestinations.RecoverableError,
+                    )
+
+                UnableToConfirmIdentityDesktopActions.NavigateToUnrecoverableError ->
+                    navController.navigate(HandbackDestinations.UnrecoverableError)
+            }
+        }
     }
 
     when (state) {
         ConfirmAbortState.Loading -> LoadingScreen()
 
         ConfirmAbortState.Display ->
-            FaceScanLimitReachedMobileWebContent(
-                onButtonClick = ::onButtonClick,
+            UnableToConfirmIdentityDesktopContent(
+                onButtonClick = viewModel::onButtonClicked,
                 modifier = modifier,
             )
     }
-
-    BackHandler {
-        // Do nothing since user shouldn't be able to go back as they have already exited the SDK.
-    }
-
-    LaunchedEffect(viewModel) {
-        viewModel.onScreenStart()
-
-        viewModel.actions.collect { action ->
-            when (action) {
-                is FaceScanLimitReachedMobileAction.ContinueGovUk -> {
-                    navController.navigate(
-                        AbortDestinations.AbortedRedirectToMobileWebHolder(
-                            redirectUri = action.redirectUri,
-                        ),
-                    )
-                }
-
-                FaceScanLimitReachedMobileAction.NavigateToOfflineError ->
-                    navController.navigate(
-                        ErrorDestinations.RecoverableError,
-                    )
-
-                FaceScanLimitReachedMobileAction.NavigateToUnrecoverableError ->
-                    navController.navigate(
-                        HandbackDestinations.UnrecoverableError,
-                    )
-            }
-        }
-    }
 }
 
-@Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun FaceScanLimitReachedMobileWebContent(
+internal fun UnableToConfirmIdentityDesktopContent(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -96,19 +83,25 @@ internal fun FaceScanLimitReachedMobileWebContent(
         ErrorScreen(
             icon = ErrorScreenIcon.ErrorIcon,
             title = stringResource(titleId),
+            body = persistentListOf(
+                CentreAlignedScreenBodyContent.Text(
+                    bodyText = stringResource(R.string.handback_unabletoconfirmidentity_body),
+                ),
+            ),
             primaryButton = CentreAlignedScreenButton(
-                text = stringResource(buttonId),
-                showIcon = true,
+                text = stringResource(UnableToConfirmIdentityDesktopConstants.buttonId),
                 onClick = dropUnlessResumed { onButtonClick() },
             ),
         )
     }
 }
 
-@LightDarkBothLocalesPreview
 @Composable
-internal fun PreviewFaceScanLimitReachedMobileWeb() {
+@LightDarkBothLocalesPreview
+internal fun PreviewUnableToConfirmIdentityDesktopContent() {
     GdsTheme {
-        FaceScanLimitReachedMobileWebContent(onButtonClick = {})
+        UnableToConfirmIdentityDesktopContent(
+            onButtonClick = {},
+        )
     }
 }

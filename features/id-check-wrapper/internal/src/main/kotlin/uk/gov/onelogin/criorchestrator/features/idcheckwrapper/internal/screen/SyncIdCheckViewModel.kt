@@ -142,13 +142,13 @@ class SyncIdCheckViewModel(
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
 
-                IdCheckExitStateGroups.FACE_SCAN_LIMIT_REACHED ->
+                IdCheckExitStateGroups.UNABLE_TO_CONFIRM_IDENTITY ->
                     when (journeyType) {
                         is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToFaceScanLimitReachedMobile
+                            SyncIdCheckAction.NavigateToUnableToConfirmIdentityMobile
 
                         JourneyType.DesktopAppDesktop ->
-                            SyncIdCheckAction.NavigateToFaceScanLimitReachedDesktop
+                            SyncIdCheckAction.NavigateToUnableToConfirmIdentityDesktop
                     }
             }
 

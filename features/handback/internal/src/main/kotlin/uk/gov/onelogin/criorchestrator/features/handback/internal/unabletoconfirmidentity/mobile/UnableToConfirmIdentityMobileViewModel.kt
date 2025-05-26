@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile
+package uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.mobile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +22,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-class FaceScanLimitReachedMobileViewModel(
+class UnableToConfirmIdentityMobileViewModel(
     private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
     private val abortSession: AbortSession,
@@ -31,21 +31,21 @@ class FaceScanLimitReachedMobileViewModel(
     LogTagProvider {
     private val _state = MutableStateFlow<ConfirmAbortState>(ConfirmAbortState.Display)
     val state = _state.asStateFlow()
-    private val _actions = MutableSharedFlow<FaceScanLimitReachedMobileAction>()
-    val actions: SharedFlow<FaceScanLimitReachedMobileAction> = _actions.asSharedFlow()
+    private val _actions = MutableSharedFlow<UnableToConfirmIdentityMobileAction>()
+    val actions: SharedFlow<UnableToConfirmIdentityMobileAction> = _actions.asSharedFlow()
 
     fun onScreenStart() {
         _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
             // TODO: update id
             id = HandbackScreenId.ConfirmAbortMobile,
-            title = FaceScanLimitReachedMobileConstants.titleId,
+            title = UnableToConfirmIdentityMobileConstants.titleId,
         )
     }
 
     fun onContinueToGovUk() {
         _state.value = ConfirmAbortState.Loading
-        analytics.trackButtonEvent(FaceScanLimitReachedMobileConstants.buttonId)
+        analytics.trackButtonEvent(UnableToConfirmIdentityMobileConstants.buttonId)
 
         viewModelScope.launch {
             val redirectUri =
@@ -56,15 +56,15 @@ class FaceScanLimitReachedMobileViewModel(
 
             when (abortSession()) {
                 AbortSession.Result.Error.Offline ->
-                    _actions.emit(FaceScanLimitReachedMobileAction.NavigateToOfflineError)
+                    _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToOfflineError)
                 is AbortSession.Result.Error.Unrecoverable ->
-                    _actions.emit(FaceScanLimitReachedMobileAction.NavigateToUnrecoverableError)
+                    _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToUnrecoverableError)
                 AbortSession.Result.Success -> {
                     if (redirectUri == null) {
                         logger.error(tag, "Can't continue to GOV.UK - no redirect URI")
-                        _actions.emit(FaceScanLimitReachedMobileAction.NavigateToUnrecoverableError)
+                        _actions.emit(UnableToConfirmIdentityMobileAction.NavigateToUnrecoverableError)
                     } else {
-                        _actions.emit(FaceScanLimitReachedMobileAction.ContinueGovUk(redirectUri))
+                        _actions.emit(UnableToConfirmIdentityMobileAction.ContinueGovUk(redirectUri))
                     }
                 }
             }

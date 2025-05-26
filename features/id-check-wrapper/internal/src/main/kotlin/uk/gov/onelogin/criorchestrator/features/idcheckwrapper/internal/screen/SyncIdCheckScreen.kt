@@ -142,11 +142,11 @@ private fun SyncIdCheckActionHandler(
                 SyncIdCheckAction.NavigateToUnrecoverableError ->
                     navController.navigate(HandbackDestinations.UnrecoverableError)
 
-                SyncIdCheckAction.NavigateToFaceScanLimitReachedDesktop ->
-                    navController.navigate(AbortDestinations.FaceScanLimitReachedDesktop)
+                SyncIdCheckAction.NavigateToUnableToConfirmIdentityDesktop ->
+                    navController.navigate(AbortDestinations.UnableToConfirmIdentityDesktop)
 
-                SyncIdCheckAction.NavigateToFaceScanLimitReachedMobile ->
-                    navController.navigate(AbortDestinations.FaceScanLimitReachedMobile)
+                SyncIdCheckAction.NavigateToUnableToConfirmIdentityMobile ->
+                    navController.navigate(AbortDestinations.UnableToConfirmIdentityMobile)
             }
         }
     }

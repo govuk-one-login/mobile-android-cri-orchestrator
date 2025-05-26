@@ -19,8 +19,8 @@ sealed interface AbortDestinations : ProveYourIdentityDestinations {
     ) : AbortDestinations
 
     @Serializable
-    data object FaceScanLimitReachedDesktop : AbortDestinations
+    data object UnableToConfirmIdentityDesktop : AbortDestinations
 
     @Serializable
-    data object FaceScanLimitReachedMobile : AbortDestinations
+    data object UnableToConfirmIdentityMobile : AbortDestinations
 }

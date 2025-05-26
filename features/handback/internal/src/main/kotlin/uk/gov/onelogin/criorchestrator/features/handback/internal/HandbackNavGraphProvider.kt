@@ -8,10 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.collections.immutable.toPersistentSet
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.desktop.UnableToConfirmIdentityDesktopScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.desktop.UnableToConfirmIdentityDesktopViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.mobile.UnableToConfirmIdentityMobileScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unabletoconfirmidentity.mobile.UnableToConfirmIdentityMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
@@ -42,10 +42,10 @@ class HandbackNavGraphProvider
         private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
-        @Named(FaceScanLimitReachedDesktopViewModelModule.FACTORY_NAME)
-        private val faceScanLimitReachedDesktopViewModelFactory: ViewModelProvider.Factory,
-        @Named(FaceScanLimitReachedMobileViewModelModule.FACTORY_NAME)
-        private val faceScanLimitReachedMobileViewModelFactory: ViewModelProvider.Factory,
+        @Named(UnableToConfirmIdentityDesktopViewModelModule.FACTORY_NAME)
+        private val unableToConfirmIdentityDesktopViewModelFactory: ViewModelProvider.Factory,
+        @Named(UnableToConfirmIdentityMobileViewModelModule.FACTORY_NAME)
+        private val unableToConfirmIdentityMobileViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
         private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
@@ -117,16 +117,16 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<AbortDestinations.FaceScanLimitReachedDesktop> {
-                FaceScanLimitReachedDesktopScreen(
-                    viewModel = viewModel(factory = faceScanLimitReachedDesktopViewModelFactory),
+            composable<AbortDestinations.UnableToConfirmIdentityDesktop> {
+                UnableToConfirmIdentityDesktopScreen(
+                    viewModel = viewModel(factory = unableToConfirmIdentityDesktopViewModelFactory),
                     navController = navController,
                 )
             }
 
-            composable<AbortDestinations.FaceScanLimitReachedMobile> {
-                FaceScanLimitReachedMobileScreen(
-                    viewModel = viewModel(factory = faceScanLimitReachedMobileViewModelFactory),
+            composable<AbortDestinations.UnableToConfirmIdentityMobile> {
+                UnableToConfirmIdentityMobileScreen(
+                    viewModel = viewModel(factory = unableToConfirmIdentityMobileViewModelFactory),
                     navController = navController,
                 )
             }

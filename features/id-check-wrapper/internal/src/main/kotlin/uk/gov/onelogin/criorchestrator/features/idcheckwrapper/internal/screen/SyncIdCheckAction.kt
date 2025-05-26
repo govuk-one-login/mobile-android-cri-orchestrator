@@ -23,7 +23,7 @@ sealed interface SyncIdCheckAction {
 
     data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
 
-    data object NavigateToFaceScanLimitReachedDesktop : SyncIdCheckAction
+    data object NavigateToUnableToConfirmIdentityDesktop : SyncIdCheckAction
 
-    data object NavigateToFaceScanLimitReachedMobile : SyncIdCheckAction
+    data object NavigateToUnableToConfirmIdentityMobile : SyncIdCheckAction
 }

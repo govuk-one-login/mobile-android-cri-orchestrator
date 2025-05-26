@@ -27,5 +27,5 @@ fun IdCheckSdkExitState.handle(): IdCheckExitStateGroups =
         IdCheckSdkExitState.UnknownDocumentType,
         IdCheckSdkExitState.ConfirmationFailed,
         is IdCheckSdkExitState.FaceScanLimitReached,
-        -> IdCheckExitStateGroups.FACE_SCAN_LIMIT_REACHED
+        -> IdCheckExitStateGroups.UNABLE_TO_CONFIRM_IDENTITY
     }
