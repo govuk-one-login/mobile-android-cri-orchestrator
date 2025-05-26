@@ -29,4 +29,9 @@
     <string name="handback_abortedreturntodesktopweb_title_content_description">Return to Gov dot UK on your computer or tablet</string>
     <string name="handback_abortedreturntodesktopweb_body1">Return to the GOV.UK page you left open on your computer or tablet to check if you can prove your identity another way.</string>
     <string name="handback_abortedreturntodesktopweb_body1_content_description">Return to the Gov dot UK page you left open on your computer or tablet to check if you can prove your identity another way.</string>
+
+    <string name="handback_facescanlimitreached_title">We were not able to confirm your identity</string>
+    <string name="handback_facescanlimitreached_body">You have reached the maximum amount of times you can retry. You can still confirm your identity another way.</string>
+    <string name="handback_facescanlimitreached_desktop_button">Continue</string>
+    <string name="handback_facescanlimitreached_mobile_button">Continue to the GOV.UK website</string>
 </resources>

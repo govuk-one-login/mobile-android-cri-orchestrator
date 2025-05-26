@@ -3,10 +3,10 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimit
 import androidx.annotation.StringRes
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 
-internal object FaceScanLimitReachedConstants {
+internal object FaceScanLimitReachedDesktopConstants {
     @StringRes
-    val titleId: Int = R.string.handback_confirmabort_title
+    val titleId: Int = R.string.handback_facescanlimitreached_title
 
     @StringRes
-    val buttonId: Int = R.string.handback_confirmabortdesktopweb_button
+    val buttonId: Int = R.string.handback_facescanlimitreached_desktop_button
 }

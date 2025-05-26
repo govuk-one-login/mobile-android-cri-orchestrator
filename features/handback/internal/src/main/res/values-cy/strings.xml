@@ -29,4 +29,9 @@
     <string name="handback_abortedreturntodesktopweb_title_content_description">Ewch yn ôl i Gov dot yoo kay ar eich cyfrifiadur neu dabled</string>
     <string name="handback_abortedreturntodesktopweb_body1">Dychwelwch i’r dudalen GOV.UK a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_abortedreturntodesktopweb_body1_content_description">Dychwelwch i’r dudalen Gov dot yoo kay a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
+
+    <string name="handback_facescanlimitreached_title">Nid oeddem yn gallu cadarnhau eich hunaniaeth</string>
+    <string name="handback_facescanlimitreached_body">Rydych wedi cyrraedd yr uchafswm o weithiau y gallwch chi ailgeisio. Gallwch ddal cadarnhau eich hunaiaeth mewn ffordd arall.</string>
+    <string name="handback_facescanlimitreached_desktop_button">Parhau</string>
+    <string name="handback_facescanlimitreached_mobile_button">Parhau i wefan GOV.UK</string>
 </resources>

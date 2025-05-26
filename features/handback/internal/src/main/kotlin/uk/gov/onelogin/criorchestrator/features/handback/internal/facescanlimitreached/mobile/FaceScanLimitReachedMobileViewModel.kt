@@ -16,6 +16,8 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileConstants.buttonId
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileConstants.titleId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -38,13 +40,13 @@ class FaceScanLimitReachedMobileViewModel(
         _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
             id = HandbackScreenId.ConfirmAbortMobile,
-            title = FaceScanLimitReachedMobileConstants.titleId,
+            title = titleId,
         )
     }
 
     fun onContinueToGovUk() {
         _state.value = ConfirmAbortState.Loading
-        analytics.trackButtonEvent(FaceScanLimitReachedMobileConstants.buttonId)
+        analytics.trackButtonEvent(buttonId)
 
         viewModelScope.launch {
             val redirectUri =

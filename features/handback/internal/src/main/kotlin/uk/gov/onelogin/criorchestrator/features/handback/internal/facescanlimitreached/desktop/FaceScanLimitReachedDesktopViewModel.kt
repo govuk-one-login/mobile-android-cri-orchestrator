@@ -26,13 +26,13 @@ class FaceScanLimitReachedDesktopViewModel(
         _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
             id = HandbackScreenId.ConfirmAbortDesktop,
-            title = FaceScanLimitReachedConstants.titleId,
+            title = FaceScanLimitReachedDesktopConstants.titleId,
         )
     }
 
-    fun onContinueClicked() {
+    fun onButtonClicked() {
         _state.value = ConfirmAbortState.Loading
-        analytics.trackButtonEvent(FaceScanLimitReachedConstants.buttonId)
+        analytics.trackButtonEvent(FaceScanLimitReachedDesktopConstants.buttonId)
 
         viewModelScope.launch {
             when (abortSession()) {
