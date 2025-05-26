@@ -80,8 +80,8 @@ class UnableToConfirmIdentityMobileScreenTest {
         verify(navController)
             .navigate(
                 AbortDestinations.AbortedRedirectToMobileWebHolder(
-                    redirectUri = "http://mam-redirect-uri?state=mock-state"
-                )
+                    redirectUri = "http://mam-redirect-uri?state=mock-state",
+                ),
             )
     }
 

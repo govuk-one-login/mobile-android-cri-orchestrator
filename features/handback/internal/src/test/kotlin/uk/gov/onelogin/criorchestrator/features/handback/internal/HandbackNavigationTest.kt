@@ -41,6 +41,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextS
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
+import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.UnableToConfirmIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
@@ -124,7 +125,7 @@ class HandbackNavigationTest {
         composeTestRule.clickStart()
         composeTestRule.assertConfirmAbortIsDisplayed()
 
-        composeTestRule.clickConfirmAbortToDesktopWebButton()
+        composeTestRule.clickContinueToAbortedDesktopWebButton()
         composeTestRule.assertAbortedReturnToDesktopWebIsDisplayed()
     }
 
@@ -183,6 +184,47 @@ class HandbackNavigationTest {
         verify(onFinish).invoke()
     }
 
+    // This scenario may happen if the ID Check SDK exited with a non-abort, non-happy exit state
+    @Test
+    fun `non-abort non-happy exit state - mobile`() {
+        val redirectUri = "https://redirect-uri"
+        givenMobileJourney(
+            redirectUri = redirectUri,
+        )
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile,
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertUnableToConfirmIdentityIsDisplayed()
+
+        composeTestRule.goBack()
+        composeTestRule.assertUnableToConfirmIdentityIsDisplayed()
+
+        composeTestRule.clickContinueToGovUkWebsite()
+        composeTestRule.waitForIdle()
+
+        assertEquals(redirectUri, webNavigator.openUrl)
+        verify(onFinish).invoke()
+    }
+
+    // This scenario may happen if the ID Check SDK exited with a non-abort, non-happy exit state
+    @Test
+    fun `non-abort non-happy exit state - desktop`() {
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop,
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertUnableToConfirmIdentityIsDisplayed()
+
+        composeTestRule.goBack()
+        composeTestRule.assertUnableToConfirmIdentityIsDisplayed()
+
+        composeTestRule.clickContinueToAbortedDesktopWebButton()
+        composeTestRule.assertAbortedReturnToDesktopWebIsDisplayed()
+    }
+
     // https://govukverify.atlassian.net/browse/DCMAW-12934
     @Test
     fun `unrecoverable error loop - desktop`() {
@@ -202,7 +244,7 @@ class HandbackNavigationTest {
             composeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton()
             composeTestRule.assertConfirmAbortIsDisplayed()
 
-            composeTestRule.clickConfirmAbortToDesktopWebButton()
+            composeTestRule.clickContinueToAbortedDesktopWebButton()
             composeTestRule.assertUnrecoverableErrorIsDisplayed()
         }
 
@@ -303,7 +345,7 @@ class HandbackNavigationTest {
             .onNodeWithText(context.getString(R.string.handback_confirmabort_title))
             .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickConfirmAbortToDesktopWebButton() =
+    private fun ComposeTestRule.clickContinueToAbortedDesktopWebButton() =
         composeTestRule
             .onNodeWithText(context.getString(R.string.handback_confirmabortdesktopweb_button))
             .assertIsDisplayed()
@@ -324,6 +366,11 @@ class HandbackNavigationTest {
             .onNodeWithText(context.getString(R.string.handback_abortedreturntodesktopweb_body1))
             .assertIsDisplayed()
     }
+
+    private fun ComposeTestRule.assertUnableToConfirmIdentityIsDisplayed() =
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_unabletoconfirmidentity_title))
+            .assertIsDisplayed()
 
     private fun givenMobileJourney(redirectUri: String = "https://redirect-uri") {
         val session =

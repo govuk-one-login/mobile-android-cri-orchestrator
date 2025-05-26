@@ -27,7 +27,7 @@ class UnableToConfirmIdentityMobileViewModelTest {
             analytics = analytics,
             abortSession = abortSession,
             sessionStore = FakeSessionStore(Session.createMobileAppMobileInstance()),
-            logger = SystemLogger()
+            logger = SystemLogger(),
         )
     }
 
@@ -74,7 +74,7 @@ class UnableToConfirmIdentityMobileViewModelTest {
                 viewModel.onContinueToGovUk()
                 assertEquals(
                     UnableToConfirmIdentityMobileActions.ContinueGovUk(
-                        redirectUri = "http://mam-redirect-uri?state=mock-state"
+                        redirectUri = "http://mam-redirect-uri?state=mock-state",
                     ),
                     awaitItem(),
                 )
