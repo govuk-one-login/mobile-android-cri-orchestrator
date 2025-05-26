@@ -77,7 +77,7 @@ class UnableToConfirmIdentityModalNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.UnrecoverableError> { backStackEntry ->
+            composable<HandbackDestinations.UnrecoverableError> {
                 AbortModal(
                     abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
                     startDestination = HandbackDestinations.UnrecoverableError,
