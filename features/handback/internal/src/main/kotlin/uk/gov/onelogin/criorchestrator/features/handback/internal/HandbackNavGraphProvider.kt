@@ -31,103 +31,103 @@ import javax.inject.Named
 @Suppress("LongParameterList", "LongMethod")
 @ContributesMultibinding(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
-@Inject
-constructor(
-    @Named(AbortModalViewModelModule.FACTORY_NAME)
-    private val abortModalViewModelFactory: ViewModelProvider.Factory,
-    @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
-    private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
-    @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
-    private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
-    @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
-    private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
-    private val webNavigator: WebNavigator,
-    private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
-    private val unableToConfirmIdentityNavGraphProviders:
-    Set<@JvmSuppressWildcards UnableToConfirmIdentityNavGraphProvider>,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
-        composable<HandbackDestinations.UnrecoverableError> {
-            UnrecoverableErrorScreen(
-                navController = navController,
-                viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
-            )
-        }
+    @Inject
+    constructor(
+        @Named(AbortModalViewModelModule.FACTORY_NAME)
+        private val abortModalViewModelFactory: ViewModelProvider.Factory,
+        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
+        private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
+        @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
+        private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
+        @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
+        private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
+        private val webNavigator: WebNavigator,
+        private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
+        private val unableToConfirmIdentityNavGraphProviders:
+            Set<@JvmSuppressWildcards UnableToConfirmIdentityNavGraphProvider>,
+    ) : ProveYourIdentityNavGraphProvider {
+        override fun NavGraphBuilder.contributeToGraph(
+            navController: NavController,
+            onFinish: () -> Unit,
+        ) {
+            composable<HandbackDestinations.UnrecoverableError> {
+                UnrecoverableErrorScreen(
+                    navController = navController,
+                    viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
+                )
+            }
 
-        composable<HandbackDestinations.ReturnToMobileWeb> {
-            ReturnToMobileWebScreen(
-                viewModel = viewModel(factory = returnToMobileViewModelFactory),
-                webNavigator = webNavigator,
-            )
-        }
+            composable<HandbackDestinations.ReturnToMobileWeb> {
+                ReturnToMobileWebScreen(
+                    viewModel = viewModel(factory = returnToMobileViewModelFactory),
+                    webNavigator = webNavigator,
+                )
+            }
 
-        composable<HandbackDestinations.ReturnToDesktopWeb> {
-            ReturnToDesktopWebScreen(
-                viewModel = viewModel(factory = returnToDesktopViewModelFactory),
-            )
-        }
+            composable<HandbackDestinations.ReturnToDesktopWeb> {
+                ReturnToDesktopWebScreen(
+                    viewModel = viewModel(factory = returnToDesktopViewModelFactory),
+                )
+            }
 
-        composable<AbortDestinations.ConfirmAbortDesktop> {
-            AbortModal(
-                abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
-                startDestination = AbortDestinations.ConfirmAbortDesktop,
-                navGraphProviders = abortNavGraphProviders.toPersistentSet(),
-                onDismissRequest = { navController.popBackStack() },
-                onFinish = onFinish,
-            )
-        }
+            composable<AbortDestinations.ConfirmAbortDesktop> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.ConfirmAbortDesktop,
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
 
-        composable<AbortDestinations.ConfirmAbortMobile> {
-            AbortModal(
-                abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
-                startDestination = AbortDestinations.ConfirmAbortMobile,
-                navGraphProviders = abortNavGraphProviders.toPersistentSet(),
-                onDismissRequest = { navController.popBackStack() },
-                onFinish = onFinish,
-            )
-        }
+            composable<AbortDestinations.ConfirmAbortMobile> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.ConfirmAbortMobile,
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
 
-        composable<AbortDestinations.AbortedReturnToDesktopWeb> {
-            AbortModal(
-                abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
-                startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
-                navGraphProviders = abortNavGraphProviders.toPersistentSet(),
-                onDismissRequest = { navController.popBackStack() },
-                onFinish = onFinish,
-            )
-        }
+            composable<AbortDestinations.AbortedReturnToDesktopWeb> {
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
 
-        composable<AbortDestinations.AbortedRedirectToMobileWebHolder> { backStackEntry ->
-            val redirectUri =
-                backStackEntry
-                    .toRoute<AbortDestinations.AbortedRedirectToMobileWebHolder>()
-                    .redirectUri
-            AbortModal(
-                abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
-                startDestination = AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri),
-                navGraphProviders = abortNavGraphProviders.toPersistentSet(),
-                onDismissRequest = { navController.popBackStack() },
-                onFinish = onFinish,
-            )
-        }
+            composable<AbortDestinations.AbortedRedirectToMobileWebHolder> { backStackEntry ->
+                val redirectUri =
+                    backStackEntry
+                        .toRoute<AbortDestinations.AbortedRedirectToMobileWebHolder>()
+                        .redirectUri
+                AbortModal(
+                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    startDestination = AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri),
+                    navGraphProviders = abortNavGraphProviders.toPersistentSet(),
+                    onDismissRequest = { navController.popBackStack() },
+                    onFinish = onFinish,
+                )
+            }
 
-        composable<UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop> {
-            UnableToConfirmIdentityModal(
-                startDestination = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop,
-                navGraphProviders = unableToConfirmIdentityNavGraphProviders.toPersistentSet(),
-                onFinish = onFinish,
-            )
-        }
+            composable<UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop> {
+                UnableToConfirmIdentityModal(
+                    startDestination = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityDesktop,
+                    navGraphProviders = unableToConfirmIdentityNavGraphProviders.toPersistentSet(),
+                    onFinish = onFinish,
+                )
+            }
 
-        composable<UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile> {
-            UnableToConfirmIdentityModal(
-                startDestination = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile,
-                navGraphProviders = unableToConfirmIdentityNavGraphProviders.toPersistentSet(),
-                onFinish = onFinish,
-            )
+            composable<UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile> {
+                UnableToConfirmIdentityModal(
+                    startDestination = UnableToConfirmIdentityDestinations.UnableToConfirmIdentityMobile,
+                    navGraphProviders = unableToConfirmIdentityNavGraphProviders.toPersistentSet(),
+                    onFinish = onFinish,
+                )
+            }
         }
     }
-}
