@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
+import IdCheckWrapperConfigKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -13,9 +14,10 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckExitStateGroups
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.handle
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.hasAbortedSession
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isSuccess
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
@@ -123,20 +125,30 @@ class SyncIdCheckViewModel(
 
         val journeyType = requireDisplayState().launcherData.sessionJourneyType
         val action =
-            when (exitState.isSuccess()) {
-                true ->
+            when (exitState.handle()) {
+                IdCheckExitStateGroups.SUCCESS ->
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToReturnToMobileWeb
                     }
-                false ->
+
+                IdCheckExitStateGroups.ABORT ->
                     when (journeyType) {
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
+                    }
+
+                IdCheckExitStateGroups.FACE_SCAN_LIMIT_REACHED ->
+                    when (journeyType) {
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToFaceScanLimitReachedMobile
+
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToFaceScanLimitReachedDesktop
                     }
             }
 
@@ -167,7 +179,7 @@ class SyncIdCheckViewModel(
                 )
 
             is LauncherDataReaderResult.UnrecoverableError,
-            ->
+                ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToUnrecoverableError,
                 )

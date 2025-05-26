@@ -15,15 +15,17 @@ fun IdCheckSdkExitState.hasAbortedSession(): Boolean =
         IdCheckSdkExitState.HappyPath -> false
     }
 
-fun IdCheckSdkExitState.isSuccess(): Boolean =
+fun IdCheckSdkExitState.handle(): IdCheckExitStateGroups =
     when (this) {
-        IdCheckSdkExitState.HappyPath -> true
+        IdCheckSdkExitState.HappyPath -> IdCheckExitStateGroups.SUCCESS
 
         is IdCheckSdkExitState.Nowhere,
         is IdCheckSdkExitState.ConfirmAnotherWay,
         is IdCheckSdkExitState.ConfirmationAbortedJourney,
+        IdCheckSdkExitState.UnknownDocumentType,
+        -> IdCheckExitStateGroups.ABORT
+
         IdCheckSdkExitState.ConfirmationFailed,
         is IdCheckSdkExitState.FaceScanLimitReached,
-        IdCheckSdkExitState.UnknownDocumentType,
-        -> false
+        -> IdCheckExitStateGroups.FACE_SCAN_LIMIT_REACHED
     }

@@ -22,4 +22,8 @@ sealed interface SyncIdCheckAction {
     ) : SyncIdCheckAction
 
     data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
+
+    data object NavigateToFaceScanLimitReachedDesktop : SyncIdCheckAction
+
+    data object NavigateToFaceScanLimitReachedMobile : SyncIdCheckAction
 }

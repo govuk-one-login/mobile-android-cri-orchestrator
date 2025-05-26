@@ -136,13 +136,17 @@ private fun SyncIdCheckActionHandler(
                         AbortDestinations.AbortedReturnToDesktopWeb,
                     )
 
-                SyncIdCheckAction.NavigateToRecoverableError -> {
+                SyncIdCheckAction.NavigateToRecoverableError ->
                     navController.navigate(ErrorDestinations.RecoverableError)
-                }
 
-                SyncIdCheckAction.NavigateToUnrecoverableError -> {
+                SyncIdCheckAction.NavigateToUnrecoverableError ->
                     navController.navigate(HandbackDestinations.UnrecoverableError)
-                }
+
+                SyncIdCheckAction.NavigateToFaceScanLimitReachedDesktop ->
+                    navController.navigate(AbortDestinations.FaceScanLimitReachedDesktop)
+
+                SyncIdCheckAction.NavigateToFaceScanLimitReachedMobile ->
+                    navController.navigate(AbortDestinations.FaceScanLimitReachedMobile)
             }
         }
     }

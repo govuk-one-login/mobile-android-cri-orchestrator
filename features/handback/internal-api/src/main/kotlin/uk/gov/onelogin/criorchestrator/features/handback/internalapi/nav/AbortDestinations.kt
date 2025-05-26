@@ -17,4 +17,10 @@ sealed interface AbortDestinations : ProveYourIdentityDestinations {
     data class AbortedRedirectToMobileWebHolder(
         val redirectUri: String,
     ) : AbortDestinations
+
+    @Serializable
+    data object FaceScanLimitReachedDesktop : AbortDestinations
+
+    @Serializable
+    data object FaceScanLimitReachedMobile : AbortDestinations
 }
