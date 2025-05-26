@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -50,6 +51,10 @@ internal fun FaceScanLimitReachedMobileScreen(
             )
     }
 
+    BackHandler {
+        // Do nothing since user shouldn't be able to go back as they have already exited the SDK.
+    }
+
     LaunchedEffect(viewModel) {
         viewModel.onScreenStart()
 
@@ -91,11 +96,6 @@ internal fun FaceScanLimitReachedMobileWebContent(
         ErrorScreen(
             icon = ErrorScreenIcon.ErrorIcon,
             title = stringResource(titleId),
-            body = persistentListOf(
-                CentreAlignedScreenBodyContent.Text(
-                    bodyText = stringResource(R.string.handback_facescanlimitreached_body),
-                ),
-            ),
             primaryButton = CentreAlignedScreenButton(
                 text = stringResource(buttonId),
                 showIcon = true,
