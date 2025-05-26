@@ -37,8 +37,7 @@ class UnableToConfirmIdentityMobileViewModel(
     fun onScreenStart() {
         _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
-            // TODO: update id
-            id = HandbackScreenId.ConfirmAbortMobile,
+            id = HandbackScreenId.UnableToConfirmIdentityMobile,
             title = UnableToConfirmIdentityMobileConstants.titleId,
         )
     }

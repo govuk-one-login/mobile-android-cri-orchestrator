@@ -25,8 +25,7 @@ class UnableToConfirmIdentityDesktopViewModel(
     fun onScreenStart() {
         _state.value = ConfirmAbortState.Display
         analytics.trackScreen(
-            // TODO: update id
-            id = HandbackScreenId.ConfirmAbortDesktop,
+            id = HandbackScreenId.UnableToConfirmIdentityDesktop,
             title = UnableToConfirmIdentityDesktopConstants.titleId,
         )
     }

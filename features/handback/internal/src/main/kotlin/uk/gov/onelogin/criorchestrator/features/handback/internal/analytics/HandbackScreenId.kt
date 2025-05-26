@@ -14,4 +14,7 @@ enum class HandbackScreenId(
     ConfirmAbortMobile(rawId = "c4b6167a-09b3-4671-b9d7-30f7acd02bdb"),
 
     AbortedReturnToDesktopWeb(rawId = "8d09e79f-f242-48c8-a456-4f302c23e6cb"),
+
+    UnableToConfirmIdentityDesktop(rawId = "445f537d-c73c-46ba-b8df-e902a334a6d0"),
+    UnableToConfirmIdentityMobile(rawId = "40d79ac7-6193-4e67-8255-87893fd6b51a"),
 }
