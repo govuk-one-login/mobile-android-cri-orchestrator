@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,13 +37,14 @@ class UnableToConfirmIdentityMobileScreenTest {
     private val sessionStore = FakeSessionStore(Session.createMobileAppMobileInstance())
     private val logger = SystemLogger()
 
-    private val viewModel =
+    private val viewModel by lazy {
         UnableToConfirmIdentityMobileViewModel(
             analytics = mock(),
             abortSession = abortSession,
             sessionStore = sessionStore,
             logger = logger,
         )
+    }
 
     @Before
     fun setup() {
@@ -63,13 +65,15 @@ class UnableToConfirmIdentityMobileScreenTest {
     }
 
     @Test
-    fun `when continue is clicked, initially the screen displays loading screen`() {
-        composeTestRule
-            .onNode(continueButton)
-            .performClick()
+    fun `when continue is clicked, initially the screen displays loading screen`() =
+        runTest {
+            abortSession.delay = 300L
+            composeTestRule
+                .onNode(continueButton)
+                .performClick()
 
-        composeTestRule.onNodeWithText("Loading").assertExists()
-    }
+            composeTestRule.onNodeWithText("Loading").assertExists()
+        }
 
     @Test
     fun `when continue is clicked, given a successful abort call, it navigates to return to gov uk`() {

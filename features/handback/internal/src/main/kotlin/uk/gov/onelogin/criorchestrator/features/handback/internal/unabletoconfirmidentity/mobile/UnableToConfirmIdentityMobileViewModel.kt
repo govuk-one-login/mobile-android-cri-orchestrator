@@ -69,6 +69,7 @@ class UnableToConfirmIdentityMobileViewModel(
             }
         }
     }
+
     internal fun resetState() {
         _state.value = ConfirmAbortState.Display
     }

@@ -31,11 +31,12 @@ class UnableToConfirmIdentityDesktopScreenTest {
         hasTextStartingWith(context.getString(UnableToConfirmIdentityDesktopConstants.buttonId))
     private val abortSession = StubAbortSession(AbortSession.Result.Success)
 
-    private val viewModel =
+    private val viewModel by lazy {
         UnableToConfirmIdentityDesktopViewModel(
             analytics = mock(),
             abortSession = abortSession,
         )
+    }
 
     @Before
     fun setup() {
@@ -57,6 +58,7 @@ class UnableToConfirmIdentityDesktopScreenTest {
 
     @Test
     fun `when continue is clicked, initially the screen displays loading screen`() {
+        abortSession.delay = 300L
         composeTestRule
             .onNode(continueButton)
             .performClick()
