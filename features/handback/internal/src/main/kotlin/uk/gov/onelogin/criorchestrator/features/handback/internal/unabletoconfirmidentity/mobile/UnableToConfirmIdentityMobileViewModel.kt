@@ -35,7 +35,7 @@ class UnableToConfirmIdentityMobileViewModel(
     val actions: SharedFlow<UnableToConfirmIdentityMobileActions> = _actions.asSharedFlow()
 
     fun onScreenStart() {
-        _state.value = ConfirmAbortState.Display
+        resetState()
         analytics.trackScreen(
             id = HandbackScreenId.UnableToConfirmIdentityMobile,
             title = UnableToConfirmIdentityMobileConstants.titleId,
@@ -68,5 +68,8 @@ class UnableToConfirmIdentityMobileViewModel(
                 }
             }
         }
+    }
+    internal fun resetState() {
+        _state.value = ConfirmAbortState.Display
     }
 }

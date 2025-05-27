@@ -56,6 +56,7 @@ fun UnableToConfirmIdentityDesktopScreen(
                 UnableToConfirmIdentityDesktopActions.NavigateToUnrecoverableError ->
                     navController.navigate(HandbackDestinations.UnrecoverableError)
             }
+            viewModel.resetState()
         }
     }
 

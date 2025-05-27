@@ -78,6 +78,7 @@ internal fun UnableToConfirmIdentityMobileScreen(
                         HandbackDestinations.UnrecoverableError,
                     )
             }
+            viewModel.resetState()
         }
     }
 }

@@ -23,7 +23,7 @@ class UnableToConfirmIdentityDesktopViewModel(
     val actions: SharedFlow<UnableToConfirmIdentityDesktopActions> = _actions.asSharedFlow()
 
     fun onScreenStart() {
-        _state.value = ConfirmAbortState.Display
+        resetState()
         analytics.trackScreen(
             id = HandbackScreenId.UnableToConfirmIdentityDesktop,
             title = UnableToConfirmIdentityDesktopConstants.titleId,
@@ -45,5 +45,9 @@ class UnableToConfirmIdentityDesktopViewModel(
                 }
             }
         }
+    }
+
+    internal fun resetState() {
+        _state.value = ConfirmAbortState.Display
     }
 }
