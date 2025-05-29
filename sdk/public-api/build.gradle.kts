@@ -25,6 +25,7 @@ dependencies {
 
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.networking)
+    implementation(libs.androidx.activity.compose)
     implementation(projects.sdk.internal)
 
     testFixturesImplementation(libs.org.mockito.kotlin)

@@ -2,10 +2,13 @@ package uk.gov.onelogin.criorchestrator.testwrapper
 
 import android.app.Application
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasScrollToNodeAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -35,6 +38,10 @@ class MainContentTest {
 
         // Check that at least one of the dev menu items is displayed
         // to verify that the dev menu is open
+        composeTestRule
+            .onNode(hasScrollToNodeAction())
+            .performScrollToNode(hasText(SdkConfigKey.IdCheckAsyncBackendBaseUrl.name))
+
         composeTestRule
             .onNodeWithText(SdkConfigKey.IdCheckAsyncBackendBaseUrl.name)
             .assertIsDisplayed()
