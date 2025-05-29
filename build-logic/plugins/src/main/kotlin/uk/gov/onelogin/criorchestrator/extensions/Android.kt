@@ -46,6 +46,7 @@ internal fun AndroidExtension.setPackagingConfig() =
         resources {
             merges += "/META-INF/{AL2.0,LGPL2.1}"
             merges += "/META-INF/{LICENSE.md,LICENSE-notice.md}"
+            merges += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
 

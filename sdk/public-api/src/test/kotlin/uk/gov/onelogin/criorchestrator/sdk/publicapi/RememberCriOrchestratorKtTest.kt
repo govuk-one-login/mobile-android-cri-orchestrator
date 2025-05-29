@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.sdk.publicapi
 
+import android.app.Activity
 import android.content.Context
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
@@ -18,6 +20,7 @@ import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.libraries.testing.assertions.assertExceptionEquals
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
@@ -57,16 +60,38 @@ class RememberCriOrchestratorKtTest {
             }
         }
 
+    @Test
+    fun `given activity is null, it throws`() =
+        runTest {
+            moleculeFlow(RecompositionMode.Immediate) {
+                withContext(
+                    activity = null,
+                ) {
+                    rememberCriOrchestrator(
+                        criOrchestratorSdk = criOrchestratorSdk,
+                    )
+                }
+            }.test {
+                assertExceptionEquals(IllegalStateException("No activity found"), awaitError())
+                cancel()
+            }
+        }
+
     @Composable
     fun <T> withContext(
-        context: Context = mock<Context>(),
+        activity: Activity? = mock<Activity>(),
+        context: Context = activity ?: mock<Context>(),
         composable: @Composable () -> T,
     ): T {
         var result: T? = null
         CompositionLocalProvider(
-            LocalContext provides context,
+            LocalActivity provides activity,
         ) {
-            result = composable()
+            CompositionLocalProvider(
+                LocalContext provides context,
+            ) {
+                result = composable()
+            }
         }
         return result!!
     }
