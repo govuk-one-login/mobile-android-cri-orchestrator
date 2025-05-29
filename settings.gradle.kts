@@ -82,6 +82,7 @@ include(
     ":konsist-test",
     ":libraries:analytics",
     ":libraries:android-utils",
+    ":libraries:architecture",
     ":libraries:compose-utils",
     ":libraries:kotlin-utils",
     ":libraries:di",

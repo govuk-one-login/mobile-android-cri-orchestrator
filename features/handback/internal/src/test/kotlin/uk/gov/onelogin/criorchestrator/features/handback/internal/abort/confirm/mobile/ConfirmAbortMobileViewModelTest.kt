@@ -81,7 +81,7 @@ class ConfirmAbortMobileViewModelTest {
     @Test
     fun `given session store is empty, when continue is clicked, it navigates to unrecoverable error`() =
         runTest {
-            sessionStore.write(null)
+            sessionStore.clear()
             viewModel.actions.test {
                 viewModel.onContinueToGovUk()
                 assertEquals(

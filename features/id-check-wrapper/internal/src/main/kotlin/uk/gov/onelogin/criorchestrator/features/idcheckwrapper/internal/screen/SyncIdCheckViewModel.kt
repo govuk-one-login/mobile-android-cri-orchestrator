@@ -118,7 +118,7 @@ class SyncIdCheckViewModel(
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
         if (exitState.hasAbortedSession()) {
-            sessionStore.write(null)
+            sessionStore.updateToAborted()
         }
 
         val journeyType = requireDisplayState().launcherData.sessionJourneyType

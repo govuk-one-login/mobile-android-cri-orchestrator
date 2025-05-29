@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.features.session.internalApi)
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.androidUtils)
+    implementation(projects.libraries.architecture)
     implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.di)

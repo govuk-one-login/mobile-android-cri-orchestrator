@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.sdk.internal
 
 import android.content.Context
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
@@ -28,13 +29,26 @@ class CriOrchestratorSingletonImpl(
     applicationContext: Context,
     testDispatcher: CoroutineDispatcher? = null,
 ) : CriOrchestratorSdk {
-    override val component: CriOrchestratorSingletonComponent =
-        DaggerMergedBaseCriOrchestratorSingletonComponent.factory().create(
-            authenticatedHttpClient = authenticatedHttpClient,
-            analyticsLogger = analyticsLogger,
-            initialConfig = Config.fromUserConfig(userConfig),
-            logger = logger,
-            applicationContext = applicationContext,
-            testDispatcher = testDispatcher,
-        )
+    private val _component: MergedBaseCriOrchestratorSingletonComponent =
+        DaggerMergedBaseCriOrchestratorSingletonComponent
+            .factory()
+            .create(
+                authenticatedHttpClient = authenticatedHttpClient,
+                analyticsLogger = analyticsLogger,
+                initialConfig = Config.fromUserConfig(userConfig),
+                logger = logger,
+                applicationContext = applicationContext,
+                testDispatcher = testDispatcher,
+            )
+    override val component: CriOrchestratorSingletonComponent = _component
+
+    init {
+        with(_component.coroutineScope()) {
+            _component.services().forEach { service ->
+                launch {
+                    service.start()
+                }
+            }
+        }
+    }
 }
