@@ -155,7 +155,7 @@ internal fun SelectPassportScreenContent(
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
-            forceScroll = true
+            forceScroll = true,
         )
     }
 }
