@@ -10,6 +10,8 @@ listOf(
     "uk.gov.pipelines.kotlin-lib-config",
     "uk.gov.onelogin.criorchestrator.code-quality-config",
     "uk.gov.onelogin.criorchestrator.publishing-id-config",
+    "java-test-fixtures",
+    "uk.gov.onelogin.criorchestrator.unit-test-config",
 ).forEach {
     project.plugins.apply(it)
 }

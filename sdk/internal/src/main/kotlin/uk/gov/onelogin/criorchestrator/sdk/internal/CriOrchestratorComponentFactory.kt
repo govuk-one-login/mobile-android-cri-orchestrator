@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
 import uk.gov.onelogin.criorchestrator.features.session.internal.SessionComponent
+import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSessionComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonComponent
 
@@ -24,6 +25,7 @@ fun createCriOrchestratorComponent(
         baseSingletonComponent = singletonComponent as BaseCriOrchestratorSingletonComponent,
         configComponent = singletonComponent as ConfigComponent,
         sessionComponent = singletonComponent as SessionComponent,
+        refreshActiveSessionComponent = singletonComponent as RefreshActiveSessionComponent,
         activity = activity,
         context = context,
     )

@@ -7,6 +7,7 @@ dependencies {
     implementation(projects.libraries.di)
 
     testFixturesImplementation(libs.kotlinx.coroutines)
+    testFixturesImplementation(projects.features.session.publicApi)
 }
 
 mavenPublishingConfig {

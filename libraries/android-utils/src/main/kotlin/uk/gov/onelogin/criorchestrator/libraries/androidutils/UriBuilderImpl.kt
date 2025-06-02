@@ -3,11 +3,11 @@ package uk.gov.onelogin.criorchestrator.libraries.androidutils
 import androidx.core.net.toUri
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ContributesBinding(CriOrchestratorScope::class)
+@ContributesBinding(CriOrchestratorSingletonScope::class)
 class UriBuilderImpl
     @Inject
     constructor() : UriBuilder {

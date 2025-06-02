@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
+package uk.gov.onelogin.criorchestrator.features.session.publicapi
 
 /**
  * Check for an 'active' ID Check session and update the local session store if it can be determined whether or not

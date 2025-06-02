@@ -21,6 +21,7 @@ dependencies {
     api(projects.features.dev.publicApi)
     api(projects.features.idCheckWrapper.publicApi)
     api(projects.features.resume.publicApi)
+    api(projects.features.session.publicApi)
     api(projects.sdk.sharedApi)
 
     implementation(libs.uk.gov.logging.api)

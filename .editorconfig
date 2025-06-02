@@ -1,3 +1,7 @@
+# https://github.com/JLLeitschuh/ktlint-gradle/issues/746
+[**/build/generated/**]
+ktlint = disabled
+
 [*.kt]
 ktlint_function_naming_ignore_when_annotated_with=Composable
 max_line_length = 120   # Align with detekt line length

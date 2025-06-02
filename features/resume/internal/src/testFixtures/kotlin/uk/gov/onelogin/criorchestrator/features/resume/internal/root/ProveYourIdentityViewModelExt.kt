@@ -6,7 +6,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeIsSessionResumable
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeRefreshActiveSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionResumable
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.RefreshActiveSession
+import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSession
 
 fun ProveYourIdentityViewModel.Companion.createTestInstance(
     analytics: ResumeAnalytics = mock(),

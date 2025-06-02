@@ -5,10 +5,10 @@ import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
 
 @Module
-@ContributesTo(CriOrchestratorScope::class)
+@ContributesTo(CriOrchestratorSingletonScope::class)
 class ActiveSessionApiModule {
     @Provides
     fun providesActiveSessionApi(
