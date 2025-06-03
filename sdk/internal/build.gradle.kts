@@ -38,6 +38,7 @@ dependencies {
     implementation(projects.features.resume.publicApi)
     implementation(projects.features.session.internal)
     implementation(projects.features.session.internalApi)
+    implementation(projects.features.session.publicApi)
     implementation(projects.features.selectDoc.internal)
     implementation(projects.features.selectDoc.internalApi)
     implementation(projects.libraries.analytics)

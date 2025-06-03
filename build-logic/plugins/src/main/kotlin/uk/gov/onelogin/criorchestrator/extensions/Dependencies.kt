@@ -77,7 +77,7 @@ internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = lis
     implementation(it)
 }
 
-internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
+internal fun DependencyHandlerScope.kotlinTestDependencies(libs: LibrariesForLibs) {
     testFixturesImplementation(libs.kotlinx.coroutines)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
     testFixturesImplementation(libs.org.mockito.kotlin)
@@ -90,7 +90,6 @@ internal fun DependencyHandlerScope.testDependencies(libs: LibrariesForLibs) {
     testImplementation(libs.org.junit.jupiter.engine)
     testImplementation(libs.org.mockito.kotlin)
     testImplementation(platform(libs.org.junit.bom))
-    testImplementation(testFixtures(project(":libraries:testing")))
     testRuntimeOnly(libs.org.junit.platform.launcher)
 }
 

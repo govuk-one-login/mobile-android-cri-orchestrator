@@ -6,11 +6,12 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import uk.gov.onelogin.criorchestrator.extensions.androidTestDependencies
 import uk.gov.onelogin.criorchestrator.extensions.excludeAndroidClassesFromJacocoCoverage
 import uk.gov.onelogin.criorchestrator.extensions.disableJavadocGeneration
+import uk.gov.onelogin.criorchestrator.extensions.kotlinTestDependencies
 import uk.gov.onelogin.criorchestrator.extensions.setInstrumentationTestingConfig
 import uk.gov.onelogin.criorchestrator.extensions.setJavaVersion
 import uk.gov.onelogin.criorchestrator.extensions.setNamespace
 import uk.gov.onelogin.criorchestrator.extensions.setPackagingConfig
-import uk.gov.onelogin.criorchestrator.extensions.testDependencies
+import uk.gov.onelogin.criorchestrator.extensions.testImplementation
 
 //https://github.com/gradle/gradle/issues/15383
 val libs = the<LibrariesForLibs>()
@@ -44,5 +45,6 @@ project.excludeAndroidClassesFromJacocoCoverage()
 
 dependencies {
     androidTestDependencies(libs)
-    testDependencies(libs)
+    kotlinTestDependencies(libs)
+    testImplementation(testFixtures(project(":libraries:testing")))
 }

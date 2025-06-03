@@ -14,12 +14,14 @@ dependencies {
     implementation(projects.features.resume.publicApi)
     implementation(projects.features.selectDoc.internalApi)
     implementation(projects.features.session.internalApi)
+    implementation(projects.features.session.publicApi)
     implementation(projects.features.config.internalApi)
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.di)
     implementation(projects.libraries.navigation)
 
     testFixturesImplementation(testFixtures(projects.features.session.internalApi))
+    testFixturesImplementation(testFixtures(projects.features.session.publicApi))
 
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(libs.uk.gov.logging.testdouble)

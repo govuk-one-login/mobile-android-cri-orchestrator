@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(projects.features.config.internalApi)
     implementation(projects.features.session.internalApi)
+    implementation(projects.features.session.publicApi)
     implementation(projects.libraries.analytics)
     implementation(projects.libraries.androidUtils)
     implementation(projects.libraries.architecture)

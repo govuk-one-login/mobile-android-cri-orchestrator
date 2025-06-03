@@ -10,16 +10,14 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.actives
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.UriBuilder
-import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
 import javax.inject.Inject
 import javax.inject.Provider
 
 private const val NOT_FOUND = 404
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@CompositionScope
-@ContributesBinding(CriOrchestratorScope::class, boundType = SessionReader::class)
+@ContributesBinding(CriOrchestratorSingletonScope::class, boundType = SessionReader::class)
 class RemoteSessionReader
     @Inject
     constructor(

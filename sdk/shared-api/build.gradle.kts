@@ -1,11 +1,8 @@
 import uk.gov.onelogin.criorchestrator.extensions.customisePublications
 
 plugins {
-    listOf(
-        "uk.gov.onelogin.criorchestrator.android-lib-config",
-    ).forEach {
-        id(it)
-    }
+    id("uk.gov.onelogin.criorchestrator.kotlin-lib-config")
+    id("uk.gov.onelogin.criorchestrator.di-config")
 }
 
 configure<PublishingExtension> {
@@ -15,11 +12,7 @@ configure<PublishingExtension> {
 }
 
 dependencies {
-    listOf(
-        projects.libraries.di,
-    ).forEach {
-        api(it)
-    }
+    api(projects.libraries.di)
 }
 
 mavenPublishingConfig {

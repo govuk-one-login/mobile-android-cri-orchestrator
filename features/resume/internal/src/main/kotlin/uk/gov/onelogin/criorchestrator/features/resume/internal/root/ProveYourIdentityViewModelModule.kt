@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionResumable
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.RefreshActiveSession
+import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSession
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
