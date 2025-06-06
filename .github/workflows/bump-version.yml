@@ -10,6 +10,10 @@ on:
 env:
   WORKFLOW_OUT_DIR: ./workflow-outputs
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   bump-version:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
