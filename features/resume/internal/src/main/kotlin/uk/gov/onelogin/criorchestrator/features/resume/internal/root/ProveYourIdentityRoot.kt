@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.navigation.NavHostController
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 internal fun ProveYourIdentityRoot(
     viewModel: ProveYourIdentityViewModel,
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
+    navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
@@ -58,6 +60,7 @@ internal fun ProveYourIdentityRoot(
         modifier = modifier,
         modalContent = {
             ProveYourIdentityModalNavHost(
+                navController = navController,
                 navGraphProviders = navGraphProviders,
                 onFinish = { modalState.onDismissRequest() },
             )

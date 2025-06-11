@@ -15,6 +15,7 @@ dependencies {
     ).forEach {
         implementation(it)
     }
+    implementation(projects.libraries.navigation)
 }
 
 mavenPublishingConfig {

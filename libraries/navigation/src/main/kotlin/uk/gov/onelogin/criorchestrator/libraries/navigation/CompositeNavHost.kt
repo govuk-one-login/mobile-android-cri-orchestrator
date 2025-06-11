@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.libraries.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.collections.immutable.ImmutableSet
@@ -21,9 +22,8 @@ fun CompositeNavHost(
     startDestination: NavigationDestination,
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = startDestination,

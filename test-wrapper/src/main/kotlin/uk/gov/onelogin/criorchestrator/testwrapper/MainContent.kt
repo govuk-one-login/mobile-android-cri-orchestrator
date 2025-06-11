@@ -28,6 +28,8 @@ fun MainContent(
             criOrchestratorSdk = criOrchestratorSdk,
         )
 
+    val proveYourIdentityNavController = rememberNavController()
+
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
@@ -57,6 +59,7 @@ fun MainContent(
         composable<NavDestination.Home> {
             HomeScreen(
                 criOrchestratorComponent = criOrchestratorComponent,
+                proveYourIdentityNavController = proveYourIdentityNavController,
                 onRefreshActiveSessionClick = {
                     coroutineScope.launch {
                         criOrchestratorSdk.refreshActiveSession()

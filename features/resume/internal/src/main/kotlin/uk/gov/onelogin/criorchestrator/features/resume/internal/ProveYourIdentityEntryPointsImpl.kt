@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityRoot
@@ -28,10 +29,14 @@ class ProveYourIdentityEntryPointsImpl
         private val navGraphProviders = navGraphProviders.toPersistentSet()
 
         @Composable
-        override fun ProveYourIdentityCard(modifier: Modifier) {
+        override fun ProveYourIdentityCard(
+            modifier: Modifier,
+            navController: NavHostController,
+        ) {
             ProveYourIdentityRoot(
                 viewModel = viewModel(factory = viewModelProviderFactory),
                 navGraphProviders = navGraphProviders,
+                navController = navController,
                 modifier = modifier.testTag(TEST_TAG),
             )
         }

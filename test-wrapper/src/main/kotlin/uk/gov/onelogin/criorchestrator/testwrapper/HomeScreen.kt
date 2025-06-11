@@ -16,7 +16,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 @Composable
 fun HomeScreen(
     criOrchestratorComponent: CriOrchestratorComponent,
-    criOrchestratorModalNavController: NavHostController,
+    proveYourIdentityNavController: NavHostController,
     onRefreshActiveSessionClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) = LeftAlignedScreen(
@@ -31,7 +31,7 @@ fun HomeScreen(
         item {
             ProveYourIdentityCard(
                 component = criOrchestratorComponent,
-                modalNavController = criOrchestratorModalNavController,
+                navController = proveYourIdentityNavController,
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             )
         }

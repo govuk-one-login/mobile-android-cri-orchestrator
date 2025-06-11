@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.navigation.NavHostController
 import kotlinx.collections.immutable.ImmutableSet
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogueTopAppBar
@@ -53,11 +54,13 @@ internal fun ProveYourIdentityModal(
 
 @Composable
 internal fun ProveYourIdentityModalNavHost(
+    navController: NavHostController,
     navGraphProviders: ImmutableSet<ProveYourIdentityNavGraphProvider>,
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CompositeNavHost(
+        navController = navController,
         startDestination = ProveYourIdentityDestinations.ContinueToProveYourIdentity,
         navGraphProviders = navGraphProviders,
         onFinish = onFinish,
