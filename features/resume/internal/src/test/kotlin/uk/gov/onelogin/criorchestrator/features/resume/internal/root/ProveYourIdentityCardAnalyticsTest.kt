@@ -9,6 +9,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.collections.immutable.persistentSetOf
@@ -88,6 +89,7 @@ class ProveYourIdentityCardAnalyticsTest {
                         ),
                     ),
                 ),
+                navController = rememberNavController(),
             )
         }
 }

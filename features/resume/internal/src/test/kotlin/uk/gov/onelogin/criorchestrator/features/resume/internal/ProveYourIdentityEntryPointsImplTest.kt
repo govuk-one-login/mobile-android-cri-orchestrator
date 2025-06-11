@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
@@ -53,6 +54,7 @@ class ProveYourIdentityEntryPointsImplTest {
             GdsTheme {
                 entryPoints.ProveYourIdentityCard(
                     modifier = Modifier,
+                    navController = rememberNavController(),
                 )
             }
         }

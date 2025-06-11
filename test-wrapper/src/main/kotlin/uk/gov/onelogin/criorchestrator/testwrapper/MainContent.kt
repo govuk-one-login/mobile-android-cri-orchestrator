@@ -1,13 +1,14 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -22,6 +23,7 @@ fun MainContent(
     criOrchestratorSdk: CriOrchestratorSdk,
     onSubUpdateRequest: (String?) -> Unit,
     modifier: Modifier = Modifier,
+    testActions: Flow<MainContentTestAction> = flowOf(),
 ) {
     val criOrchestratorComponent =
         rememberCriOrchestrator(
@@ -33,15 +35,12 @@ fun MainContent(
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-    /**
-     * TODO: Can we reproduce this bug in a less intrusive way?
-     *   It won't be fun for the test wrapper to behave like this during manual testing.
-     *   Perhaps we can provide another mechanism to navigate forward to another screen that tests can use.
-     */
-    LifecycleEventEffect(
-        event = Lifecycle.Event.ON_START,
-    ) {
-        navController.navigate(NavDestination.Locked)
+    LaunchedEffect(Unit) {
+        testActions.collect {
+            when (it) {
+                MainContentTestAction.NavigateToAnotherScreen -> navController.navigate(NavDestination.Another)
+            }
+        }
     }
 
     NavHost(
@@ -67,12 +66,8 @@ fun MainContent(
                 },
             )
         }
-        composable<NavDestination.Locked> {
-            LockScreen(
-                onUnlock = {
-                    navController.popBackStack()
-                },
-            )
+        composable<NavDestination.Another> {
+            AnotherScreen()
         }
     }
 }
@@ -85,5 +80,9 @@ private sealed class NavDestination {
     object Home
 
     @Serializable
-    object Locked
+    object Another
+}
+
+enum class MainContentTestAction {
+    NavigateToAnotherScreen,
 }
