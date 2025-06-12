@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import android.content.Context
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
@@ -23,6 +24,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.Resume
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
 
@@ -78,16 +80,18 @@ class ProveYourIdentityCardAnalyticsTest {
 
     private fun ComposeContentTestRule.displayProveYourIdentityRoot() =
         setContent {
-            ProveYourIdentityRoot(
-                viewModel,
-                persistentSetOf(
-                    ContinueToProveYourIdentityNavGraphProvider(
-                        ContinueToProveYourIdentityViewModelModule.provideFactory(
-                            analytics = mock(),
-                            nfcChecker = mock(),
+            CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
+                ProveYourIdentityRoot(
+                    viewModel,
+                    persistentSetOf(
+                        ContinueToProveYourIdentityNavGraphProvider(
+                            ContinueToProveYourIdentityViewModelModule.provideFactory(
+                                analytics = mock(),
+                                nfcChecker = mock(),
+                            ),
                         ),
                     ),
-                ),
-            )
+                )
+            }
         }
 }
