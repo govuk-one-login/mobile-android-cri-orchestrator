@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">CRI Orchestrator</string>
+    <string name="app_name" translatable="false">CRI Orchestrator</string>
+    <string name="appName" translatable="false">@string/app_name</string>
 </resources>
