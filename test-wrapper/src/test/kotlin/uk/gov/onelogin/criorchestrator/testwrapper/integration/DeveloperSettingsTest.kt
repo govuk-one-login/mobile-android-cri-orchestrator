@@ -27,6 +27,12 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.createTestInstance
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 import uk.gov.onelogin.criorchestrator.testwrapper.MainContent
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.CONTINUE_TO_PROVE_YOUR_IDENTITY
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DEVELOPER_SETTINGS
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DO_YOU_HAVE_A_DRIVING_LICENCE
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DO_YOU_HAVE_A_PASSPORT
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.START
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
 import org.robolectric.annotation.Config as RobolectricConfig
 
 @RunWith(AndroidJUnit4::class)
@@ -37,15 +43,6 @@ class DeveloperSettingsTest {
     private val stateRestorationTester = StateRestorationTester(composeTestRule)
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
-
-    private companion object {
-        private const val DEVELOPER_SETTINGS = "Developer settings"
-        private const val START = "Start"
-        private const val CONTINUE = "Continue"
-        private const val CONTINUE_TO_PROVE_YOUR_IDENTITY = "Continue to prove your identity"
-        private const val DO_YOU_HAVE_A_PASSPORT = "Do you have a passport with a biometric chip?"
-        private const val DO_YOU_HAVE_A_DRIVING_LICENCE = "Do you have a UK photocard driving licence?"
-    }
 
     val criOrchestratorSdk =
         CriOrchestratorSdk.createTestInstance(
@@ -149,20 +146,6 @@ class DeveloperSettingsTest {
             .performClick()
 
         composeTestRule.goBack(times = 2)
-    }
-
-    private fun ComposeTestRule.continueToSelectDocument() {
-        composeTestRule
-            .onNodeWithText(START)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(CONTINUE_TO_PROVE_YOUR_IDENTITY)
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(CONTINUE)
-            .performClick()
     }
 
     private fun ComposeTestRule.toggleBypassIdCheckAsyncBackendConfig() {

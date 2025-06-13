@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import android.content.Context
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
@@ -23,6 +24,7 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -95,16 +97,18 @@ class ProveYourIdentityRootTest {
 
     private fun ComposeContentTestRule.displayProveYourIdentityRoot() =
         setContent {
-            ProveYourIdentityRoot(
-                viewModel,
-                persistentSetOf(
-                    ContinueToProveYourIdentityNavGraphProvider(
-                        ContinueToProveYourIdentityViewModelModule.provideFactory(
-                            analytics = mock(),
-                            nfcChecker = mock(),
+            CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
+                ProveYourIdentityRoot(
+                    viewModel,
+                    persistentSetOf(
+                        ContinueToProveYourIdentityNavGraphProvider(
+                            ContinueToProveYourIdentityViewModelModule.provideFactory(
+                                analytics = mock(),
+                                nfcChecker = mock(),
+                            ),
                         ),
                     ),
-                ),
-            )
+                )
+            }
         }
 }
