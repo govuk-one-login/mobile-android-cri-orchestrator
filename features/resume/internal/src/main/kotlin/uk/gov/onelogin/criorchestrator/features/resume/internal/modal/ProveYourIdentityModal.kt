@@ -20,7 +20,9 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
  *
  * If it is allowed to, this dialog will display automatically.
  *
- * @param state The modal UI state.
+ * @param onDismissRequest Executes when the user tries to dismiss the modal.
+ * @param onCancelClick Executes when the user clicks the close/cancel button.
+ *   Dismissing the modal should be handled separately using [onDismissRequest].
  * @param modifier See [Modifier].
  * @param content The modal content (see [ProveYourIdentityModalNavHost])
  */
