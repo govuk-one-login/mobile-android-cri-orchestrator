@@ -1,13 +1,14 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.modal
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.ImmutableSet
-import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogueTopAppBar
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
@@ -19,35 +20,33 @@ import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
  *
  * If it is allowed to, this dialog will display automatically.
  *
- * @param state The modal UI state.
+ * @param onDismissRequest Executes when the user tries to dismiss the modal.
+ * @param onCancelClick Executes when the user clicks the close/cancel button.
+ *   Dismissing the modal should be handled separately using [onDismissRequest].
  * @param modifier See [Modifier].
  * @param content The modal content (see [ProveYourIdentityModalNavHost])
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ProveYourIdentityModal(
-    state: ProveYourIdentityModalState,
+    onDismissRequest: () -> Unit,
     onCancelClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    if (!state.allowedToShow) {
-        return
-    }
-
-    FullScreenDialogue(
-        modifier = modifier,
-        topAppBar = {
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background,
+    ) {
+        Column {
             FullScreenDialogueTopAppBar(
                 onCloseClick = {
                     onCancelClick()
-                    state.onDismissRequest()
+                    onDismissRequest()
                 },
             )
-        },
-        onDismissRequest = state::onDismissRequest,
-    ) {
-        content()
+            content()
+        }
     }
 }
 
@@ -65,32 +64,13 @@ internal fun ProveYourIdentityModalNavHost(
     )
 }
 
-internal data class PreviewParams(
-    val state: ProveYourIdentityModalState,
-)
-
-@Suppress("MaxLineLength") // Conflict between Ktlint formatting and Detekt rule
-internal class ProveYourIdentityModalPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
-    override val values =
-        sequenceOf(
-            PreviewParams(
-                state = ProveYourIdentityModalState(allowedToShow = true),
-            ),
-            PreviewParams(
-                state = ProveYourIdentityModalState(allowedToShow = false),
-            ),
-        )
-}
-
 @PreviewLightDark
 @Composable
-internal fun ProveYourIdentityModalPreview(
-    @PreviewParameter(ProveYourIdentityModalPreviewParameterProvider::class)
-    parameters: PreviewParams,
-) = GdsTheme {
-    ProveYourIdentityModal(
-        state = parameters.state,
-        onCancelClick = {},
-    ) {
+internal fun ProveYourIdentityModalPreview() =
+    GdsTheme {
+        ProveYourIdentityModal(
+            onDismissRequest = {},
+            onCancelClick = {},
+        ) {
+        }
     }
-}
