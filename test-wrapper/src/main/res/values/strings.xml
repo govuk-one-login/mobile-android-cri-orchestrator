@@ -1,3 +1,6 @@
-<resources>
-    <string name="app_name">CRI Orchestrator</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">CRI Orchestrator</string>
+
+    <!-- Required in the ID Check SDK -->
+    <string name="appName" translatable="false" tools:ignore="UnusedResources">@string/app_name</string>
 </resources>
