@@ -7,6 +7,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
@@ -48,6 +50,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubG
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubIsSessionAbortedOrUnavailable
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.filterInDialogElseAll
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
@@ -287,18 +290,24 @@ class HandbackNavigationTest {
 
     private fun ComposeTestRule.assertUnrecoverableErrorIsDisplayed() =
         composeTestRule
-            .onNodeWithText(context.getString(R.string.handback_unrecoverableerror_title))
+            .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_title))
+            .filterInDialogElseAll()
+            .onFirst()
             .assertIsDisplayed()
 
     private fun ComposeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton() =
         composeTestRule
-            .onNodeWithText(context.getString(R.string.handback_unrecoverableerror_button))
+            .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_button))
+            .filterInDialogElseAll()
+            .onFirst()
             .assertIsDisplayed()
             .performClick()
 
     private fun ComposeTestRule.assertConfirmAbortIsDisplayed() =
         composeTestRule
-            .onNodeWithText(context.getString(R.string.handback_confirmabort_title))
+            .onAllNodesWithText(context.getString(R.string.handback_confirmabort_title))
+            .filterInDialogElseAll()
+            .onFirst()
             .assertIsDisplayed()
 
     private fun ComposeTestRule.clickConfirmAbortToDesktopWebButton() =
