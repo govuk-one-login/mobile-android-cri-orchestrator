@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Required in the ID Check SDK -->
+    <!-- Required in the ID Check SDK - Defaults to the One Login app name-->
     <string name="appName" translatable="false" tools:ignore="UnusedResources">One Login</string>
 </resources>
