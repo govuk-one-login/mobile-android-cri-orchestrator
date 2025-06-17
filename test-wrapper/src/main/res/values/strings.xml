@@ -2,5 +2,5 @@
     <string name="app_name" translatable="false">CRI Orchestrator</string>
 
     <!-- Required in the ID Check SDK -->
-    <string name="appName" translatable="false" tools:ignore="UnusedResources">@string/app_name</string>
+    <string name="idsdk_app_name" translatable="false" tools:ignore="UnusedResources">@string/app_name</string>
 </resources>
