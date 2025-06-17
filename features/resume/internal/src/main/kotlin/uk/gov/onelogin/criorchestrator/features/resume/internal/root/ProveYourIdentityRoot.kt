@@ -11,7 +11,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +24,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.card.ProveYourId
 import uk.gov.onelogin.criorchestrator.features.resume.internal.modal.ProveYourIdentityModal
 import uk.gov.onelogin.criorchestrator.features.resume.internal.modal.ProveYourIdentityModalNavHost
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.fullScreenDialogProperties
 
 @Composable
 internal fun ProveYourIdentityRoot(
@@ -104,7 +104,7 @@ internal fun ProveYourIdentityRootNavHost(
 
         dialog(
             DESTINATION_MODAL,
-            dialogProperties = DialogProperties(usePlatformDefaultWidth = false),
+            dialogProperties = fullScreenDialogProperties,
         ) {
             ProveYourIdentityModal(
                 onCancelClick = onModalCancelClick,

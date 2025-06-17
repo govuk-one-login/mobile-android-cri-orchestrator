@@ -13,6 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.Nfc
 fun Config.Companion.createTestInstance(
     isNfcAvailable: Boolean = true,
     bypassIdCheckAsyncBackend: Boolean = true,
+    bypassJourneyType: String = SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE,
 ): Config =
     Config(
         entries =
@@ -20,6 +21,10 @@ fun Config.Companion.createTestInstance(
                 Config.Entry<Config.Value.BooleanValue>(
                     key = SdkConfigKey.BypassIdCheckAsyncBackend,
                     value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
+                ),
+                Config.Entry<Config.Value.StringValue>(
+                    key = SdkConfigKey.BypassJourneyType,
+                    value = Config.Value.StringValue(bypassJourneyType),
                 ),
                 Config.Entry<Config.Value.StringValue>(
                     key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
