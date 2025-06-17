@@ -11,6 +11,7 @@ import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.libraries.architecture.CriOrchestratorService
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.sdk.internal.di.CoroutineDispatchersModule.Companion.TEST_DISPATCHER_NAME
 import javax.inject.Named
 import javax.inject.Singleton
@@ -35,6 +36,8 @@ interface BaseCriOrchestratorSingletonComponent {
     }
 
     fun coroutineScope(): CoroutineScope
+
+    fun coroutineDispatchers(): CoroutineDispatchers
 
     fun services(): Set<@JvmSuppressWildcards CriOrchestratorService>
 

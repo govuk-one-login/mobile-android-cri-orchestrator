@@ -8,6 +8,9 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.CHECK_CAN_PROVE_IDENTITY_ANOTHER_WAY
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.CONFIRM
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.CONFIRM_NO_DRIVING_LICENCE
@@ -18,6 +21,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.LOADING
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.NO
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.RETURN_TO_GOVUK_ON_COMPUTER
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.START
+import kotlin.time.Duration.Companion.seconds
 
 internal fun ComposeTestRule.continueToSelectDocument() {
     onNodeWithText(START)
@@ -30,8 +34,8 @@ internal fun ComposeTestRule.continueToSelectDocument() {
         .performClick()
 }
 
-@OptIn(ExperimentalTestApi::class)
-internal fun ComposeTestRule.continueToAbortedDesktop() {
+@OptIn(ExperimentalTestApi::class, ExperimentalCoroutinesApi::class)
+internal fun ComposeTestRule.continueToAbortedDesktop(testScope: TestScope) {
     onNodeWithText(START)
         .performClick()
 
@@ -63,10 +67,11 @@ internal fun ComposeTestRule.continueToAbortedDesktop() {
     onNodeWithText(CONTINUE)
         .performClick()
 
-    waitUntilDoesNotExist(
-        hasText(LOADING),
-        timeoutMillis = 5000L,
-    )
+    onNodeWithText(LOADING)
+        .assertIsDisplayed()
+
+    testScope.advanceTimeBy(1.seconds)
+
     onNodeWithText(RETURN_TO_GOVUK_ON_COMPUTER)
         .assertIsDisplayed()
 }

@@ -16,7 +16,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -37,6 +40,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continue
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
 import org.robolectric.annotation.Config as RobolectricConfig
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 @RobolectricConfig(application = Application::class)
 class RestoreProveYourIdentityNavigationStateTest {
@@ -46,6 +50,7 @@ class RestoreProveYourIdentityNavigationStateTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
+    private val testScope = TestScope()
     val criOrchestratorSdk =
         CriOrchestratorSdk.createTestInstance(
             applicationContext = context,
@@ -55,11 +60,12 @@ class RestoreProveYourIdentityNavigationStateTest {
                     bypassIdCheckAsyncBackend = true,
                     bypassJourneyType = SdkConfigKey.BypassJourneyType.OPTION_DESKTOP_APP_DESKTOP,
                 ),
+            testDispatcher = UnconfinedTestDispatcher(testScope.testScheduler),
         )
 
     @Test
     fun `restore 'prove your identity' navigation state within another nav graph`() =
-        runTest {
+        testScope.runTest {
             val testActions = MutableSharedFlow<MainContentTestAction>()
             stateRestorationTester.setContent {
                 GdsTheme {
@@ -98,7 +104,7 @@ class RestoreProveYourIdentityNavigationStateTest {
 
     @Test
     fun `restore 'abort' navigation state within another nav graph`() =
-        runTest {
+        testScope.runTest {
             val testActions = MutableSharedFlow<MainContentTestAction>()
             stateRestorationTester.setContent {
                 GdsTheme {
@@ -110,7 +116,7 @@ class RestoreProveYourIdentityNavigationStateTest {
                 }
             }
 
-            composeTestRule.continueToAbortedDesktop()
+            composeTestRule.continueToAbortedDesktop(this)
 
             testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
 
