@@ -38,7 +38,7 @@ class SyncIdCheckViewModel(
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
 
-    private val _actions = MutableSharedFlow<SyncIdCheckAction>()
+    private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
 
     companion object;
