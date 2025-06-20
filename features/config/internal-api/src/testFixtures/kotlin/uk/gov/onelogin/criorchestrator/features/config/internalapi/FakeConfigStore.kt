@@ -13,6 +13,7 @@ class FakeConfigStore(
     initialConfig: Config = FakeConfig.create(),
 ) : ConfigStore {
     private val config: MutableStateFlow<Config> = MutableStateFlow(initialConfig)
+    private var readSingleCallCount = 0
 
     override fun <T : Config.Value> read(key: ConfigKey<T>): Flow<T> =
         config
@@ -20,7 +21,10 @@ class FakeConfigStore(
                 it[key]
             }.distinctUntilChanged()
 
-    override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T = config.value[key]
+    override fun <T : Config.Value> readSingle(key: ConfigKey<T>): T {
+        readSingleCallCount++
+        return config.value[key]
+    }
 
     override fun readAll(): Flow<Config> = config
 
@@ -34,4 +38,6 @@ class FakeConfigStore(
                 entries = persistentListOf(entry),
             ),
         )
+
+    fun getReadSingleCount(): Int = readSingleCallCount
 }
