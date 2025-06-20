@@ -1,6 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -14,6 +18,7 @@ import org.mockito.kotlin.verify
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.testdouble.SystemLogger
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
@@ -45,6 +50,7 @@ class SyncIdCheckViewModelTest {
     private val biometricToken = BiometricToken.createTestToken()
     private val analytics = mock<IdCheckWrapperAnalytics>()
     private val sessionStore = FakeSessionStore(session)
+    private val configStore: ConfigStore = FakeConfigStore()
     private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
@@ -345,29 +351,76 @@ class SyncIdCheckViewModelTest {
             }
         }
 
-    private fun viewModel(biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken)) =
-        SyncIdCheckViewModel(
-            logger = logger,
-            launcherDataReader =
-                LauncherDataReader(
-                    sessionStore =
-                        FakeSessionStore(
-                            session = session,
-                        ),
-                    biometricTokenReader =
-                        StubBiometricTokenReader(
-                            biometricTokenResult = biometricTokenResult,
-                        ),
-                    configStore = FakeConfigStore(),
-                ),
-            analytics = analytics,
-            configStore =
-                FakeConfigStore(
-                    initialConfig =
-                        Config.createTestInstance(
-                            enableManualLauncher = enableManualLauncher,
-                        ),
-                ),
-            sessionStore = sessionStore,
-        )
+    private fun viewModel(
+        biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken),
+        configStore: ConfigStore = this.configStore,
+    ) = SyncIdCheckViewModel(
+        logger = logger,
+        launcherDataReader =
+            LauncherDataReader(
+                sessionStore =
+                    FakeSessionStore(
+                        session = session,
+                    ),
+                biometricTokenReader =
+                    StubBiometricTokenReader(
+                        biometricTokenResult = biometricTokenResult,
+                    ),
+                configStore = configStore,
+            ),
+        analytics = analytics,
+        configStore =
+            FakeConfigStore(
+                initialConfig =
+                    Config.createTestInstance(
+                        enableManualLauncher = enableManualLauncher,
+                    ),
+            ),
+        sessionStore = sessionStore,
+    )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `test that launcher is not triggered twice`() =
+        runTest {
+            val actions = mutableListOf<SyncIdCheckAction>()
+            val job =
+                launch {
+                    viewModel.actions.toList(actions)
+                }
+
+            viewModel.onIdCheckSdkLaunchRequest(launcherData)
+            advanceUntilIdle()
+            assertEquals(true, viewModel.sdkHasDisplayed)
+
+            viewModel.onIdCheckSdkLaunchRequest(launcherData)
+            advanceUntilIdle()
+
+            job.cancel()
+
+            val launchActions = actions.filterIsInstance<SyncIdCheckAction.LaunchIdCheckSdk>()
+            assertEquals(1, launchActions.size)
+            assertEquals(launcherData, launchActions.first().launcherData)
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `sdk launcher is not triggered when screen start executed again`() =
+        runTest {
+            val configStore = FakeConfigStore()
+            val viewModel = viewModel(configStore = configStore)
+
+            viewModel.onScreenStart(documentVariety = documentVariety)
+            advanceUntilIdle()
+
+            viewModel.onIdCheckSdkLaunchRequest(launcherData)
+            advanceUntilIdle()
+
+            assertEquals(true, viewModel.sdkHasDisplayed)
+
+            viewModel.onScreenStart(documentVariety = documentVariety)
+            advanceUntilIdle()
+
+            assertEquals(1, configStore.getReadSingleCount())
+        }
 }

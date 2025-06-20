@@ -40,6 +40,7 @@ class SyncIdCheckViewModel(
 
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
+    var sdkHasDisplayed = false
 
     companion object;
 
@@ -49,13 +50,15 @@ class SyncIdCheckViewModel(
             R.string.loading,
         )
 
-        if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
-            viewModelScope.launch {
-                delay(STUB_BIOMETRIC_TOKEN_DELAY_MS)
-                _state.value = SyncIdCheckState.DisplayStubBiometricToken
+        if (!sdkHasDisplayed) {
+            if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
+                viewModelScope.launch {
+                    delay(STUB_BIOMETRIC_TOKEN_DELAY_MS)
+                    _state.value = SyncIdCheckState.DisplayStubBiometricToken
+                }
+            } else {
+                loadLauncher(documentVariety)
             }
-        } else {
-            loadLauncher(documentVariety)
         }
     }
 
@@ -106,15 +109,19 @@ class SyncIdCheckViewModel(
             )
     }
 
-    fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) =
-        viewModelScope.launch {
-            _actions.emit(
-                SyncIdCheckAction.LaunchIdCheckSdk(
-                    launcherData = launcherData,
-                    logger = logger,
-                ),
-            )
+    fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) {
+        if (!sdkHasDisplayed) {
+            sdkHasDisplayed = true
+            viewModelScope.launch {
+                _actions.emit(
+                    SyncIdCheckAction.LaunchIdCheckSdk(
+                        launcherData = launcherData,
+                        logger = logger,
+                    ),
+                )
+            }
         }
+    }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
         if (exitState.hasAbortedSession()) {
