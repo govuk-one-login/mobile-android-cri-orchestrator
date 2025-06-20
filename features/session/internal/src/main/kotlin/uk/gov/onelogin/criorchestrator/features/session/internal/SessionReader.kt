@@ -3,6 +3,11 @@ package uk.gov.onelogin.criorchestrator.features.session.internal
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 
 fun interface SessionReader {
+    /**
+     * Try to determine if the user has an 'active' ID Check session.
+     *
+     * If this isn't possible, such as when there is no internet connection, the result may be [Result.Unknown].
+     */
     suspend fun isActiveSession(): Result
 
     sealed interface Result {
