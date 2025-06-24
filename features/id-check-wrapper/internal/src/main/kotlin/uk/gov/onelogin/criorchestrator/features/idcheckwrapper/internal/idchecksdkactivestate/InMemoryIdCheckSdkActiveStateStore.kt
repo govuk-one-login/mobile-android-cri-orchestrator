@@ -18,7 +18,7 @@ class InMemoryIdCheckSdkActiveStateStore
     constructor(
         private val logger: Logger,
     ) : IdCheckSdkActiveStateStore,
-    LogTagProvider {
+        LogTagProvider {
         private val idCheckSdkActiveState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
         override fun read(): StateFlow<Boolean> {

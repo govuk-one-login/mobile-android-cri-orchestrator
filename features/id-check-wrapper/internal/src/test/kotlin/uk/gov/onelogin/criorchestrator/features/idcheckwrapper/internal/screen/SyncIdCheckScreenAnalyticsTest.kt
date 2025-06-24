@@ -97,7 +97,7 @@ class SyncIdCheckScreenAnalyticsTest {
                                         enableManualLauncher = false,
                                     ),
                             ),
-                        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
+                        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
                     ),
             )
         }
