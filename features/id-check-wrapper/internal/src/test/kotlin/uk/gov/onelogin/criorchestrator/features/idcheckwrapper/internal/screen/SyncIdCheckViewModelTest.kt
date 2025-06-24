@@ -7,6 +7,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -274,7 +276,7 @@ class SyncIdCheckViewModelTest {
         }
 
     @Test
-    fun `when sdk launch request is received, it emits the launch action`() =
+    fun `when sdk launch request is received, it emits the launch action and sets ID Check SDK state to active`() =
         runTest {
             viewModel.actions.test {
                 viewModel.onScreenStart(documentVariety = documentVariety)
@@ -287,12 +289,13 @@ class SyncIdCheckViewModelTest {
                     ),
                     awaitItem(),
                 )
+                assertTrue(idCheckSdkActiveStateStore.read().value)
             }
         }
 
     @ParameterizedTest(name = "{index} sdk result {0} with session {1} results in {2}")
     @MethodSource("provideSdkResultActionParams")
-    fun `when sdk result is received, it emits the navigation action`(
+    fun `when sdk result is received, it emits the navigation action and sets ID Check SDK state to inactive`(
         stubExitState: IdCheckSdkExitState,
         session: Session,
         expectedNavigationAction: SyncIdCheckAction,
@@ -306,6 +309,7 @@ class SyncIdCheckViewModelTest {
                 expectedNavigationAction,
                 awaitItem(),
             )
+            assertFalse(idCheckSdkActiveStateStore.read().value)
         }
     }
 
