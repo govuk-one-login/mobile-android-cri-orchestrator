@@ -11,6 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.InMemoryIdCheckSdkActiveStateStore
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
@@ -36,10 +38,12 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
             configStore = configStore,
         ),
     logger: Logger = mock(),
+    idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
 ) = SyncIdCheckViewModel(
     configStore = configStore,
     launcherDataReader = launcherDataReader,
     logger = logger,
     analytics = mock(),
+    idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
     sessionStore = sessionStore,
 )
