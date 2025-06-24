@@ -114,6 +114,7 @@ class SyncIdCheckViewModel(
     fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) {
         if (!sdkHasDisplayed) {
             sdkHasDisplayed = true
+            idCheckSdkActiveStateStore.setActive()
             viewModelScope.launch {
                 _actions.emit(
                     SyncIdCheckAction.LaunchIdCheckSdk(
@@ -126,6 +127,7 @@ class SyncIdCheckViewModel(
     }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        idCheckSdkActiveStateStore.setInactive()
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
         }
