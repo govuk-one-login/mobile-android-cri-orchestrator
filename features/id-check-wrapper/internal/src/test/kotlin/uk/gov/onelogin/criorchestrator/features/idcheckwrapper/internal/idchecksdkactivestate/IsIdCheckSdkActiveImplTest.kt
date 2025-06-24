@@ -1,8 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import uk.gov.logging.testdouble.SystemLogger
 
 class IsIdCheckSdkActiveImplTest {
