@@ -20,6 +20,7 @@ import javax.inject.Named
 object SyncIdCheckViewModelModule {
     const val FACTORY_NAME = "SyncIdCheckViewModelModuleFactory"
 
+    @Suppress("LongParameterList")
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(

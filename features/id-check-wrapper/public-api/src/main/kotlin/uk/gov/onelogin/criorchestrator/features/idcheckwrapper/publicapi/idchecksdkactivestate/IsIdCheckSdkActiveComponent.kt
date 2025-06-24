@@ -12,7 +12,7 @@ fun interface IsIdCheckSdkActiveComponent {
 }
 
 /**
- * Get the [RefreshActiveSession] use case.
+ * Get the [IsIdCheckSdkActive] use case.
  */
 val CriOrchestratorSdk.isIdCheckSdkActive: IsIdCheckSdkActive get() =
     (this.component as IsIdCheckSdkActiveComponent).isIdCheckSdkActive()
