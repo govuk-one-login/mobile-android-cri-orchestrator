@@ -30,6 +30,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.InMemoryIdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createTestInstance
@@ -44,6 +45,7 @@ import java.util.stream.Stream
 
 @ExtendWith(MainDispatcherExtension::class)
 class SyncIdCheckViewModelTest {
+    private val logger = SystemLogger()
     private val documentVariety = DocumentVariety.NFC_PASSPORT
     private var enableManualLauncher = false
     private var session = Session.createTestInstance()
@@ -51,6 +53,7 @@ class SyncIdCheckViewModelTest {
     private val analytics = mock<IdCheckWrapperAnalytics>()
     private val sessionStore = FakeSessionStore(session)
     private val configStore: ConfigStore = FakeConfigStore()
+    private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
@@ -83,10 +86,10 @@ class SyncIdCheckViewModelTest {
                 ),
             analytics = analytics,
             sessionStore = sessionStore,
+            idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
         )
     }
 
-    private val logger = SystemLogger()
     private val activityResultContractParameters =
         IdCheckSdkActivityResultContractParameters(
             stubExitState = ExitStateOption.None,
@@ -377,6 +380,7 @@ class SyncIdCheckViewModelTest {
                     ),
             ),
         sessionStore = sessionStore,
+        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
