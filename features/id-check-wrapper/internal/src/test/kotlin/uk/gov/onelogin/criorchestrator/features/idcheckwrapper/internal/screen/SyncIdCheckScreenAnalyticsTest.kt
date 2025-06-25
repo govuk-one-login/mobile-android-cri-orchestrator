@@ -23,6 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.InMemoryIdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
@@ -69,6 +70,7 @@ class SyncIdCheckScreenAnalyticsTest {
 
     private fun ComposeContentTestRule.setSyncIdCheckScreenContent() {
         setContent {
+            val logger = SystemLogger()
             SyncIdCheckScreen(
                 documentVariety = DocumentVariety.NFC_PASSPORT,
                 navController = rememberNavController(),
@@ -86,7 +88,7 @@ class SyncIdCheckScreenAnalyticsTest {
                                     ),
                                 configStore = FakeConfigStore(),
                             ),
-                        logger = SystemLogger(),
+                        logger = logger,
                         analytics = analytics,
                         configStore =
                             FakeConfigStore(
@@ -95,6 +97,7 @@ class SyncIdCheckScreenAnalyticsTest {
                                         enableManualLauncher = false,
                                     ),
                             ),
+                        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
                     ),
             )
         }

@@ -10,6 +10,7 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
@@ -19,11 +20,13 @@ import javax.inject.Named
 object SyncIdCheckViewModelModule {
     const val FACTORY_NAME = "SyncIdCheckViewModelModuleFactory"
 
+    @Suppress("LongParameterList")
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(
         configStore: ConfigStore,
         sessionStore: SessionStore,
+        idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore,
         launcherDataReader: LauncherDataReader,
         logger: Logger,
         analytics: IdCheckWrapperAnalytics,
@@ -33,6 +36,7 @@ object SyncIdCheckViewModelModule {
                 SyncIdCheckViewModel(
                     configStore = configStore,
                     sessionStore = sessionStore,
+                    idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
                     launcherDataReader = launcherDataReader,
                     logger = logger,
                     analytics = analytics,

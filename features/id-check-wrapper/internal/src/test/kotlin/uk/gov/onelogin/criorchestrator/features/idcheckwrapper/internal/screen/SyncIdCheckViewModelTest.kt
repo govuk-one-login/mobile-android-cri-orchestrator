@@ -7,6 +7,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -30,6 +32,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.InMemoryIdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createTestInstance
@@ -44,6 +47,7 @@ import java.util.stream.Stream
 
 @ExtendWith(MainDispatcherExtension::class)
 class SyncIdCheckViewModelTest {
+    private val logger = SystemLogger()
     private val documentVariety = DocumentVariety.NFC_PASSPORT
     private var enableManualLauncher = false
     private var session = Session.createTestInstance()
@@ -51,6 +55,7 @@ class SyncIdCheckViewModelTest {
     private val analytics = mock<IdCheckWrapperAnalytics>()
     private val sessionStore = FakeSessionStore(session)
     private val configStore: ConfigStore = FakeConfigStore()
+    private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
             session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
@@ -83,10 +88,10 @@ class SyncIdCheckViewModelTest {
                 ),
             analytics = analytics,
             sessionStore = sessionStore,
+            idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
         )
     }
 
-    private val logger = SystemLogger()
     private val activityResultContractParameters =
         IdCheckSdkActivityResultContractParameters(
             stubExitState = ExitStateOption.None,
@@ -271,7 +276,7 @@ class SyncIdCheckViewModelTest {
         }
 
     @Test
-    fun `when sdk launch request is received, it emits the launch action`() =
+    fun `when sdk launch request is received, it emits the launch action and sets ID Check SDK state to active`() =
         runTest {
             viewModel.actions.test {
                 viewModel.onScreenStart(documentVariety = documentVariety)
@@ -284,12 +289,13 @@ class SyncIdCheckViewModelTest {
                     ),
                     awaitItem(),
                 )
+                assertTrue(idCheckSdkActiveStateStore.read().value)
             }
         }
 
     @ParameterizedTest(name = "{index} sdk result {0} with session {1} results in {2}")
     @MethodSource("provideSdkResultActionParams")
-    fun `when sdk result is received, it emits the navigation action`(
+    fun `when sdk result is received, it emits the navigation action and sets ID Check SDK state to inactive`(
         stubExitState: IdCheckSdkExitState,
         session: Session,
         expectedNavigationAction: SyncIdCheckAction,
@@ -303,6 +309,7 @@ class SyncIdCheckViewModelTest {
                 expectedNavigationAction,
                 awaitItem(),
             )
+            assertFalse(idCheckSdkActiveStateStore.read().value)
         }
     }
 
@@ -377,6 +384,7 @@ class SyncIdCheckViewModelTest {
                     ),
             ),
         sessionStore = sessionStore,
+        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)

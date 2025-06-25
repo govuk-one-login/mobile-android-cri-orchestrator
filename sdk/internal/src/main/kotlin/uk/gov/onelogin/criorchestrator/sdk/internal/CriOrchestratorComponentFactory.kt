@@ -3,6 +3,8 @@ package uk.gov.onelogin.criorchestrator.sdk.internal
 import android.app.Activity
 import android.content.Context
 import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.IdCheckSdkActiveStateComponent
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.idchecksdkactivestate.IsIdCheckSdkActiveComponent
 import uk.gov.onelogin.criorchestrator.features.session.internal.SessionComponent
 import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSessionComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
@@ -25,6 +27,8 @@ fun createCriOrchestratorComponent(
         baseSingletonComponent = singletonComponent as BaseCriOrchestratorSingletonComponent,
         configComponent = singletonComponent as ConfigComponent,
         sessionComponent = singletonComponent as SessionComponent,
+        idCheckSdkActiveStateComponent = singletonComponent as IdCheckSdkActiveStateComponent,
+        isIdCheckSdkActiveComponent = singletonComponent as IsIdCheckSdkActiveComponent,
         refreshActiveSessionComponent = singletonComponent as RefreshActiveSessionComponent,
         activity = activity,
         context = context,

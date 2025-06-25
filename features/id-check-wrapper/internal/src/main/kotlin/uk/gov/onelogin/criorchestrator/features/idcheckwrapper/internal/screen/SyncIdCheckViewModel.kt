@@ -23,6 +23,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.Lau
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
@@ -31,6 +32,7 @@ private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 class SyncIdCheckViewModel(
     private val configStore: ConfigStore,
     private val sessionStore: SessionStore,
+    private val idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore,
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
@@ -112,6 +114,7 @@ class SyncIdCheckViewModel(
     fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) {
         if (!sdkHasDisplayed) {
             sdkHasDisplayed = true
+            idCheckSdkActiveStateStore.setActive()
             viewModelScope.launch {
                 _actions.emit(
                     SyncIdCheckAction.LaunchIdCheckSdk(
@@ -124,6 +127,7 @@ class SyncIdCheckViewModel(
     }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        idCheckSdkActiveStateStore.setInactive()
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
         }

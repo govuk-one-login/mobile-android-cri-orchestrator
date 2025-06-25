@@ -17,6 +17,8 @@ dependencies {
         }
     }
     implementation(projects.features.config.publicApi)
+    implementation(projects.libraries.di)
+    implementation(projects.sdk.sharedApi)
 }
 
 mavenPublishingConfig {

@@ -5,6 +5,8 @@ import android.content.Context
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.IdCheckSdkActiveStateComponent
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.idchecksdkactivestate.IsIdCheckSdkActiveComponent
 import uk.gov.onelogin.criorchestrator.features.session.internal.SessionComponent
 import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSessionComponent
 import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
@@ -20,6 +22,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
         BaseCriOrchestratorSingletonComponent::class,
         ConfigComponent::class,
         SessionComponent::class,
+        IdCheckSdkActiveStateComponent::class,
+        IsIdCheckSdkActiveComponent::class,
         RefreshActiveSessionComponent::class,
     ],
 )
@@ -31,6 +35,8 @@ interface BaseCriOrchestratorComponent {
             baseSingletonComponent: BaseCriOrchestratorSingletonComponent,
             configComponent: ConfigComponent,
             sessionComponent: SessionComponent,
+            idCheckSdkActiveStateComponent: IdCheckSdkActiveStateComponent,
+            isIdCheckSdkActiveComponent: IsIdCheckSdkActiveComponent,
             refreshActiveSessionComponent: RefreshActiveSessionComponent,
             @BindsInstance context: Context,
             @BindsInstance activity: Activity,
