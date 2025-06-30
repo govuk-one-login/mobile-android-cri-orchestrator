@@ -26,6 +26,8 @@ class ReturnToMobileWebScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    val context: Context = ApplicationProvider.getApplicationContext()
+
     private val session =
         Session.createTestInstance(
             redirectUri = REDIRECT_URI,
@@ -53,7 +55,6 @@ class ReturnToMobileWebScreenTest {
 
     @Test
     fun `when continue to gov uk website button is clicked, it opens the session redirect uri`() {
-        val context: Context = ApplicationProvider.getApplicationContext()
         composeTestRule
             .onNode(
                 hasTextStartingWith(context.getString(ReturnToMobileWebConstants.buttonId)),
@@ -64,7 +65,6 @@ class ReturnToMobileWebScreenTest {
 
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {
-        val context: Context = ApplicationProvider.getApplicationContext()
         val title =
             composeTestRule
                 .onNode(hasText(context.getString(ReturnToMobileWebConstants.titleId)))
@@ -74,5 +74,15 @@ class ReturnToMobileWebScreenTest {
             composeTestRule
                 .onNode(hasText(context.getString(R.string.handback_returntomobileweb_body2)))
         body.assertContentDescriptionContains("Gov dot UK", true)
+    }
+
+    @Test
+    fun `when talkback is enabled, it reads out external site button correctly`() {
+        composeTestRule.onNode(
+            hasText(
+                context.getString(R.string.handback_returntomobileweb_button),
+                true,
+            ),
+        ).assertContentDescriptionContains(". opens in web browser")
     }
 }
