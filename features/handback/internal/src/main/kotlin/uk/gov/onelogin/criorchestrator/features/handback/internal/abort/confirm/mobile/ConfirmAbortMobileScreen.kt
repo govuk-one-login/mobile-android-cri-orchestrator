@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
+import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
@@ -134,6 +135,7 @@ internal fun ConfirmAbortMobileWebContent(
                 }
             },
             primaryButton = {
+                val contentDescription = ". ${stringResource(opens_in_external_browser)}"
                 GdsButton(
                     text = stringResource(ConfirmAbortMobileConstants.buttonId),
                     onClick = dropUnlessResumed { onButtonClick() },
@@ -148,7 +150,7 @@ internal fun ConfirmAbortMobileWebContent(
                                 ),
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
-                            contentDescription = "Opens in external browser",
+                            contentDescription = contentDescription,
                         ),
                     modifier = Modifier.fillMaxWidth(),
                 )
