@@ -78,11 +78,12 @@ class ReturnToMobileWebScreenTest {
 
     @Test
     fun `when talkback is enabled, it reads out external site button correctly`() {
-        composeTestRule.onNode(
-            hasText(
-                context.getString(R.string.handback_returntomobileweb_button),
-                true,
-            ),
-        ).assertContentDescriptionContains(". opens in web browser")
+        composeTestRule
+            .onNode(
+                hasText(
+                    context.getString(R.string.handback_returntomobileweb_button),
+                    true,
+                ),
+            ).assertContentDescriptionContains(". opens in web browser")
     }
 }

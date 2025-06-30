@@ -66,7 +66,6 @@ class ConfirmAbortMobileScreenTest {
 
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {
-
         val body =
             composeTestRule
                 .onNode(hasText(context.getString(R.string.handback_confirmabort_body1)))
@@ -75,12 +74,13 @@ class ConfirmAbortMobileScreenTest {
 
     @Test
     fun `when talkback is enabled, it reads out external site button correctly`() {
-        composeTestRule.onNode(
-            hasText(
-                context.getString(R.string.handback_confirmabortmobileweb_button),
-                true,
-            ),
-        ).assertContentDescriptionContains(". opens in web browser")
+        composeTestRule
+            .onNode(
+                hasText(
+                    context.getString(R.string.handback_confirmabortmobileweb_button),
+                    true,
+                ),
+            ).assertContentDescriptionContains(". opens in web browser")
     }
 
     @Test
