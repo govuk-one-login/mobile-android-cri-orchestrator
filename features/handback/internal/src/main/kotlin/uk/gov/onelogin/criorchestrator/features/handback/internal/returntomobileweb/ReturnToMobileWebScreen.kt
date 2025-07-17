@@ -115,6 +115,7 @@ private fun ReturnToMobileWebScreenContent(
                 }
             },
             primaryButton = {
+                val contentDescription = ". ${stringResource(opens_in_external_browser)}"
                 GdsButton(
                     text = stringResource(ReturnToMobileWebConstants.buttonId),
                     buttonType =
@@ -128,8 +129,8 @@ private fun ReturnToMobileWebScreenContent(
                                 ),
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
-                            contentDescription = stringResource(opens_in_external_browser),
-                            shadowColor = Buttons.shadow.toMappedColors()
+                            contentDescription = contentDescription,
+                            shadowColor = Buttons.shadow.toMappedColors(),
                         ),
                     onClick = dropUnlessResumed { onButtonClick() },
                     modifier = Modifier.fillMaxWidth(),
