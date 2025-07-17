@@ -25,7 +25,9 @@ import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
+import uk.gov.android.ui.theme.m3.Buttons
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.android.ui.theme.m3.toMappedColors
 import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -127,6 +129,7 @@ private fun ReturnToMobileWebScreenContent(
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
                             contentDescription = stringResource(opens_in_external_browser),
+                            shadowColor = Buttons.shadow.toMappedColors()
                         ),
                     onClick = dropUnlessResumed { onButtonClick() },
                     modifier = Modifier.fillMaxWidth(),

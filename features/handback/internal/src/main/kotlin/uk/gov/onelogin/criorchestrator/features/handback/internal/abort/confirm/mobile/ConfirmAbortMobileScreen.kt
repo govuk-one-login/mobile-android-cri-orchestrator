@@ -18,6 +18,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
@@ -26,7 +27,9 @@ import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
+import uk.gov.android.ui.theme.m3.Buttons
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.android.ui.theme.m3.toMappedColors
 import uk.gov.android.ui.theme.m3_disabled
 import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -149,6 +152,7 @@ internal fun ConfirmAbortMobileWebContent(
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
                             contentDescription = "Opens in external browser",
+                            shadowColor = Buttons.shadow.toMappedColors()
                         ),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -158,6 +162,7 @@ internal fun ConfirmAbortMobileWebContent(
 }
 
 @LightDarkBothLocalesPreview
+@Preview
 @Composable
 internal fun PreviewConfirmAbortMobileWeb() {
     GdsTheme {
