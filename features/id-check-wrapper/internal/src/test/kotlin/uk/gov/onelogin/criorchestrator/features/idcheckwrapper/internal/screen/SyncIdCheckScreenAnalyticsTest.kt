@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 import android.content.Context
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -98,6 +99,10 @@ class SyncIdCheckScreenAnalyticsTest {
                                     ),
                             ),
                         idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
+                        savedStateHandle =
+                            SavedStateHandle(
+                                mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+                            ),
                     ),
             )
         }

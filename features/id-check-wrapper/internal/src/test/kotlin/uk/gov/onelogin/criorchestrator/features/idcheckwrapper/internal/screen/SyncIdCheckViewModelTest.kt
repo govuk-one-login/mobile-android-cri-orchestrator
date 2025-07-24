@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -53,7 +54,9 @@ class SyncIdCheckViewModelTest {
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
     private val analytics = mock<IdCheckWrapperAnalytics>()
-    private val sessionStore = FakeSessionStore(session)
+    private val sessionStore by lazy {
+        FakeSessionStore(session)
+    }
     private val configStore: ConfigStore = FakeConfigStore()
     private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
@@ -89,6 +92,10 @@ class SyncIdCheckViewModelTest {
             analytics = analytics,
             sessionStore = sessionStore,
             idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
+            savedStateHandle =
+                SavedStateHandle(
+                    mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+                ),
         )
     }
 
@@ -385,6 +392,10 @@ class SyncIdCheckViewModelTest {
             ),
         sessionStore = sessionStore,
         idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+            ),
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
