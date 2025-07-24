@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -26,10 +27,13 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.Docum
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
+@Suppress("LongParameterList")
 class SyncIdCheckViewModel(
+    private val savedStateHandle: SavedStateHandle,
     private val configStore: ConfigStore,
     private val sessionStore: SessionStore,
     private val idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore,
@@ -42,9 +46,14 @@ class SyncIdCheckViewModel(
 
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
-    var sdkHasDisplayed = false
+    var sdkHasDisplayed: Boolean =
+        savedStateHandle.get(
+            key = SDK_HAS_DISPLAYED,
+        ) ?: initiallyReturnFalse()
 
-    companion object;
+    companion object {
+        const val SDK_HAS_DISPLAYED = "uk.gov.onelogin.criorchestrator.sdkHasDisplayed"
+    }
 
     fun onScreenStart(documentVariety: DocumentVariety) {
         analytics.trackScreen(
@@ -113,7 +122,7 @@ class SyncIdCheckViewModel(
 
     fun onIdCheckSdkLaunchRequest(launcherData: LauncherData) {
         if (!sdkHasDisplayed) {
-            sdkHasDisplayed = true
+            updateSdkHasDisplayed(true)
             idCheckSdkActiveStateStore.setActive()
             viewModelScope.launch {
                 _actions.emit(
@@ -131,8 +140,7 @@ class SyncIdCheckViewModel(
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
         }
-
-        val journeyType = requireDisplayState().launcherData.sessionJourneyType
+        val journeyType = sessionStore.read().value!!.journeyType
         val action =
             when (exitState.isSuccess()) {
                 true ->
@@ -198,4 +206,14 @@ class SyncIdCheckViewModel(
     }
 
     private fun requireDisplayState() = _state.value as? SyncIdCheckState.Display ?: error("Expected display state")
+
+    private fun updateSdkHasDisplayed(state: Boolean) {
+        sdkHasDisplayed = state
+        savedStateHandle[SDK_HAS_DISPLAYED] = state
+    }
+
+    private fun initiallyReturnFalse(): Boolean {
+        savedStateHandle[SDK_HAS_DISPLAYED] = false
+        return false
+    }
 }
