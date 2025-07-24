@@ -47,9 +47,7 @@ class SyncIdCheckViewModel(
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
     var sdkHasDisplayed: Boolean =
-        savedStateHandle.get(
-            key = SDK_HAS_DISPLAYED,
-        ) ?: initiallyReturnFalse()
+        savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
 
     companion object {
         const val SDK_HAS_DISPLAYED = "uk.gov.onelogin.criorchestrator.sdkHasDisplayed"
