@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
+import androidx.lifecycle.SavedStateHandle
 import org.mockito.Mockito.mock
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.api.Logger
@@ -46,4 +47,8 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
     analytics = mock(),
     idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
     sessionStore = sessionStore,
+    savedStateHandle =
+        SavedStateHandle(
+            mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+        ),
 )
