@@ -31,7 +31,8 @@ class MainActivityTest {
     @Test
     fun itLaunches() {
         launchActivity<MainActivity>().use {
-            onView(withId(android.R.id.content))
+            onView(
+                withId(android.R.id.content))
                 .check(matches(isDisplayed()))
         }
     }
