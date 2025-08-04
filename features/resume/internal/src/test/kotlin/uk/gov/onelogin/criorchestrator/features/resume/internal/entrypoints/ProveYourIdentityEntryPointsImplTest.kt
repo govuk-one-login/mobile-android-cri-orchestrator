@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.resume.internal
+package uk.gov.onelogin.criorchestrator.features.resume.internal.entrypoints
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.onelogin.criorchestrator.features.resume.internal.ProveYourIdentityEntryPointsImpl
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
