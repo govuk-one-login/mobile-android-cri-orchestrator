@@ -37,10 +37,10 @@ class DevMenuEntryPointsImplTest {
         composeTestRule.setContent {
             GdsTheme {
                 entryPoints.DevMenuScreen(
-                    modifier = Modifier.Companion,
+                    modifier = Modifier,
                 )
             }
         }
-        composeTestRule.onNodeWithTag(DevMenuEntryPointsImpl.Companion.TEST_TAG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(DevMenuEntryPointsImpl.TEST_TAG).assertIsDisplayed()
     }
 }

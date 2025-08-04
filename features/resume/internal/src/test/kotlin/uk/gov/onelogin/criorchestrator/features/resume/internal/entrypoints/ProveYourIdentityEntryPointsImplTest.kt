@@ -25,7 +25,7 @@ class ProveYourIdentityEntryPointsImplTest {
     val composeTestRule = createComposeRule()
 
     private val fakeProveYourIdentityViewModel =
-        ProveYourIdentityViewModel.Companion.createTestInstance()
+        ProveYourIdentityViewModel.createTestInstance()
 
     private val fakeViewModelProviderFactory =
         viewModelFactory {
@@ -53,10 +53,10 @@ class ProveYourIdentityEntryPointsImplTest {
         composeTestRule.setContent {
             GdsTheme {
                 entryPoints.ProveYourIdentityCard(
-                    modifier = Modifier.Companion,
+                    modifier = Modifier,
                 )
             }
         }
-        composeTestRule.onNodeWithTag(ProveYourIdentityEntryPointsImpl.Companion.TEST_TAG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(ProveYourIdentityEntryPointsImpl.TEST_TAG).assertIsDisplayed()
     }
 }

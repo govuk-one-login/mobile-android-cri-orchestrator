@@ -38,12 +38,11 @@ class ConfirmAbortMobileScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     private val context: Context = ApplicationProvider.getApplicationContext()
-    private val continueButton =
-        hasTextStartingWith(context.getString(ConfirmAbortMobileConstants.buttonId))
+    private val continueButton = hasTextStartingWith(context.getString(ConfirmAbortMobileConstants.buttonId))
     private val navController = mock<NavController>()
     private val abortSession = StubAbortSession()
     private val session =
-        Session.Companion.createTestInstance(
+        Session.createTestInstance(
             redirectUri = REDIRECT_URI,
         )
 

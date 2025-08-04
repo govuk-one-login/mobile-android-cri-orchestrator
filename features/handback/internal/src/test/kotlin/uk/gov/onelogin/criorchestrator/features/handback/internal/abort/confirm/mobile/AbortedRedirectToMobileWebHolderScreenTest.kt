@@ -1,13 +1,13 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.mobile
+package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.AbortedRedirectToMobileWebHolderScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 
@@ -32,12 +32,12 @@ class AbortedRedirectToMobileWebHolderScreenTest {
 
     @Test
     fun `when navigated to, it immediately navigates to mobile web`() {
-        Assert.assertEquals(REDIRECT_URI, webNavigator.openUrl)
+        assertEquals(REDIRECT_URI, webNavigator.openUrl)
     }
 
     @Test
     fun `when navigated to, it immediately runs onFinish`() {
-        Assert.assertTrue(hasFinished)
+        assertTrue(hasFinished)
     }
 
     private fun onFinish() {
