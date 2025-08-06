@@ -1,5 +1,6 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    alias(libs.plugins.kotlin.parcelize)
 }
 dependencies {
     implementation(libs.kotlinx.coroutines)

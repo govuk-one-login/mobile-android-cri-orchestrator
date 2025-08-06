@@ -31,7 +31,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journ
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "TooGenericExceptionCaught", "TooManyFunctions")
 class SyncIdCheckViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val configStore: ConfigStore,
@@ -46,11 +46,12 @@ class SyncIdCheckViewModel(
 
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
-    var sdkHasDisplayed: Boolean =
-        savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
+    var sdkHasDisplayed: Boolean = savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
+    val journeyType: JourneyType = savedStateHandle[SDK_JOURNEY_TYPE] ?: initialJourneyType()
 
     companion object {
         const val SDK_HAS_DISPLAYED = "uk.gov.onelogin.criorchestrator.sdkHasDisplayed"
+        const val SDK_JOURNEY_TYPE = "uk.gov.onelogin.criorchestrator.sdkJourneyType"
     }
 
     fun onScreenStart(documentVariety: DocumentVariety) {
@@ -138,7 +139,6 @@ class SyncIdCheckViewModel(
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
         }
-        val journeyType = sessionStore.read().value!!.journeyType
         val action =
             when (exitState.isSuccess()) {
                 true ->
@@ -213,5 +213,20 @@ class SyncIdCheckViewModel(
     private fun initiallyReturnFalse(): Boolean {
         savedStateHandle[SDK_HAS_DISPLAYED] = false
         return false
+    }
+
+    private fun initialJourneyType(): JourneyType {
+        val sessionStoreJourneyType =
+            try {
+                sessionStore.read().value!!.journeyType
+            } catch (e: NullPointerException) {
+                logger.error(
+                    tag = this::class.java.simpleName,
+                    msg = "No session found in Session Store nor Saved State Handle",
+                )
+                throw e
+            }
+        savedStateHandle[SDK_JOURNEY_TYPE] = sessionStoreJourneyType
+        return sessionStoreJourneyType
     }
 }
