@@ -39,6 +39,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
@@ -129,7 +130,6 @@ class SyncIdCheckViewModelTest {
     )
 
     companion object {
-        private const val REDIRECT_URI = "http://mam-redirect-uri"
         private val mamSession =
             Session.createTestInstance(
                 redirectUri = REDIRECT_URI,
@@ -178,7 +178,7 @@ class SyncIdCheckViewModelTest {
                                 sdkResult,
                                 Session.createMobileAppMobileInstance(),
                                 SyncIdCheckAction.NavigateToReturnToMobileWeb(
-                                    "http://mam-redirect-uri?state=mock-state"
+                                    REDIRECT_URI
                                 ),
                             ),
                         ).stream()

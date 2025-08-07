@@ -129,7 +129,7 @@ class SyncIdCheckScreenTest {
 
         verify(navController).navigate(
             AbortDestinations.AbortedRedirectToMobileWebHolder(
-                redirectUri = "http://mam-redirect-uri?state=mock-state",
+                redirectUri = REDIRECT_URI,
             ),
         )
     }

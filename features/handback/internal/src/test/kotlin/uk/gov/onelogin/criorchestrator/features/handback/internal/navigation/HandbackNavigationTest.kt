@@ -97,7 +97,7 @@ class HandbackNavigationTest {
 
     @Test
     fun `return to mobile web`() {
-        val redirectUri = "https://example/redirect"
+        val redirectUri = "http://mam-redirect-uri?state=mock-state"
         givenMobileJourney(
             redirectUri = redirectUri,
         )
