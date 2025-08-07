@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.disablebackbutton
+package uk.gov.onelogin.criorchestrator.features.handback.internal
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable

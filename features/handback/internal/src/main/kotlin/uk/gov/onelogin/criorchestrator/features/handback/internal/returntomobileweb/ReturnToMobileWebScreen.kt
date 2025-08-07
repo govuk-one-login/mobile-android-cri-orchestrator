@@ -59,7 +59,7 @@ fun ReturnToMobileWebScreen(
     LaunchedEffect(viewModel.actions) {
         viewModel.actions.collect { action ->
             when (action) {
-                is ReturnToMobileWebAction.ContinueToGovUk -> {
+                ReturnToMobileWebAction.ContinueToGovUk -> {
                     webNavigator.openWebPage(redirectUri)
                 }
             }

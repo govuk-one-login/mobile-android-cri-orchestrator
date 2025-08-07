@@ -4,7 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
-import uk.gov.onelogin.criorchestrator.features.handback.internal.disablebackbutton.DisableBackButtonTest
+import uk.gov.onelogin.criorchestrator.features.handback.internal.DisableBackButtonTest
 
 @RunWith(AndroidJUnit4::class)
 class ReturnToDesktopWebScreenDisableBackButtonTest : DisableBackButtonTest() {
