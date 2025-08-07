@@ -178,7 +178,7 @@ class SyncIdCheckViewModelTest {
                                 sdkResult,
                                 Session.createMobileAppMobileInstance(),
                                 SyncIdCheckAction.NavigateToReturnToMobileWeb(
-                                    REDIRECT_URI
+                                    REDIRECT_URI,
                                 ),
                             ),
                         ).stream()

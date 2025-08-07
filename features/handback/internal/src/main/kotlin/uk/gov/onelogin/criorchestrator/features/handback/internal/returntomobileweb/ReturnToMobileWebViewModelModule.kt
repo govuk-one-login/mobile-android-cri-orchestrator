@@ -7,7 +7,6 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import javax.inject.Named
 
@@ -18,9 +17,7 @@ object ReturnToMobileWebViewModelModule {
 
     @Provides
     @Named(FACTORY_NAME)
-    fun provideFactory(
-        analytics: HandbackAnalytics,
-    ): ViewModelProvider.Factory =
+    fun provideFactory(analytics: HandbackAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ReturnToMobileWebViewModel(

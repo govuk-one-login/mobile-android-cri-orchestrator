@@ -18,9 +18,7 @@ fun Session.Companion.createDesktopAppDesktopInstance(): Session =
         redirectUri = null,
     )
 
-fun Session.Companion.createMobileAppMobileInstance(
-    redirectUri: String = REDIRECT_URI,
-): Session =
+fun Session.Companion.createMobileAppMobileInstance(redirectUri: String = REDIRECT_URI): Session =
     Session.createTestInstance(
         redirectUri = redirectUri,
     )

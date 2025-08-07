@@ -15,10 +15,7 @@ import org.mockito.Mockito.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
