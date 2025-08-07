@@ -135,7 +135,7 @@ class SyncIdCheckViewModel(
     }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
-        var redirectUri: String? = null
+        var redirectUri: String?
         idCheckSdkActiveStateStore.setInactive()
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
