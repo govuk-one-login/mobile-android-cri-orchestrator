@@ -135,7 +135,6 @@ class SyncIdCheckViewModel(
     }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
-        var redirectUri: String?
         idCheckSdkActiveStateStore.setInactive()
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
@@ -146,17 +145,13 @@ class SyncIdCheckViewModel(
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        is JourneyType.MobileAppMobile -> {
-                            redirectUri = journeyType.redirectUri
-                            SyncIdCheckAction.NavigateToReturnToMobileWeb(redirectUri)
-                        }
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToReturnToMobileWeb(journeyType.redirectUri)
                     }
                 false ->
                     when (journeyType) {
-                        is JourneyType.MobileAppMobile -> {
-                            redirectUri = journeyType.redirectUri
-                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(redirectUri)
-                        }
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
