@@ -16,7 +16,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
-import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -47,7 +47,6 @@ class ReturnToMobileWebScreenAnalyticsTest {
     private val viewModel =
         ReturnToMobileWebViewModel(
             analytics = analytics,
-            sessionStore = FakeSessionStore(),
         )
 
     @Before
@@ -56,6 +55,7 @@ class ReturnToMobileWebScreenAnalyticsTest {
             ReturnToMobileWebScreen(
                 viewModel = viewModel,
                 webNavigator = FakeWebNavigator(),
+                redirectUri = REDIRECT_URI,
             )
         }
     }

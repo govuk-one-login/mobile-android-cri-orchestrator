@@ -20,13 +20,11 @@ object ReturnToMobileWebViewModelModule {
     @Named(FACTORY_NAME)
     fun provideFactory(
         analytics: HandbackAnalytics,
-        sessionStore: SessionStore,
     ): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
                 ReturnToMobileWebViewModel(
                     analytics = analytics,
-                    sessionStore = sessionStore,
                 )
             }
         }

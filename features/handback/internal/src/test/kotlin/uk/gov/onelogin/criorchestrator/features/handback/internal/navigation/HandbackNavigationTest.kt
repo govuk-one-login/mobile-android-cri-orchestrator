@@ -46,6 +46,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
@@ -96,12 +97,12 @@ class HandbackNavigationTest {
 
     @Test
     fun `return to mobile web`() {
-        val redirectUri = "https://redirect-uri"
+        val redirectUri = "https://example/redirect"
         givenMobileJourney(
             redirectUri = redirectUri,
         )
         composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.ReturnToMobileWeb,
+            startNavigatesTo = HandbackDestinations.ReturnToMobileWeb(REDIRECT_URI),
         )
 
         composeTestRule.clickStart()
@@ -368,7 +369,6 @@ class HandbackNavigationTest {
             returnToMobileViewModelFactory =
                 ReturnToMobileWebViewModelModule.provideFactory(
                     analytics = analytics,
-                    sessionStore = sessionStore,
                 ),
             returnToDesktopViewModelFactory =
                 ReturnToDesktopWebViewModelModule.provideFactory(

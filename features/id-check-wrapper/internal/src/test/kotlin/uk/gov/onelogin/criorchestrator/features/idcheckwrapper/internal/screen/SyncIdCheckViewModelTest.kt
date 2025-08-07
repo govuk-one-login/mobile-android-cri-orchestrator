@@ -177,7 +177,9 @@ class SyncIdCheckViewModelTest {
                             Arguments.of(
                                 sdkResult,
                                 Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToReturnToMobileWeb,
+                                SyncIdCheckAction.NavigateToReturnToMobileWeb(
+                                    "http://mam-redirect-uri?state=mock-state"
+                                ),
                             ),
                         ).stream()
                     }

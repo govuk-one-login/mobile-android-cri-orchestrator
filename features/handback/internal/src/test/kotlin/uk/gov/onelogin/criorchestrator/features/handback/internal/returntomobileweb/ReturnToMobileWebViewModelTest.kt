@@ -12,12 +12,10 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 @ExtendWith(MainDispatcherExtension::class)
 class ReturnToMobileWebViewModelTest {
     private val analytics = mock<HandbackAnalytics>()
-    private val sessionStore = mock<SessionStore>()
 
     private val viewModel =
         ReturnToMobileWebViewModel(
             analytics = analytics,
-            sessionStore = sessionStore,
         )
 
     @Test

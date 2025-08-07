@@ -13,7 +13,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
 class ReturnToMobileWebViewModel(
-    private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<ReturnToMobileWebAction>()
@@ -30,16 +29,7 @@ class ReturnToMobileWebViewModel(
         analytics.trackButtonEvent(ReturnToMobileWebConstants.buttonId)
 
         viewModelScope.launch {
-            val redirectUri =
-                sessionStore
-                    .read()
-                    .filterNotNull()
-                    .first()
-                    .redirectUri
-
-            redirectUri?.let {
-                _actions.emit(ReturnToMobileWebAction.ContinueToGovUk(it))
-            }
+            _actions.emit(ReturnToMobileWebAction.ContinueToGovUk)
         }
     }
 }

@@ -54,10 +54,15 @@ class HandbackNavGraphProvider
                 )
             }
 
-            composable<HandbackDestinations.ReturnToMobileWeb> {
+            composable<HandbackDestinations.ReturnToMobileWeb> { backStackEntry ->
+                val redirectUri =
+                    backStackEntry
+                        .toRoute<HandbackDestinations.ReturnToMobileWeb>()
+                        .redirectUri
                 ReturnToMobileWebScreen(
                     viewModel = viewModel(factory = returnToMobileViewModelFactory),
                     webNavigator = webNavigator,
+                    redirectUri = redirectUri,
                 )
             }
 

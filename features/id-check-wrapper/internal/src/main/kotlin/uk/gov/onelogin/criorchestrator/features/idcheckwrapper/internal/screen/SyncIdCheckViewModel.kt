@@ -26,6 +26,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 
@@ -135,6 +136,7 @@ class SyncIdCheckViewModel(
     }
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
+        var redirectUri: String? = null
         idCheckSdkActiveStateStore.setInactive()
         if (exitState.hasAbortedSession()) {
             sessionStore.updateToAborted()
@@ -145,13 +147,17 @@ class SyncIdCheckViewModel(
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToReturnToMobileWeb
+                        is JourneyType.MobileAppMobile -> {
+                            redirectUri = journeyType.redirectUri
+                            SyncIdCheckAction.NavigateToReturnToMobileWeb(redirectUri)
+                        }
                     }
                 false ->
                     when (journeyType) {
-                        is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
+                        is JourneyType.MobileAppMobile -> {
+                            redirectUri = journeyType.redirectUri
+                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(redirectUri)
+                        }
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
