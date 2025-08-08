@@ -39,6 +39,7 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocal
 fun ReturnToMobileWebScreen(
     viewModel: ReturnToMobileWebViewModel,
     webNavigator: WebNavigator,
+    redirectUri: String,
     modifier: Modifier = Modifier,
 ) {
     BackHandler(enabled = true) {
@@ -58,8 +59,8 @@ fun ReturnToMobileWebScreen(
     LaunchedEffect(viewModel.actions) {
         viewModel.actions.collect { action ->
             when (action) {
-                is ReturnToMobileWebAction.ContinueToGovUk -> {
-                    webNavigator.openWebPage(action.redirectUri)
+                ReturnToMobileWebAction.ContinueToGovUk -> {
+                    webNavigator.openWebPage(redirectUri)
                 }
             }
         }

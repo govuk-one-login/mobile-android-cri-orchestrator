@@ -1,11 +1,17 @@
 package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 sealed interface JourneyType {
+    @Parcelize
     data class MobileAppMobile(
         val redirectUri: String,
-    ) : JourneyType
+    ) : JourneyType,
+        Parcelable
 
-    data object DesktopAppDesktop : JourneyType
+    @Parcelize
+    data object DesktopAppDesktop : JourneyType, Parcelable
 }
 
 val Session.journeyType: JourneyType

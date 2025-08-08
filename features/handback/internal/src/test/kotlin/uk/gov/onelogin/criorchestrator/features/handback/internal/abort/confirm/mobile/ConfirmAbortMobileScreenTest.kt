@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.mobilescreen
+package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile
 
 import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
@@ -18,9 +18,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileConstants
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -112,7 +109,7 @@ class ConfirmAbortMobileScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            AbortDestinations.AbortedRedirectToMobileWebHolder("https://example/redirect"),
+            AbortDestinations.AbortedRedirectToMobileWebHolder(REDIRECT_URI),
         )
     }
 
