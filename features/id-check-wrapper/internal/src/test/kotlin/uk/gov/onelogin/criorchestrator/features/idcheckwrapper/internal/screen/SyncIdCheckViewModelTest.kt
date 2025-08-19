@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -38,6 +39,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
@@ -53,7 +55,9 @@ class SyncIdCheckViewModelTest {
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
     private val analytics = mock<IdCheckWrapperAnalytics>()
-    private val sessionStore = FakeSessionStore(session)
+    private val sessionStore by lazy {
+        FakeSessionStore(session)
+    }
     private val configStore: ConfigStore = FakeConfigStore()
     private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
@@ -89,6 +93,10 @@ class SyncIdCheckViewModelTest {
             analytics = analytics,
             sessionStore = sessionStore,
             idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
+            savedStateHandle =
+                SavedStateHandle(
+                    mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+                ),
         )
     }
 
@@ -122,7 +130,6 @@ class SyncIdCheckViewModelTest {
     )
 
     companion object {
-        private const val REDIRECT_URI = "http://mam-redirect-uri"
         private val mamSession =
             Session.createTestInstance(
                 redirectUri = REDIRECT_URI,
@@ -170,7 +177,9 @@ class SyncIdCheckViewModelTest {
                             Arguments.of(
                                 sdkResult,
                                 Session.createMobileAppMobileInstance(),
-                                SyncIdCheckAction.NavigateToReturnToMobileWeb,
+                                SyncIdCheckAction.NavigateToReturnToMobileWeb(
+                                    REDIRECT_URI,
+                                ),
                             ),
                         ).stream()
                     }
@@ -385,6 +394,10 @@ class SyncIdCheckViewModelTest {
             ),
         sessionStore = sessionStore,
         idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+            ),
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)

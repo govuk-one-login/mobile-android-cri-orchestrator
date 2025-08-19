@@ -1,3 +1,5 @@
+package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile
+
 import android.content.Context
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.hasText
@@ -16,9 +18,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileConstants
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -29,6 +28,8 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 
+// This test has been moved into it's own package as for some reason, before when this test was
+// in the `mobile` package above, it interferes with Paparazzi screenshot testing
 @RunWith(AndroidJUnit4::class)
 class ConfirmAbortMobileScreenTest {
     @get:Rule
@@ -108,7 +109,7 @@ class ConfirmAbortMobileScreenTest {
             .performClick()
 
         verify(navController).navigate(
-            AbortDestinations.AbortedRedirectToMobileWebHolder("https://example/redirect"),
+            AbortDestinations.AbortedRedirectToMobileWebHolder(REDIRECT_URI),
         )
     }
 

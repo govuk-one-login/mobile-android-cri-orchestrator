@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.ksp) apply false
 
@@ -54,7 +55,7 @@ val apkConfig by rootProject.extra(
         override val debugVersion: String = "DEBUG_VERSION"
         override val sdkVersions = object : ApkConfig.SdkVersions {
             override val minimum = 29
-            override val target = 34
+            override val target = 35
             override val compile = 35
         }
     }

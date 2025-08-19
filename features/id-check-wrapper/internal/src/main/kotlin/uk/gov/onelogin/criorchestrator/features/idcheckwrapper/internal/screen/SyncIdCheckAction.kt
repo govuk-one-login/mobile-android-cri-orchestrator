@@ -9,7 +9,9 @@ sealed interface SyncIdCheckAction {
         val logger: Logger,
     ) : SyncIdCheckAction
 
-    data object NavigateToReturnToMobileWeb : SyncIdCheckAction
+    data class NavigateToReturnToMobileWeb(
+        val redirectUri: String,
+    ) : SyncIdCheckAction
 
     data object NavigateToReturnToDesktopWeb : SyncIdCheckAction
 

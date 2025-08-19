@@ -73,6 +73,12 @@ See the `test-wrapper` module for an example of how to set this up.
 
 ## Development
 
+Enable Git LFS:
+
+```bash
+git lfs install
+```
+
 Clone the repository, including the Android pipelines submodule:
 ```bash
 git clone --recurse-submodules git@github.com:govuk-one-login/mobile-android-cri-orchestrator.git

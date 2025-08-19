@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.dev.internal
+package uk.gov.onelogin.criorchestrator.features.dev.internal.entrypoints
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
@@ -12,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.dev.internal.DevMenuEntryPointsImpl
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuViewModel
 
 @RunWith(AndroidJUnit4::class)

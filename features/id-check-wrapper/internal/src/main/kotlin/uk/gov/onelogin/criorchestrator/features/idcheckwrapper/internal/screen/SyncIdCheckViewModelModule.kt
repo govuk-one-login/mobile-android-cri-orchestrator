@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.squareup.anvil.annotations.ContributesTo
@@ -40,6 +41,7 @@ object SyncIdCheckViewModelModule {
                     launcherDataReader = launcherDataReader,
                     logger = logger,
                     analytics = analytics,
+                    savedStateHandle = createSavedStateHandle(),
                 )
             }
         }

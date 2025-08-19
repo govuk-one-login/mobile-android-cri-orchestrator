@@ -114,9 +114,11 @@ private fun SyncIdCheckActionHandler(
                     launcher.launch(action.launcherData.toIdCheckSdkActivityParameters())
                 }
 
-                SyncIdCheckAction.NavigateToReturnToMobileWeb ->
+                is SyncIdCheckAction.NavigateToReturnToMobileWeb ->
                     navController.navigate(
-                        HandbackDestinations.ReturnToMobileWeb,
+                        HandbackDestinations.ReturnToMobileWeb(
+                            redirectUri = action.redirectUri,
+                        ),
                     )
 
                 SyncIdCheckAction.NavigateToReturnToDesktopWeb ->
