@@ -28,8 +28,6 @@ import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.theme.m3.Buttons
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3.toMappedColors
-import uk.gov.android.ui.theme.m3_disabled
-import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
@@ -125,8 +123,8 @@ private fun ReturnToMobileWebScreenContent(
                                 ButtonDefaults.buttonColors(
                                     containerColor = colorScheme.primary,
                                     contentColor = colorScheme.onPrimary,
-                                    disabledContainerColor = m3_disabled,
-                                    disabledContentColor = m3_onDisabled,
+                                    disabledContainerColor = Buttons.disabled.toMappedColors(),
+                                    disabledContentColor = Buttons.disabledTextAndSymbol.toMappedColors(),
                                 ),
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
