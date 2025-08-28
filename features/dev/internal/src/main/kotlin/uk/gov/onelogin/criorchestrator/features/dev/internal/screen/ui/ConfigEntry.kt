@@ -11,7 +11,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -32,6 +31,8 @@ import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.theme.m3.GdsLocalColorScheme
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.android.ui.theme.m3.Switch
+import uk.gov.android.ui.theme.m3.defaultColors
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.OptionConfigKey
 
@@ -98,12 +99,7 @@ private fun ConfigBoolEntry(
         Switch(
             checked = value,
             onCheckedChange = onCheckedChange,
-            colors =
-                SwitchDefaults.colors().copy(
-                    uncheckedTrackColor = GdsLocalColorScheme.current.unselectedBackgroundSwitch,
-                    uncheckedThumbColor = GdsLocalColorScheme.current.unselectedBorderAndHandleSwitch,
-                    uncheckedBorderColor = GdsLocalColorScheme.current.unselectedBorderAndHandleSwitch,
-                ),
+            colors = Switch.defaultColors(),
         )
     }
 }
