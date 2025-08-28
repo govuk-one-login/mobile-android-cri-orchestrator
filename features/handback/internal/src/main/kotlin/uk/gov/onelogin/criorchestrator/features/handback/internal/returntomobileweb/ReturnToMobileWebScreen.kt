@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobil
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,14 +21,13 @@ import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
 import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
 import uk.gov.android.ui.componentsv2.button.ButtonType
 import uk.gov.android.ui.componentsv2.button.GdsButton
+import uk.gov.android.ui.componentsv2.button.primaryButtonColors
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.theme.m3.Buttons
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3.toMappedColors
-import uk.gov.android.ui.theme.m3_disabled
-import uk.gov.android.ui.theme.m3_onDisabled
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
@@ -121,13 +119,7 @@ private fun ReturnToMobileWebScreenContent(
                     text = stringResource(ReturnToMobileWebConstants.buttonId),
                     buttonType =
                         ButtonType.Icon(
-                            buttonColors =
-                                ButtonDefaults.buttonColors(
-                                    containerColor = colorScheme.primary,
-                                    contentColor = colorScheme.onPrimary,
-                                    disabledContainerColor = m3_disabled,
-                                    disabledContentColor = m3_onDisabled,
-                                ),
+                            buttonColors = primaryButtonColors(),
                             fontWeight = FontWeight.Bold,
                             iconImage = ImageVector.vectorResource(ic_external_site),
                             contentDescription = contentDescription,

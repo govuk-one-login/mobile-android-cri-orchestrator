@@ -25,11 +25,7 @@ internal fun DevMenu(
     onEntryChange: (Config.Entry<Config.Value>) -> Unit,
     modifier: Modifier = Modifier,
 ) = Surface(
-    modifier =
-        Modifier
-            .fillMaxWidth(),
-    // DCMAW-11635
-    color = MaterialTheme.colorScheme.background,
+    modifier = Modifier.fillMaxWidth(),
 ) {
     LazyColumn(
         modifier = modifier,

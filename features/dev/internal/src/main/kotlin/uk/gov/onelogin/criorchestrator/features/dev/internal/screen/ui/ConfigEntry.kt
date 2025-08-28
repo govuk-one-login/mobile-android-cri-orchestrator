@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,10 @@ import kotlinx.collections.immutable.ImmutableList
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
+import uk.gov.android.ui.theme.m3.GdsLocalColorScheme
 import uk.gov.android.ui.theme.m3.GdsTheme
+import uk.gov.android.ui.theme.m3.Switch
+import uk.gov.android.ui.theme.m3.defaultColors
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.OptionConfigKey
 
@@ -73,9 +77,7 @@ private fun ConfigBoolEntry(
     value: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-) = Surface(
-    color = MaterialTheme.colorScheme.background,
-) {
+) = Surface {
     Row(
         modifier =
             modifier
@@ -95,6 +97,7 @@ private fun ConfigBoolEntry(
         Switch(
             checked = value,
             onCheckedChange = onCheckedChange,
+            colors = Switch.defaultColors(),
         )
     }
 }
@@ -109,29 +112,31 @@ private fun ConfigStrEntry(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    ConfigStrEntryRow(
-        name = name,
-        value = value,
-        onClick = { showDialog = true },
-        modifier = modifier,
-    )
+    Surface {
+        ConfigStrEntryRow(
+            name = name,
+            value = value,
+            onClick = { showDialog = true },
+            modifier = modifier,
+        )
 
-    if (showDialog) {
-        if (options != null) {
-            ConfigOptionsEntryDialog(
-                name = name,
-                options = options,
-                value = value,
-                onValueChange = onValueChange,
-                onDismissRequest = { showDialog = false },
-            )
-        } else {
-            ConfigStrEntryDialog(
-                name = name,
-                value = value,
-                onValueChange = onValueChange,
-                onDismissRequest = { showDialog = false },
-            )
+        if (showDialog) {
+            if (options != null) {
+                ConfigOptionsEntryDialog(
+                    name = name,
+                    options = options,
+                    value = value,
+                    onValueChange = onValueChange,
+                    onDismissRequest = { showDialog = false },
+                )
+            } else {
+                ConfigStrEntryDialog(
+                    name = name,
+                    value = value,
+                    onValueChange = onValueChange,
+                    onDismissRequest = { showDialog = false },
+                )
+            }
         }
     }
 }
@@ -144,7 +149,6 @@ private fun ConfigStrEntryRow(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.background,
         modifier =
             modifier
                 .clickable(
@@ -195,6 +199,11 @@ private fun ConfigStrEntryDialog(
                 TextField(
                     value = value,
                     onValueChange = onValueChange,
+                    colors =
+                        TextFieldDefaults.colors().copy(
+                            focusedContainerColor = GdsLocalColorScheme.current.cardBackground,
+                            unfocusedContainerColor = GdsLocalColorScheme.current.cardBackground,
+                        ),
                 )
             }
         }
@@ -239,14 +248,16 @@ private fun ConfigOptionsEntryDialog(
 @PreviewLightDark
 internal fun ConfigEntryPreview() =
     GdsTheme {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            previewConfig.entries.forEach {
-                ConfigEntry(
-                    entry = it,
-                    onEntryChange = {},
-                )
+        Surface {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                previewConfig.entries.forEach {
+                    ConfigEntry(
+                        entry = it,
+                        onEntryChange = {},
+                    )
+                }
             }
         }
     }

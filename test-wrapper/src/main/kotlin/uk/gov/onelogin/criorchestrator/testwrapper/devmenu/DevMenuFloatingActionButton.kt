@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,5 +19,6 @@ internal fun DevMenuFloatingActionButton(
         onClick = onClick,
         icon = { Icon(Icons.Filled.Settings, null) },
         text = { Text(text = "Developer settings") },
+        containerColor = MaterialTheme.colorScheme.outlineVariant,
     )
 }

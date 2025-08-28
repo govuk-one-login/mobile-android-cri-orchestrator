@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -83,89 +84,91 @@ internal fun SelectBrpScreenContent(
 ) {
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
 
-    LeftAlignedScreen(
-        modifier = modifier,
-        title = { horizontalPadding ->
-            GdsHeading(
-                stringResource(SelectBrpConstants.titleId),
-                textAlign = GdsHeadingAlignment.LeftAligned,
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-            )
-        },
-        body = { horizontalPadding ->
-            item {
-                GdsBulletedList(
-                    bulletListItems =
-                        persistentListOf(
-                            ListItem(
-                                stringResource(R.string.selectdocument_brp_bullet_brp),
-                            ),
-                            ListItem(
-                                stringResource(R.string.selectdocument_brp_bullet_brc),
-                            ),
-                            ListItem(
-                                stringResource(R.string.selectdocument_brp_bullet_fwp),
-                            ),
-                        ),
-                    title =
-                        ListTitle(
-                            text = stringResource(R.string.selectdocument_brp_bullet_title),
-                            titleType = TitleType.Text,
-                        ),
+    Surface {
+        LeftAlignedScreen(
+            modifier = modifier,
+            title = { horizontalPadding ->
+                GdsHeading(
+                    stringResource(SelectBrpConstants.titleId),
+                    textAlign = GdsHeadingAlignment.LeftAligned,
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
-            }
+            },
+            body = { horizontalPadding ->
+                item {
+                    GdsBulletedList(
+                        bulletListItems =
+                            persistentListOf(
+                                ListItem(
+                                    stringResource(R.string.selectdocument_brp_bullet_brp),
+                                ),
+                                ListItem(
+                                    stringResource(R.string.selectdocument_brp_bullet_brc),
+                                ),
+                                ListItem(
+                                    stringResource(R.string.selectdocument_brp_bullet_fwp),
+                                ),
+                            ),
+                        title =
+                            ListTitle(
+                                text = stringResource(R.string.selectdocument_brp_bullet_title),
+                                titleType = TitleType.Text,
+                            ),
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                    )
+                }
 
-            item {
-                GdsWarningText(
-                    stringResource(R.string.selectdocument_brp_expiry),
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
-                )
-            }
+                item {
+                    GdsWarningText(
+                        stringResource(R.string.selectdocument_brp_expiry),
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                    )
+                }
 
-            item {
+                item {
+                    GdsButton(
+                        text = stringResource(SelectBrpConstants.readMoreButtonTextId),
+                        buttonType = ButtonType.Secondary,
+                        onClick = dropUnlessResumed { onReadMoreClicked() },
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                        textAlign = TextAlign.Start,
+                        contentPosition = Arrangement.Start,
+                        contentModifier = Modifier,
+                    )
+                }
+
+                item {
+                    GdsSelection(
+                        items =
+                            SelectBrpConstants.selectionItems
+                                .map { stringResource(it) }
+                                .toPersistentList(),
+                        selectedItem = selectedItem,
+                        onItemSelected = { selectedItem = it },
+                        title =
+                            RadioSelectionTitle(
+                                stringResource(R.string.selectdocument_brp_selection_title),
+                                uk.gov.android.ui.componentsv2.inputs.radio.TitleType.BoldText,
+                            ),
+                    )
+                }
+            },
+            primaryButton = {
                 GdsButton(
-                    text = stringResource(SelectBrpConstants.readMoreButtonTextId),
-                    buttonType = ButtonType.Secondary,
-                    onClick = dropUnlessResumed { onReadMoreClicked() },
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
-                    textAlign = TextAlign.Start,
-                    contentPosition = Arrangement.Start,
-                    contentModifier = Modifier,
+                    stringResource(SelectBrpConstants.continueButtonTextId),
+                    buttonType = ButtonType.Primary,
+                    onClick =
+                        dropUnlessResumed {
+                            selectedItem?.let {
+                                onContinueClicked(it)
+                            }
+                        },
+                    enabled = selectedItem != null,
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            }
-
-            item {
-                GdsSelection(
-                    items =
-                        SelectBrpConstants.selectionItems
-                            .map { stringResource(it) }
-                            .toPersistentList(),
-                    selectedItem = selectedItem,
-                    onItemSelected = { selectedItem = it },
-                    title =
-                        RadioSelectionTitle(
-                            stringResource(R.string.selectdocument_brp_selection_title),
-                            uk.gov.android.ui.componentsv2.inputs.radio.TitleType.BoldText,
-                        ),
-                )
-            }
-        },
-        primaryButton = {
-            GdsButton(
-                stringResource(SelectBrpConstants.continueButtonTextId),
-                buttonType = ButtonType.Primary,
-                onClick =
-                    dropUnlessResumed {
-                        selectedItem?.let {
-                            onContinueClicked(it)
-                        }
-                    },
-                enabled = selectedItem != null,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        },
-    )
+            },
+        )
+    }
 }
 
 @LightDarkBothLocalesPreview
