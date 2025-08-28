@@ -77,9 +77,7 @@ private fun ConfigBoolEntry(
     value: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-) = Surface(
-    color = MaterialTheme.colorScheme.background,
-) {
+) = Surface {
     Row(
         modifier =
             modifier
@@ -114,29 +112,31 @@ private fun ConfigStrEntry(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    ConfigStrEntryRow(
-        name = name,
-        value = value,
-        onClick = { showDialog = true },
-        modifier = modifier,
-    )
+    Surface {
+        ConfigStrEntryRow(
+            name = name,
+            value = value,
+            onClick = { showDialog = true },
+            modifier = modifier,
+        )
 
-    if (showDialog) {
-        if (options != null) {
-            ConfigOptionsEntryDialog(
-                name = name,
-                options = options,
-                value = value,
-                onValueChange = onValueChange,
-                onDismissRequest = { showDialog = false },
-            )
-        } else {
-            ConfigStrEntryDialog(
-                name = name,
-                value = value,
-                onValueChange = onValueChange,
-                onDismissRequest = { showDialog = false },
-            )
+        if (showDialog) {
+            if (options != null) {
+                ConfigOptionsEntryDialog(
+                    name = name,
+                    options = options,
+                    value = value,
+                    onValueChange = onValueChange,
+                    onDismissRequest = { showDialog = false },
+                )
+            } else {
+                ConfigStrEntryDialog(
+                    name = name,
+                    value = value,
+                    onValueChange = onValueChange,
+                    onDismissRequest = { showDialog = false },
+                )
+            }
         }
     }
 }
@@ -149,7 +149,6 @@ private fun ConfigStrEntryRow(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.background,
         modifier =
             modifier
                 .clickable(
@@ -249,14 +248,16 @@ private fun ConfigOptionsEntryDialog(
 @PreviewLightDark
 internal fun ConfigEntryPreview() =
     GdsTheme {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            previewConfig.entries.forEach {
-                ConfigEntry(
-                    entry = it,
-                    onEntryChange = {},
-                )
+        Surface {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                previewConfig.entries.forEach {
+                    ConfigEntry(
+                        entry = it,
+                        onEntryChange = {},
+                    )
+                }
             }
         }
     }
