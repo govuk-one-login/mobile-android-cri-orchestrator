@@ -54,6 +54,15 @@ jobs:
           yq -i ".version-bumped = $VERSION_BUMPED" "$WORKFLOW_OUT_DIR/bump-version.yml"
         shell: bash
 
+      - name: Create GitHub release
+        if: steps.versioning.outputs.current_version != steps.versioning.outputs.new_version
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
+        with:
+          tag_name: ${{ steps.versioning.outputs.new_version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: bump-version-outputs
