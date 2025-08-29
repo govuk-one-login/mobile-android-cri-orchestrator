@@ -36,7 +36,7 @@ turbine = "1.2.1"
 uk-gov-logging = "0.32.1" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.7.2"
 uk-gov-ui = "8.0.0"
-gov-uk-idcheck = "0.25.14"
+gov-uk-idcheck = "0.27.1"
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
