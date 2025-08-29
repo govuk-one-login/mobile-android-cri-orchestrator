@@ -13,6 +13,7 @@ dependencies {
         libs.android.build.tool,
         libs.anvil.gradle.plugin,
         libs.kotlin.gradle.plugin,
+        libs.ksp.gradle.plugin,
         libs.uk.gov.pipelines.plugins,
     ).forEach {
         implementation(it)
