@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.testwrapper.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.logging.testdouble.analytics.FakeAnalyticsLogger
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
@@ -18,7 +19,7 @@ internal fun rememberPreviewCriOrchestratorComponent(): CriOrchestratorComponent
             CriOrchestratorSdk.create(
                 authenticatedHttpClient = createStubHttpClient(),
                 analyticsLogger = FakeAnalyticsLogger(),
-                initialConfig = TestWrapperConfig.provideConfig(LocalContext.current.resources),
+                initialConfig = TestWrapperConfig.provideConfig(LocalResources.current),
                 logger = SystemLogger(),
                 applicationContext = LocalContext.current.applicationContext,
             ),
