@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
 import android.content.Context
+import dev.zacsweers.metro.createGraphFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import uk.gov.android.network.client.GenericHttpClient
@@ -29,9 +30,8 @@ class CriOrchestratorSingletonImpl(
     applicationContext: Context,
     testDispatcher: CoroutineDispatcher? = null,
 ) : CriOrchestratorSdk {
-    private val _component: MergedBaseCriOrchestratorSingletonComponent =
-        DaggerMergedBaseCriOrchestratorSingletonComponent
-            .factory()
+    private val _component: BaseCriOrchestratorSingletonComponent =
+        createGraphFactory<BaseCriOrchestratorSingletonComponent.Factory>()
             .create(
                 authenticatedHttpClient = authenticatedHttpClient,
                 analyticsLogger = analyticsLogger,
@@ -40,7 +40,7 @@ class CriOrchestratorSingletonImpl(
                 applicationContext = applicationContext,
                 testDispatcher = testDispatcher,
             )
-    override val component: CriOrchestratorSingletonComponent = _component
+    override val component: CriOrchestratorSingletonComponent = _component as CriOrchestratorSingletonComponent
 
     init {
         with(_component.coroutineScope()) {
