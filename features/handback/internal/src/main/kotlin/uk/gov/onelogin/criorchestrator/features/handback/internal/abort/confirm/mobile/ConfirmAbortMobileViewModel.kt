@@ -2,8 +2,6 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,10 +16,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@Module
-@ContributesTo(CriOrchestratorScope::class)
 class ConfirmAbortMobileViewModel(
     private val sessionStore: SessionStore,
     private val analytics: HandbackAnalytics,
