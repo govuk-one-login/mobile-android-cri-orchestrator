@@ -49,7 +49,7 @@ class HandbackNavGraphProvider
         @Named(FaceScanLimitReachedDesktopViewModelModule.FACTORY_NAME)
         private val faceScanLimitReachedDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-        private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
+        private val abortNavGraphProviders: Set<AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,

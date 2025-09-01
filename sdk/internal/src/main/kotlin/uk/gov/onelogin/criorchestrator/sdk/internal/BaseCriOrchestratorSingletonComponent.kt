@@ -44,7 +44,7 @@ interface BaseCriOrchestratorSingletonComponent {
 
     fun coroutineDispatchers(): CoroutineDispatchers
 
-    fun services(): Set<@JvmSuppressWildcards CriOrchestratorService>
+    fun services(): Set<CriOrchestratorService>
 
     fun logger(): Logger
 
