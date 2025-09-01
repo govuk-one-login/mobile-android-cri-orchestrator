@@ -13,5 +13,5 @@ import javax.inject.Singleton
 object SingletonCoroutineScopeModule {
     @Provides
     @Singleton
-    fun singletonCoroutineScope() = CoroutineScope(SupervisorJob())
+    fun singletonCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob())
 }
