@@ -46,12 +46,8 @@ internal fun DependencyHandlerScope.project(
 ) = dependencies.project(mapOf("path" to path))
 
 internal fun DependencyHandlerScope.diDependencies(libs: LibrariesForLibs) {
-    listOf(
-        libs.dagger
-    ).forEach {
-        implementation(it)
-    }
-    ksp(libs.dagger.compiler)
+    implementation(libs.dagger.runtime)
+    implementation(libs.anvil.annotations)
 }
 
 internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLibs) = listOf(
