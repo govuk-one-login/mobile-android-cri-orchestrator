@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.sdk.internal
 
 import android.app.Activity
 import android.content.Context
+import dev.zacsweers.metro.createGraphFactory
 import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate.IdCheckSdkActiveStateComponent
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.idchecksdkactivestate.IsIdCheckSdkActiveComponent
@@ -23,7 +24,7 @@ fun createCriOrchestratorComponent(
     activity: Activity,
     context: Context,
 ): CriOrchestratorComponent =
-    DaggerMergedBaseCriOrchestratorComponent.factory().create(
+    createGraphFactory<BaseCriOrchestratorComponent.Factory>().create(
         baseSingletonComponent = singletonComponent as BaseCriOrchestratorSingletonComponent,
         configComponent = singletonComponent as ConfigComponent,
         sessionComponent = singletonComponent as SessionComponent,
@@ -32,4 +33,4 @@ fun createCriOrchestratorComponent(
         refreshActiveSessionComponent = singletonComponent as RefreshActiveSessionComponent,
         activity = activity,
         context = context,
-    )
+    ) as CriOrchestratorComponent
