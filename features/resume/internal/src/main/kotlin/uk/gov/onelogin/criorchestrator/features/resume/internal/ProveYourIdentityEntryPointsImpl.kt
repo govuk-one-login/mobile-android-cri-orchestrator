@@ -23,7 +23,7 @@ class ProveYourIdentityEntryPointsImpl
     constructor(
         @Named(ProveYourIdentityViewModelModule.FACTORY_NAME)
         private val viewModelProviderFactory: ViewModelProvider.Factory,
-        navGraphProviders: Set<@JvmSuppressWildcards ProveYourIdentityNavGraphProvider>,
+        navGraphProviders: Set<ProveYourIdentityNavGraphProvider>,
     ) : ProveYourIdentityEntryPoints {
         private val navGraphProviders = navGraphProviders.toPersistentSet()
 

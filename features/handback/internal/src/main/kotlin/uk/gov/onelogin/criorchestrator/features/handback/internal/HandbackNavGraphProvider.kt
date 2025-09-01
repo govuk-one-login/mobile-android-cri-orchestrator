@@ -41,7 +41,7 @@ class HandbackNavGraphProvider
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-        private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
+        private val abortNavGraphProviders: Set<AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
