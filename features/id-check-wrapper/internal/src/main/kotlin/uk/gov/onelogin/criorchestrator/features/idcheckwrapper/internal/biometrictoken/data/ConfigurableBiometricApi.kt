@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -9,9 +11,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.FakeBiometricTokenApi
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
-@ContributesBinding(CriOrchestratorScope::class, boundType = BiometricApi::class)
+@ContributesBinding(CriOrchestratorScope::class, binding = binding<BiometricApi>())
 class ConfigurableBiometricApi
     @Inject
     constructor(

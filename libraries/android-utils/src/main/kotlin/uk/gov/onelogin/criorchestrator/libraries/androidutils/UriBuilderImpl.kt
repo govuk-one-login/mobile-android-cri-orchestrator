@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.libraries.androidutils
 
 import androidx.core.net.toUri
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ContributesBinding(CriOrchestratorSingletonScope::class)

@@ -1,11 +1,11 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import uk.gov.onelogin.criorchestrator.features.session.internal.SessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSession
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
 
 @ContributesBinding(CriOrchestratorSingletonScope::class)
 class RefreshActiveSessionImpl

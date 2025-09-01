@@ -5,16 +5,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.SingleIn
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuScreen
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuViewModelModule
 import uk.gov.onelogin.criorchestrator.features.dev.internalapi.DevMenuEntryPoints
-import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
-@CompositionScope
+@SingleIn(CriOrchestratorScope::class)
 @ContributesBinding(CriOrchestratorScope::class)
 class DevMenuEntryPointsImpl
     @Inject

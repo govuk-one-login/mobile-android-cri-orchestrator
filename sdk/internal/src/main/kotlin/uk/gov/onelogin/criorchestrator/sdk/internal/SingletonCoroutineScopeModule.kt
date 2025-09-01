@@ -1,17 +1,17 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Singleton
 
-@Module
+@BindingContainer
 @ContributesTo(CriOrchestratorSingletonScope::class)
 object SingletonCoroutineScopeModule {
     @Provides
-    @Singleton
+    @SingleIn(CriOrchestratorSingletonScope::class)
     fun singletonCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob())
 }

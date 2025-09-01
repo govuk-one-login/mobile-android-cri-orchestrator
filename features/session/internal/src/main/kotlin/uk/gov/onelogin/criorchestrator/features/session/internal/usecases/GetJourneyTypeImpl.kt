@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.first
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
@@ -8,9 +10,8 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Journ
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
-@ContributesBinding(CriOrchestratorScope::class, boundType = GetJourneyType::class)
+@ContributesBinding(CriOrchestratorScope::class, binding = binding<GetJourneyType>())
 class GetJourneyTypeImpl
     @Inject
     constructor(

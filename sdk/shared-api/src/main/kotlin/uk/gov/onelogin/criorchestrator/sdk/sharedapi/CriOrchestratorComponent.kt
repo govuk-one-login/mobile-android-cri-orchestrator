@@ -1,6 +1,6 @@
 package uk.gov.onelogin.criorchestrator.sdk.sharedapi
 
-import com.squareup.anvil.annotations.ContributesTo
+import dev.zacsweers.metro.ContributesTo
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 /**

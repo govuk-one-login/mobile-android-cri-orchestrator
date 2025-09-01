@@ -6,16 +6,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.squareup.anvil.annotations.ContributesMultibinding
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Named
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckScreen
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckViewModelModule
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
-@ContributesMultibinding(CriOrchestratorScope::class)
+@ContributesIntoSet(CriOrchestratorScope::class)
 class IdCheckWrapperNavGraphProvider
     @Inject
     constructor(

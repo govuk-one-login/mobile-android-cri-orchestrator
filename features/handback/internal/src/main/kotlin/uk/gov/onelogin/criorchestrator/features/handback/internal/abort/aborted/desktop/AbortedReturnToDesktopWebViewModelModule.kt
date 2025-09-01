@@ -3,14 +3,14 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.Provides
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Named
 
-@Module
+@BindingContainer
 @ContributesTo(CriOrchestratorScope::class)
 object AbortedReturnToDesktopWebViewModelModule {
     const val FACTORY_NAME = "AbortedReturnToDesktopWebViewModelModuleFactory"

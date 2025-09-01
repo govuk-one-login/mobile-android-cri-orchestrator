@@ -6,7 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.squareup.anvil.annotations.ContributesMultibinding
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Named
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModelModule
@@ -21,10 +23,8 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDe
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
-@ContributesMultibinding(CriOrchestratorScope::class)
+@ContributesIntoSet(CriOrchestratorScope::class)
 class AbortModalNavGraphProvider
     @Inject
     constructor(

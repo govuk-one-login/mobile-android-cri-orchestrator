@@ -5,18 +5,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.SingleIn
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityRoot
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
-@CompositionScope
+@SingleIn(CriOrchestratorScope::class)
 @ContributesBinding(CriOrchestratorScope::class)
 class ProveYourIdentityEntryPointsImpl
     @Inject

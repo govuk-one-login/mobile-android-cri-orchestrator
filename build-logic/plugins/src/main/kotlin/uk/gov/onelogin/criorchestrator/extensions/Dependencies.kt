@@ -45,11 +45,6 @@ internal fun DependencyHandlerScope.project(
     path: String
 ) = dependencies.project(mapOf("path" to path))
 
-internal fun DependencyHandlerScope.diDependencies(libs: LibrariesForLibs) {
-    implementation(libs.dagger.runtime)
-    implementation(libs.anvil.annotations)
-}
-
 internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLibs) = listOf(
     platform(libs.androidx.compose.bom),
     libs.androidx.ui,
