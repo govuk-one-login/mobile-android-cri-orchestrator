@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator
 
 import org.gradle.accessors.dm.LibrariesForLibs
-import uk.gov.onelogin.criorchestrator.extensions.diDependencies
 import com.google.devtools.ksp.gradle.KspExtension
 import dev.zacsweers.metro.gradle.MetroPluginExtension
 
@@ -16,19 +15,10 @@ listOf(
 }
 
 configure<MetroPluginExtension> {
-    // Incremental adoption
-    // https://zacsweers.github.io/metro/latest/adoption.html#option-2-migrate-existing-usages-reuse-your-existing-annotations
-    interop {
-        includeDagger()
-        includeAnvil()
-    }
+    enableFullBindingGraphValidation = true
 }
 
 // https://zacsweers.github.io/metro/0.6.3/adoption.html#precursor-steps
 configure<KspExtension> {
     arg("dagger.useBindingGraphFix", "enabled")
-}
-
-dependencies {
-    diDependencies(libs)
 }

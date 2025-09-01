@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Provider
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
@@ -11,13 +14,11 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.actives
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.UriBuilder
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
-import javax.inject.Provider
 
 private const val NOT_FOUND = 404
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ContributesBinding(CriOrchestratorSingletonScope::class, boundType = SessionReader::class)
+@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<SessionReader>())
 class RemoteSessionReader
     @Inject
     constructor(
@@ -33,7 +34,7 @@ class RemoteSessionReader
         }
 
         override suspend fun isActiveSession(): SessionReader.Result {
-            val response = activeSessionApi.get().getActiveSession()
+            val response = activeSessionApi().getActiveSession()
             logResponse(response)
 
             return when (response) {

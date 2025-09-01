@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
+import dev.zacsweers.metro.Inject
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import javax.inject.Inject
 
 class FakeActiveSessionApi
     @Inject

@@ -1,6 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import uk.gov.android.network.api.ApiResponse
@@ -10,10 +12,9 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.A
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ContributesBinding(CriOrchestratorScope::class, boundType = AbortSession::class)
+@ContributesBinding(CriOrchestratorScope::class, binding = binding<AbortSession>())
 class AbortSessionImpl
     @Inject
     constructor(

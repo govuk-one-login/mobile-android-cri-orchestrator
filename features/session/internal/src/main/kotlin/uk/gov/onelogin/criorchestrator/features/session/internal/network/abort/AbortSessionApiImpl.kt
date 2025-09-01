@@ -1,11 +1,11 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.abort
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
 @ContributesBinding(CriOrchestratorScope::class)
 class AbortSessionApiImpl

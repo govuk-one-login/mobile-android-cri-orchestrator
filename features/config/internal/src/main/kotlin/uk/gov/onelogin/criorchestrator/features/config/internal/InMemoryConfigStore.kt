@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.config.internal
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import dev.zacsweers.metro.binding
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,11 +15,9 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-@ContributesBinding(CriOrchestratorSingletonScope::class, boundType = ConfigStore::class)
+@SingleIn(CriOrchestratorSingletonScope::class)
+@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<ConfigStore>())
 class InMemoryConfigStore
     @Inject
     constructor(

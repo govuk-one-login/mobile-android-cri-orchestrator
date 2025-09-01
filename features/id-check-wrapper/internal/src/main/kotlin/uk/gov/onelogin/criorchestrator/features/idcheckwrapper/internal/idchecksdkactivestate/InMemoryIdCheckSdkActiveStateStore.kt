@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,11 +11,9 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-@ContributesBinding(CriOrchestratorSingletonScope::class, boundType = IdCheckSdkActiveStateStore::class)
+@SingleIn(CriOrchestratorSingletonScope::class)
+@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<IdCheckSdkActiveStateStore>())
 class InMemoryIdCheckSdkActiveStateStore
     @Inject
     constructor(

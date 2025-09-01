@@ -2,7 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.appreview
 
 import android.content.Context
 import android.widget.Toast
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 
 class DebugRequestAppReview
     @Inject

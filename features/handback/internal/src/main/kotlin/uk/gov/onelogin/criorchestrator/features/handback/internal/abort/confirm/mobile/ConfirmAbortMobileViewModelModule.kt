@@ -3,17 +3,17 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.Provides
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Named
 
-@Module
+@BindingContainer
 @ContributesTo(CriOrchestratorScope::class)
 object ConfirmAbortMobileViewModelModule {
     const val FACTORY_NAME = "ConfirmAbortMobileWebViewModelFactory"

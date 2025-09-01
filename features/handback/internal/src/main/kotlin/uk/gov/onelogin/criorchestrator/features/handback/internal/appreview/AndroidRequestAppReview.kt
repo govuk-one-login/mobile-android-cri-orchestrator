@@ -2,10 +2,10 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.appreview
 
 import android.app.Activity
 import com.google.android.play.core.review.ReviewManagerFactory
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.tasks.await
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
-import javax.inject.Inject
 
 class AndroidRequestAppReview
     @Inject

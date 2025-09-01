@@ -3,8 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.anvil.annotations)
-    implementation(libs.dagger.runtime)
+    implementation(libs.metro.runtime)
 }
 
 mavenPublishingConfig {

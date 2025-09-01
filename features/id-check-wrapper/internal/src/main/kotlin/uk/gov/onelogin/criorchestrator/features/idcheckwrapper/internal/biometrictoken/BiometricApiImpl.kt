@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
+import dev.zacsweers.metro.Inject
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.client.ContentType
@@ -10,7 +11,6 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.Id
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiRequest.BiometricRequest
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
-import javax.inject.Inject
 
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 

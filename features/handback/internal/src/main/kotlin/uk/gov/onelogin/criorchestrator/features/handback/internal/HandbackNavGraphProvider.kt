@@ -7,7 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.toRoute
-import com.squareup.anvil.annotations.ContributesMultibinding
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Named
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModelModule
@@ -28,11 +30,9 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.Handbac
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.fullScreenDialogProperties
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
 @Suppress("LongMethod", "LongParameterList")
-@ContributesMultibinding(CriOrchestratorScope::class)
+@ContributesIntoSet(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
     @Inject
     constructor(

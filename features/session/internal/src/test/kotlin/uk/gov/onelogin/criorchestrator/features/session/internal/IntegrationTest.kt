@@ -16,7 +16,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.FakeUriBuilderImpl
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
-import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class IntegrationTest {
@@ -46,7 +45,7 @@ class IntegrationTest {
 
         remoteSessionReader =
             RemoteSessionReader(
-                activeSessionApi = Provider { activeSessionApi },
+                activeSessionApi = { activeSessionApi },
                 logger = logger,
                 uriBuilder = FakeUriBuilderImpl(),
             )
