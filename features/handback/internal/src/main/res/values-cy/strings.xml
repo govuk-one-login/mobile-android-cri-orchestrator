@@ -32,7 +32,7 @@
 
     <string name="handback_facescanlimitreached_title">Nid oeddem yn gallu cadarnhau eich hunaniaeth</string>
     <string name="handback_facescanlimitreached_body1">Rydych wedi cyrraedd y nifer mwyaf o weithiau y gallwch geisio sganio eich wyneb.</string>
-    <string name="handback_facescanlimitreacheddesktop_body2">Dychwelwch i\'r dudalen GOV.UK a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
+    <string name="handback_facescanlimitreacheddesktop_body2">Dychwelwch i’r dudalen GOV.UK a adawsoch ar agor ar eich cyfrifiadur neu dabled i wirio a allwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_facescanlimitreachedmobile_body2">Parhewch i GOV.UK i weld os gallwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_facescanlimitreachedmobile_body2_content_description">Parhewch i Gov dot yoo kay i weld os gallwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_facescanlimitreachedmobile_button">Parhau i wefan GOV.UK</string>
