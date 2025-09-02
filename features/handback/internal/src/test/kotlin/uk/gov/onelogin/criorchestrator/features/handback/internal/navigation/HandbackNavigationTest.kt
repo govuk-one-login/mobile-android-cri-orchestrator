@@ -33,6 +33,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.FakeRequestAppReview
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
@@ -402,6 +403,10 @@ class HandbackNavigationTest {
                             ),
                         webNavigator = webNavigator,
                     ),
+                ),
+            faceScanLimitReachedViewModelFactory =
+                FaceScanLimitReachedMobileViewModelModule.provideFactory(
+                    analytics = analytics,
                 ),
         )
 
