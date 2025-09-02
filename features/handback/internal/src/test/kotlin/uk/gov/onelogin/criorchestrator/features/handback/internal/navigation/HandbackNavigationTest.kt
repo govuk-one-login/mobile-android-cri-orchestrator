@@ -262,6 +262,44 @@ class HandbackNavigationTest {
         composeTestRule.assertStartIsDisplayed()
     }
 
+    @Test
+    fun `face scan limit reached - desktop`() {
+        givenDesktopJourney()
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = HandbackDestinations.FaceScanLimitReachedDesktop,
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
+
+        // Back navigation is disabled
+        composeTestRule.goBack()
+        composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
+    }
+
+    @Test
+    fun `face scan limit reached - mobile`() {
+        val redirectUri = "http://mam-redirect-uri?state=mock-state"
+        givenMobileJourney(
+            redirectUri = redirectUri,
+        )
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = HandbackDestinations.FaceScanLimitReachedMobile(REDIRECT_URI),
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
+
+        // Back navigation is disabled
+        composeTestRule.goBack()
+        composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
+
+        composeTestRule.clickContinueToGovUkWebsite()
+        composeTestRule.waitForIdle()
+
+        assertEquals(redirectUri, webNavigator.openUrl)
+    }
+
     private fun ComposeTestRule.assertStartIsDisplayed() =
         composeTestRule
             .onNodeWithText(START_BUTTON)
@@ -334,6 +372,30 @@ class HandbackNavigationTest {
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(context.getString(R.string.handback_abortedreturntodesktopweb_body1))
+            .assertIsDisplayed()
+    }
+
+    private fun ComposeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed() {
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreached_title))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreached_body1))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreacheddesktop_body2))
+            .assertIsDisplayed()
+    }
+
+    private fun ComposeTestRule.assertFaceScanLimitReachedMobileIsDisplayed() {
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreached_title))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreached_body1))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_facescanlimitreachedmobile_body2))
             .assertIsDisplayed()
     }
 
