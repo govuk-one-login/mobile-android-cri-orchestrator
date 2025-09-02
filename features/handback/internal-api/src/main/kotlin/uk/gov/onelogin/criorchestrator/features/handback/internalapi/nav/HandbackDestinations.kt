@@ -19,4 +19,7 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data class FaceScanLimitReachedMobile(
         val redirectUri: String,
     ) : HandbackDestinations
+
+    @Serializable
+    data object FaceScanLimitReachedDesktop : HandbackDestinations
 }
