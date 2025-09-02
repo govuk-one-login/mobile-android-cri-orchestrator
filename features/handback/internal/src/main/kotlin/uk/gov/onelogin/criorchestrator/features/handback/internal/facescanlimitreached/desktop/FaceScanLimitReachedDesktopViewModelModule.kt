@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile
+package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -12,15 +12,15 @@ import javax.inject.Named
 
 @Module
 @ContributesTo(CriOrchestratorScope::class)
-object FaceScanLimitReachedMobileViewModelModule {
-    const val FACTORY_NAME = "FaceScanLimitReachedDesktopViewModelModule"
+object FaceScanLimitReachedDesktopViewModelModule {
+    const val FACTORY_NAME = "FaceScanLimitReachedDesktopViewModelFactory"
 
     @Provides
     @Named(FACTORY_NAME)
     fun provideFactory(analytics: HandbackAnalytics): ViewModelProvider.Factory =
         viewModelFactory {
             initializer {
-                FaceScanLimitReachedMobileViewModel(
+                FaceScanLimitReachedDesktopViewModel(
                     analytics = analytics,
                 )
             }

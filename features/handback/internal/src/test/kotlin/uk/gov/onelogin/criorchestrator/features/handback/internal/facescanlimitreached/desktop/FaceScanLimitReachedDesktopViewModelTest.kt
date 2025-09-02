@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile
+package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -9,11 +9,11 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
-class FaceScanLimitReachedMobileViewModelTest {
+class FaceScanLimitReachedDesktopViewModelTest {
     private val analytics = mock<HandbackAnalytics>()
 
     private val viewModel =
-        FaceScanLimitReachedMobileViewModel(
+        FaceScanLimitReachedDesktopViewModel(
             analytics = analytics,
         )
 
@@ -23,18 +23,8 @@ class FaceScanLimitReachedMobileViewModelTest {
 
         verify(analytics)
             .trackScreen(
-                id = HandbackScreenId.FaceScanLimitReachedMobile,
-                title = FaceScanLimitReachedMobileConstants.titleId,
-            )
-    }
-
-    @Test
-    fun `onButtonClick() sends button analytics event`() {
-        viewModel.onButtonClick()
-
-        verify(analytics)
-            .trackButtonEvent(
-                buttonText = FaceScanLimitReachedMobileConstants.buttonId,
+                id = HandbackScreenId.FaceScanLimitReachedDesktop,
+                title = FaceScanLimitReachedDesktopConstants.titleId,
             )
     }
 }
