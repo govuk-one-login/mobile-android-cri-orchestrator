@@ -17,7 +17,9 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.ProveYourIdentit
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {
@@ -40,10 +42,15 @@ class ProveYourIdentityEntryPointsImplTest {
             navGraphProviders =
                 persistentSetOf(
                     ContinueToProveYourIdentityNavGraphProvider(
-                        ContinueToProveYourIdentityViewModelModule.provideFactory(
-                            analytics = mock(),
-                            nfcChecker = mock(),
-                        ),
+                        viewModelProviderFactory =
+                            TestViewModelProviderFactory(
+                                testViewModelProvider {
+                                    ContinueToProveYourIdentityViewModel(
+                                        analytics = mock(),
+                                        nfcChecker = mock(),
+                                    )
+                                },
+                            ),
                     ),
                 ),
         )

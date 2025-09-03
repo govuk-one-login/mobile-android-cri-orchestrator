@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.SingleIn
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityRoot
-import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityViewModelModule
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -21,7 +19,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class ProveYourIdentityEntryPointsImpl
     @Inject
     constructor(
-        @Named(ProveYourIdentityViewModelModule.FACTORY_NAME)
         private val viewModelProviderFactory: ViewModelProvider.Factory,
         navGraphProviders: Set<ProveYourIdentityNavGraphProvider>,
     ) : ProveYourIdentityEntryPoints {

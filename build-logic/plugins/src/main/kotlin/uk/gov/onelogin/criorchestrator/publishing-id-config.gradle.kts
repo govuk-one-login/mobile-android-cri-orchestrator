@@ -1,6 +1,5 @@
 package uk.gov.onelogin.criorchestrator
 
-import org.gradle.api.publish.PublishingExtension
 import uk.gov.onelogin.criorchestrator.extensions.customisePublications
 import uk.gov.onelogin.criorchestrator.extensions.modulePathAsArtifactId
 import uk.gov.onelogin.criorchestrator.extensions.modulePathAsGroupId

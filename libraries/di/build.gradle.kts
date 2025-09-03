@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.metro.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel)
 }
 
 mavenPublishingConfig {

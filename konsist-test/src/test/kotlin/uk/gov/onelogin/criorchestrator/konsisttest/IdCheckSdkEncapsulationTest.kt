@@ -5,6 +5,8 @@ import com.lemonappdev.konsist.api.ext.list.withImport
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkWrapperInternalPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope

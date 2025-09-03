@@ -7,7 +7,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.Named
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -16,8 +15,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class ContinueToProveYourIdentityNavGraphProvider
     @Inject
     constructor(
-        @Named(ContinueToProveYourIdentityViewModelModule.FACTORY_NAME)
-        private val viewModelFactory: ViewModelProvider.Factory,
+        private val viewModelProviderFactory: ViewModelProvider.Factory,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
@@ -25,7 +23,7 @@ class ContinueToProveYourIdentityNavGraphProvider
         ) {
             composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
                 ContinueToProveYourIdentityScreen(
-                    viewModel = viewModel(factory = viewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                     navController = navController,
                 )
             }

@@ -3,6 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,8 +19,12 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionResumable
 import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSession
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
-class ProveYourIdentityViewModel(
+@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ViewModelKey(ProveYourIdentityViewModel::class)
+class ProveYourIdentityViewModel @Inject constructor(
     private val isSessionResumable: IsSessionResumable,
     private val refreshActiveSession: RefreshActiveSession,
     private val analytics: ResumeAnalytics,

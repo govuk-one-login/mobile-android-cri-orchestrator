@@ -18,6 +18,8 @@ dependencies {
         // This groovy dependency is causing issues with Jacoco transforms. Resolved by excluding.
         exclude(group = "org.apache.groovy", module = "groovy")
     }
+
+    testFixturesImplementation(libs.androidx.lifecycle.viewmodel)
 }
 
 android {

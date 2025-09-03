@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal
 
+import IdCheckWrapperConfigKey
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
