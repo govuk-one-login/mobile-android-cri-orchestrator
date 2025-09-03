@@ -8,17 +8,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.Named
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.AbortedRedirectToMobileWebHolderScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -28,14 +23,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class AbortModalNavGraphProvider
     @Inject
     constructor(
-        @Named(ConfirmAbortMobileViewModelModule.FACTORY_NAME)
-        private val confirmAbortMobileWebViewModelFactory: ViewModelProvider.Factory,
-        @Named(ConfirmAbortDesktopViewModelModule.FACTORY_NAME)
-        private val confirmAbortDesktopWebViewModelFactory: ViewModelProvider.Factory,
-        @Named(AbortedReturnToDesktopWebViewModelModule.FACTORY_NAME)
-        private val abortedReturnToDesktopWebViewModelFactory: ViewModelProvider.Factory,
-        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
-        private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
+        private val viewModelProviderFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
     ) : AbortNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
@@ -44,21 +32,21 @@ class AbortModalNavGraphProvider
         ) {
             composable<AbortDestinations.ConfirmAbortMobile> {
                 ConfirmAbortMobileScreen(
-                    viewModel = viewModel(factory = confirmAbortMobileWebViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                     navController = navController,
                 )
             }
 
             composable<AbortDestinations.ConfirmAbortDesktop> {
                 ConfirmAbortDesktopWebScreen(
-                    viewModel = viewModel(factory = confirmAbortDesktopWebViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                     navController = navController,
                 )
             }
 
             composable<AbortDestinations.AbortedReturnToDesktopWeb> {
                 AbortedReturnToDesktopWebScreen(
-                    viewModel = viewModel(factory = abortedReturnToDesktopWebViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                 )
             }
 
@@ -77,7 +65,7 @@ class AbortModalNavGraphProvider
             composable<HandbackDestinations.UnrecoverableError> {
                 UnrecoverableErrorScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                 )
             }
         }

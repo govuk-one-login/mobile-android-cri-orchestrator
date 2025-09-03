@@ -28,19 +28,19 @@ import org.mockito.kotlin.verifyNoMoreInteractions
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.HandbackNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.FakeRequestAppReview
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
-import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
@@ -59,6 +59,8 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.filterInDialogElse
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -419,61 +421,78 @@ class HandbackNavigationTest {
         isSessionAbortedOrUnavailable.state.value = true
     }
 
+    @Suppress("LongMethod")
     private fun createNavGraphProvider(): HandbackNavGraphProvider =
         HandbackNavGraphProvider(
-            abortModalViewModelFactory =
-                AbortModalViewModelModule.provideViewModel(
-                    isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
-                ),
-            unrecoverableErrorViewModelFactory =
-                UnrecoverableErrorViewModelModule.provideFactory(
-                    analytics = analytics,
-                    getJourneyType = getJourneyType,
-                ),
-            returnToMobileViewModelFactory =
-                ReturnToMobileWebViewModelModule.provideFactory(
-                    analytics = analytics,
-                ),
-            returnToDesktopViewModelFactory =
-                ReturnToDesktopWebViewModelModule.provideFactory(
-                    analytics = analytics,
-                    requestAppReview = requestAppReview,
-                ),
             webNavigator = webNavigator,
+            viewModelProviderFactory =
+                TestViewModelProviderFactory(
+                    testViewModelProvider {
+                        AbortModalViewModel(
+                            isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+                        )
+                    },
+                    testViewModelProvider {
+                        UnrecoverableErrorViewModel(
+                            analytics = analytics,
+                            getJourneyType = getJourneyType,
+                        )
+                    },
+                    testViewModelProvider {
+                        ReturnToMobileWebViewModel(
+                            analytics = analytics,
+                        )
+                    },
+                    testViewModelProvider {
+                        ReturnToDesktopWebViewModel(
+                            analytics = analytics,
+                            requestAppReview = requestAppReview,
+                        )
+                    },
+                    testViewModelProvider {
+                        FaceScanLimitReachedMobileViewModel(
+                            analytics = analytics,
+                        )
+                    },
+                    testViewModelProvider {
+                        FaceScanLimitReachedDesktopViewModel(
+                            analytics = analytics,
+                        )
+                    },
+                ),
             abortNavGraphProviders =
                 persistentSetOf(
                     AbortModalNavGraphProvider(
-                        confirmAbortDesktopWebViewModelFactory =
-                            ConfirmAbortDesktopViewModelModule.provideFactory(
-                                analytics = analytics,
-                                abortSession = abortSession,
-                            ),
-                        confirmAbortMobileWebViewModelFactory =
-                            ConfirmAbortMobileViewModelModule.provideFactory(
-                                sessionStore = sessionStore,
-                                analytics = analytics,
-                                abortSession = abortSession,
-                                logger = logger,
-                            ),
-                        abortedReturnToDesktopWebViewModelFactory =
-                            AbortedReturnToDesktopWebViewModelModule.provideViewModel(
-                                analytics = analytics,
-                            ),
-                        unrecoverableErrorViewModelFactory =
-                            UnrecoverableErrorViewModelModule.provideFactory(
-                                getJourneyType = getJourneyType,
-                                analytics = analytics,
+                        viewModelProviderFactory =
+                            TestViewModelProviderFactory(
+                                testViewModelProvider {
+                                    ConfirmAbortDesktopViewModel(
+                                        analytics = analytics,
+                                        abortSession = abortSession,
+                                    )
+                                },
+                                testViewModelProvider {
+                                    ConfirmAbortMobileViewModel(
+                                        sessionStore = sessionStore,
+                                        analytics = analytics,
+                                        abortSession = abortSession,
+                                        logger = logger,
+                                    )
+                                },
+                                testViewModelProvider {
+                                    AbortedReturnToDesktopWebViewModel(
+                                        analytics = analytics,
+                                    )
+                                },
+                                testViewModelProvider {
+                                    UnrecoverableErrorViewModel(
+                                        getJourneyType = getJourneyType,
+                                        analytics = analytics,
+                                    )
+                                },
                             ),
                         webNavigator = webNavigator,
                     ),
-                ),
-            faceScanLimitReachedMobileViewModelFactory =
-                FaceScanLimitReachedMobileViewModelModule.provideFactory(
-                    analytics = analytics,
-                ),
-            faceScanLimitReachedDesktopViewModelFactory =
-                FaceScanLimitReachedDesktopViewModelModule.provideFactory(
-                    analytics = analytics,
                 ),
         )
 

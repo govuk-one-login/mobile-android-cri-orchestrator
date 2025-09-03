@@ -23,8 +23,10 @@ import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -95,20 +97,27 @@ class ProveYourIdentityRootTest {
         verify(viewModel).onStartClick()
     }
 
-    private fun ComposeContentTestRule.displayProveYourIdentityRoot() =
+    private fun ComposeContentTestRule.displayProveYourIdentityRoot() {
+        val navGraphProviders =
+            persistentSetOf(
+                ContinueToProveYourIdentityNavGraphProvider(
+                    TestViewModelProviderFactory(
+                        testViewModelProvider {
+                            ContinueToProveYourIdentityViewModel(
+                                analytics = mock(),
+                                nfcChecker = mock(),
+                            )
+                        },
+                    ),
+                ),
+            )
         setContent {
             CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
                 ProveYourIdentityRoot(
-                    viewModel,
-                    persistentSetOf(
-                        ContinueToProveYourIdentityNavGraphProvider(
-                            ContinueToProveYourIdentityViewModelModule.provideFactory(
-                                analytics = mock(),
-                                nfcChecker = mock(),
-                            ),
-                        ),
-                    ),
+                    viewModel = viewModel,
+                    navGraphProviders = navGraphProviders,
                 )
             }
         }
+    }
 }

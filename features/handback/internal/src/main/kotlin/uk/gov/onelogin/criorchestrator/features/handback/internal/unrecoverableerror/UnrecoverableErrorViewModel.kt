@@ -2,6 +2,9 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverable
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -9,8 +12,12 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.Hand
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
-internal class UnrecoverableErrorViewModel(
+@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ViewModelKey(UnrecoverableErrorViewModel::class)
+internal class UnrecoverableErrorViewModel @Inject constructor(
     private val analytics: HandbackAnalytics,
     private val getJourneyType: GetJourneyType,
 ) : ViewModel() {
