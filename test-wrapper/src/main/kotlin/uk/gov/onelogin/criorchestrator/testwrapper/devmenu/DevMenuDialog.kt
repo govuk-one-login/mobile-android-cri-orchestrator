@@ -6,13 +6,13 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.dev.publicapi.DevMenuScreen
-import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
-import uk.gov.onelogin.criorchestrator.testwrapper.preview.rememberPreviewCriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
+import uk.gov.onelogin.criorchestrator.testwrapper.preview.rememberPreviewCriOrchestratorGraph
 
 @Composable
 @Suppress("LongMethod")
 internal fun DevMenuDialog(
-    criOrchestratorComponent: CriOrchestratorComponent,
+    criOrchestratorGraph: CriOrchestratorGraph,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -21,7 +21,7 @@ internal fun DevMenuDialog(
         onDismissRequest = onDismissRequest,
     ) {
         DevMenuScreen(
-            component = criOrchestratorComponent,
+            graph = criOrchestratorGraph,
         )
     }
 }
@@ -31,7 +31,7 @@ internal fun DevMenuDialog(
 internal fun DevMenuPreview() {
     GdsTheme {
         DevMenuDialog(
-            criOrchestratorComponent = rememberPreviewCriOrchestratorComponent(),
+            criOrchestratorGraph = rememberPreviewCriOrchestratorGraph(),
             onDismissRequest = {},
         )
     }

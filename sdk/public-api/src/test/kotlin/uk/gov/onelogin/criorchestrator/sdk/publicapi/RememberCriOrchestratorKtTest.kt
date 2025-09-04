@@ -22,7 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.testing.assertions.assertExceptionEquals
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
-import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 
 class RememberCriOrchestratorKtTest {
@@ -55,7 +55,7 @@ class RememberCriOrchestratorKtTest {
                     )
                 }
             }.test {
-                assertInstanceOf<CriOrchestratorComponent>(awaitItem())
+                assertInstanceOf<CriOrchestratorGraph>(awaitItem())
                 cancel()
             }
         }

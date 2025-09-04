@@ -11,15 +11,15 @@ import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.libraries.architecture.CriOrchestratorService
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
-import uk.gov.onelogin.criorchestrator.sdk.internal.di.CoroutineDispatchersModule.Companion.TEST_DISPATCHER_NAME
+import uk.gov.onelogin.criorchestrator.sdk.internal.di.CoroutineDispatchersBindings.Companion.TEST_DISPATCHER_NAME
 
 /**
- * The real Dagger component that other component interfaces and modules will be merged into.
+ * The real dependency graph that other graph interfaces and binding containers will be merged into.
  */
-@DependencyGraph(CriOrchestratorSingletonScope::class)
-interface BaseCriOrchestratorSingletonComponent {
+@DependencyGraph(CriOrchestratorAppScope::class)
+interface BaseCriOrchestratorAppGraph {
     @DependencyGraph.Factory
     interface Factory {
         @Suppress("LongParameterList")
@@ -30,7 +30,7 @@ interface BaseCriOrchestratorSingletonComponent {
             @Provides logger: Logger,
             @Provides applicationContext: Context,
             @Provides @Named(TEST_DISPATCHER_NAME) testDispatcher: CoroutineDispatcher?,
-        ): BaseCriOrchestratorSingletonComponent
+        ): BaseCriOrchestratorAppGraph
     }
 
     fun coroutineScope(): CoroutineScope

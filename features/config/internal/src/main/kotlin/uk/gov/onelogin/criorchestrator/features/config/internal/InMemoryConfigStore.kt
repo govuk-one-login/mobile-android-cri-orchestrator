@@ -14,10 +14,10 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.ConfigKey
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@SingleIn(CriOrchestratorSingletonScope::class)
-@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<ConfigStore>())
+@SingleIn(CriOrchestratorAppScope::class)
+@ContributesBinding(CriOrchestratorAppScope::class, binding = binding<ConfigStore>())
 class InMemoryConfigStore
     @Inject
     constructor(

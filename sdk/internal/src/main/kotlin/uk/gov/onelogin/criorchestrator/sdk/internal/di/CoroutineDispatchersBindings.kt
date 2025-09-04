@@ -6,12 +6,12 @@ import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 
 @BindingContainer
-@ContributesTo(CriOrchestratorSingletonScope::class)
-class CoroutineDispatchersModule {
+@ContributesTo(CriOrchestratorAppScope::class)
+class CoroutineDispatchersBindings {
     @Provides
     fun provideCoroutineDispatchers(
         @Named(TEST_DISPATCHER_NAME)

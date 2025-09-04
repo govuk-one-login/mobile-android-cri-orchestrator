@@ -9,19 +9,19 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import uk.gov.onelogin.criorchestrator.sdk.internal.di.ViewModelGraph
 
 /**
- * The real Dagger component that other component interfaces and modules will be merged into.
+ * The real dependency graph that other component interfaces and modules will be merged into.
  */
 @DependencyGraph(
     CriOrchestratorScope::class,
 )
-interface BaseCriOrchestratorComponent: ViewModelGraph.Factory {
+interface BaseCriOrchestratorGraph : ViewModelGraph.Factory {
     @DependencyGraph.Factory
     interface Factory {
         @Suppress("LongParameterList")
         fun create(
-            @Includes baseSingletonComponent: BaseCriOrchestratorSingletonComponent,
+            @Includes baseAppGraph: BaseCriOrchestratorAppGraph,
             @Provides context: Context,
             @Provides activity: Activity,
-        ): BaseCriOrchestratorComponent
+        ): BaseCriOrchestratorGraph
     }
 }

@@ -13,12 +13,12 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.actives
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApiResponse
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.UriBuilder
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 private const val NOT_FOUND = 404
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<SessionReader>())
+@ContributesBinding(CriOrchestratorAppScope::class, binding = binding<SessionReader>())
 class RemoteSessionReader
     @Inject
     constructor(

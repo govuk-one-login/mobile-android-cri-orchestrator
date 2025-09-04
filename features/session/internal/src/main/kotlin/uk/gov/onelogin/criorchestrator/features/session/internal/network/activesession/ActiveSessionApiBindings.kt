@@ -5,11 +5,11 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @BindingContainer
-@ContributesTo(CriOrchestratorSingletonScope::class)
-class ActiveSessionApiModule {
+@ContributesTo(CriOrchestratorAppScope::class)
+class ActiveSessionApiBindings {
     @Provides
     fun providesActiveSessionApi(
         config: ConfigStore,

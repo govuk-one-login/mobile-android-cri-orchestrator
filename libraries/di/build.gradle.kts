@@ -15,7 +15,7 @@ mavenPublishingConfig {
         description.set(
             """
             The Credential Issuer (CRI) Orchestrator Dependency Injection Module contains dependency
-            injection scopes used by Dagger and Anvil.
+            injection scopes used by Metro.
             """.trimIndent(),
         )
     }
