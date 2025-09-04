@@ -11,10 +11,10 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@SingleIn(CriOrchestratorSingletonScope::class)
-@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<SessionStore>())
+@SingleIn(CriOrchestratorAppScope::class)
+@ContributesBinding(CriOrchestratorAppScope::class, binding = binding<SessionStore>())
 class InMemorySessionStore
     @Inject
     constructor(

@@ -2,9 +2,9 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idcheck
 
 import dev.zacsweers.metro.ContributesTo
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@ContributesTo(CriOrchestratorSingletonScope::class)
-interface IdCheckSdkActiveStateComponent {
+@ContributesTo(CriOrchestratorAppScope::class)
+interface IdCheckSdkActiveStateProviders {
     fun idCheckSdkActiveStateStore(): IdCheckSdkActiveStateStore
 }

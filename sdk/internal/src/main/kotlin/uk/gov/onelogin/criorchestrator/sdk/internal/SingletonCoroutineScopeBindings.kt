@@ -6,12 +6,12 @@ import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @BindingContainer
-@ContributesTo(CriOrchestratorSingletonScope::class)
-object SingletonCoroutineScopeModule {
+@ContributesTo(CriOrchestratorAppScope::class)
+object SingletonCoroutineScopeBindings {
     @Provides
-    @SingleIn(CriOrchestratorSingletonScope::class)
+    @SingleIn(CriOrchestratorAppScope::class)
     fun singletonCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob())
 }

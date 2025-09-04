@@ -15,6 +15,6 @@ fun interface ProveYourIdentityEntryPoints {
 
 @SingleIn(CriOrchestratorScope::class)
 @ContributesTo(CriOrchestratorScope::class)
-fun interface ProveYourIdentityEntryPointsComponent {
+fun interface ProveYourIdentityEntryPointsProviders {
     fun proveYourIdentityEntryPoints(): ProveYourIdentityEntryPoints
 }

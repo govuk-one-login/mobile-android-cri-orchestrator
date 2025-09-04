@@ -15,6 +15,6 @@ fun interface DevMenuEntryPoints {
 
 @SingleIn(CriOrchestratorScope::class)
 @ContributesTo(CriOrchestratorScope::class)
-fun interface DevMenuEntryPointsComponent {
+fun interface DevMenuEntryPointsProviders {
     fun devMenuEntryPoints(): DevMenuEntryPoints
 }

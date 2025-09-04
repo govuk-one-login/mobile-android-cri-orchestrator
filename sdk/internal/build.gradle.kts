@@ -57,8 +57,8 @@ mavenPublishingConfig {
         )
         description.set(
             """
-            The Credential Issuer (CRI) Orchestrator SDK Internal module contains the real Dagger
-            component used for the CRI Orchestrator SDK, and functions to instantiate it.
+            The Credential Issuer (CRI) Orchestrator SDK Internal module contains the real Metro
+            dependency graph used for the CRI Orchestrator SDK.
             """.trimIndent(),
         )
     }

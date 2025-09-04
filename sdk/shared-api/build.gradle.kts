@@ -23,7 +23,7 @@ mavenPublishingConfig {
         description.set(
             """
             The Credential Issuer (CRI) Orchestrator SDK Shared API module contains the public-
-            facing abstraction that hides the internal Dagger component.
+            facing abstraction that hides the internal dependency graphs.
             """.trimIndent(),
         )
     }

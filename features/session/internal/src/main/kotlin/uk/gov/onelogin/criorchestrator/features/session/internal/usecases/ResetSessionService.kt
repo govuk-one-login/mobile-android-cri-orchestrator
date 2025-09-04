@@ -13,15 +13,15 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.architecture.CriOrchestratorService
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 /**
  * [CriOrchestratorService] that listens for config changes and clears the session store when appropriate.
  *
  * For example, if the backend URL configuration is changed during testing, the session store should be cleared.
  */
-@SingleIn(CriOrchestratorSingletonScope::class)
-@ContributesIntoSet(CriOrchestratorSingletonScope::class, binding = binding<CriOrchestratorService>())
+@SingleIn(CriOrchestratorAppScope::class)
+@ContributesIntoSet(CriOrchestratorAppScope::class, binding = binding<CriOrchestratorService>())
 class ResetSessionService
     @Inject
     constructor(

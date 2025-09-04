@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
-import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
+import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigProviders
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
@@ -37,7 +37,7 @@ class CriOrchestratorSingletonImplTest {
                 )
 
             val config =
-                (singleton.component as ConfigComponent)
+                (singleton.appGraph as ConfigProviders)
                     .configStore()
                     .readAll()
                     .first()

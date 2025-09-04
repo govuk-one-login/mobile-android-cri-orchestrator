@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@SingleIn(CriOrchestratorSingletonScope::class)
-@ContributesBinding(CriOrchestratorSingletonScope::class, binding = binding<IdCheckSdkActiveStateStore>())
+@SingleIn(CriOrchestratorAppScope::class)
+@ContributesBinding(CriOrchestratorAppScope::class, binding = binding<IdCheckSdkActiveStateStore>())
 class InMemoryIdCheckSdkActiveStateStore
     @Inject
     constructor(

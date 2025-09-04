@@ -13,7 +13,7 @@ import uk.gov.idcheck.sdk.passport.nfc.checker.NfcCheckerImpl as IdCheckSdkNfcCh
 
 @BindingContainer
 @ContributesTo(CriOrchestratorScope::class)
-object NfcModule {
+object NfcBindings {
     @Provides
     @SingleIn(CriOrchestratorScope::class)
     fun provideNfcChecker(

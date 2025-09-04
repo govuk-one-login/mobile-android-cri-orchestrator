@@ -9,8 +9,8 @@ import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.sdk.internal.config.fromUserConfig
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorAppGraph
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
-import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSingletonComponent
 
 /**
  * @param authenticatedHttpClient The HTTP client to make all network calls.
@@ -30,8 +30,8 @@ class CriOrchestratorSingletonImpl(
     applicationContext: Context,
     testDispatcher: CoroutineDispatcher? = null,
 ) : CriOrchestratorSdk {
-    private val _component: BaseCriOrchestratorSingletonComponent =
-        createGraphFactory<BaseCriOrchestratorSingletonComponent.Factory>()
+    private val _appGraph: BaseCriOrchestratorAppGraph =
+        createGraphFactory<BaseCriOrchestratorAppGraph.Factory>()
             .create(
                 authenticatedHttpClient = authenticatedHttpClient,
                 analyticsLogger = analyticsLogger,
@@ -40,11 +40,11 @@ class CriOrchestratorSingletonImpl(
                 applicationContext = applicationContext,
                 testDispatcher = testDispatcher,
             )
-    override val component: CriOrchestratorSingletonComponent = _component as CriOrchestratorSingletonComponent
+    override val appGraph: CriOrchestratorAppGraph = _appGraph as CriOrchestratorAppGraph
 
     init {
-        with(_component.coroutineScope()) {
-            _component.services().forEach { service ->
+        with(_appGraph.coroutineScope()) {
+            _appGraph.services().forEach { service ->
                 launch {
                     service.start()
                 }
