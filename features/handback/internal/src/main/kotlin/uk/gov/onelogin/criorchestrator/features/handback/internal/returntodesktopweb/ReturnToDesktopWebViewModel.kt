@@ -16,7 +16,8 @@ import kotlin.time.Duration.Companion.seconds
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ReturnToDesktopWebViewModel::class)
-class ReturnToDesktopWebViewModel @Inject constructor(
+@Inject
+class ReturnToDesktopWebViewModel(
     private val analytics: HandbackAnalytics,
     private val requestAppReview: RequestAppReview,
 ) : ViewModel() {

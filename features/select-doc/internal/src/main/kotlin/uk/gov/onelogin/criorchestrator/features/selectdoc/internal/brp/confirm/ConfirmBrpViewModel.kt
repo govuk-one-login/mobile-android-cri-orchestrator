@@ -15,7 +15,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ConfirmBrpViewModel::class)
-class ConfirmBrpViewModel @Inject constructor(
+@Inject
+class ConfirmBrpViewModel(
     private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     private val _action = MutableSharedFlow<ConfirmBrpAction.NavigateToSyncIdCheck>()

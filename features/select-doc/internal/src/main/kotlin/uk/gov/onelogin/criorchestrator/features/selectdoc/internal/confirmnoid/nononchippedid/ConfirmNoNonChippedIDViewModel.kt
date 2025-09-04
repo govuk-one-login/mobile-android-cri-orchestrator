@@ -18,7 +18,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ConfirmNoNonChippedIDViewModel::class)
-class ConfirmNoNonChippedIDViewModel @Inject constructor(
+@Inject
+class ConfirmNoNonChippedIDViewModel(
     private val analytics: SelectDocAnalytics,
     private val getJourneyType: GetJourneyType,
 ) : ViewModel() {

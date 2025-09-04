@@ -11,7 +11,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(AbortedReturnToDesktopWebViewModel::class)
-class AbortedReturnToDesktopWebViewModel @Inject constructor(
+@Inject
+class AbortedReturnToDesktopWebViewModel(
     private val analytics: HandbackAnalytics,
 ) : ViewModel() {
     fun onScreenStart() {

@@ -17,7 +17,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(UnrecoverableErrorViewModel::class)
-internal class UnrecoverableErrorViewModel @Inject constructor(
+@Inject
+internal class UnrecoverableErrorViewModel(
     private val analytics: HandbackAnalytics,
     private val getJourneyType: GetJourneyType,
 ) : ViewModel() {

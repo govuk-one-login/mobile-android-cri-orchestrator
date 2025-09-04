@@ -15,7 +15,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(RecoverableErrorViewModel::class)
-class RecoverableErrorViewModel @Inject constructor(
+@Inject
+class RecoverableErrorViewModel(
     private val analytics: ErrorAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<RecoverableErrorAction>()

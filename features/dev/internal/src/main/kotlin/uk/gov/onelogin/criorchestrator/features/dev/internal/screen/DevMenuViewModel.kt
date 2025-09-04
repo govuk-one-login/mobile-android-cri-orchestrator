@@ -19,7 +19,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(DevMenuViewModel::class)
-class DevMenuViewModel @Inject constructor(
+@Inject
+class DevMenuViewModel(
     private val configStore: ConfigStore,
 ) : ViewModel() {
     private val _state =
