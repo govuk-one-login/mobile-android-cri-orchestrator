@@ -9,6 +9,7 @@ import org.mockito.Mockito.mock
 import uk.gov.onelogin.criorchestrator.features.config.internal.ConfigComponent
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 class CriOrchestratorSingletonImplTest {
