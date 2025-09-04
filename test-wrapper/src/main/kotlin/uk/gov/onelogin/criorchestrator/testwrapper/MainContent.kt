@@ -25,7 +25,7 @@ fun MainContent(
     modifier: Modifier = Modifier,
     testActions: Flow<MainContentTestAction> = flowOf(),
 ) {
-    val criOrchestratorComponent =
+    val criOrchestratorGraph =
         rememberCriOrchestrator(
             criOrchestratorSdk = criOrchestratorSdk,
         )
@@ -50,12 +50,12 @@ fun MainContent(
             SetupScreen(
                 onSubUpdateRequest = onSubUpdateRequest,
                 onStartClick = { navController.navigate(NavDestination.Home) },
-                criOrchestratorComponent = criOrchestratorComponent,
+                criOrchestratorGraph = criOrchestratorGraph,
             )
         }
         composable<NavDestination.Home> {
             HomeScreen(
-                criOrchestratorComponent = criOrchestratorComponent,
+                criOrchestratorGraph = criOrchestratorGraph,
                 onRefreshActiveSessionClick = {
                     coroutineScope.launch {
                         criOrchestratorSdk.refreshActiveSession()

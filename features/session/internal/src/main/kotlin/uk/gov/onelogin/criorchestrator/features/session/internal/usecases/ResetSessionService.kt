@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
-import com.squareup.anvil.annotations.ContributesMultibinding
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -10,17 +13,15 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.architecture.CriOrchestratorService
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
-import javax.inject.Singleton
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 /**
  * [CriOrchestratorService] that listens for config changes and clears the session store when appropriate.
  *
  * For example, if the backend URL configuration is changed during testing, the session store should be cleared.
  */
-@Singleton
-@ContributesMultibinding(CriOrchestratorSingletonScope::class, boundType = CriOrchestratorService::class)
+@SingleIn(CriOrchestratorAppScope::class)
+@ContributesIntoSet(CriOrchestratorAppScope::class, binding = binding<CriOrchestratorService>())
 class ResetSessionService
     @Inject
     constructor(

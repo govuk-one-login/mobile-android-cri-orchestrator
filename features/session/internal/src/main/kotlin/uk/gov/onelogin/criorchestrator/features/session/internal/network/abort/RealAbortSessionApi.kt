@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.abort
 
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.first
 import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
@@ -8,7 +9,6 @@ import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
-import javax.inject.Inject
 
 private const val ABORT_SESSION_ENDPOINT = "/async/abortSession"
 

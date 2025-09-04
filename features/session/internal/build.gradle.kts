@@ -42,7 +42,7 @@ mavenPublishingConfig {
         description.set(
             """
             The CRI Orchestrator Session Internal module contains implementations used for 
-            ID Check session logic that are Dagger injected where requested.
+            ID Check session logic.
             """.trimIndent(),
         )
     }

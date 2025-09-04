@@ -22,10 +22,12 @@ import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModelModule
+import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
+import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
@@ -78,20 +80,29 @@ class ProveYourIdentityCardAnalyticsTest {
         assertContains(analyticsLogger.loggedEvents, expectedEvent)
     }
 
-    private fun ComposeContentTestRule.displayProveYourIdentityRoot() =
+    private fun ComposeContentTestRule.displayProveYourIdentityRoot() {
+        val navGraphProviders =
+            persistentSetOf(
+                ContinueToProveYourIdentityNavGraphProvider(
+                    viewModelProviderFactory =
+                        TestViewModelProviderFactory(
+                            testViewModelProvider {
+                                ContinueToProveYourIdentityViewModel(
+                                    analytics = mock(),
+                                    nfcChecker = mock(),
+                                )
+                            },
+                        ),
+                ),
+            )
+
         setContent {
             CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
                 ProveYourIdentityRoot(
-                    viewModel,
-                    persistentSetOf(
-                        ContinueToProveYourIdentityNavGraphProvider(
-                            ContinueToProveYourIdentityViewModelModule.provideFactory(
-                                analytics = mock(),
-                                nfcChecker = mock(),
-                            ),
-                        ),
-                    ),
+                    viewModel = viewModel,
+                    navGraphProviders = navGraphProviders,
                 )
             }
         }
+    }
 }

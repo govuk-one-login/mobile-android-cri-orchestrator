@@ -1,17 +1,17 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal.di
 
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
-import javax.inject.Named
 
-@Module
-@ContributesTo(CriOrchestratorSingletonScope::class)
-class CoroutineDispatchersModule {
+@BindingContainer
+@ContributesTo(CriOrchestratorAppScope::class)
+class CoroutineDispatchersBindings {
     @Provides
     fun provideCoroutineDispatchers(
         @Named(TEST_DISPATCHER_NAME)

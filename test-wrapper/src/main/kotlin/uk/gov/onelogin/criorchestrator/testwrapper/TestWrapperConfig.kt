@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
+import IdCheckWrapperConfigKey
 import android.content.res.Resources
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config

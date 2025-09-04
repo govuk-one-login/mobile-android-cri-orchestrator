@@ -1,15 +1,15 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@Module
-@ContributesTo(CriOrchestratorSingletonScope::class)
-class ActiveSessionApiModule {
+@BindingContainer
+@ContributesTo(CriOrchestratorAppScope::class)
+class ActiveSessionApiBindings {
     @Provides
     fun providesActiveSessionApi(
         config: ConfigStore,

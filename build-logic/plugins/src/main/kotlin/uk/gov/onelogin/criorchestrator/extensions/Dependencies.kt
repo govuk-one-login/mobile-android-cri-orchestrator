@@ -45,15 +45,6 @@ internal fun DependencyHandlerScope.project(
     path: String
 ) = dependencies.project(mapOf("path" to path))
 
-internal fun DependencyHandlerScope.diDependencies(libs: LibrariesForLibs) {
-    listOf(
-        libs.dagger
-    ).forEach {
-        implementation(it)
-    }
-    ksp(libs.dagger.compiler)
-}
-
 internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLibs) = listOf(
     platform(libs.androidx.compose.bom),
     libs.androidx.ui,

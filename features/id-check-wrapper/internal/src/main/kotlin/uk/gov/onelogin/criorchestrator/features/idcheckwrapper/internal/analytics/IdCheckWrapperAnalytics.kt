@@ -1,12 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics
 
+import dev.zacsweers.metro.Inject
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel2
 import uk.gov.logging.api.analytics.parameters.data.TaxonomyLevel3
 import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
-import javax.inject.Inject
 
 class IdCheckWrapperAnalytics
     @Inject

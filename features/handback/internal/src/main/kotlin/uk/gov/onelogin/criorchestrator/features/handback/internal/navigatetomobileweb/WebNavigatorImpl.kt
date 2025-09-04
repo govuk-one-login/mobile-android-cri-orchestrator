@@ -3,9 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomob
 import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
 @ContributesBinding(CriOrchestratorScope::class)
 class WebNavigatorImpl

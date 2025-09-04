@@ -20,7 +20,6 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.FakeUriBuilderImpl
 import java.util.stream.Stream
-import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class RemoteSessionReaderTest {
@@ -33,7 +32,7 @@ class RemoteSessionReaderTest {
     fun setUp() {
         remoteSessionReader =
             RemoteSessionReader(
-                activeSessionApi = Provider { activeSessionApi },
+                activeSessionApi = { activeSessionApi },
                 logger = logger,
                 uriBuilder = FakeUriBuilderImpl(),
             )

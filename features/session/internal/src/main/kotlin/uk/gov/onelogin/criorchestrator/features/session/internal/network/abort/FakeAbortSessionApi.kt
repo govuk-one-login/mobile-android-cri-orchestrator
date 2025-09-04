@@ -1,12 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.abort
 
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
-import javax.inject.Inject
 
 private const val BAD_REQUEST = 400
 private const val DELAY = 300L

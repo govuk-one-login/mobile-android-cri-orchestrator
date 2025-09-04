@@ -3,7 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.dagger)
+    implementation(libs.metro.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel)
 }
 
 mavenPublishingConfig {
@@ -14,7 +15,7 @@ mavenPublishingConfig {
         description.set(
             """
             The Credential Issuer (CRI) Orchestrator Dependency Injection Module contains dependency
-            injection scopes used by Dagger and Anvil.
+            injection scopes used by Metro.
             """.trimIndent(),
         )
     }

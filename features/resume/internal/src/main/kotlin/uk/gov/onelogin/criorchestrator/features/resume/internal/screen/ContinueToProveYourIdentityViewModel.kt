@@ -2,6 +2,9 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -10,8 +13,13 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.N
 import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeScreenId
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
-internal class ContinueToProveYourIdentityViewModel(
+@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ViewModelKey(ContinueToProveYourIdentityViewModel::class)
+@Inject
+class ContinueToProveYourIdentityViewModel(
     private val analytics: ResumeAnalytics,
     private val nfcChecker: NfcChecker,
 ) : ViewModel(),

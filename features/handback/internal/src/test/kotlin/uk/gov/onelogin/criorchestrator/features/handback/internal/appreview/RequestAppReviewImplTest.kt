@@ -8,7 +8,6 @@ import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
-import javax.inject.Provider
 
 class RequestAppReviewImplTest {
     private val configStore = FakeConfigStore()
@@ -18,8 +17,8 @@ class RequestAppReviewImplTest {
     private val requestAppReview =
         RequestAppReviewImpl(
             configStore = configStore,
-            androidRequestAppReview = Provider { androidRequestAppReview },
-            debugRequestAppReview = Provider { debugRequestAppReview },
+            androidRequestAppReview = { androidRequestAppReview },
+            debugRequestAppReview = { debugRequestAppReview },
         )
 
     @Test

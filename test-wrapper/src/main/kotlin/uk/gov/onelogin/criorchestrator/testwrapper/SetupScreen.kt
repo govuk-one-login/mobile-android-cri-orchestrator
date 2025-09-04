@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import uk.gov.android.ui.theme.m3.GdsLocalColorScheme
-import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuDialog
 import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuFloatingActionButton
 
@@ -28,7 +28,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.devmenu.DevMenuFloatingAction
 fun SetupScreen(
     onSubUpdateRequest: (String?) -> Unit,
     onStartClick: () -> Unit,
-    criOrchestratorComponent: CriOrchestratorComponent,
+    criOrchestratorGraph: CriOrchestratorGraph,
     modifier: Modifier = Modifier,
 ) {
     var showDevMenu by remember { mutableStateOf(false) }
@@ -80,7 +80,7 @@ fun SetupScreen(
 
         if (showDevMenu) {
             DevMenuDialog(
-                criOrchestratorComponent = criOrchestratorComponent,
+                criOrchestratorGraph = criOrchestratorGraph,
                 onDismissRequest = { showDevMenu = false },
             )
         }
