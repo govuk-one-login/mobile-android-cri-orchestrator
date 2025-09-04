@@ -20,7 +20,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ConfirmAbortDesktopViewModel::class)
-class ConfirmAbortDesktopViewModel @Inject constructor(
+@Inject
+class ConfirmAbortDesktopViewModel(
     private val analytics: HandbackAnalytics,
     private val abortSession: AbortSession,
 ) : ViewModel() {

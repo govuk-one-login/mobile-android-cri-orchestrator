@@ -18,7 +18,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ContinueToProveYourIdentityViewModel::class)
-class ContinueToProveYourIdentityViewModel @Inject constructor(
+@Inject
+class ContinueToProveYourIdentityViewModel(
     private val analytics: ResumeAnalytics,
     private val nfcChecker: NfcChecker,
 ) : ViewModel(),

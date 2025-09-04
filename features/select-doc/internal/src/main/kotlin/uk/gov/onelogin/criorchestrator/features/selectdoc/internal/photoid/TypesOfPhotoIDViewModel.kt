@@ -11,7 +11,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(TypesOfPhotoIDViewModel::class)
-class TypesOfPhotoIDViewModel @Inject constructor(
+@Inject
+class TypesOfPhotoIDViewModel(
     private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     fun onScreenStart() {

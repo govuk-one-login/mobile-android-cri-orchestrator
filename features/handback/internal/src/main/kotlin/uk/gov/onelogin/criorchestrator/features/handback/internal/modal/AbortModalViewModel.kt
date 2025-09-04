@@ -15,7 +15,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(AbortModalViewModel::class)
-class AbortModalViewModel @Inject constructor(
+@Inject
+class AbortModalViewModel(
     private val isSessionAbortedOrUnavailable: IsSessionAbortedOrUnavailable,
 ) : ViewModel() {
     private val _isAborted = MutableStateFlow<Boolean>(false)

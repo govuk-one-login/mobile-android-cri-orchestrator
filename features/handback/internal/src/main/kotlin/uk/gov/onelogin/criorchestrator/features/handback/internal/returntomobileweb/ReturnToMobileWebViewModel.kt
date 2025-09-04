@@ -16,7 +16,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ReturnToMobileWebViewModel::class)
-class ReturnToMobileWebViewModel @Inject constructor(
+@Inject
+class ReturnToMobileWebViewModel(
     private val analytics: HandbackAnalytics,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<ReturnToMobileWebAction>()

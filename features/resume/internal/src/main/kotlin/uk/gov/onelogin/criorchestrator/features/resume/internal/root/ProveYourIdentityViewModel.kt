@@ -24,7 +24,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ProveYourIdentityViewModel::class)
-class ProveYourIdentityViewModel @Inject constructor(
+@Inject
+class ProveYourIdentityViewModel(
     private val isSessionResumable: IsSessionResumable,
     private val refreshActiveSession: RefreshActiveSession,
     private val analytics: ResumeAnalytics,

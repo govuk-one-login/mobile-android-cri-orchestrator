@@ -15,7 +15,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ConfirmDrivingLicenceViewModel::class)
-class ConfirmDrivingLicenceViewModel @Inject constructor(
+@Inject
+class ConfirmDrivingLicenceViewModel(
     private val analytics: SelectDocAnalytics,
 ) : ViewModel() {
     private val _action = MutableSharedFlow<ConfirmDrivingLicenceAction.NavigateToSyncIdCheck>()
