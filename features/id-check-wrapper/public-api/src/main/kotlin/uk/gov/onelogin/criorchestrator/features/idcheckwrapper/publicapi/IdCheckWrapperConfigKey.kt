@@ -1,3 +1,5 @@
+package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi
+
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.BooleanConfigKey
 
 /**
