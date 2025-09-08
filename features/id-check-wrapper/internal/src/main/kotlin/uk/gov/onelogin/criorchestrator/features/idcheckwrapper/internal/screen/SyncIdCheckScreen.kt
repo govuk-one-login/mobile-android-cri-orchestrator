@@ -145,6 +145,16 @@ private fun SyncIdCheckActionHandler(
                 SyncIdCheckAction.NavigateToUnrecoverableError -> {
                     navController.navigate(HandbackDestinations.UnrecoverableError)
                 }
+                is SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb -> {
+                    navController.navigate(
+                        HandbackDestinations.FaceScanLimitReachedMobile(
+                            redirectUri = action.redirectUri,
+                        ),
+                    )
+                }
+                SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb -> {
+                    navController.navigate(HandbackDestinations.FaceScanLimitReachedDesktop)
+                }
             }
         }
     }

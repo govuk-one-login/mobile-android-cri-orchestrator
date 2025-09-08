@@ -16,6 +16,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.R
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.IdCheckSdkActivityResultContractParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.hasAbortedSession
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isLimitReached
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isSuccess
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
@@ -140,21 +141,33 @@ class SyncIdCheckViewModel(
             sessionStore.updateToAborted()
         }
         val action =
-            when (exitState.isSuccess()) {
-                true ->
+            when {
+                exitState.isSuccess() -> {
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToReturnToMobileWeb(journeyType.redirectUri)
                     }
-                false ->
+                }
+
+                exitState.isLimitReached() -> {
+                    when (journeyType) {
+                        is JourneyType.MobileAppMobile ->
+                            SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb(journeyType.redirectUri)
+                        JourneyType.DesktopAppDesktop ->
+                            SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb
+                    }
+                }
+
+                else -> {
                     when (journeyType) {
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
+                }
             }
 
         viewModelScope.launch {
