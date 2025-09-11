@@ -9,6 +9,10 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.toRoute
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.collections.immutable.toPersistentSet
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModelModule
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
@@ -40,6 +44,10 @@ class HandbackNavGraphProvider
         private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
         @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
         private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
+        @Named(FaceScanLimitReachedMobileViewModelModule.FACTORY_NAME)
+        private val faceScanLimitReachedMobileViewModelFactory: ViewModelProvider.Factory,
+        @Named(FaceScanLimitReachedDesktopViewModelModule.FACTORY_NAME)
+        private val faceScanLimitReachedDesktopViewModelFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
         private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
@@ -69,6 +77,24 @@ class HandbackNavGraphProvider
             composable<HandbackDestinations.ReturnToDesktopWeb> {
                 ReturnToDesktopWebScreen(
                     viewModel = viewModel(factory = returnToDesktopViewModelFactory),
+                )
+            }
+
+            composable<HandbackDestinations.FaceScanLimitReachedMobile> { backStackEntry ->
+                val redirectUri =
+                    backStackEntry
+                        .toRoute<HandbackDestinations.FaceScanLimitReachedMobile>()
+                        .redirectUri
+                FaceScanLimitReachedMobileScreen(
+                    viewModel = viewModel(factory = faceScanLimitReachedMobileViewModelFactory),
+                    webNavigator = webNavigator,
+                    redirectUri = redirectUri,
+                )
+            }
+
+            composable<HandbackDestinations.FaceScanLimitReachedDesktop> {
+                FaceScanLimitReachedDesktopScreen(
+                    viewModel = viewModel(factory = faceScanLimitReachedDesktopViewModelFactory),
                 )
             }
 

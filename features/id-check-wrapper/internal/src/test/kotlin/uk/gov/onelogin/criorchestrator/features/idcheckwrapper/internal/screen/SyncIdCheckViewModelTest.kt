@@ -136,11 +136,13 @@ class SyncIdCheckViewModelTest {
             )
 
         @JvmStatic
+        @Suppress("LongMethod")
         fun provideSdkResultActionParams(): Stream<Arguments> {
             val unhappyPaths =
                 ExitStateOption.entries
                     .filter {
-                        it.exitState !is IdCheckSdkExitState.HappyPath
+                        it.exitState !is IdCheckSdkExitState.HappyPath &&
+                            it.exitState !is IdCheckSdkExitState.FaceScanLimitReached
                     }.mapNotNull {
                         it.exitState
                     }.stream()
@@ -160,6 +162,30 @@ class SyncIdCheckViewModelTest {
                             ),
                         ).stream()
                     }
+
+            val limitReachedPaths =
+                ExitStateOption.entries
+                    .filter { it.exitState is IdCheckSdkExitState.FaceScanLimitReached }
+                    .mapNotNull {
+                        it.exitState
+                    }.stream()
+                    .flatMap { sdkResult ->
+                        listOf(
+                            Arguments.of(
+                                sdkResult,
+                                Session.createDesktopAppDesktopInstance(),
+                                SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb,
+                            ),
+                            Arguments.of(
+                                sdkResult,
+                                mamSession,
+                                SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb(
+                                    redirectUri = REDIRECT_URI,
+                                ),
+                            ),
+                        ).stream()
+                    }
+
             val happyPaths =
                 ExitStateOption.entries
                     .filter {
@@ -184,7 +210,7 @@ class SyncIdCheckViewModelTest {
                         ).stream()
                     }
 
-            return Stream.concat(happyPaths, unhappyPaths)
+            return Stream.of(happyPaths, unhappyPaths, limitReachedPaths).flatMap { it }
         }
     }
 

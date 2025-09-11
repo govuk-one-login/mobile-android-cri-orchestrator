@@ -8,22 +8,37 @@ fun IdCheckSdkExitState.hasAbortedSession(): Boolean =
         is IdCheckSdkExitState.ConfirmAnotherWay,
         is IdCheckSdkExitState.ConfirmationAbortedJourney,
         IdCheckSdkExitState.ConfirmationFailed,
-        is IdCheckSdkExitState.FaceScanLimitReached,
         IdCheckSdkExitState.UnknownDocumentType,
         -> true
 
-        IdCheckSdkExitState.HappyPath -> false
+        is IdCheckSdkExitState.FaceScanLimitReached,
+        IdCheckSdkExitState.HappyPath,
+        -> false
     }
 
 fun IdCheckSdkExitState.isSuccess(): Boolean =
     when (this) {
-        IdCheckSdkExitState.HappyPath -> true
+        IdCheckSdkExitState.HappyPath,
+        -> true
 
         is IdCheckSdkExitState.Nowhere,
         is IdCheckSdkExitState.ConfirmAnotherWay,
         is IdCheckSdkExitState.ConfirmationAbortedJourney,
         IdCheckSdkExitState.ConfirmationFailed,
+        IdCheckSdkExitState.UnknownDocumentType,
         is IdCheckSdkExitState.FaceScanLimitReached,
+        -> false
+    }
+
+fun IdCheckSdkExitState.isLimitReached(): Boolean =
+    when (this) {
+        is IdCheckSdkExitState.FaceScanLimitReached -> true
+
+        is IdCheckSdkExitState.ConfirmAnotherWay,
+        is IdCheckSdkExitState.ConfirmationAbortedJourney,
+        IdCheckSdkExitState.ConfirmationFailed,
+        IdCheckSdkExitState.HappyPath,
+        IdCheckSdkExitState.Nowhere,
         IdCheckSdkExitState.UnknownDocumentType,
         -> false
     }

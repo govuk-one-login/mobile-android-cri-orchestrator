@@ -24,4 +24,10 @@ sealed interface SyncIdCheckAction {
     ) : SyncIdCheckAction
 
     data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
+
+    data class NavigateToLimitReachedReturnToMobileWeb(
+        val redirectUri: String,
+    ) : SyncIdCheckAction
+
+    data object NavigateToLimitReachedReturnToDesktopWeb : SyncIdCheckAction
 }
