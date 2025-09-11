@@ -35,7 +35,7 @@ fun FaceScanLimitReachedDesktopScreen(
         // as the user must return to their web browser
     }
 
-    FaceScanLimitReachedDesktopScreenConstants(
+    FaceScanLimitReachedDesktopScreenContent(
         modifier = modifier,
     )
 
@@ -47,7 +47,7 @@ fun FaceScanLimitReachedDesktopScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-private fun FaceScanLimitReachedDesktopScreenConstants(modifier: Modifier = Modifier) {
+private fun FaceScanLimitReachedDesktopScreenContent(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = colorScheme.background,
@@ -106,6 +106,6 @@ private fun FaceScanLimitReachedDesktopScreenConstants(modifier: Modifier = Modi
 @Composable
 internal fun FaceScanLimitReachedDesktopScreen() {
     GdsTheme {
-        FaceScanLimitReachedDesktopScreenConstants()
+        FaceScanLimitReachedDesktopScreenContent()
     }
 }

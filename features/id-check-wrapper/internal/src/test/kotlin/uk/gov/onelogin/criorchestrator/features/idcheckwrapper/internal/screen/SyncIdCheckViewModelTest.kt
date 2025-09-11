@@ -210,7 +210,7 @@ class SyncIdCheckViewModelTest {
                         ).stream()
                     }
 
-            return Stream.concat(Stream.concat(happyPaths, unhappyPaths), limitReachedPaths)
+            return Stream.of(happyPaths, unhappyPaths, limitReachedPaths).flatMap { it }
         }
     }
 
