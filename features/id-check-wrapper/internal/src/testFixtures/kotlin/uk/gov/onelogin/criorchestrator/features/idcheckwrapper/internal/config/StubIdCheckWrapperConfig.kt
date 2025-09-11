@@ -1,9 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.config
 
-import IdCheckWrapperConfigKey
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 
 fun Config.Companion.createTestInstance(
     enableManualLauncher: Boolean = false,

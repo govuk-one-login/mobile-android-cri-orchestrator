@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.sdk.internal.config
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 private val defaultConfig =
