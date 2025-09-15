@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
-import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -108,7 +108,7 @@ internal fun ConfirmBrpScreenContent(
             primaryButton = {
                 GdsButton(
                     text = confirmButtonText,
-                    buttonType = ButtonType.Primary,
+                    buttonType = ButtonTypeV2.Primary(),
                     onClick = dropUnlessResumed { onPrimaryClick() },
                     modifier = Modifier.fillMaxWidth(),
                 )

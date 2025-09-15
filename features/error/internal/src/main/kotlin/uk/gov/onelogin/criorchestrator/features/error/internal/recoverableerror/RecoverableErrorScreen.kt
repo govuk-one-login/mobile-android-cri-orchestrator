@@ -16,7 +16,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
-import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.images.GdsIcon
@@ -112,7 +112,7 @@ internal fun RecoverableErrorScreenContent(
             primaryButton = {
                 GdsButton(
                     text = stringResource(RecoverableErrorConstants.buttonTextId),
-                    buttonType = ButtonType.Primary,
+                    buttonType = ButtonTypeV2.Primary(),
                     onClick = dropUnlessResumed { onButtonClick() },
                     modifier =
                         Modifier

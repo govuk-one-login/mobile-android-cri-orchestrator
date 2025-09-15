@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.dropUnlessResumed
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -80,7 +80,7 @@ internal fun SyncIdCheckScreenManualLauncherContent(
             GdsButton(
                 text = "Launch ID Check SDK",
                 onClick = dropUnlessResumed { onLaunchRequest() },
-                buttonType = ButtonType.Primary,
+                buttonType = ButtonTypeV2.Primary(),
                 modifier = Modifier.fillMaxWidth(),
             )
         },

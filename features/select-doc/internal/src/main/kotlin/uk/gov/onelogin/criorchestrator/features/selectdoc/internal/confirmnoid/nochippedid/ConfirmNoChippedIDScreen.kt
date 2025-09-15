@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.persistentListOf
-import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -107,7 +107,7 @@ internal fun ConfirmNoChippedIDContent(
             primaryButton = {
                 GdsButton(
                     stringResource(ConfirmNoChippedIDConstants.confirmButtonTextId),
-                    buttonType = ButtonType.Primary,
+                    buttonType = ButtonTypeV2.Primary(),
                     onClick = dropUnlessResumed { onConfirmClick() },
                     modifier = Modifier.fillMaxWidth(),
                 )

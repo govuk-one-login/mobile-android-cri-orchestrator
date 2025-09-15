@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import kotlinx.collections.immutable.toPersistentList
-import uk.gov.android.ui.componentsv2.button.ButtonType
+import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -116,7 +116,7 @@ internal fun SelectDrivingLicenceScreenContent(
                     item {
                         GdsButton(
                             text = stringResource(SelectDrivingLicenceConstants.readMoreButtonTextId),
-                            buttonType = ButtonType.Secondary,
+                            buttonType = ButtonTypeV2.Secondary(),
                             onClick = dropUnlessResumed { onReadMoreClick() },
                             modifier = Modifier.padding(horizontal = horizontalPadding),
                             contentModifier = Modifier,
@@ -144,7 +144,7 @@ internal fun SelectDrivingLicenceScreenContent(
             primaryButton = {
                 GdsButton(
                     text = stringResource(SelectDrivingLicenceConstants.buttonTextId),
-                    buttonType = ButtonType.Primary,
+                    buttonType = ButtonTypeV2.Primary(),
                     onClick = {
                         selectedItem?.let {
                             onContinueClicked(it)
