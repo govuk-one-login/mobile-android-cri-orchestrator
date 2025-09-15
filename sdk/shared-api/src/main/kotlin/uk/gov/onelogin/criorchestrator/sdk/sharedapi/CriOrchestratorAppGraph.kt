@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
  * (`BaseCriOrchestratorSdkGraph`) and provides no functionality.
  */
 @Deprecated(
-    "Renamed to CriOrchestratorAppGraph",
+    "Renamed to CriOrchestratorAppGraph. To be removed 15/11/2025.",
     replaceWith = ReplaceWith("CriOrchestratorAppGraph"),
 )
 interface CriOrchestratorSingletonComponent

@@ -5,6 +5,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @ContributesTo(CriOrchestratorAppScope::class)
-interface SessionProviders {
+fun interface SessionProviders {
     fun sessionStore(): SessionStore
 }

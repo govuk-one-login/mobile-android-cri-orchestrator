@@ -16,7 +16,7 @@ import uk.gov.onelogin.criorchestrator.sdk.internal.di.ViewModelGraph
 )
 interface BaseCriOrchestratorGraph : ViewModelGraph.Factory {
     @DependencyGraph.Factory
-    interface Factory {
+    fun interface Factory {
         @Suppress("LongParameterList")
         fun create(
             @Includes baseAppGraph: BaseCriOrchestratorAppGraph,

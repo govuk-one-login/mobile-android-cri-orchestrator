@@ -21,7 +21,7 @@ import uk.gov.onelogin.criorchestrator.sdk.internal.di.CoroutineDispatchersBindi
 @DependencyGraph(CriOrchestratorAppScope::class)
 interface BaseCriOrchestratorAppGraph {
     @DependencyGraph.Factory
-    interface Factory {
+    fun interface Factory {
         @Suppress("LongParameterList")
         fun create(
             @Provides authenticatedHttpClient: GenericHttpClient,

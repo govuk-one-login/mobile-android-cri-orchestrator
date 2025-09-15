@@ -7,7 +7,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 
 @Composable
-@Deprecated("Use the variant accepting CriOrchestratorGraph")
+@Deprecated("Use the variant accepting CriOrchestratorGraph. To be removed 15/11/2025.")
 fun DevMenuScreen(
     component: CriOrchestratorComponent,
     modifier: Modifier = Modifier,

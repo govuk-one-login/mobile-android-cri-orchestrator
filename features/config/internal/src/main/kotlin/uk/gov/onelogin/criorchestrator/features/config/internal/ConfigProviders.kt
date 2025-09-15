@@ -5,6 +5,6 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @ContributesTo(CriOrchestratorAppScope::class)
-interface ConfigProviders {
+fun interface ConfigProviders {
     fun configStore(): ConfigStore
 }

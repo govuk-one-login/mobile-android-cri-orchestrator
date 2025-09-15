@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
  * and provides no functionality.
  */
 @Deprecated(
-    message = "Renamed to CriOrchestratorGraph",
+    message = "Renamed to CriOrchestratorGraph. To be removed 15/11/2025.",
     replaceWith = ReplaceWith("CriOrchestratorGraph"),
 )
 interface CriOrchestratorComponent

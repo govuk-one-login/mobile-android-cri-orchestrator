@@ -5,6 +5,6 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idche
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @ContributesTo(CriOrchestratorAppScope::class)
-interface IdCheckSdkActiveStateProviders {
+fun interface IdCheckSdkActiveStateProviders {
     fun idCheckSdkActiveStateStore(): IdCheckSdkActiveStateStore
 }

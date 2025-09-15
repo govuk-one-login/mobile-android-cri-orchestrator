@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 
 @Composable
 @Deprecated(
-    "Renamed component parameter to graph",
+    "Renamed component parameter to graph. To be removed 15/11/2025.",
 )
 fun ProveYourIdentityCard(
     component: CriOrchestratorComponent,
