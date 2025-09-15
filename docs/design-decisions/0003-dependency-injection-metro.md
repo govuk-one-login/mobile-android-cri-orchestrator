@@ -1,4 +1,4 @@
-# Use Anvil for dependency injection
+# Use Metro for dependency injection
 
 <!-- vale Google.We = NO -->
 <!-- vale Vale.Spelling["SDKs"] = NO -->
@@ -35,15 +35,19 @@ Downsides of pure Dagger:
 - It requires boilerplate to merge separate Dagger components
 - It requires boilerplate to attach Dagger modules to Dagger components
 
-### Anvil (chosen)
+ 
+### Metro (chosen)
 
-[Anvil] makes dependency injection with Dagger easier by automatically merging Dagger modules and component interfaces. Instead of manually adding modules to a Dagger component and making the Dagger component extend all component interfaces, Anvil includes these modules and interfaces in a component automatically.
+[Metro] makes dependency injection easier by automatically merging binding containers (equivalent to Dagger modules) and dependency graphs/providers (equivalent to Dagger component interfaces). Rather than of requiring manually adding binding containers to a graph or making the graph extend all provider interfaces, Metro will aggregate bindings and providers into a graph automatically.
 
-Benefits of Anvil:
--  It reduces the amount of boilerplate we need to write, in a similar way to Hilt.
--  It retains the flexibility to define custom scopes, in a similar way to Dagger.
+Previously this project used [Anvil] for dependency injection. Metro is Anvil's successor and provides the same benefits and more.
 
-Downsides of Anvil:
+Benefits of Metro:
+- It reduces the amount of boilerplate we need to write, in a similar way to Hilt.
+- It retains the flexibility to define custom scopes, in a similar way to Dagger.
+- It improves build performance, compared to other options.
+
+Downsides of Metro:
 - There's less information or community support around it.
 
 ### Manual dependency injection
@@ -58,7 +62,7 @@ However, for a project of this scale, it's not practical.
 
 ## Consequences
 
-- This SDK uses Anvil for dependency injection
+- This SDK uses Metro for dependency injection
 - Production code in this SDK doesn't depend on Hilt
 - Consuming apps may use any dependency injection framework
 - The test wrapper app may continue to use any dependency injection framework
@@ -67,3 +71,4 @@ However, for a project of this scale, it's not practical.
 [Hilt is Google's recommended approach for DI in apps]: https://developer.android.com/training/dependency-injection#hilt
 [Dagger]: https://dagger.dev
 [Anvil]: https://github.com/square/anvil
+[Metro]: https://zacsweers.github.io/metro/latest
