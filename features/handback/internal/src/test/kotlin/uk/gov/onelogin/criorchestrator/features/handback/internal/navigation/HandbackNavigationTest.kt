@@ -58,7 +58,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubG
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubIsSessionAbortedOrUnavailable
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
-import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.filterInDialogElseAll
@@ -481,7 +480,6 @@ private class InitialNavGraphProvider(
     excludes = [
         WebNavigatorImpl::class,
         RequestAppReviewImpl::class,
-        AndroidResourceProvider::class,
     ],
 )
 interface TestGraph : ViewModelGraph.Factory {

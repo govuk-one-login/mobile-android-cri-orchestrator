@@ -37,7 +37,6 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
-import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
@@ -278,7 +277,6 @@ private class InitialNavGraphProvider(
 @DependencyGraph(
     scope = CriOrchestratorScope::class,
     bindingContainers = [ViewModelProviderFactoryBindings::class],
-    excludes = [AndroidResourceProvider::class],
 )
 interface TestGraph : ViewModelGraph.Factory {
     fun inject(test: SelectDocNavigationTest)
