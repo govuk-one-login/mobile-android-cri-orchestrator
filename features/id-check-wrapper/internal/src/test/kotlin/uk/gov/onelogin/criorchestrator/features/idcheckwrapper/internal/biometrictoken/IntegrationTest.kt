@@ -36,8 +36,8 @@ class IntegrationTest {
         val biometricApi =
             ConfigurableBiometricApi(
                 configStore = configStore,
-                realBiometricApi = BiometricApiImpl(createTestHttpClient(), configStore),
-                fakeBiometricApi = FakeBiometricTokenApi(),
+                realBiometricApi = { BiometricApiImpl(createTestHttpClient(), configStore) },
+                fakeBiometricApi = { FakeBiometricTokenApi() },
             )
 
         biometricTokenReader =
