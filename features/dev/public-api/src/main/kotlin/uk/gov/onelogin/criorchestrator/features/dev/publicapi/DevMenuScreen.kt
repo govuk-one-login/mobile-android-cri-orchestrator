@@ -10,11 +10,10 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 fun DevMenuScreen(
     component: CriOrchestratorComponent,
     modifier: Modifier = Modifier,
-) {
-    (component as DevMenuEntryPointsProviders).devMenuEntryPoints().DevMenuScreen(
-        modifier = modifier,
-    )
-}
+) = DevMenuScreen(
+    graph = component as CriOrchestratorGraph,
+    modifier = modifier,
+)
 
 @Composable
 fun DevMenuScreen(

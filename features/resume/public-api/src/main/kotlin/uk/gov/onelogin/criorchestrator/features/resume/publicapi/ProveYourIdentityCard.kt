@@ -12,11 +12,10 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 fun ProveYourIdentityCard(
     component: CriOrchestratorComponent,
     modifier: Modifier = Modifier,
-) {
-    (component as ProveYourIdentityEntryPointsProviders).proveYourIdentityEntryPoints().ProveYourIdentityCard(
-        modifier = modifier,
-    )
-}
+) = ProveYourIdentityCard(
+    graph = component as CriOrchestratorGraph,
+    modifier = modifier,
+)
 
 @Composable
 fun ProveYourIdentityCard(
