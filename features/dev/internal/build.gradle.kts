@@ -7,7 +7,6 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.uk.gov.networking)
-    implementation(projects.features.dev.internalApi)
     implementation(projects.features.dev.publicApi)
     implementation(projects.features.config.internalApi)
     implementation(projects.libraries.di)

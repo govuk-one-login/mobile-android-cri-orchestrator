@@ -6,12 +6,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourIdentityRoot
-import uk.gov.onelogin.criorchestrator.features.resume.internalapi.ProveYourIdentityEntryPoints
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityEntryPoints
+import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityEntryPointsProviders
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @SingleIn(CriOrchestratorScope::class)
@@ -37,3 +39,7 @@ class ProveYourIdentityEntryPointsImpl
             internal val TEST_TAG = this::class.java.simpleName
         }
     }
+
+@SingleIn(CriOrchestratorScope::class)
+@ContributesTo(CriOrchestratorScope::class)
+interface ContributedEntryPointsProviders : ProveYourIdentityEntryPointsProviders

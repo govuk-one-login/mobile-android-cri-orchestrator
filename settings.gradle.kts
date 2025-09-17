@@ -63,7 +63,6 @@ include(
     ":features:config:internal-api",
     ":features:config:public-api",
     ":features:dev:internal",
-    ":features:dev:internal-api",
     ":features:dev:public-api",
     ":features:error:internal",
     ":features:error:internal-api",

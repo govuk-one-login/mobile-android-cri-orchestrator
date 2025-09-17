@@ -16,9 +16,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.createGraphFactory
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.Serializable
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,33 +34,34 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.ConfirmNoNonChippedIDViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.confirm.ConfirmDrivingLicenceViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenceViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.confirm.ConfirmPassportViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
-import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelGraph
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelProviderFactoryBindings
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 
 @RunWith(AndroidJUnit4::class)
 class SelectDocNavigationTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val analytics: SelectDocAnalytics = mock()
-    private val getJourneyType = StubGetJourneyType()
-    private val nfcChecker = NfcChecker { true }
-    private val navGraphProvider = createNavGraphProvider()
+
     private val onFinish = mock<() -> Unit>()
+
+    @Inject
+    lateinit var navGraphProvider: SelectDocNavGraphProvider
+
+    @Before
+    fun setUp() {
+        createGraphFactory<TestGraph.Factory>().create().inject(this)
+    }
 
     @After
     fun tearDown() {
@@ -233,62 +239,6 @@ class SelectDocNavigationTest {
         onNodeWithText(context.getString(R.string.typesofphotoid_title))
             .assertIsDisplayed()
 
-    @Suppress("LongMethod")
-    private fun createNavGraphProvider(): SelectDocNavGraphProvider =
-        SelectDocNavGraphProvider(
-            viewModelProviderFactory =
-                TestViewModelProviderFactory(
-                    testViewModelProvider {
-                        SelectPassportViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        SelectBrpViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        SelectDrivingLicenceViewModel(
-                            analytics = analytics,
-                            nfcChecker = nfcChecker,
-                        )
-                    },
-                    testViewModelProvider {
-                        TypesOfPhotoIDViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        ConfirmPassportViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        ConfirmBrpViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        ConfirmDrivingLicenceViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        ConfirmNoChippedIDViewModel(
-                            analytics = analytics,
-                            getJourneyType = getJourneyType,
-                        )
-                    },
-                    testViewModelProvider {
-                        ConfirmNoNonChippedIDViewModel(
-                            analytics = analytics,
-                            getJourneyType = getJourneyType,
-                        )
-                    },
-                ),
-        )
-
     private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) =
         setContent {
             CompositeNavHost(
@@ -322,5 +272,28 @@ private class InitialNavGraphProvider(
                 Text(START_BUTTON)
             }
         }
+    }
+}
+
+@DependencyGraph(
+    scope = CriOrchestratorScope::class,
+    bindingContainers = [ViewModelProviderFactoryBindings::class],
+    excludes = [AndroidResourceProvider::class],
+)
+interface TestGraph : ViewModelGraph.Factory {
+    fun inject(test: SelectDocNavigationTest)
+
+    @DependencyGraph.Factory
+    interface Factory {
+        fun create(
+            @Provides
+            analytics: SelectDocAnalytics = mock(),
+            @Provides
+            getJourneyType: GetJourneyType = StubGetJourneyType(),
+            @Provides
+            nfcChecker: NfcChecker = NfcChecker { true },
+            @Provides
+            resourceProvider: ResourceProvider = FakeResourceProvider(),
+        ): TestGraph
     }
 }

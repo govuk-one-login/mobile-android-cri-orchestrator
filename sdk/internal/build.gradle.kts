@@ -24,7 +24,6 @@ dependencies {
     implementation(projects.features.config.internalApi)
     implementation(projects.features.config.publicApi)
     implementation(projects.features.dev.internal)
-    implementation(projects.features.dev.internalApi)
     implementation(projects.features.dev.publicApi)
     implementation(projects.features.error.internal)
     implementation(projects.features.error.internalApi)

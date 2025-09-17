@@ -1,4 +1,4 @@
-package uk.gov.onelogin.criorchestrator.sdk.internal.di
+package uk.gov.onelogin.criorchestrator.libraries.di.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,6 @@ import dev.zacsweers.metro.GraphExtension
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
 import kotlin.reflect.KClass
 
 @GraphExtension(CriOrchestratorViewModelScope::class)

@@ -1,20 +1,10 @@
 plugins {
-    listOf(
-        "uk.gov.onelogin.criorchestrator.android-lib-config",
-        "uk.gov.onelogin.criorchestrator.base-compose-config",
-    ).forEach {
-        id(it)
-    }
+    id("uk.gov.onelogin.criorchestrator.android-lib-config")
+    id("uk.gov.onelogin.criorchestrator.base-compose-config")
 }
 
 dependencies {
-    listOf(
-        projects.sdk.sharedApi,
-        projects.features.resume.internalApi,
-        projects.features.config.publicApi,
-    ).forEach {
-        implementation(it)
-    }
+    implementation(projects.sdk.sharedApi)
 }
 
 mavenPublishingConfig {

@@ -16,51 +16,58 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.createGraphFactory
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.Serializable
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
+import uk.gov.logging.api.Logger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.handback.internal.HandbackNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.ConfirmAbortMobileViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.FakeRequestAppReview
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalNavGraphProvider
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.RequestAppReview
+import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.RequestAppReviewImpl
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.FakeWebNavigator
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModel
-import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModel
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
+import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigatorImpl
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionAbortedOrUnavailable
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubAbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubIsSessionAbortedOrUnavailable
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.filterInDialogElseAll
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelGraph
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelProviderFactoryBindings
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -68,16 +75,27 @@ class HandbackNavigationTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val analytics: HandbackAnalytics = mock()
     private val getJourneyType = StubGetJourneyType()
     private val isSessionAbortedOrUnavailable = StubIsSessionAbortedOrUnavailable(false)
     private val sessionStore = FakeSessionStore()
     private val webNavigator = FakeWebNavigator()
     private val abortSession = StubAbortSession()
-    private val requestAppReview = FakeRequestAppReview()
-    private val logger = SystemLogger()
-    private val navGraphProvider = createNavGraphProvider()
     private val onFinish = mock<() -> Unit>()
+
+    @Inject
+    lateinit var navGraphProvider: HandbackNavGraphProvider
+
+    @Before
+    fun setUp() {
+        createGraphFactory<TestGraph.Factory>()
+            .create(
+                getJourneyType = getJourneyType,
+                isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+                sessionStore = sessionStore,
+                webNavigator = webNavigator,
+                abortSession = abortSession,
+            ).inject(this)
+    }
 
     @After
     fun tearDown() {
@@ -421,81 +439,6 @@ class HandbackNavigationTest {
         isSessionAbortedOrUnavailable.state.value = true
     }
 
-    @Suppress("LongMethod")
-    private fun createNavGraphProvider(): HandbackNavGraphProvider =
-        HandbackNavGraphProvider(
-            webNavigator = webNavigator,
-            viewModelProviderFactory =
-                TestViewModelProviderFactory(
-                    testViewModelProvider {
-                        AbortModalViewModel(
-                            isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
-                        )
-                    },
-                    testViewModelProvider {
-                        UnrecoverableErrorViewModel(
-                            analytics = analytics,
-                            getJourneyType = getJourneyType,
-                        )
-                    },
-                    testViewModelProvider {
-                        ReturnToMobileWebViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        ReturnToDesktopWebViewModel(
-                            analytics = analytics,
-                            requestAppReview = requestAppReview,
-                        )
-                    },
-                    testViewModelProvider {
-                        FaceScanLimitReachedMobileViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                    testViewModelProvider {
-                        FaceScanLimitReachedDesktopViewModel(
-                            analytics = analytics,
-                        )
-                    },
-                ),
-            abortNavGraphProviders =
-                persistentSetOf(
-                    AbortModalNavGraphProvider(
-                        viewModelProviderFactory =
-                            TestViewModelProviderFactory(
-                                testViewModelProvider {
-                                    ConfirmAbortDesktopViewModel(
-                                        analytics = analytics,
-                                        abortSession = abortSession,
-                                    )
-                                },
-                                testViewModelProvider {
-                                    ConfirmAbortMobileViewModel(
-                                        sessionStore = sessionStore,
-                                        analytics = analytics,
-                                        abortSession = abortSession,
-                                        logger = logger,
-                                    )
-                                },
-                                testViewModelProvider {
-                                    AbortedReturnToDesktopWebViewModel(
-                                        analytics = analytics,
-                                    )
-                                },
-                                testViewModelProvider {
-                                    UnrecoverableErrorViewModel(
-                                        getJourneyType = getJourneyType,
-                                        analytics = analytics,
-                                    )
-                                },
-                            ),
-                        webNavigator = webNavigator,
-                    ),
-                ),
-        )
-
     private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) =
         setContent {
             CompositeNavHost(
@@ -529,5 +472,43 @@ private class InitialNavGraphProvider(
                 Text(START_BUTTON)
             }
         }
+    }
+}
+
+@DependencyGraph(
+    scope = CriOrchestratorScope::class,
+    bindingContainers = [ViewModelProviderFactoryBindings::class],
+    excludes = [
+        WebNavigatorImpl::class,
+        RequestAppReviewImpl::class,
+        AndroidResourceProvider::class,
+    ],
+)
+interface TestGraph : ViewModelGraph.Factory {
+    fun inject(test: HandbackNavigationTest)
+
+    @DependencyGraph.Factory
+    @Suppress("LongParameterList")
+    interface Factory {
+        fun create(
+            @Provides
+            getJourneyType: GetJourneyType,
+            @Provides
+            isSessionAbortedOrUnavailable: IsSessionAbortedOrUnavailable,
+            @Provides
+            sessionStore: SessionStore,
+            @Provides
+            webNavigator: WebNavigator,
+            @Provides
+            abortSession: AbortSession,
+            @Provides
+            analytics: HandbackAnalytics = mock(),
+            @Provides
+            requestAppReview: RequestAppReview = FakeRequestAppReview(),
+            @Provides
+            logger: Logger = SystemLogger(),
+            @Provides
+            resourceProvider: ResourceProvider = FakeResourceProvider(),
+        ): TestGraph
     }
 }

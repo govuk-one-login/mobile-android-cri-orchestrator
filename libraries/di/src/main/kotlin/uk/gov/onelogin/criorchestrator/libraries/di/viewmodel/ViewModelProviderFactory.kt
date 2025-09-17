@@ -1,12 +1,9 @@
-package uk.gov.onelogin.criorchestrator.sdk.internal.di
+package uk.gov.onelogin.criorchestrator.libraries.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 import kotlin.reflect.KClass
 
 /**
@@ -14,7 +11,6 @@ import kotlin.reflect.KClass
  *
  * Use [ViewModelKey] to contribute view models to this factory.
  */
-@ContributesBinding(CriOrchestratorScope::class)
 @Inject
 class ViewModelProviderFactory(
     private val graphFactory: ViewModelGraph.Factory,

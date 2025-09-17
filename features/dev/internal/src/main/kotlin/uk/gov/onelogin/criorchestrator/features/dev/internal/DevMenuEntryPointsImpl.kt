@@ -6,10 +6,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.DevMenuScreen
-import uk.gov.onelogin.criorchestrator.features.dev.internalapi.DevMenuEntryPoints
+import uk.gov.onelogin.criorchestrator.features.dev.publicapi.DevMenuEntryPoints
+import uk.gov.onelogin.criorchestrator.features.dev.publicapi.DevMenuEntryPointsProviders
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @SingleIn(CriOrchestratorScope::class)
@@ -31,3 +33,7 @@ class DevMenuEntryPointsImpl
             internal val TEST_TAG = this.javaClass.simpleName
         }
     }
+
+@SingleIn(CriOrchestratorScope::class)
+@ContributesTo(CriOrchestratorScope::class)
+interface ContributedEntryPointsProviders : DevMenuEntryPointsProviders

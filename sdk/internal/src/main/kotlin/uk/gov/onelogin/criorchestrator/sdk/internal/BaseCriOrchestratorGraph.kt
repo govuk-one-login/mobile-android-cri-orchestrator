@@ -6,13 +6,15 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Includes
 import dev.zacsweers.metro.Provides
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import uk.gov.onelogin.criorchestrator.sdk.internal.di.ViewModelGraph
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelGraph
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelProviderFactoryBindings
 
 /**
  * The real dependency graph that other component interfaces and modules will be merged into.
  */
 @DependencyGraph(
     CriOrchestratorScope::class,
+    bindingContainers = [ViewModelProviderFactoryBindings::class],
 )
 interface BaseCriOrchestratorGraph : ViewModelGraph.Factory {
     @DependencyGraph.Factory
