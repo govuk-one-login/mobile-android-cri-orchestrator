@@ -5,7 +5,6 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 
@@ -16,18 +15,10 @@ class CoroutineDispatchersBindings {
     fun provideCoroutineDispatchers(
         @Named(TEST_DISPATCHER_NAME)
         testDispatcher: CoroutineDispatcher?,
-    ): CoroutineDispatchers {
-        if (testDispatcher != null) {
-            return CoroutineDispatchers(
-                default = testDispatcher,
-                io = testDispatcher,
-                main = Dispatchers.Main,
-                unconfined = testDispatcher,
-            )
-        }
-
-        return CoroutineDispatchers()
-    }
+    ): CoroutineDispatchers =
+        CoroutineDispatchers.defaultUnlessTest(
+            testDispatcher = testDispatcher,
+        )
 
     companion object {
         const val TEST_DISPATCHER_NAME = "testDispatcher"

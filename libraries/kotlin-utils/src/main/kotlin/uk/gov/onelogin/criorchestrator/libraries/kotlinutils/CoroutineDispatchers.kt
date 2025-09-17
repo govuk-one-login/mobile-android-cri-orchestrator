@@ -17,5 +17,21 @@ data class CoroutineDispatchers(
                 main = dispatcher,
                 unconfined = dispatcher,
             )
+
+        fun defaultUnlessTest(
+            testDispatcher: CoroutineDispatcher?,
+            defaultDispatchers: CoroutineDispatchers = CoroutineDispatchers(),
+        ): CoroutineDispatchers {
+            if (testDispatcher != null) {
+                return CoroutineDispatchers(
+                    io = testDispatcher,
+                    default = testDispatcher,
+                    main = Dispatchers.Main,
+                    unconfined = testDispatcher,
+                )
+            }
+
+            return defaultDispatchers
+        }
     }
 }
