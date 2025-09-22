@@ -3,6 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,10 +33,15 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheck
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
 @Suppress("LongParameterList", "TooGenericExceptionCaught", "TooManyFunctions")
+@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ViewModelKey(SyncIdCheckViewModel::class)
+@Inject
 class SyncIdCheckViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val configStore: ConfigStore,

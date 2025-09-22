@@ -7,9 +7,9 @@ package uk.gov.onelogin.criorchestrator.sdk.sharedapi
  */
 interface CriOrchestratorSdk {
     /**
-     * Holds the Dagger component. For internal use.
+     * Holds the dependency graph. For internal use.
      */
-    val component: CriOrchestratorSingletonComponent
+    val appGraph: CriOrchestratorAppGraph
 
     companion object
 

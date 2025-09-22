@@ -13,6 +13,10 @@ class ModuleArchitectureTest {
         private val libraryPackage = """uk\.gov\..*\.libraries\..*""".toRegex()
         private val featurePackageAny =
             """(uk\.gov\..*\.features\..*)\.(?:internal|internalapi|publicapi|)(?:\..*|$)""".toRegex()
+        private val featurePackagePublicApi =
+            """(uk\.gov\..*\.features\..*)\.publicapi(?:\..*|$)""".toRegex()
+        private val featurePackageInternalApi =
+            """(uk\.gov\..*\.features\..*)\.internalapi(?:\..*|$)""".toRegex()
         private val featurePackageInternal =
             """(uk\.gov\..*\.features\..*)\.internal(?:\..*|$)""".toRegex()
         private val featurePackageApi =
@@ -55,6 +59,48 @@ class ModuleArchitectureTest {
                     .filter {
                         !it.hasNameStartingWith(thisFeaturePackage)
                     }.none {
+                        it.hasNameMatching(featurePackageInternal)
+                    }
+            }
+    }
+
+    @Test
+    fun `public api modules do not depend on internal api or internal implementation modules`() {
+        Konsist
+            .defaultScope()
+            .files
+            .withPackageMatching(featurePackagePublicApi)
+            .assertTrue(
+                additionalMessage =
+                    """
+                    Public API modules shouldn't know about internals.
+                    Internal API modules and internal implementation modules may know about public APIs but not 
+                    the other way around.
+                    """.trimIndent(),
+            ) {
+                it.imports
+                    .none {
+                        it.hasNameMatching(featurePackageInternal) ||
+                            it.hasNameMatching(featurePackageInternalApi)
+                    }
+            }
+    }
+
+    @Test
+    fun `internal api modules do not depend on internal implementation modules`() {
+        Konsist
+            .defaultScope()
+            .files
+            .withPackageMatching(featurePackageInternalApi)
+            .assertTrue(
+                additionalMessage =
+                    """
+                    Internal API modules shouldn't know about internal implementations.
+                    Internal implementation modules may know about the internal APIs but not the other way around.
+                    """.trimIndent(),
+            ) {
+                it.imports
+                    .none {
                         it.hasNameMatching(featurePackageInternal)
                     }
             }

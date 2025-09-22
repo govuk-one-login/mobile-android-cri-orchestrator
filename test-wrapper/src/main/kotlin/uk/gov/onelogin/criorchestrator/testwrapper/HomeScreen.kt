@@ -9,12 +9,12 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
-import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorComponent
+import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 fun HomeScreen(
-    criOrchestratorComponent: CriOrchestratorComponent,
+    criOrchestratorGraph: CriOrchestratorGraph,
     onRefreshActiveSessionClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) = LeftAlignedScreen(
@@ -28,7 +28,7 @@ fun HomeScreen(
     body = { horizontalPadding ->
         item {
             ProveYourIdentityCard(
-                component = criOrchestratorComponent,
+                graph = criOrchestratorGraph,
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             )
         }

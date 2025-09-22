@@ -1,12 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.idchecksdkactivestate.IsIdCheckSdkActive
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorSingletonScope
-import javax.inject.Inject
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
-@ContributesBinding(CriOrchestratorSingletonScope::class)
+@ContributesBinding(CriOrchestratorAppScope::class)
 class IsIdCheckSdkActiveImpl
     @Inject
     constructor(

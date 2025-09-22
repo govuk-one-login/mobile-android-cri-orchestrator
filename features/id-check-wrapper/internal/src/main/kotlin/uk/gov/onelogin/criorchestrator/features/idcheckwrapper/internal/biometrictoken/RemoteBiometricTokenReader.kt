@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import dev.zacsweers.metro.binding
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.ApiResponse
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
@@ -9,12 +12,10 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
-import uk.gov.onelogin.criorchestrator.libraries.di.CompositionScope
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
 
-@CompositionScope
-@ContributesBinding(CriOrchestratorScope::class, boundType = BiometricTokenReader::class)
+@SingleIn(CriOrchestratorScope::class)
+@ContributesBinding(CriOrchestratorScope::class, binding = binding<BiometricTokenReader>())
 class RemoteBiometricTokenReader
     @Inject
     constructor(

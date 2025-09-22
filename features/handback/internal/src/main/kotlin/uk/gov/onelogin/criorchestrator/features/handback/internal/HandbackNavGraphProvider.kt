@@ -7,49 +7,31 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.toRoute
-import com.squareup.anvil.annotations.ContributesMultibinding
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
 import kotlinx.collections.immutable.toPersistentSet
 import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.desktop.FaceScanLimitReachedDesktopViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
-import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModalViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
-import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorViewModelModule
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.fullScreenDialogProperties
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import javax.inject.Inject
-import javax.inject.Named
 
 @Suppress("LongMethod", "LongParameterList")
-@ContributesMultibinding(CriOrchestratorScope::class)
+@ContributesIntoSet(CriOrchestratorScope::class)
 class HandbackNavGraphProvider
     @Inject
     constructor(
-        @Named(AbortModalViewModelModule.FACTORY_NAME)
-        private val abortModalViewModelFactory: ViewModelProvider.Factory,
-        @Named(UnrecoverableErrorViewModelModule.FACTORY_NAME)
-        private val unrecoverableErrorViewModelFactory: ViewModelProvider.Factory,
-        @Named(ReturnToMobileWebViewModelModule.FACTORY_NAME)
-        private val returnToMobileViewModelFactory: ViewModelProvider.Factory,
-        @Named(ReturnToDesktopWebViewModelModule.FACTORY_NAME)
-        private val returnToDesktopViewModelFactory: ViewModelProvider.Factory,
-        @Named(FaceScanLimitReachedMobileViewModelModule.FACTORY_NAME)
-        private val faceScanLimitReachedMobileViewModelFactory: ViewModelProvider.Factory,
-        @Named(FaceScanLimitReachedDesktopViewModelModule.FACTORY_NAME)
-        private val faceScanLimitReachedDesktopViewModelFactory: ViewModelProvider.Factory,
+        private val viewModelProviderFactory: ViewModelProvider.Factory,
         private val webNavigator: WebNavigator,
-        private val abortNavGraphProviders: Set<@JvmSuppressWildcards AbortNavGraphProvider>,
+        private val abortNavGraphProviders: Set<AbortNavGraphProvider>,
     ) : ProveYourIdentityNavGraphProvider {
         override fun NavGraphBuilder.contributeToGraph(
             navController: NavController,
@@ -58,7 +40,7 @@ class HandbackNavGraphProvider
             composable<HandbackDestinations.UnrecoverableError> {
                 UnrecoverableErrorScreen(
                     navController = navController,
-                    viewModel = viewModel(factory = unrecoverableErrorViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                 )
             }
 
@@ -68,7 +50,7 @@ class HandbackNavGraphProvider
                         .toRoute<HandbackDestinations.ReturnToMobileWeb>()
                         .redirectUri
                 ReturnToMobileWebScreen(
-                    viewModel = viewModel(factory = returnToMobileViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                     webNavigator = webNavigator,
                     redirectUri = redirectUri,
                 )
@@ -76,7 +58,7 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.ReturnToDesktopWeb> {
                 ReturnToDesktopWebScreen(
-                    viewModel = viewModel(factory = returnToDesktopViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                 )
             }
 
@@ -86,7 +68,7 @@ class HandbackNavGraphProvider
                         .toRoute<HandbackDestinations.FaceScanLimitReachedMobile>()
                         .redirectUri
                 FaceScanLimitReachedMobileScreen(
-                    viewModel = viewModel(factory = faceScanLimitReachedMobileViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                     webNavigator = webNavigator,
                     redirectUri = redirectUri,
                 )
@@ -94,7 +76,7 @@ class HandbackNavGraphProvider
 
             composable<HandbackDestinations.FaceScanLimitReachedDesktop> {
                 FaceScanLimitReachedDesktopScreen(
-                    viewModel = viewModel(factory = faceScanLimitReachedDesktopViewModelFactory),
+                    viewModel = viewModel(factory = viewModelProviderFactory),
                 )
             }
 
@@ -102,7 +84,7 @@ class HandbackNavGraphProvider
                 dialogProperties = fullScreenDialogProperties,
             ) {
                 AbortModal(
-                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    abortModalViewModel = viewModel(factory = viewModelProviderFactory),
                     startDestination = AbortDestinations.ConfirmAbortDesktop,
                     navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
@@ -114,7 +96,7 @@ class HandbackNavGraphProvider
                 dialogProperties = fullScreenDialogProperties,
             ) {
                 AbortModal(
-                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    abortModalViewModel = viewModel(factory = viewModelProviderFactory),
                     startDestination = AbortDestinations.ConfirmAbortMobile,
                     navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
@@ -126,7 +108,7 @@ class HandbackNavGraphProvider
                 dialogProperties = fullScreenDialogProperties,
             ) {
                 AbortModal(
-                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    abortModalViewModel = viewModel(factory = viewModelProviderFactory),
                     startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
                     navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },
@@ -142,7 +124,7 @@ class HandbackNavGraphProvider
                         .toRoute<AbortDestinations.AbortedRedirectToMobileWebHolder>()
                         .redirectUri
                 AbortModal(
-                    abortModalViewModel = viewModel(factory = abortModalViewModelFactory),
+                    abortModalViewModel = viewModel(factory = viewModelProviderFactory),
                     startDestination = AbortDestinations.AbortedRedirectToMobileWebHolder(redirectUri),
                     navGraphProviders = abortNavGraphProviders.toPersistentSet(),
                     onDismissRequest = { navController.popBackStack() },

@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data
 
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.first
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
@@ -12,7 +13,6 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDo
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
-import javax.inject.Inject
 
 class LauncherDataReader
     @Inject

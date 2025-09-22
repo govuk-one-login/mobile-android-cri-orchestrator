@@ -26,5 +26,6 @@ tasks.withType<Test> {
 
 dependencies {
     testImplementation(libs.com.lemonappdev.konsist)
+    testImplementation(libs.metro.runtime)
     testFixturesCompileOnly(libs.com.lemonappdev.konsist)
 }
