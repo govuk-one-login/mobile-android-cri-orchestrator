@@ -34,14 +34,6 @@ buildscript {
             "sonar.projectId" to "mobile-android-cri-orchestrator",
         )
     )
-    dependencies {
-        listOf(
-            // https://issuetracker.google.com/issues/380600747
-            libs.org.bouncycastle.bcutil.jdk18on,
-        ).forEach {
-            classpath(it)
-        }
-    }
 }
 
 // https://stackoverflow.com/a/78325449/6449273

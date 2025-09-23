@@ -1,13 +1,12 @@
 [versions]
 activityCompose = "1.10.1"
-agp = "8.8.2"
+agp = "8.12.3"
 androidXCoreKtx = "1.16.0"
 androidXTest = "1.6.1"
 androidXTestJUnit = "1.3.0"
 androidXTestOrchestrator = "1.6.1"
 androidXTestRunner = "1.7.0"
 appcompat = "1.7.1"
-bouncycastle-jdk18on = "1.81"
 composeBom = "2025.08.00"
 composable-preview-scanner = "0.7.0"
 compose-lint-checks = "1.4.2"
@@ -85,7 +84,6 @@ ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 metro-gradle-plugin = { module = "dev.zacsweers.metro:gradle-plugin", version.ref = "metro" }
 metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
-org-bouncycastle-bcutil-jdk18on = { group = "org.bouncycastle", name = "bcutil-jdk18on", version.ref = "bouncycastle-jdk18on" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 org-junit-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 org-junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter" }
