@@ -21,4 +21,7 @@
 
     <!-- Ignoring rule limiting vector sizes to 200x200 -->
     <issue id="VectorRaster" severity="ignore" />
+
+    <!-- Dependency updates are handled by Dependabot -->
+    <issue id="GradleDependency" severity="ignore" />
 </lint>
