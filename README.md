@@ -84,3 +84,7 @@ Clone the repository, including the Android pipelines submodule:
 git clone --recurse-submodules git@github.com:govuk-one-login/mobile-android-cri-orchestrator.git
 ```
 Learn more about working with [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+## Documentation
+
+Further documentation about this project can be found in [`docs/`](./docs/README.md).
