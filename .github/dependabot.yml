@@ -26,10 +26,9 @@ updates:
           - "patch"
   - package-ecosystem: "gradle"
     directory: "/"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 10
     schedule:
-      # Check version catalog updates weekly
-      interval: "weekly"
+      interval: "daily"
     registries:
       - github-maven
     commit-message:
@@ -47,10 +46,6 @@ updates:
       govuk:
         patterns:
           - "uk.gov*"
-      gradle:
-        update-types:
-          - "minor"
-          - "patch"
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
