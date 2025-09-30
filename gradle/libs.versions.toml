@@ -2,7 +2,7 @@
 activityCompose = "1.11.0"
 agp = "8.13.0"
 androidXCoreKtx = "1.17.0"
-androidXTest = "1.6.0"
+androidXTest = "1.7.0"
 androidXTestJUnit = "1.3.0"
 androidXTestOrchestrator = "1.6.1"
 androidXTestRunner = "1.7.0"
