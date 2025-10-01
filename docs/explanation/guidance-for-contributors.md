@@ -15,7 +15,7 @@ Features are further split into implementation (`internal`) and API (`public-api
 
 When contributing code, consider creating a new feature or library module if it doesn't fit well elsewhere.
 
-The strategy for modularisation is based on advice from Google and further detail can be found in _[Module structure for Android SDKs]_.
+The strategy for modularisation is based on advice from Google and further detail can be found in _[About the module structure]_.
 
 We've developed a sample project as a reference implementation for the architecture which can be found at [govuk-one-login/mobile-android-sdk-architecture-sample]. The project's [ARCHITECTURE.md] describes the module structure.
 
@@ -155,7 +155,7 @@ Developers don't need to write screenshot tests manually because they're automat
 [Metro decision document]: https://github.com/govuk-one-login/mobile-android-cri-orchestrator/blob/main/docs/design-decisions/0003-dependency-injection-metro.md
 [Metro]: https://github.com/ZacSweers/metro
 [Metro documentation]: https://zacsweers.github.io/metro
-[Module structure for Android SDKs]: https://docs.google.com/document/d/1O-UABYB9RaoTKO2IEPQpdJV6i0tEOiDJ4Xy0eppBq5s/edit?tab=t.0
+[About the module structure]: ./module-structure.md
 [Paparazzi]: https://github.com/cashapp/paparazzi
 [Robolectric decision document]: https://github.com/govuk-one-login/mobile-android-cri-orchestrator/blob/70468aaf4b61fb249c0e6523913b7e390b9b91a1/docs/design-decisions/0002-local-ui-tests.md
 [Robolectric]: https://robolectric.org/
