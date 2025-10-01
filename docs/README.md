@@ -6,6 +6,7 @@
 
 ## Explanation
 
+* [Technical guidance for contributors](./explanation/guidance-for-contributors.md)
 * [The module structure](./explanation/module-structure.md)
 
 ## Reference
