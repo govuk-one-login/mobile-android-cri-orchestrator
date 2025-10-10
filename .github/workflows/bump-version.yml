@@ -12,7 +12,9 @@ env:
 
 jobs:
   bump-version:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     env:
       JDK_VERSION: 21
     permissions:
@@ -31,9 +33,18 @@ jobs:
         with:
           jdk-version: 21
 
+      - name: Create a pre-release unless the workflow was triggered manually
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          echo "pre_release=true" >> "$GITHUB_ENV"
+          echo "pre_release_version=alpha.$(date +%s)" >> "$GITHUB_ENV"
+
       - name: Increment the release version using Conventional Commits
         id: versioning
         uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          # TODO: This parameter doesn't exist yet
+          pre-release: ${{ env.pre_release_version }}
 
       - name: Publish release tags
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
@@ -55,7 +66,9 @@ jobs:
         shell: bash
 
       - name: Create GitHub release
-        if: steps.versioning.outputs.current_version != steps.versioning.outputs.new_version
+        if: |
+          env.pre_release != 'true' &&
+          steps.versioning.outputs.current_version != steps.versioning.outputs.new_version
         uses: softprops/action-gh-release@62c96d0c4e8a889135c1f3a25910db8dbe0e85f7 # v2.3.4
         with:
           tag_name: ${{ steps.versioning.outputs.new_version }}
