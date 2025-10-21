@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.returntodeskt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +15,6 @@ import kotlin.time.Duration.Companion.seconds
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(ReturnToDesktopWebViewModel::class)
-@Inject
 class ReturnToDesktopWebViewModel(
     private val analytics: HandbackAnalytics,
     private val requestAppReview: RequestAppReview,

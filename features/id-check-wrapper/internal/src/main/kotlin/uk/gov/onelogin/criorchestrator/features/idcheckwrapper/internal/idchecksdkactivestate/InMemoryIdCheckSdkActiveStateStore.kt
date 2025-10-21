@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecksdkactivestate
 
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,25 +13,23 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesBinding(CriOrchestratorAppScope::class, binding = binding<IdCheckSdkActiveStateStore>())
-class InMemoryIdCheckSdkActiveStateStore
-    @Inject
-    constructor(
-        private val logger: Logger,
-    ) : IdCheckSdkActiveStateStore,
-        LogTagProvider {
-        private val idCheckSdkActiveState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+class InMemoryIdCheckSdkActiveStateStore(
+    private val logger: Logger,
+) : IdCheckSdkActiveStateStore,
+    LogTagProvider {
+    private val idCheckSdkActiveState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-        override fun read(): StateFlow<Boolean> {
-            logger.debug(tag, "Reading state ${idCheckSdkActiveState.value} from ID Check SDK active state store")
-            return idCheckSdkActiveState.asStateFlow()
-        }
-
-        private fun write(value: Boolean) {
-            logger.debug(tag, "Writing state $value to ID Check SDK active state store")
-            idCheckSdkActiveState.value = value
-        }
-
-        override fun setActive() = write(true)
-
-        override fun setInactive() = write(false)
+    override fun read(): StateFlow<Boolean> {
+        logger.debug(tag, "Reading state ${idCheckSdkActiveState.value} from ID Check SDK active state store")
+        return idCheckSdkActiveState.asStateFlow()
     }
+
+    private fun write(value: Boolean) {
+        logger.debug(tag, "Writing state $value to ID Check SDK active state store")
+        idCheckSdkActiveState.value = value
+    }
+
+    override fun setActive() = write(true)
+
+    override fun setInactive() = write(false)
+}

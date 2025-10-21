@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -15,63 +14,61 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ContributesBinding(CriOrchestratorScope::class, binding = binding<AbortSession>())
-class AbortSessionImpl
-    @Inject
-    constructor(
-        private val sessionStore: SessionStore,
-        private val abortSessionApi: AbortSessionApi,
-        private val logger: Logger,
-    ) : AbortSession,
-        LogTagProvider {
-        override suspend fun invoke(): AbortSession.Result {
-            val session = sessionStore.read().first()
+class AbortSessionImpl(
+    private val sessionStore: SessionStore,
+    private val abortSessionApi: AbortSessionApi,
+    private val logger: Logger,
+) : AbortSession,
+    LogTagProvider {
+    override suspend fun invoke(): AbortSession.Result {
+        val session = sessionStore.read().first()
 
-            if (session == null) {
-                logger.error(tag, "Tried to abort a non-existent session")
+        if (session == null) {
+            logger.error(tag, "Tried to abort a non-existent session")
 
-                // Fail gracefully in case the session has somehow been aborted already
-                return AbortSession.Result.Success
-            }
-
-            val response = abortSessionApi.abortSession(session.sessionId)
-
-            when (response) {
-                is ApiResponse.Success<*> ->
-                    logger.info(tag, "Aborted session")
-
-                is ApiResponse.Failure ->
-                    logger.error(tag, "Failed to abort session", response.error)
-
-                ApiResponse.Loading -> unexpectedLoadingApiResponse()
-
-                ApiResponse.Offline ->
-                    logger.debug(tag, "Failed to abort session - device is offline")
-            }
-
-            val result =
-                when (response) {
-                    is ApiResponse.Failure -> AbortSession.Result.Error.Unrecoverable(response.error)
-                    ApiResponse.Offline -> AbortSession.Result.Error.Offline
-                    is ApiResponse.Success<*> -> AbortSession.Result.Success
-                    ApiResponse.Loading -> unexpectedLoadingApiResponse()
-                }
-
-            when (result) {
-                AbortSession.Result.Error.Offline,
-                is AbortSession.Result.Error.Unrecoverable,
-                -> {
-                    // Don't clear the session store
-                }
-                AbortSession.Result.Success -> {
-                    sessionStore.updateToAborted()
-                }
-            }
-
-            return result
+            // Fail gracefully in case the session has somehow been aborted already
+            return AbortSession.Result.Success
         }
 
-        /**
-         * This should never be called as the networking library doesn't emit loading results.
-         */
-        private fun unexpectedLoadingApiResponse(): Nothing = error("Loading state is not possible")
+        val response = abortSessionApi.abortSession(session.sessionId)
+
+        when (response) {
+            is ApiResponse.Success<*> ->
+                logger.info(tag, "Aborted session")
+
+            is ApiResponse.Failure ->
+                logger.error(tag, "Failed to abort session", response.error)
+
+            ApiResponse.Loading -> unexpectedLoadingApiResponse()
+
+            ApiResponse.Offline ->
+                logger.debug(tag, "Failed to abort session - device is offline")
+        }
+
+        val result =
+            when (response) {
+                is ApiResponse.Failure -> AbortSession.Result.Error.Unrecoverable(response.error)
+                ApiResponse.Offline -> AbortSession.Result.Error.Offline
+                is ApiResponse.Success<*> -> AbortSession.Result.Success
+                ApiResponse.Loading -> unexpectedLoadingApiResponse()
+            }
+
+        when (result) {
+            AbortSession.Result.Error.Offline,
+            is AbortSession.Result.Error.Unrecoverable,
+            -> {
+                // Don't clear the session store
+            }
+            AbortSession.Result.Success -> {
+                sessionStore.updateToAborted()
+            }
+        }
+
+        return result
     }
+
+    /**
+     * This should never be called as the networking library doesn't emit loading results.
+     */
+    private fun unexpectedLoadingApiResponse(): Nothing = error("Loading state is not possible")
+}

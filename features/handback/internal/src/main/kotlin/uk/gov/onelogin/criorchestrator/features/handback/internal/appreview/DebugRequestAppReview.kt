@@ -4,15 +4,14 @@ import android.content.Context
 import android.widget.Toast
 import dev.zacsweers.metro.Inject
 
-class DebugRequestAppReview
-    @Inject
-    constructor(
-        private val context: Context,
-    ) : RequestAppReview {
-        var hasRequestedReview: Boolean = false
+@Inject
+class DebugRequestAppReview(
+    private val context: Context,
+) : RequestAppReview {
+    var hasRequestedReview: Boolean = false
 
-        override suspend fun invoke() {
-            hasRequestedReview = true
-            Toast.makeText(context, "Debug: app review requested", Toast.LENGTH_LONG).show()
-        }
+    override suspend fun invoke() {
+        hasRequestedReview = true
+        Toast.makeText(context, "Debug: app review requested", Toast.LENGTH_LONG).show()
     }
+}

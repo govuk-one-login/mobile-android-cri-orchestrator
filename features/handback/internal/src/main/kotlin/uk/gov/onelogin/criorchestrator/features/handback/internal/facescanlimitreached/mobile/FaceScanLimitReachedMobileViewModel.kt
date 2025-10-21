@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -16,7 +15,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(FaceScanLimitReachedMobileViewModel::class)
-@Inject
 class FaceScanLimitReachedMobileViewModel(
     private val analytics: HandbackAnalytics,
 ) : ViewModel() {

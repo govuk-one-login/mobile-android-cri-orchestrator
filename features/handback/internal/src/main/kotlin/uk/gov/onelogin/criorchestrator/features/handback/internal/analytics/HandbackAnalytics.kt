@@ -8,21 +8,20 @@ import uk.gov.logging.api.v3dot1.model.RequiredParameters
 import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 
-class HandbackAnalytics
-    @Inject
-    constructor(
-        resourceProvider: ResourceProvider,
-        analyticsLogger: AnalyticsLogger,
-    ) : Analytics(
-            resourceProvider,
-            analyticsLogger,
-            requiredParameters = requiredParameters,
-        ) {
-        companion object {
-            internal val requiredParameters =
-                RequiredParameters(
-                    taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
-                    taxonomyLevel3 = TaxonomyLevel3.HANDBACK,
-                )
-        }
+@Inject
+class HandbackAnalytics(
+    resourceProvider: ResourceProvider,
+    analyticsLogger: AnalyticsLogger,
+) : Analytics(
+        resourceProvider,
+        analyticsLogger,
+        requiredParameters = requiredParameters,
+    ) {
+    companion object {
+        internal val requiredParameters =
+            RequiredParameters(
+                taxonomyLevel2 = TaxonomyLevel2.DOCUMENT_CHECKING_APP,
+                taxonomyLevel3 = TaxonomyLevel3.HANDBACK,
+            )
     }
+}

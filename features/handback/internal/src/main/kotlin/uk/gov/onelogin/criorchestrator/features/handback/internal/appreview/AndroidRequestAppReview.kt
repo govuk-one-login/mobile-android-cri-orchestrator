@@ -7,17 +7,16 @@ import kotlinx.coroutines.tasks.await
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 
-class AndroidRequestAppReview
-    @Inject
-    constructor(
-        private val activity: Activity,
-        private val logger: Logger,
-    ) : RequestAppReview,
-        LogTagProvider {
-        override suspend fun invoke() {
-            val reviewManager = ReviewManagerFactory.create(activity)
-            val reviewInfo = reviewManager.requestReviewFlow().await()
-            logger.info(tag, "Launching app review flow")
-            reviewManager.launchReviewFlow(activity, reviewInfo).await()
-        }
+@Inject
+class AndroidRequestAppReview(
+    private val activity: Activity,
+    private val logger: Logger,
+) : RequestAppReview,
+    LogTagProvider {
+    override suspend fun invoke() {
+        val reviewManager = ReviewManagerFactory.create(activity)
+        val reviewInfo = reviewManager.requestReviewFlow().await()
+        logger.info(tag, "Launching app review flow")
+        reviewManager.launchReviewFlow(activity, reviewInfo).await()
     }
+}
