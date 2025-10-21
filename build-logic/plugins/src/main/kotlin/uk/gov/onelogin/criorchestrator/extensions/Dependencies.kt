@@ -56,7 +56,6 @@ internal fun DependencyHandlerScope.baseComposeDependencies(libs: LibrariesForLi
 
 internal fun DependencyHandlerScope.uiDependencies(libs: LibrariesForLibs) = listOf(
     libs.androidx.appcompat,
-    libs.material,
     libs.androidx.lifecycle.runtime.ktx,
     libs.androidx.lifecycle.viewmodel.compose,
     libs.androidx.ui.graphics,

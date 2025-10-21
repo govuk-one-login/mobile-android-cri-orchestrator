@@ -23,7 +23,6 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
 ksp = "2.2.20-2.0.4"
 lifecycle = "2.9.4"
-material = "1.13.0"
 metro = "0.6.10"
 mockito = "6.1.0"
 molecule = "2.2.0"
@@ -83,7 +82,6 @@ kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-cor
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 metro-gradle-plugin = { module = "dev.zacsweers.metro:gradle-plugin", version.ref = "metro" }
 metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
