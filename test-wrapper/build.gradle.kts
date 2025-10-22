@@ -43,4 +43,7 @@ dependencies {
 
     testImplementation(platform(libs.org.junit.bom))
     testImplementation(testFixtures(projects.sdk.publicApi))
+
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(testFixtures(projects.sdk.publicApi))
 }

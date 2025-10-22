@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +29,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecks
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
 import kotlin.test.assertContains
@@ -102,6 +104,10 @@ class SyncIdCheckScreenAnalyticsTest {
                         savedStateHandle =
                             SavedStateHandle(
                                 mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
+                            ),
+                        dispatchers =
+                            CoroutineDispatchers.defaultUnlessTest(
+                                testDispatcher = StandardTestDispatcher(),
                             ),
                     ),
             )
