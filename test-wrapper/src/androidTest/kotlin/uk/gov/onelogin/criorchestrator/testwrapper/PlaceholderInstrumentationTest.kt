@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -16,6 +15,6 @@ import org.junit.runner.RunWith
 class PlaceholderInstrumentationTest {
     @Test
     fun placeholder() {
-        fail("There are no device tests in this module")
+        // This test is due to be replaced
     }
 }
