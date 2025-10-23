@@ -35,9 +35,13 @@ import uk.gov.onelogin.criorchestrator.testwrapper.MainContentTestAction
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ANOTHER_SCREEN
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DO_YOU_HAVE_A_DRIVING_LICENCE
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.NO
-import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.RETURN_TO_GOVUK_ON_COMPUTER
-import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToAbortedDesktop
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.confirmDoYouHaveADrivingLicence
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.confirmNoDrivingLicence
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToCheckIfCanProveIdentityAnotherWay
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.seeLoading
+import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.seeReturnToGovUkOnComputer
+import kotlin.time.Duration.Companion.seconds
 import org.robolectric.annotation.Config as RobolectricConfig
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -116,7 +120,12 @@ class RestoreProveYourIdentityNavigationStateTest {
                 }
             }
 
-            composeTestRule.continueToAbortedDesktop(this)
+            composeTestRule.continueToSelectDocument()
+            composeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence = false)
+            composeTestRule.confirmNoDrivingLicence()
+            composeTestRule.continueToCheckIfCanProveIdentityAnotherWay()
+            composeTestRule.seeLoading(testScope = this, duration = 1.seconds)
+            composeTestRule.seeReturnToGovUkOnComputer()
 
             testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
 
@@ -126,8 +135,6 @@ class RestoreProveYourIdentityNavigationStateTest {
 
             composeTestRule.goBack()
 
-            composeTestRule
-                .onNodeWithText(RETURN_TO_GOVUK_ON_COMPUTER)
-                .assertIsDisplayed()
+            composeTestRule.seeReturnToGovUkOnComputer()
         }
 }
