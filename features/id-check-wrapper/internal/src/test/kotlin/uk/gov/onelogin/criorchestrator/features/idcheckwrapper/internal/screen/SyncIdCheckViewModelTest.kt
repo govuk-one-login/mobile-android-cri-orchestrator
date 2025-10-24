@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -44,13 +45,16 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import java.util.stream.Stream
+import kotlin.time.Duration.Companion.seconds
 
 @ExtendWith(MainDispatcherExtension::class)
 class SyncIdCheckViewModelTest {
     private val logger = SystemLogger()
     private val documentVariety = DocumentVariety.NFC_PASSPORT
+    private var bypassIdCheckAsyncBackend = false
     private var enableManualLauncher = false
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
@@ -65,6 +69,11 @@ class SyncIdCheckViewModelTest {
             session = session.copyUpdateState { advanceAtLeastDocumentSelected() },
         )
     }
+    private val testDispatcher = StandardTestDispatcher()
+    private val dispatchers =
+        CoroutineDispatchers.defaultUnlessTest(
+            testDispatcher = testDispatcher,
+        )
 
     private val viewModel by lazy {
         SyncIdCheckViewModel(
@@ -73,6 +82,7 @@ class SyncIdCheckViewModelTest {
                     initialConfig =
                         Config.createTestInstance(
                             enableManualLauncher = enableManualLauncher,
+                            bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
                         ),
                 ),
             logger = logger,
@@ -97,6 +107,7 @@ class SyncIdCheckViewModelTest {
                 SavedStateHandle(
                     mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
                 ),
+            dispatchers = dispatchers,
         )
     }
 
@@ -424,6 +435,7 @@ class SyncIdCheckViewModelTest {
             SavedStateHandle(
                 mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
             ),
+        dispatchers = dispatchers,
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -469,5 +481,23 @@ class SyncIdCheckViewModelTest {
             advanceUntilIdle()
 
             assertEquals(1, configStore.getReadSingleCount())
+        }
+
+    @Test
+    fun `given id check backend bypass is enabled, when screen is started, it displays the stub bio token screen`() =
+        runTest {
+            bypassIdCheckAsyncBackend = true
+            viewModel.state.test {
+                skipItems(1) // Loading
+                viewModel.onScreenStart(documentVariety = documentVariety)
+
+                // Skip loading
+                testDispatcher.scheduler.advanceTimeBy(3.seconds)
+
+                assertEquals(
+                    SyncIdCheckState.DisplayStubBiometricToken,
+                    awaitItem(),
+                )
+            }
         }
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
@@ -35,6 +36,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
 import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
 import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
@@ -50,6 +52,7 @@ class SyncIdCheckViewModel(
     private val launcherDataReader: LauncherDataReader,
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
+    private val dispatchers: CoroutineDispatchers,
 ) : ViewModel() {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
@@ -73,7 +76,9 @@ class SyncIdCheckViewModel(
         if (!sdkHasDisplayed) {
             if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
                 viewModelScope.launch {
-                    delay(STUB_BIOMETRIC_TOKEN_DELAY_MS)
+                    withContext(dispatchers.io) {
+                        delay(STUB_BIOMETRIC_TOKEN_DELAY_MS)
+                    }
                     _state.value = SyncIdCheckState.DisplayStubBiometricToken
                 }
             } else {

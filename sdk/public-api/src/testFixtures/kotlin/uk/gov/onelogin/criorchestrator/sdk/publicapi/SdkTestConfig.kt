@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.sdk.publicapi
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 /**
@@ -14,6 +15,7 @@ fun Config.Companion.createTestInstance(
     isNfcAvailable: Boolean = true,
     bypassIdCheckAsyncBackend: Boolean = true,
     bypassJourneyType: String = SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE,
+    enableManualIdCheckSdkLauncher: Boolean = true,
 ): Config =
     Config(
         entries =
@@ -39,6 +41,10 @@ fun Config.Companion.createTestInstance(
                                 false -> NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE
                             },
                         ),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                    value = Config.Value.BooleanValue(enableManualIdCheckSdkLauncher),
                 ),
             ),
     )
