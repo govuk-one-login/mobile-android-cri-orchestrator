@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.uk.gov.networking)
     implementation(libs.uk.gov.logging.api)
     implementation(projects.libraries.analytics)
+    implementation(projects.libraries.kotlinUtils)
 
     testFixturesImplementation(projects.features.session.internalApi)
     testFixturesImplementation(libs.uk.gov.idcheck.repositories.api)
@@ -34,6 +35,7 @@ dependencies {
     testFixturesImplementation(libs.uk.gov.idcheck.ui.presentation)
     testFixturesImplementation(projects.features.idCheckWrapper.internalApi)
     testFixturesImplementation(projects.features.session.internalApi)
+    testFixturesImplementation(projects.libraries.kotlinUtils)
     testFixturesImplementation(testFixtures(projects.features.config.internalApi))
     testFixturesImplementation(testFixtures(projects.features.config.publicApi))
     testFixturesImplementation(testFixtures(projects.features.idCheckWrapper.publicApi))

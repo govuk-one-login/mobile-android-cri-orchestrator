@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.lifecycle.SavedStateHandle
+import kotlinx.coroutines.test.StandardTestDispatcher
 import org.mockito.Mockito.mock
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.api.Logger
@@ -16,7 +17,9 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.idchecks
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.idchecksdkactivestate.IdCheckSdkActiveStateStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 
+@Suppress("LongParameterList")
 fun SyncIdCheckViewModel.Companion.createTestInstance(
     sessionStore: SessionStore = FakeSessionStore(),
     configStore: ConfigStore =
@@ -40,6 +43,10 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
         ),
     logger: Logger = mock(),
     idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
+    dispatchers: CoroutineDispatchers =
+        CoroutineDispatchers.defaultUnlessTest(
+            testDispatcher = StandardTestDispatcher(),
+        ),
 ) = SyncIdCheckViewModel(
     configStore = configStore,
     launcherDataReader = launcherDataReader,
@@ -51,4 +58,5 @@ fun SyncIdCheckViewModel.Companion.createTestInstance(
         SavedStateHandle(
             mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
         ),
+    dispatchers = dispatchers,
 )
