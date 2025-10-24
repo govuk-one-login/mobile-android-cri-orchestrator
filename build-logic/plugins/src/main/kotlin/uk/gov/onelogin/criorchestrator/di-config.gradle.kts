@@ -13,5 +13,6 @@ listOf(
 }
 
 configure<MetroPluginExtension> {
+    contributesAsInject = true
     enableFullBindingGraphValidation = true
 }

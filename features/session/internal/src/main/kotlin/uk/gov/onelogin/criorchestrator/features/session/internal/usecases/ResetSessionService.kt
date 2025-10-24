@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import dev.zacsweers.metro.ContributesIntoSet
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.collect
@@ -22,24 +21,22 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
  */
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesIntoSet(CriOrchestratorAppScope::class, binding = binding<CriOrchestratorService>())
-class ResetSessionService
-    @Inject
-    constructor(
-        private val sessionStore: SessionStore,
-        private val configStore: ConfigStore,
-    ) : CriOrchestratorService {
-        override suspend fun start() {
-            configStore
-                .readAll()
-                .map {
-                    listOf(
-                        it[SdkConfigKey.IdCheckAsyncBackendBaseUrl],
-                        it[SdkConfigKey.BypassIdCheckAsyncBackend],
-                    )
-                }.drop(1)
-                .distinctUntilChanged()
-                .onEach {
-                    sessionStore.clear()
-                }.collect()
-        }
+class ResetSessionService(
+    private val sessionStore: SessionStore,
+    private val configStore: ConfigStore,
+) : CriOrchestratorService {
+    override suspend fun start() {
+        configStore
+            .readAll()
+            .map {
+                listOf(
+                    it[SdkConfigKey.IdCheckAsyncBackendBaseUrl],
+                    it[SdkConfigKey.BypassIdCheckAsyncBackend],
+                )
+            }.drop(1)
+            .distinctUntilChanged()
+            .onEach {
+                sessionStore.clear()
+            }.collect()
     }
+}

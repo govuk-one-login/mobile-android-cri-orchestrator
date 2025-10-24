@@ -12,26 +12,25 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.Id
 
 private const val ABORT_SESSION_ENDPOINT = "/async/abortSession"
 
-class RealAbortSessionApi
-    @Inject
-    constructor(
-        private val httpClient: GenericHttpClient,
-        private val configStore: ConfigStore,
-    ) : AbortSessionApi,
-        LogTagProvider {
-        override suspend fun abortSession(sessionId: String): ApiResponse {
-            val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value
-            val request =
-                ApiRequest.Post(
-                    url = baseUrl + ABORT_SESSION_ENDPOINT,
-                    body =
-                        AbortSessionApiRequest(
-                            sessionId = sessionId,
-                        ),
-                    contentType = ContentType.APPLICATION_JSON,
-                )
-            return httpClient.makeRequest(
-                apiRequest = request,
+@Inject
+class RealAbortSessionApi(
+    private val httpClient: GenericHttpClient,
+    private val configStore: ConfigStore,
+) : AbortSessionApi,
+    LogTagProvider {
+    override suspend fun abortSession(sessionId: String): ApiResponse {
+        val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value
+        val request =
+            ApiRequest.Post(
+                url = baseUrl + ABORT_SESSION_ENDPOINT,
+                body =
+                    AbortSessionApiRequest(
+                        sessionId = sessionId,
+                    ),
+                contentType = ContentType.APPLICATION_JSON,
             )
-        }
+        return httpClient.makeRequest(
+            apiRequest = request,
+        )
     }
+}

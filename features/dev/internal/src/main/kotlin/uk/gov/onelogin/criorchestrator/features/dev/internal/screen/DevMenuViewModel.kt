@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.dev.internal.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -19,7 +18,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
 
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(DevMenuViewModel::class)
-@Inject
 class DevMenuViewModel(
     private val configStore: ConfigStore,
 ) : ViewModel() {
