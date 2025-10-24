@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.usecases
 
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.first
@@ -12,18 +11,16 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journ
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class, binding = binding<GetJourneyType>())
-class GetJourneyTypeImpl
-    @Inject
-    constructor(
-        private val sessionStore: SessionStore,
-    ) : GetJourneyType {
-        @OptIn(FlowPreview::class)
-        override suspend operator fun invoke(): JourneyType {
-            val session =
-                sessionStore
-                    .read()
-                    .first() ?: error("Session is not set")
+class GetJourneyTypeImpl(
+    private val sessionStore: SessionStore,
+) : GetJourneyType {
+    @OptIn(FlowPreview::class)
+    override suspend operator fun invoke(): JourneyType {
+        val session =
+            sessionStore
+                .read()
+                .first() ?: error("Session is not set")
 
-            return session.journeyType
-        }
+        return session.journeyType
     }
+}

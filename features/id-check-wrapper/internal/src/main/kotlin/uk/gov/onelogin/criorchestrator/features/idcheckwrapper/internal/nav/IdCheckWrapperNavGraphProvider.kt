@@ -7,29 +7,26 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.zacsweers.metro.ContributesIntoSet
-import dev.zacsweers.metro.Inject
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen.SyncIdCheckScreen
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
-class IdCheckWrapperNavGraphProvider
-    @Inject
-    constructor(
-        private val viewModelProviderFactory: ViewModelProvider.Factory,
-    ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(
-            navController: NavController,
-            onFinish: () -> Unit,
-        ) {
-            composable<IdCheckWrapperDestinations.SyncIdCheckScreen> {
-                val args = it.toRoute<IdCheckWrapperDestinations.SyncIdCheckScreen>()
-                SyncIdCheckScreen(
-                    documentVariety = args.documentVariety,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                    navController = navController,
-                )
-            }
+class IdCheckWrapperNavGraphProvider(
+    private val viewModelProviderFactory: ViewModelProvider.Factory,
+) : ProveYourIdentityNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(
+        navController: NavController,
+        onFinish: () -> Unit,
+    ) {
+        composable<IdCheckWrapperDestinations.SyncIdCheckScreen> {
+            val args = it.toRoute<IdCheckWrapperDestinations.SyncIdCheckScreen>()
+            SyncIdCheckScreen(
+                documentVariety = args.documentVariety,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+                navController = navController,
+            )
         }
     }
+}

@@ -14,30 +14,29 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.Docum
 
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 
-class BiometricApiImpl
-    @Inject
-    constructor(
-        private val httpClient: GenericHttpClient,
-        private val configStore: ConfigStore,
-    ) : BiometricApi,
-        LogTagProvider {
-        override suspend fun getBiometricToken(
-            sessionId: String,
-            documentVariety: DocumentVariety,
-        ): ApiResponse {
-            val request =
-                ApiRequest.Post(
-                    url = "${configStore.readSingle(IdCheckAsyncBackendBaseUrl).value}$BIOMETRIC_TOKEN_ENDPOINT",
-                    body =
-                        BiometricRequest(
-                            sessionId,
-                            documentVariety.toDocumentType().backendRepresentation,
-                        ),
-                    contentType = ContentType.APPLICATION_JSON,
-                )
-
-            return httpClient.makeRequest(
-                apiRequest = request,
+@Inject
+class BiometricApiImpl(
+    private val httpClient: GenericHttpClient,
+    private val configStore: ConfigStore,
+) : BiometricApi,
+    LogTagProvider {
+    override suspend fun getBiometricToken(
+        sessionId: String,
+        documentVariety: DocumentVariety,
+    ): ApiResponse {
+        val request =
+            ApiRequest.Post(
+                url = "${configStore.readSingle(IdCheckAsyncBackendBaseUrl).value}$BIOMETRIC_TOKEN_ENDPOINT",
+                body =
+                    BiometricRequest(
+                        sessionId,
+                        documentVariety.toDocumentType().backendRepresentation,
+                    ),
+                contentType = ContentType.APPLICATION_JSON,
             )
-        }
+
+        return httpClient.makeRequest(
+            apiRequest = request,
+        )
     }
+}

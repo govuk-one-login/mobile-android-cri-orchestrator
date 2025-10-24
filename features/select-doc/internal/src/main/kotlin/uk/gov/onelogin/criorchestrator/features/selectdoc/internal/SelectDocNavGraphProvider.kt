@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.zacsweers.metro.ContributesIntoSet
-import dev.zacsweers.metro.Inject
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.confirm.ConfirmBrpScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.brp.select.SelectBrpScreen
@@ -22,75 +21,73 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
 @Suppress("LongParameterList")
-class SelectDocNavGraphProvider
-    @Inject
-    constructor(
-        private val viewModelProviderFactory: ViewModelProvider.Factory,
-    ) : ProveYourIdentityNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(
-            navController: NavController,
-            onFinish: () -> Unit,
-        ) {
-            composable<SelectDocDestinations.Passport> {
-                SelectPassportScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+class SelectDocNavGraphProvider(
+    private val viewModelProviderFactory: ViewModelProvider.Factory,
+) : ProveYourIdentityNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(
+        navController: NavController,
+        onFinish: () -> Unit,
+    ) {
+        composable<SelectDocDestinations.Passport> {
+            SelectPassportScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.Brp> {
-                SelectBrpScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.Brp> {
+            SelectBrpScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.DrivingLicence> {
-                SelectDrivingLicenceScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.DrivingLicence> {
+            SelectDrivingLicenceScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.TypesOfPhotoID> {
-                TypesOfPhotoIDScreen(
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.TypesOfPhotoID> {
+            TypesOfPhotoIDScreen(
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmPassport> {
-                ConfirmPassportScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.ConfirmPassport> {
+            ConfirmPassportScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmBrp> {
-                ConfirmBrpScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.ConfirmBrp> {
+            ConfirmBrpScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmDrivingLicence> {
-                ConfirmDrivingLicenceScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.ConfirmDrivingLicence> {
+            ConfirmDrivingLicenceScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmNoChippedID> {
-                ConfirmNoChippedIDScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.ConfirmNoChippedID> {
+            ConfirmNoChippedIDScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
+        }
 
-            composable<SelectDocDestinations.ConfirmNoNonChippedID> {
-                ConfirmNoNonChippedIDScreen(
-                    navController = navController,
-                    viewModel = viewModel(factory = viewModelProviderFactory),
-                )
-            }
+        composable<SelectDocDestinations.ConfirmNoNonChippedID> {
+            ConfirmNoNonChippedIDScreen(
+                navController = navController,
+                viewModel = viewModel(factory = viewModelProviderFactory),
+            )
         }
     }
+}

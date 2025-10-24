@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,7 +42,6 @@ private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 @Suppress("LongParameterList", "TooGenericExceptionCaught", "TooManyFunctions")
 @ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
 @ViewModelKey(SyncIdCheckViewModel::class)
-@Inject
 class SyncIdCheckViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val configStore: ConfigStore,
