@@ -65,8 +65,8 @@ jobs:
         if: ${{ github.event_name != 'pull_request' && env.should_publish == 'true' }}
         uses: ./mobile-android-pipelines/actions/maven-publish
         with:
-          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
-          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.MODULE_PUSH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_PUSH_TOKEN }}
 
       - name: Test publishing to Maven local
         if: ${{ github.event_name == 'pull_request' }}
