@@ -12,6 +12,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
+@Suppress("LongMethod")
 class CriOrchestratorSingletonImplTest {
     @Test
     fun `it applies the default config`() =
@@ -66,6 +67,12 @@ class CriOrchestratorSingletonImplTest {
                             Config.Entry<Config.Value.BooleanValue>(
                                 key = IdCheckWrapperConfigKey.EnableManualLauncher,
                                 Config.Value.BooleanValue(false),
+                            ),
+                            Config.Entry(
+                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                                Config.Value.BooleanValue(
+                                    value = false,
+                                ),
                             ),
                             Config.Entry<Config.Value.StringValue>(
                                 key = NfcConfigKey.NfcAvailability,

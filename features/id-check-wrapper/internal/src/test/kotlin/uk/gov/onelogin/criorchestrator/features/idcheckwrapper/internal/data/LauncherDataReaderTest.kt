@@ -6,6 +6,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -20,12 +23,14 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
+import java.util.stream.Stream
 
 class LauncherDataReaderTest {
     private var initialConfig =
@@ -41,6 +46,11 @@ class LauncherDataReaderTest {
                     ),
                     Config.Entry<Config.Value.BooleanValue>(
                         key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                        value =
+                            Config.Value.BooleanValue(false),
+                    ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
                         value =
                             Config.Value.BooleanValue(false),
                     ),
@@ -64,12 +74,20 @@ class LauncherDataReaderTest {
                     biometricToken = biometricToken,
                     documentType = DocumentType.NFC_PASSPORT,
                     backendMode = BackendMode.V2,
+                    experimentalComposeNavigation = false,
                 ),
             )
 
         private val sessionStore =
             FakeSessionStore(
                 session = session,
+            )
+
+        @JvmStatic
+        fun provideExperimentalComposeNavigationValues(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(false, false),
+                Arguments.of(true, true),
             )
     }
 
@@ -137,6 +155,11 @@ class LauncherDataReaderTest {
                                 key = SdkConfigKey.BypassIdCheckAsyncBackend,
                                 value =
                                     Config.Value.BooleanValue(true),
+                            ),
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                                value =
+                                    Config.Value.BooleanValue(false),
                             ),
                         ),
                 )
@@ -211,4 +234,51 @@ class LauncherDataReaderTest {
                 launcherDataReader.read(documentVariety)
             }
         }
+
+    @ParameterizedTest(name = "given experimentalComposeNavigation is {0}, read sets the flag to {1}")
+    @MethodSource("provideExperimentalComposeNavigationValues")
+    fun `read reflects experimental compose navigation config`(
+        configValue: Boolean,
+        expectedValue: Boolean,
+    ) = runTest {
+        initialConfig =
+            Config(
+                entries =
+                    persistentListOf(
+                        Config.Entry<Config.Value.StringValue>(
+                            key = IdCheckAsyncBackendBaseUrl,
+                            value =
+                                Config.Value.StringValue(
+                                    ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
+                                ),
+                        ),
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                            value =
+                                Config.Value.BooleanValue(false),
+                        ),
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                            value =
+                                Config.Value.BooleanValue(configValue),
+                        ),
+                    ),
+            )
+
+        val launcherDataReader = createLauncherDataReader()
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = documentVariety,
+            )
+
+        assertEquals(
+            expectedLauncherDataResult.copy(
+                launcherData =
+                    expectedLauncherDataResult.launcherData.copy(
+                        experimentalComposeNavigation = expectedValue,
+                    ),
+            ),
+            launcherDataResult,
+        )
+    }
 }

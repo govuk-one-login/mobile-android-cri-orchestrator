@@ -16,6 +16,7 @@ fun Config.Companion.createTestInstance(
     bypassIdCheckAsyncBackend: Boolean = true,
     bypassJourneyType: String = SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE,
     enableManualIdCheckSdkLauncher: Boolean = true,
+    experimentalComposeNavigation: Boolean = false,
 ): Config =
     Config(
         entries =
@@ -45,6 +46,10 @@ fun Config.Companion.createTestInstance(
                 Config.Entry<Config.Value.BooleanValue>(
                     key = IdCheckWrapperConfigKey.EnableManualLauncher,
                     value = Config.Value.BooleanValue(enableManualIdCheckSdkLauncher),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                    value = Config.Value.BooleanValue(experimentalComposeNavigation),
                 ),
             ),
     )

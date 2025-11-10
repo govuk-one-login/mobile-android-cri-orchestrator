@@ -61,7 +61,15 @@ class SyncIdCheckViewModelTest {
     private val sessionStore by lazy {
         FakeSessionStore(session)
     }
-    private val configStore: ConfigStore = FakeConfigStore()
+    private val configStore: ConfigStore =
+        FakeConfigStore(
+            initialConfig =
+                Config.createTestInstance(
+                    enableManualLauncher = false,
+                    bypassIdCheckAsyncBackend = false,
+                    experimentalComposeNavigation = false,
+                ),
+        )
     private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
@@ -80,9 +88,10 @@ class SyncIdCheckViewModelTest {
                 FakeConfigStore(
                     initialConfig =
                         Config.createTestInstance(
-                            enableManualLauncher = enableManualLauncher,
-                            bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
-                        ),
+                        enableManualLauncher = enableManualLauncher,
+                        bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                        experimentalComposeNavigation = false,
+                    )
                 ),
             logger = logger,
             launcherDataReader =
@@ -97,7 +106,11 @@ class SyncIdCheckViewModelTest {
                                 biometricToken,
                             ),
                         ),
-                    configStore = FakeConfigStore(),
+                    configStore = FakeConfigStore(initialConfig = Config.createTestInstance(
+                        enableManualLauncher = enableManualLauncher,
+                        bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                        experimentalComposeNavigation = false,
+                    )),
                 ),
             analytics = analytics,
             sessionStore = sessionStore,
@@ -421,13 +434,7 @@ class SyncIdCheckViewModelTest {
                 configStore = configStore,
             ),
         analytics = analytics,
-        configStore =
-            FakeConfigStore(
-                initialConfig =
-                    Config.createTestInstance(
-                        enableManualLauncher = enableManualLauncher,
-                    ),
-            ),
+        configStore = configStore,
         sessionStore = sessionStore,
         idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
         savedStateHandle =
@@ -459,7 +466,13 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `sdk launcher is not triggered when screen start executed again`() =
         runTest {
-            val configStore = FakeConfigStore()
+            val initialConfig =
+                Config.createTestInstance(
+                    enableManualLauncher = enableManualLauncher,
+                    bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                    experimentalComposeNavigation = false,
+                )
+            val configStore = FakeConfigStore(initialConfig = initialConfig)
             val viewModel = viewModel(configStore = configStore)
             listOf(
                 viewModel.state,

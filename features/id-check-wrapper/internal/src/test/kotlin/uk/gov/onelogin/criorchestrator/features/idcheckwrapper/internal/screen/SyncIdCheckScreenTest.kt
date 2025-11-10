@@ -68,7 +68,15 @@ class SyncIdCheckScreenTest {
                             biometricTokenResult = biometricTokenResult,
                             delay = readerDelay,
                         ),
-                    configStore = FakeConfigStore(),
+                    configStore =
+                        FakeConfigStore(
+                            initialConfig =
+                                Config.createTestInstance(
+                                    enableManualLauncher = enableManualLauncher,
+                                    bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                                    experimentalComposeNavigation = false,
+                                ),
+                        ),
                 ),
             configStore =
                 FakeConfigStore(
@@ -76,6 +84,7 @@ class SyncIdCheckScreenTest {
                         Config.createTestInstance(
                             enableManualLauncher = enableManualLauncher,
                             bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                            experimentalComposeNavigation = false,
                         ),
                 ),
         )

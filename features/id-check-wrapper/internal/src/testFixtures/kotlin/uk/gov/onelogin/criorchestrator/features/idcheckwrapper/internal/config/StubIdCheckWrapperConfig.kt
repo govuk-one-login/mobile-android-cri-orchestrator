@@ -8,6 +8,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheck
 fun Config.Companion.createTestInstance(
     enableManualLauncher: Boolean = false,
     bypassIdCheckAsyncBackend: Boolean = false,
+    experimentalComposeNavigation: Boolean = false,
 ): Config =
     Config(
         entries =
@@ -19,6 +20,10 @@ fun Config.Companion.createTestInstance(
                 Config.Entry<Config.Value.BooleanValue>(
                     key = SdkConfigKey.BypassIdCheckAsyncBackend,
                     value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                    value = Config.Value.BooleanValue(experimentalComposeNavigation),
                 ),
             ),
     )
