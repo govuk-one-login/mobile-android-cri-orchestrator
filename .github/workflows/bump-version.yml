@@ -12,7 +12,9 @@ env:
 
 jobs:
   bump-version:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     env:
       JDK_VERSION: 21
     permissions:
@@ -31,9 +33,19 @@ jobs:
         with:
           jdk-version: 21
 
+      - name: Create a pre-release unless the workflow was triggered manually
+        id: pre-release
+        # If the workflow is triggered automatically (e.g. by merging a PR) create a pre-release
+        # If the workflow is triggered manually (i.e. through the Github UI) create a stable release
+        run: echo "enabled=$IS_AUTOMATIC_RELEASE" >> "$GITHUB_OUTPUT"
+        env:
+          IS_AUTOMATIC_RELEASE: ${{ github.event_name != 'workflow_dispatch' }}
+
       - name: Increment the release version using Conventional Commits
         id: versioning
         uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          pre-release-type: ${{ steps.pre-release.outputs.enabled == 'true' && 'alpha' || '' }}
 
       - name: Publish release tags
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
@@ -60,7 +72,7 @@ jobs:
         with:
           tag_name: ${{ steps.versioning.outputs.new_version }}
           draft: false
-          prerelease: false
+          prerelease: ${{ steps.pre-release.outputs.enabled }}
           generate_release_notes: true
 
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0

@@ -3,6 +3,7 @@
 ## How-to guides
 
 * [Run integrated test](./how-to/run-integrated-test.md)
+* [Publish a new version](./how-to/publish-a-new-version.md)
 
 ## Explanation
 
