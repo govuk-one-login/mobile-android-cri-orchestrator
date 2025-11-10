@@ -60,6 +60,7 @@ internal fun SyncIdCheckScreenManualLauncherContent(
                     sessionId = launcherData.sessionId,
                     accessToken = launcherData.biometricToken.accessToken,
                     opaqueId = launcherData.biometricToken.opaqueId,
+                    experimentalComposeNavigation = launcherData.experimentalComposeNavigation,
                     modifier = Modifier.padding(horizontal = horizontalPadding),
                 )
             }
@@ -95,6 +96,7 @@ private fun DebugData(
     sessionId: String,
     accessToken: String,
     opaqueId: String,
+    experimentalComposeNavigation: Boolean,
     modifier: Modifier = Modifier,
 ) = Column(
     modifier = modifier,
@@ -113,6 +115,9 @@ private fun DebugData(
     )
     Text(
         text = "Biometric Token Opaque ID: $opaqueId",
+    )
+    Text(
+        text = "Compose Navigation Enabled: $experimentalComposeNavigation",
     )
 }
 
@@ -134,6 +139,7 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
                             opaqueId = "test opaque ID",
                         ),
                     backendMode = BackendMode.V2,
+                    experimentalComposeNavigation = false,
                 ),
             exitStateOptions = ExitStateOption.entries.map { it.displayName }.toPersistentList(),
             selectedExitState = 0,

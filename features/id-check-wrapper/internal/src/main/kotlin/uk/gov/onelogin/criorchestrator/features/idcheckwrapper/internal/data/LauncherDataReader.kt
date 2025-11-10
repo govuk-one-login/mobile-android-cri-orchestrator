@@ -11,6 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
@@ -25,6 +26,9 @@ class LauncherDataReader(
         val sessionId = requireLatestSession().sessionId
 
         val result = biometricTokenReader.getBiometricToken(sessionId, documentVariety)
+
+        val experimentalComposeNavigation: Boolean =
+            configStore.readSingle(IdCheckWrapperConfigKey.ExperimentalComposeNavigation).value
 
         if (result is BiometricTokenResult.Success) {
             sessionStore.updateToDocumentSelected()
@@ -68,6 +72,7 @@ class LauncherDataReader(
                         biometricToken = result.token,
                         documentType = documentVariety.toDocumentType(),
                         backendMode = backendMode,
+                        experimentalComposeNavigation = experimentalComposeNavigation,
                     ),
                 )
             }

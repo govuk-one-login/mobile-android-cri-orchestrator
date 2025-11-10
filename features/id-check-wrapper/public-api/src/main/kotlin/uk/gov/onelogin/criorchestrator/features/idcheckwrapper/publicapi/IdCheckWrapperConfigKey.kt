@@ -17,4 +17,17 @@ sealed interface IdCheckWrapperConfigKey {
             name = "Enable manual ID Check SDK launcher",
         ),
         IdCheckWrapperConfigKey
+
+    /**
+     * Enable the experimental Compose navigation flow.
+     *
+     * When enabled, the app will use Compose-based navigation instead of the current ID Check SDK
+     * XML-based navigation graph. This feature is part of ongoing migration efforts, and the flag
+     * will be removed in DCMAW-15387.
+     */
+    data object ExperimentalComposeNavigation :
+        BooleanConfigKey(
+            name = "Enable experimental Compose navigation",
+        ),
+        IdCheckWrapperConfigKey
 }
