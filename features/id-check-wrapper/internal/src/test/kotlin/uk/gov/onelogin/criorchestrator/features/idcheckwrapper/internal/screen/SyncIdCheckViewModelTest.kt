@@ -88,10 +88,10 @@ class SyncIdCheckViewModelTest {
                 FakeConfigStore(
                     initialConfig =
                         Config.createTestInstance(
-                        enableManualLauncher = enableManualLauncher,
-                        bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
-                        experimentalComposeNavigation = false,
-                    )
+                            enableManualLauncher = enableManualLauncher,
+                            bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                            experimentalComposeNavigation = false,
+                        ),
                 ),
             logger = logger,
             launcherDataReader =
@@ -106,11 +106,15 @@ class SyncIdCheckViewModelTest {
                                 biometricToken,
                             ),
                         ),
-                    configStore = FakeConfigStore(initialConfig = Config.createTestInstance(
-                        enableManualLauncher = enableManualLauncher,
-                        bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
-                        experimentalComposeNavigation = false,
-                    )),
+                    configStore =
+                        FakeConfigStore(
+                            initialConfig =
+                                Config.createTestInstance(
+                                    enableManualLauncher = enableManualLauncher,
+                                    bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                                    experimentalComposeNavigation = false,
+                                ),
+                        ),
                 ),
             analytics = analytics,
             sessionStore = sessionStore,
