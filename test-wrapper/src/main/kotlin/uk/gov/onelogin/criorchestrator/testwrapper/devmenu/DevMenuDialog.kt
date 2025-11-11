@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.dev.publicapi.DevMenuScreen
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.fullScreenDialogProperties
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 import uk.gov.onelogin.criorchestrator.testwrapper.preview.rememberPreviewCriOrchestratorGraph
 
@@ -19,12 +19,7 @@ internal fun DevMenuDialog(
     modifier: Modifier = Modifier,
 ) = Dialog(
     onDismissRequest = onDismissRequest,
-    properties =
-        DialogProperties(
-            dismissOnClickOutside = false,
-            usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false,
-        ),
+    properties = fullScreenDialogProperties,
 ) {
     FullScreenDialogue(
         modifier = modifier,
