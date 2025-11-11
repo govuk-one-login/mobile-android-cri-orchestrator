@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 
 object FakeConfig {
     const val ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE = "https://test.backend.url"
@@ -21,6 +22,14 @@ object FakeConfig {
                         key = SdkConfigKey.BypassIdCheckAsyncBackend,
                         value =
                             Config.Value.BooleanValue(false),
+                    ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                        value = Config.Value.BooleanValue(false),
+                    ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                        value = Config.Value.BooleanValue(false),
                     ),
                 ),
         )
