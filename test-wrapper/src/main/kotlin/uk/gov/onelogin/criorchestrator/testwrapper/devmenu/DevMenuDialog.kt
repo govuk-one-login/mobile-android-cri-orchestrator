@@ -3,6 +3,8 @@ package uk.gov.onelogin.criorchestrator.testwrapper.devmenu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import uk.gov.android.ui.patterns.dialog.FullScreenDialogue
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.dev.publicapi.DevMenuScreen
@@ -15,6 +17,14 @@ internal fun DevMenuDialog(
     criOrchestratorGraph: CriOrchestratorGraph,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+) = Dialog(
+    onDismissRequest = onDismissRequest,
+    properties =
+        DialogProperties(
+            dismissOnClickOutside = false,
+            usePlatformDefaultWidth = false,
+            decorFitsSystemWindows = false,
+        ),
 ) {
     FullScreenDialogue(
         modifier = modifier,
