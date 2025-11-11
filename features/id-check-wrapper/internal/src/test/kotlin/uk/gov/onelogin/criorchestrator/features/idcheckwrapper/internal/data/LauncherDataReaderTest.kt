@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -30,7 +29,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
-import java.util.stream.Stream
 
 class LauncherDataReaderTest {
     private var initialConfig =
@@ -81,13 +79,6 @@ class LauncherDataReaderTest {
         private val sessionStore =
             FakeSessionStore(
                 session = session,
-            )
-
-        @JvmStatic
-        fun provideExperimentalComposeNavigationValues(): Stream<Arguments> =
-            Stream.of(
-                Arguments.of(false, false),
-                Arguments.of(true, true),
             )
     }
 
@@ -235,50 +226,43 @@ class LauncherDataReaderTest {
             }
         }
 
-    @ParameterizedTest(name = "given experimentalComposeNavigation is {0}, read sets the flag to {1}")
-    @MethodSource("provideExperimentalComposeNavigationValues")
-    fun `read reflects experimental compose navigation config`(
-        configValue: Boolean,
-        expectedValue: Boolean,
-    ) = runTest {
-        initialConfig =
-            Config(
-                entries =
-                    persistentListOf(
-                        Config.Entry<Config.Value.StringValue>(
-                            key = IdCheckAsyncBackendBaseUrl,
-                            value =
-                                Config.Value.StringValue(
-                                    ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
-                                ),
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(booleans = [true, false])
+    fun `given different experimental compose navigation config, read gets the launcher data`(configValue: Boolean) =
+        runTest {
+            initialConfig =
+                Config(
+                    entries =
+                        persistentListOf(
+                            Config.Entry<Config.Value.StringValue>(
+                                key = IdCheckAsyncBackendBaseUrl,
+                                value = Config.Value.StringValue(ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE),
+                            ),
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                                value = Config.Value.BooleanValue(false),
+                            ),
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                                value = Config.Value.BooleanValue(configValue),
+                            ),
                         ),
-                        Config.Entry<Config.Value.BooleanValue>(
-                            key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                            value =
-                                Config.Value.BooleanValue(false),
-                        ),
-                        Config.Entry<Config.Value.BooleanValue>(
-                            key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                            value =
-                                Config.Value.BooleanValue(configValue),
-                        ),
-                    ),
-            )
+                )
 
-        val launcherDataReader = createLauncherDataReader()
-        val launcherDataResult =
-            launcherDataReader.read(
-                documentVariety = documentVariety,
-            )
+            val launcherDataReader = createLauncherDataReader()
+            val launcherDataResult =
+                launcherDataReader.read(
+                    documentVariety = documentVariety,
+                )
 
-        assertEquals(
-            expectedLauncherDataResult.copy(
-                launcherData =
-                    expectedLauncherDataResult.launcherData.copy(
-                        experimentalComposeNavigation = expectedValue,
-                    ),
-            ),
-            launcherDataResult,
-        )
-    }
+            assertEquals(
+                expectedLauncherDataResult.copy(
+                    launcherData =
+                        expectedLauncherDataResult.launcherData.copy(
+                            experimentalComposeNavigation = configValue,
+                        ),
+                ),
+                launcherDataResult,
+            )
+        }
 }
