@@ -16,7 +16,7 @@ prerelease_type=$2
 
 echo "Checking ${github_ref_name} is a valid ${prerelease_type} release" >&2
 
-[[ "${github_ref_name}" =~ v.*-$prerelease_type\..* ]] || {
+[[ "${github_ref_name}" =~ .*-$prerelease_type\..* ]] || {
   echo "Error: ${github_ref_name} isn't a valid ${prerelease_type} release" >&2
   exit 1
 }
