@@ -1,0 +1,17 @@
+name: Ensure a pre-release is checked out
+description: Ensure the Github ref for this action is a valid pre-release tag (e.g. v1.2.3-alpha.4).
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Set Github Action path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
+    - name: Ensure an alpha pre-release is checked out
+      run: ensure_prerelease_tag.bash "$GITHUB_REF_NAME" alpha
+      shell: bash
+

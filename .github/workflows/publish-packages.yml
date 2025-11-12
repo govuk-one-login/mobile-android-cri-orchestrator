@@ -3,7 +3,6 @@ name: Publish packages
 on:
   workflow_run:
     workflows: [Bump version]
-    branches: [main]
     types: [completed]
   pull_request:
     types:
