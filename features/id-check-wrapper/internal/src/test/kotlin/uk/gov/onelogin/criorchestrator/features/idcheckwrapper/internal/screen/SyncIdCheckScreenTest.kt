@@ -76,6 +76,7 @@ class SyncIdCheckScreenTest {
                         Config.createTestInstance(
                             enableManualLauncher = enableManualLauncher,
                             bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                            experimentalComposeNavigation = false,
                         ),
                 ),
         )

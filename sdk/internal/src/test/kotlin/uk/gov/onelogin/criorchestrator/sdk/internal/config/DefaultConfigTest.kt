@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 import java.util.stream.Stream
 import kotlin.test.assertContains
@@ -29,11 +30,17 @@ class DefaultConfigTest {
                 key = NfcConfigKey.NfcAvailability,
                 Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
             )
+        private val experimentalComposeNavigationEntry =
+            Config.Entry<Config.Value.BooleanValue>(
+                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                Config.Value.BooleanValue(false),
+            )
         private val requiredUserConfig =
             listOf(
                 idCheckAsyncBackendBaseUrlEntry,
                 bypassIdCheckAsyncBackendEntry,
                 nfcAvailabilityEntry,
+                experimentalComposeNavigationEntry,
             )
 
         @JvmStatic
@@ -49,6 +56,10 @@ class DefaultConfigTest {
                 ),
                 Arguments.of(
                     nfcAvailabilityEntry,
+                    null,
+                ),
+                Arguments.of(
+                    experimentalComposeNavigationEntry,
                     null,
                 ),
             )

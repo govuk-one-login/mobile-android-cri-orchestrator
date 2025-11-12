@@ -82,6 +82,7 @@ class SyncIdCheckViewModelTest {
                         Config.createTestInstance(
                             enableManualLauncher = enableManualLauncher,
                             bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                            experimentalComposeNavigation = false,
                         ),
                 ),
             logger = logger,
@@ -421,13 +422,7 @@ class SyncIdCheckViewModelTest {
                 configStore = configStore,
             ),
         analytics = analytics,
-        configStore =
-            FakeConfigStore(
-                initialConfig =
-                    Config.createTestInstance(
-                        enableManualLauncher = enableManualLauncher,
-                    ),
-            ),
+        configStore = configStore,
         sessionStore = sessionStore,
         idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
         savedStateHandle =

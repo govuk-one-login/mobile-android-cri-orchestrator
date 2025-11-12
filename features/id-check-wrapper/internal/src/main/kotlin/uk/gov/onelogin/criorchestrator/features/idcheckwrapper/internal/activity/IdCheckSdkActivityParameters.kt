@@ -10,4 +10,5 @@ internal fun LauncherData.toIdCheckSdkActivityParameters() =
         sessionId = this.sessionId,
         bioToken = this.biometricToken,
         backendMode = this.backendMode,
+        experimentalComposeNavigation = this.experimentalComposeNavigation,
     )
