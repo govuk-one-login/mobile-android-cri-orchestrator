@@ -42,6 +42,12 @@ object TestWrapperConfig {
                             value = true,
                         ),
                     ),
+                    Config.Entry(
+                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                        Config.Value.BooleanValue(
+                            value = false,
+                        ),
+                    ),
                 ),
         )
 }

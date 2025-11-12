@@ -11,9 +11,11 @@ fun LauncherData.Companion.createTestInstance(
     session: Session = Session.createTestInstance(),
     biometricToken: BiometricToken = BiometricToken.createTestToken(),
     documentType: DocumentType = DocumentType.NFC_PASSPORT,
+    experimentalComposeNavigation: Boolean = false,
 ) = LauncherData(
     documentType = documentType,
     session = session,
     biometricToken = biometricToken,
     backendMode = BackendMode.V2,
+    experimentalComposeNavigation = experimentalComposeNavigation,
 )

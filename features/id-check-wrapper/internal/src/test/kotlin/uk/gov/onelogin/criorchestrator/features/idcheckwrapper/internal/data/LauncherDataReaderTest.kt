@@ -6,6 +6,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -20,6 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
@@ -44,6 +47,11 @@ class LauncherDataReaderTest {
                         value =
                             Config.Value.BooleanValue(false),
                     ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                        value =
+                            Config.Value.BooleanValue(false),
+                    ),
                 ),
         )
     private val configStore by lazy {
@@ -64,6 +72,7 @@ class LauncherDataReaderTest {
                     biometricToken = biometricToken,
                     documentType = DocumentType.NFC_PASSPORT,
                     backendMode = BackendMode.V2,
+                    experimentalComposeNavigation = false,
                 ),
             )
 
@@ -123,22 +132,17 @@ class LauncherDataReaderTest {
     fun `given different bypass ID Check backend is enabled, read gets the correct launcher data`() =
         runTest {
             initialConfig =
-                Config(
-                    entries =
-                        persistentListOf(
-                            Config.Entry<Config.Value.StringValue>(
-                                key = IdCheckAsyncBackendBaseUrl,
-                                value =
-                                    Config.Value.StringValue(
-                                        ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
-                                    ),
+                initialConfig.combinedWith(
+                    Config(
+                        entries =
+                            persistentListOf(
+                                Config.Entry<Config.Value.BooleanValue>(
+                                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                                    value =
+                                        Config.Value.BooleanValue(true),
+                                ),
                             ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                                value =
-                                    Config.Value.BooleanValue(true),
-                            ),
-                        ),
+                    ),
                 )
             val launcherDataReader = createLauncherDataReader()
             val launcherDataResult =
@@ -210,5 +214,39 @@ class LauncherDataReaderTest {
             assertThrows<IllegalStateException> {
                 launcherDataReader.read(documentVariety)
             }
+        }
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(booleans = [true, false])
+    fun `given different experimental compose navigation config, read gets the launcher data`(configValue: Boolean) =
+        runTest {
+            initialConfig =
+                initialConfig.combinedWith(
+                    Config(
+                        entries =
+                            persistentListOf(
+                                Config.Entry<Config.Value.BooleanValue>(
+                                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                                    value = Config.Value.BooleanValue(configValue),
+                                ),
+                            ),
+                    ),
+                )
+
+            val launcherDataReader = createLauncherDataReader()
+            val launcherDataResult =
+                launcherDataReader.read(
+                    documentVariety = documentVariety,
+                )
+
+            assertEquals(
+                expectedLauncherDataResult.copy(
+                    launcherData =
+                        expectedLauncherDataResult.launcherData.copy(
+                            experimentalComposeNavigation = configValue,
+                        ),
+                ),
+                launcherDataResult,
+            )
         }
 }

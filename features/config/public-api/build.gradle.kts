@@ -13,6 +13,7 @@ dependencies {
 
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(projects.features.config.publicApi))
+    testFixturesImplementation(testFixtures(projects.features.idCheckWrapper.publicApi))
 }
 
 mavenPublishingConfig {

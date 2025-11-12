@@ -13,6 +13,7 @@ data class LauncherData(
     val biometricToken: BiometricToken,
     val documentType: DocumentType,
     val backendMode: BackendMode,
+    val experimentalComposeNavigation: Boolean,
 ) {
     companion object;
 
