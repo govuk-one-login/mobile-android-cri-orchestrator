@@ -84,8 +84,6 @@ jobs:
             uk.gov.onelogin.criorchestrator.sdk:sdk,
             uk.gov.onelogin.criorchestrator.sdk:sdk-internal,
             uk.gov.onelogin.criorchestrator.sdk:sdk-shared-api'
-          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
-          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace

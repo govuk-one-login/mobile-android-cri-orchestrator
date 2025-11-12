@@ -1,4 +1,6 @@
 name: 'Setup runner'
+description: 'Setup the Github Actions runner with dependencies and configuration'
+
 runs:
   using: "composite"
   steps:
