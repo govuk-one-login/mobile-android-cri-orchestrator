@@ -132,27 +132,17 @@ class LauncherDataReaderTest {
     fun `given different bypass ID Check backend is enabled, read gets the correct launcher data`() =
         runTest {
             initialConfig =
-                Config(
-                    entries =
-                        persistentListOf(
-                            Config.Entry<Config.Value.StringValue>(
-                                key = IdCheckAsyncBackendBaseUrl,
-                                value =
-                                    Config.Value.StringValue(
-                                        ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
-                                    ),
+                initialConfig.combinedWith(
+                    Config(
+                        entries =
+                            persistentListOf(
+                                Config.Entry<Config.Value.BooleanValue>(
+                                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                                    value =
+                                        Config.Value.BooleanValue(true),
+                                ),
                             ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                                value =
-                                    Config.Value.BooleanValue(true),
-                            ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                                value =
-                                    Config.Value.BooleanValue(false),
-                            ),
-                        ),
+                    ),
                 )
             val launcherDataReader = createLauncherDataReader()
             val launcherDataResult =
@@ -231,22 +221,16 @@ class LauncherDataReaderTest {
     fun `given different experimental compose navigation config, read gets the launcher data`(configValue: Boolean) =
         runTest {
             initialConfig =
-                Config(
-                    entries =
-                        persistentListOf(
-                            Config.Entry<Config.Value.StringValue>(
-                                key = IdCheckAsyncBackendBaseUrl,
-                                value = Config.Value.StringValue(ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE),
+                initialConfig.combinedWith(
+                    Config(
+                        entries =
+                            persistentListOf(
+                                Config.Entry<Config.Value.BooleanValue>(
+                                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                                    value = Config.Value.BooleanValue(configValue),
+                                ),
                             ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                                value = Config.Value.BooleanValue(false),
-                            ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                                value = Config.Value.BooleanValue(configValue),
-                            ),
-                        ),
+                    ),
                 )
 
             val launcherDataReader = createLauncherDataReader()
