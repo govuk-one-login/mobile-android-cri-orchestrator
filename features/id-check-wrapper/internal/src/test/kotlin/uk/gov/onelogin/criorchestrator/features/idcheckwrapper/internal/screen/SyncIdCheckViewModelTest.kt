@@ -3,7 +3,6 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -17,6 +16,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
@@ -57,11 +59,20 @@ class SyncIdCheckViewModelTest {
     private var enableManualLauncher = false
     private var session = Session.createTestInstance()
     private val biometricToken = BiometricToken.createTestToken()
+    private var biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken)
     private val analytics = mock<IdCheckWrapperAnalytics>()
     private val sessionStore by lazy {
         FakeSessionStore(session)
     }
-    private val configStore: ConfigStore = FakeConfigStore()
+    private val configStore: ConfigStore by lazy {
+        FakeConfigStore(
+            initialConfig =
+                Config.createTestInstance(
+                    enableManualLauncher = enableManualLauncher,
+                    bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
+                ),
+        )
+    }
     private val idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger)
     private val launcherData by lazy {
         LauncherData.createTestInstance(
@@ -73,32 +84,21 @@ class SyncIdCheckViewModelTest {
         CoroutineDispatchers.defaultUnlessTest(
             testDispatcher = testDispatcher,
         )
+    private val launcherDataReader by lazy {
+        spy(
+            LauncherDataReader(
+                sessionStore = FakeSessionStore(session = session),
+                biometricTokenReader = StubBiometricTokenReader(biometricTokenResult),
+                configStore = configStore,
+            ),
+        )
+    }
 
     private val viewModel by lazy {
         SyncIdCheckViewModel(
-            configStore =
-                FakeConfigStore(
-                    initialConfig =
-                        Config.createTestInstance(
-                            enableManualLauncher = enableManualLauncher,
-                            bypassIdCheckAsyncBackend = bypassIdCheckAsyncBackend,
-                        ),
-                ),
+            configStore = configStore,
             logger = logger,
-            launcherDataReader =
-                LauncherDataReader(
-                    sessionStore =
-                        FakeSessionStore(
-                            session = session,
-                        ),
-                    biometricTokenReader =
-                        StubBiometricTokenReader(
-                            BiometricTokenResult.Success(
-                                biometricToken,
-                            ),
-                        ),
-                    configStore = FakeConfigStore(),
-                ),
+            launcherDataReader = launcherDataReader,
             analytics = analytics,
             sessionStore = sessionStore,
             idCheckSdkActiveStateStore = idCheckSdkActiveStateStore,
@@ -227,7 +227,6 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `before screen is started, starts loading`() =
         runTest {
-            val viewModel = viewModel()
             viewModel.state.test {
                 assertEquals(SyncIdCheckState.Loading, awaitItem())
                 cancel()
@@ -360,7 +359,6 @@ class SyncIdCheckViewModelTest {
 
     @Test
     fun `when screen is started, it sends analytics`() {
-        val viewModel = viewModel()
         viewModel.onScreenStart(documentVariety = documentVariety)
 
         verify(analytics)
@@ -373,12 +371,9 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `when get biometric token fails with unrecoverable error, it navigates to unrecoverable error`() =
         runTest {
-            val viewModel =
-                viewModel(
-                    biometricTokenResult =
-                        BiometricTokenResult.Error(
-                            Exception("Error"),
-                        ),
+            biometricTokenResult =
+                BiometricTokenResult.Error(
+                    Exception("Error"),
                 )
 
             viewModel.actions.test {
@@ -391,10 +386,7 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `when get biometric token fails with unrecoverable error, it navigates to recoverable error`() =
         runTest {
-            val viewModel =
-                viewModel(
-                    biometricTokenResult = BiometricTokenResult.Offline,
-                )
+            biometricTokenResult = BiometricTokenResult.Offline
 
             viewModel.actions.test {
                 viewModel.onScreenStart(documentVariety = documentVariety)
@@ -402,40 +394,6 @@ class SyncIdCheckViewModelTest {
                 assertEquals(SyncIdCheckAction.NavigateToRecoverableError, awaitItem())
             }
         }
-
-    private fun viewModel(
-        biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken),
-        configStore: ConfigStore = this.configStore,
-    ) = SyncIdCheckViewModel(
-        logger = logger,
-        launcherDataReader =
-            LauncherDataReader(
-                sessionStore =
-                    FakeSessionStore(
-                        session = session,
-                    ),
-                biometricTokenReader =
-                    StubBiometricTokenReader(
-                        biometricTokenResult = biometricTokenResult,
-                    ),
-                configStore = configStore,
-            ),
-        analytics = analytics,
-        configStore =
-            FakeConfigStore(
-                initialConfig =
-                    Config.createTestInstance(
-                        enableManualLauncher = enableManualLauncher,
-                    ),
-            ),
-        sessionStore = sessionStore,
-        idCheckSdkActiveStateStore = InMemoryIdCheckSdkActiveStateStore(logger),
-        savedStateHandle =
-            SavedStateHandle(
-                mapOf(SyncIdCheckViewModel.SDK_HAS_DISPLAYED to false),
-            ),
-        dispatchers = dispatchers,
-    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
@@ -459,20 +417,9 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `sdk launcher is not triggered when screen start executed again`() =
         runTest {
-            val configStore = FakeConfigStore()
-            val viewModel = viewModel(configStore = configStore)
-            listOf(
-                viewModel.state,
-                viewModel.actions,
-            ).merge()
+            viewModel.actions
                 .test {
-                    skipItems(1) // Loading
-
                     viewModel.onScreenStart(documentVariety = documentVariety)
-                    assertEquals(
-                        automaticLauncherState(),
-                        awaitItem(),
-                    )
 
                     viewModel.onIdCheckSdkLaunchRequest(launcherData)
                     assertInstanceOf<SyncIdCheckAction.LaunchIdCheckSdk>(
@@ -481,7 +428,8 @@ class SyncIdCheckViewModelTest {
 
                     viewModel.onScreenStart(documentVariety = documentVariety)
 
-                    ensureAllEventsConsumed() // No more launch actions or state updates
+                    ensureAllEventsConsumed() // No more launch actions
+                    verify(launcherDataReader, times(1)).read(any())
                 }
         }
 
