@@ -57,7 +57,7 @@ class SyncIdCheckViewModel(
 
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
-    var sdkHasDisplayed: Boolean = savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
+    private var sdkHasDisplayed: Boolean = savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
     val journeyType: JourneyType = savedStateHandle[SDK_JOURNEY_TYPE] ?: initialJourneyType()
 
     companion object {

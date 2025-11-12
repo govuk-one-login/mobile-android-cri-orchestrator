@@ -3,15 +3,14 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertInstanceOf
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
@@ -442,24 +441,18 @@ class SyncIdCheckViewModelTest {
     @Test
     fun `test that launcher is not triggered twice`() =
         runTest {
-            val actions = mutableListOf<SyncIdCheckAction>()
-            val job =
-                launch {
-                    viewModel.actions.toList(actions)
-                }
+            viewModel.actions.test {
+                viewModel.onIdCheckSdkLaunchRequest(launcherData)
 
-            viewModel.onIdCheckSdkLaunchRequest(launcherData)
-            advanceUntilIdle()
-            assertEquals(true, viewModel.sdkHasDisplayed)
+                assertEquals(
+                    SyncIdCheckAction.LaunchIdCheckSdk(launcherData, logger),
+                    awaitItem(),
+                )
 
-            viewModel.onIdCheckSdkLaunchRequest(launcherData)
-            advanceUntilIdle()
+                viewModel.onIdCheckSdkLaunchRequest(launcherData)
 
-            job.cancel()
-
-            val launchActions = actions.filterIsInstance<SyncIdCheckAction.LaunchIdCheckSdk>()
-            assertEquals(1, launchActions.size)
-            assertEquals(launcherData, launchActions.first().launcherData)
+                ensureAllEventsConsumed() // No more launch actions
+            }
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -468,19 +461,28 @@ class SyncIdCheckViewModelTest {
         runTest {
             val configStore = FakeConfigStore()
             val viewModel = viewModel(configStore = configStore)
+            listOf(
+                viewModel.state,
+                viewModel.actions,
+            ).merge()
+                .test {
+                    skipItems(1) // Loading
 
-            viewModel.onScreenStart(documentVariety = documentVariety)
-            advanceUntilIdle()
+                    viewModel.onScreenStart(documentVariety = documentVariety)
+                    assertEquals(
+                        automaticLauncherState(),
+                        awaitItem(),
+                    )
 
-            viewModel.onIdCheckSdkLaunchRequest(launcherData)
-            advanceUntilIdle()
+                    viewModel.onIdCheckSdkLaunchRequest(launcherData)
+                    assertInstanceOf<SyncIdCheckAction.LaunchIdCheckSdk>(
+                        awaitItem(),
+                    )
 
-            assertEquals(true, viewModel.sdkHasDisplayed)
+                    viewModel.onScreenStart(documentVariety = documentVariety)
 
-            viewModel.onScreenStart(documentVariety = documentVariety)
-            advanceUntilIdle()
-
-            assertEquals(1, configStore.getReadSingleCount())
+                    ensureAllEventsConsumed() // No more launch actions or state updates
+                }
         }
 
     @Test
