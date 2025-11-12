@@ -42,7 +42,7 @@ jobs:
           IS_AUTOMATIC_RELEASE: ${{ github.event_name != 'workflow_dispatch' }}
 
       - name: Ensure stable release is created from an existing pre-release
-        if: !{{ steps.pre-release.outputs.enabled == 'false' }}
+        if: ${{ steps.pre-release.outputs.enabled == 'false' }}
         run: ./actions/ensure-pre-release-tag
 
       - name: Increment the release version using Conventional Commits
