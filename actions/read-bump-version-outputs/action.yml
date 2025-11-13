@@ -1,0 +1,51 @@
+name: Read bump-version outputs
+description: Reads the outputs of the bump-version.yml workflow
+
+inputs:
+  workflow-run-id:
+    description: The Github workflow run ID of the bump-version workflow
+    required: true
+  workflow-out-dir:
+    description: The output directory for Github actions
+    required: true
+  github-token: 
+    description: Github token for downloading artifacts
+    required: true
+    
+outputs:
+  version-bumped:
+    description: "Whether the version was bumped"
+    value: ${{ steps.read-outputs.outputs.version-bumped }}
+  current-version:
+    description: "Version prior to any version bump"
+    value: ${{ steps.read-outputs.outputs.current-version }}
+  new-version:
+    description: "Version after any version bump"
+    value: ${{ steps.read-outputs.outputs.new-version }}
+
+runs:
+  using: "composite"
+  steps:
+
+      - name: Download bump-version outputs
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 #v6.0.0
+        with:
+          name: bump-version-outputs
+          path: ${{ inputs.workflow-out-dir }}
+          run-id: ${{ inputs.workflow-run-id }}
+          github-token: ${{ inputs.github-token }}
+
+      - name: Read bump-version outputs
+        id: read-outputs
+        run: |
+          bump_version_outputs="$WORKFLOW_OUT_DIR/bump-version.yml"
+          cat "$bump_version_outputs" >&2 # Log the outputs for debugging
+
+          version_bumped=$(yq ".version-bumped" "$bump_version_outputs")
+          current_version=$(yq ".current-version" "$bump_version_outputs")
+          new_version=$(yq ".new-version" "$bump_version_outputs")
+
+          echo "version-bumped=$version_bumped" >> "$GITHUB_OUTPUTS"
+          echo "current-version=$current_version" >> "$GITHUB_OUTPUTS"
+          echo "new-version=$new_version" >> "$GITHUB_OUTPUTS"
+

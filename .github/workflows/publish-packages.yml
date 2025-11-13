@@ -9,7 +9,6 @@ on:
       - opened
       - reopened
       - synchronize
-  workflow_dispatch:
 
 env:
   WORKFLOW_OUT_DIR: ./workflow-outputs
@@ -33,25 +32,14 @@ jobs:
           submodules: 'true'
           fetch-depth: 0
 
-      - name: Download bump-version outputs
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 #v6.0.0
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      - name: Read bump-version outputs
+        if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+        id: bump-version
+        uses: ./actions/read-bump-version-outputs
         with:
-          name: bump-version-outputs
-          path: ${{ env.WORKFLOW_OUT_DIR }}
-          run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Enable publishing if triggered manually
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "should_publish=true" >> "$GITHUB_ENV"
-
-      - name: Enable publishing if version was bumped
-        run: |
-          if [ -f "$WORKFLOW_OUT_DIR/bump-version.yml" ]; then
-            version_bumped=$(yq ".version-bumped" "$WORKFLOW_OUT_DIR/bump-version.yml")
-            echo "should_publish=$version_bumped" >> "$GITHUB_ENV"
-          fi
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_DIR }}
+          workflow-run-id: ${{ github.event.workflow_run.id }}
 
       - name: Setup GitHub Runner workflow
         uses: ./mobile-android-pipelines/actions/setup-runner
@@ -62,11 +50,12 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Publish to Github Packages
-        if: ${{ github.event_name != 'pull_request' && env.should_publish == 'true' }}
+        if: ${{ github.event_name == 'workflow_run' && steps.bump-version.outputs.version-bumped == 'true' }}
         uses: ./mobile-android-pipelines/actions/maven-publish
         with:
           GITHUB_ACTOR: ${{ secrets.MODULE_PUSH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_PUSH_TOKEN }}
+          VERSION_NAME: ${{ steps.bump-version.outputs.new-version }}
 
       - name: Test publishing to Maven local
         if: ${{ github.event_name == 'pull_request' }}

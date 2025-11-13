@@ -65,9 +65,14 @@ jobs:
       - name: Create workflow outputs
         env:
           VERSION_BUMPED: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
+          CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
+          NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
         run: |
-          mkdir "$WORKFLOW_OUT_DIR" && touch "$WORKFLOW_OUT_DIR/bump-version.yml"
-          yq -i ".version-bumped = $VERSION_BUMPED" "$WORKFLOW_OUT_DIR/bump-version.yml"
+          output_file="$WORKFLOW_OUT_DIR/bump-version.yml"
+          mkdir "$WORKFLOW_OUT_DIR" && touch "$output_file"
+          yq -i ".version-bumped = $VERSION_BUMPED" "$output_file"
+          yq -i ".current-version = \"$CURRENT_VERSION\"" "$output_file"
+          yq -i ".new-version = \"$NEW_VERSION\"" "$output_file"
         shell: bash
 
       - name: Create GitHub release
