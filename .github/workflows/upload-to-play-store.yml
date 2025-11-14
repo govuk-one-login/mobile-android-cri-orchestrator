@@ -4,7 +4,9 @@ on:
   workflow_run:
     workflows: [Bump version]
     types: [completed]
-  workflow_dispatch:
+
+env:
+  WORKFLOW_OUT_DIR: ./workflow-outputs
 
 jobs:
   upload-to-play-store:
@@ -24,6 +26,14 @@ jobs:
           lfs: 'true'
           submodules: 'true'
           fetch-depth: 0
+
+      - name: Read bump-version outputs
+        id: bump-version
+        uses: ./actions/read-bump-version-outputs
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_DIR }}
+          workflow-run-id: ${{ github.event.workflow_run.id }}
 
       - name: Setup GitHub Runner workflow
         uses: ./mobile-android-pipelines/actions/setup-runner
@@ -57,6 +67,7 @@ jobs:
           modules: 'test-wrapper'
           flavors: 'staging,build'
           version-code: ${{ steps.generate-version-code.outputs.version-code }}
+          version-name: ${{ steps.bump-version.outputs.new-version }}
 
       - name: Upload to Play Store
         uses: ./mobile-android-pipelines/actions/publish-to-play-store
