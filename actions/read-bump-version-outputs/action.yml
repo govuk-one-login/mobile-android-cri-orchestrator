@@ -45,9 +45,9 @@ runs:
           current_version=$(yq ".current-version" "$bump_version_outputs")
           new_version=$(yq ".new-version" "$bump_version_outputs")
 
-          echo "version-bumped=$version_bumped" >> "$GITHUB_OUTPUTS"
-          echo "current-version=$current_version" >> "$GITHUB_OUTPUTS"
-          echo "new-version=$new_version" >> "$GITHUB_OUTPUTS"
+          echo "version-bumped=$version_bumped" >> "$GITHUB_OUTPUT"
+          echo "current-version=$current_version" >> "$GITHUB_OUTPUT"
+          echo "new-version=$new_version" >> "$GITHUB_OUTPUT"
         shell: bash
         env:
           WORKFLOW_OUT_DIR: ${{ inputs.workflow-out-dir }}
