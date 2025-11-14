@@ -48,4 +48,7 @@ runs:
           echo "version-bumped=$version_bumped" >> "$GITHUB_OUTPUTS"
           echo "current-version=$current_version" >> "$GITHUB_OUTPUTS"
           echo "new-version=$new_version" >> "$GITHUB_OUTPUTS"
+        shell: bash
+        env:
+          WORKFLOW_OUT_DIR: ${{ inputs.workflow-out-dir }}
 
