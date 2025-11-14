@@ -5,6 +5,9 @@ on:
     workflows: [Bump version]
     types: [completed]
 
+env:
+  WORKFLOW_OUT_DIR: ./workflow-outputs
+
 jobs:
   upload-to-play-store:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
