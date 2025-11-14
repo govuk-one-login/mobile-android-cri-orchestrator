@@ -63,17 +63,11 @@ jobs:
           version-prefix: ''
 
       - name: Create workflow outputs
-        env:
-          VERSION_BUMPED: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
-          CURRENT_VERSION: ${{ steps.versioning.outputs.current_version }}
-          NEW_VERSION: ${{ steps.versioning.outputs.new_version }}
-        run: |
-          output_file="$WORKFLOW_OUT_DIR/bump-version.yml"
-          mkdir -p "$WORKFLOW_OUT_DIR" && touch "$output_file"
-          yq -i ".version-bumped = $VERSION_BUMPED" "$output_file"
-          yq -i ".current-version = \"$CURRENT_VERSION\"" "$output_file"
-          yq -i ".new-version = \"$NEW_VERSION\"" "$output_file"
-        shell: bash
+        uses: ./actions/write-bump-version-outputs
+        with:
+          current-version: ${{ steps.versioning.outputs.current_version }}
+          new-version: ${{ steps.versioning.outputs.new_version }}
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_DIR }}
 
       - name: Create GitHub release
         if: steps.versioning.outputs.current_version != steps.versioning.outputs.new_version
@@ -83,11 +77,6 @@ jobs:
           draft: false
           prerelease: ${{ steps.pre-release.outputs.enabled }}
           generate_release_notes: true
-
-      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: bump-version-outputs
-          path: ${{env.WORKFLOW_OUT_DIR}}/**
 
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace

@@ -1,0 +1,33 @@
+name: Write bump-version outputs
+description: Writes the outputs of the bump-version.yml workflow
+
+inputs:
+  current-version:
+    description: The version prior to any version bump
+  new-version:
+    description: The version after any version bump
+  workflow-out-dir:
+    description: The output directory for Github actions
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create workflow outputs
+      env:
+        VERSION_BUMPED: ${{ inputs.current-version != inputs.new-version }}
+        CURRENT_VERSION: ${{ inputs.current-version }}
+        NEW_VERSION: ${{ inputs.new-version }}
+        WORKFLOW_OUT_DIR: ${{ inputs.workflow-out-dir }}
+      run: |
+        output_file="$WORKFLOW_OUT_DIR/bump-version.yml"
+        mkdir -p "$WORKFLOW_OUT_DIR" && touch "$output_file"
+        yq -i ".version-bumped = $VERSION_BUMPED" "$output_file"
+        yq -i ".current-version = \"$CURRENT_VERSION\"" "$output_file"
+        yq -i ".new-version = \"$NEW_VERSION\"" "$output_file"
+      shell: bash
+
+    - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4  # v5.0.0
+      with:
+        name: bump-version-outputs
+        path: ${{ inputs.workflow-out-dir }}/**
