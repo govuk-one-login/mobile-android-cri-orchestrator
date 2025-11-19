@@ -138,6 +138,9 @@ jobs:
           submodules: 'true'
           fetch-depth: 0
 
+      - name: Free storage 
+        uses: ./actions/free-storage
+
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
 

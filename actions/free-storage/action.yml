@@ -1,0 +1,16 @@
+name: 'Free storage'
+description: |
+  Free storage space on the GitHub Actions runner by removing unused
+  dependencies.
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Free storage
+      run: |
+        # https://github.com/actions/runner-images/issues/2840#issuecomment-790492173
+        sudo rm -rf /usr/share/dotnet         # .NET
+        sudo rm -rf /opt/ghc                  # Haskell
+        sudo rm -rf "/usr/local/share/boost"  # Boost C++
+      shell: bash
