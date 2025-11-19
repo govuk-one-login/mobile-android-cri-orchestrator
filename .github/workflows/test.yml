@@ -94,7 +94,7 @@ jobs:
   # Not all the projects are running instrumentation tests. This job is here to check they still compile.
   assemble-instrumentation-tests:
     name: Assemble instrumentation tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-8core-x64
     permissions:
       # Set permissions for ${{ secrets.GITHUB_TOKEN }}
       # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
@@ -125,7 +125,7 @@ jobs:
 
   test-wrapper-instrumentation-test:
     name: Run test wrapper instrumentation tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-8core-x64
     permissions:
       # Set permissions for ${{ secrets.GITHUB_TOKEN }}
       # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
