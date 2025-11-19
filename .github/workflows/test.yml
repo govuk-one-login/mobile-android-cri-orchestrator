@@ -136,7 +136,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
           sudo rm -rf "/usr/local/share/boost"
-        continue-on-error: true
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         shell: bash
 
       - name: Run checkout github action
@@ -152,11 +152,6 @@ jobs:
       - name: Cache mobile-android-pipelines build
         uses: ./actions/cache-pipelines-build
 
-      - name: Show runner storage usage
-        run: du -sh /* 2>/dev/null | sort -hr | head -n 20
-        continue-on-error: true
-        shell: bash
-
       - name: Run test wrapper instrumentation tests
         # If you need to run tests from different sub-projects, run these in
         # parallel, in separate jobs.
@@ -164,12 +159,6 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
-
-      - name: Show runner storage usage
-        if: ${{ always() }}
-        run: du -sh /* 2>/dev/null | sort -hr | head -n 20
-        continue-on-error: true
-        shell: bash
 
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
