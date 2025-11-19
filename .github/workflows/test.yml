@@ -132,7 +132,9 @@ jobs:
       packages: read
     steps:
       - name: Show runner storage usage
-        run: du -sh /* 2>/dev/null | sort -hr | head -n 20
+        run: |
+          du -sh /home/* 2>/dev/null | sort -hr | head -n 20
+          du -sh /usr/* 2>/dev/null | sort -hr | head -n 20
         continue-on-error: true
         shell: bash
 
@@ -150,7 +152,9 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Show runner storage usage
-        run: du -sh /* 2>/dev/null | sort -hr | head -n 20
+        run: |
+          du -sh /home/* 2>/dev/null | sort -hr | head -n 20
+          du -sh /usr/* 2>/dev/null | sort -hr | head -n 20
         continue-on-error: true
         shell: bash
 
@@ -163,8 +167,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Show runner storage usage
-        run: du -sh /* 2>/dev/null | sort -hr | head -n 20
-        if: ${{ always() }}
+        run: |
+          du -sh /home/* 2>/dev/null | sort -hr | head -n 20
+          du -sh /usr/* 2>/dev/null | sort -hr | head -n 20
         continue-on-error: true
         shell: bash
 
