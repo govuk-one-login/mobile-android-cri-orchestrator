@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -34,7 +34,7 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Lint
-        uses: govuk-one-login/mobile-android-pipelines/actions/lint@9edac63a75c29f848d8c7a7e8bdb02077e348d77
+        uses: ./mobile-android-pipelines/actions/lint
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -76,7 +76,7 @@ jobs:
 
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
 
       - name: Lint Github Actions
         uses: alphagov/govuk-infrastructure/.github/actions/actionlint@7a6653567f4d69d70d95d7dbf3d4470b6c2db63a # main
