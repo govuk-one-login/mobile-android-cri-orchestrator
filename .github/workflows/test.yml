@@ -139,7 +139,7 @@ jobs:
           fetch-depth: 0
 
       - name: Free storage 
-        uses: ./actions/free-storage
+        uses: ./mobile-android-pipelines/actions/clean-runner-fast
 
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
