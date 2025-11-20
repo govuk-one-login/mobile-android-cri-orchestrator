@@ -1,0 +1,50 @@
+name: Test CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  WORKFLOW_OUT_TEST_DIR: ./workflow-out-test-dir
+
+jobs:
+  test-bump-version-outputs:
+    name: Test bump-version outputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Write bump-version outputs
+        id: write
+        uses: ./actions/write-bump-version-outputs
+        with:
+          current-version: 1.2.3
+          new-version: 2.0.0
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_TEST_DIR }}
+
+      - name: Read bump-version outputs
+        id: read
+        uses: ./actions/read-bump-version-outputs
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_TEST_DIR }}
+          workflow-run-id: ${{ github.run_id }}
+
+      - name: Check bump-version outputs
+        env:
+          CURRENT_VERSION: ${{ steps.read.outputs.current-version }}
+          NEW_VERSION: ${{ steps.read.outputs.new-version }}
+          VERSION_BUMPED: ${{ steps.read.outputs.version-bumped }}
+        run: |
+          [[ $CURRENT_VERSION == "1.2.3" ]] || exit 1
+          [[ $NEW_VERSION == "2.0.0" ]] || exit 1
+          [[ $VERSION_BUMPED == "true" ]] || exit 1
+        shell: bash
