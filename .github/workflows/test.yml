@@ -138,6 +138,9 @@ jobs:
           submodules: 'true'
           fetch-depth: 0
 
+      - name: Free storage 
+        uses: ./mobile-android-pipelines/actions/clean-runner-fast
+
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
 
