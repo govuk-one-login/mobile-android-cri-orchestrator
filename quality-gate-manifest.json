@@ -1,0 +1,124 @@
+{
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.1.0/schemas/schema.json",
+  "services": [
+    {
+      "service-tag": "id-check",
+      "quality-gates": [
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/lint.yml",
+            "name": "Lint",
+            "path": "jobs.lint"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/lint.yml",
+            "name": "Lint Kotlin structure",
+            "path": "jobs.lint-structure"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/lint.yml",
+            "name": "Lint Github Actions",
+            "path": "jobs.lint-github-actions"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "unit",
+            "integration",
+            "regression"
+          ],
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "name": "Unit test",
+            "path": "jobs.unit-test"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "name": "Assemble instrumentation tests",
+            "path": "jobs.assemble-instrumentation-tests"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "integration",
+            "regression"
+          ],
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "name": "Run test wrapper instrumentation tests",
+            "path": "jobs.test-wrapper-instrumentation-test"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting",
+            "secret scanning",
+            "unit test coverage",
+            "vulnerability detection"
+          ],
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "name": "Scan with Sonar",
+            "path": "jobs.sonar-scan"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/check-pr-metadata.yml",
+            "name": "Check PR title",
+            "path": "jobs.check-pr-title"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": [
+            "code style and linting"
+          ],
+          "config": {
+            "file": ".github/workflows/check-pr-metadata.yml",
+            "name": "Check commit messages",
+            "path": "jobs.check-commit-messages"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        }
+      ]
+    }
+  ]
+}
