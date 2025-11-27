@@ -199,10 +199,17 @@ jobs:
         with:
           name: test-wrapper-instrumentation-test-coverage
 
+      - name: Get version
+        id: versioning
+        uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          dry-run: true
+
       - name: Scan with Sonar
         uses: ./mobile-android-pipelines/actions/sonar-scan
         with:
           sonar-token: ${{ secrets.SONAR_TOKEN }}
+          version-name: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version }}
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
