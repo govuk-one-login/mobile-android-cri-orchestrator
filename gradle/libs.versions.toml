@@ -1,5 +1,5 @@
 [versions]
-activityCompose = "1.11.0"
+activityCompose = "1.12.0"
 agp = "8.13.0"
 androidXCoreKtx = "1.17.0"
 androidXTest = "1.6.0"
