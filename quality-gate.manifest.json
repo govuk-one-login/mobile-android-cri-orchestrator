@@ -99,7 +99,7 @@
             "code style and linting"
           ],
           "config": {
-            "file": ".github/workflows/check-pr-metadata.yml",
+            "file": ".github/workflows/pr_metadata.yml",
             "name": "Check PR title",
             "path": "jobs.check-pr-title"
           },
@@ -111,7 +111,7 @@
             "code style and linting"
           ],
           "config": {
-            "file": ".github/workflows/check-pr-metadata.yml",
+            "file": ".github/workflows/pr_metadata.yml",
             "name": "Check commit messages",
             "path": "jobs.check-commit-messages"
           },
