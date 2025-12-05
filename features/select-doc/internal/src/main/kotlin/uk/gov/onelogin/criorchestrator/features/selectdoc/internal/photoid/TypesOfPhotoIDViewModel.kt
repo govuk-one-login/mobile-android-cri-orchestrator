@@ -2,13 +2,12 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import androidx.lifecycle.ViewModel
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(TypesOfPhotoIDViewModel::class)
 class TypesOfPhotoIDViewModel(
     private val analytics: SelectDocAnalytics,

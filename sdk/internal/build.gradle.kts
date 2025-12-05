@@ -44,6 +44,7 @@ dependencies {
     implementation(projects.libraries.architecture)
     implementation(projects.libraries.androidUtils)
     implementation(projects.libraries.composeUtils)
+    implementation(projects.libraries.di)
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.navigation)
     implementation(projects.sdk.sharedApi)

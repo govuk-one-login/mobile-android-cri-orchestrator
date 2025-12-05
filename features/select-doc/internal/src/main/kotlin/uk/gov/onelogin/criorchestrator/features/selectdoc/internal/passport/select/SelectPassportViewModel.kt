@@ -3,16 +3,15 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.sel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(SelectPassportViewModel::class)
 class SelectPassportViewModel(
     private val analytics: SelectDocAnalytics,

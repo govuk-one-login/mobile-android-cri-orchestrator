@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,10 +14,9 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmAbortDesktopViewModel::class)
 class ConfirmAbortDesktopViewModel(
     private val analytics: HandbackAnalytics,

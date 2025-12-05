@@ -4,9 +4,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.ViewModel
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.zacsweers.metro.Provider
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
 import org.junit.Test
@@ -18,8 +19,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourId
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
+import kotlin.reflect.KClass
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {
@@ -29,29 +29,30 @@ class ProveYourIdentityEntryPointsImplTest {
     private val fakeProveYourIdentityViewModel =
         ProveYourIdentityViewModel.createTestInstance()
 
-    private val fakeViewModelProviderFactory =
-        viewModelFactory {
-            initializer {
-                fakeProveYourIdentityViewModel
-            }
+    private val fakeViewModelFactoryProvider =
+        Provider<ViewModel> {
+            fakeProveYourIdentityViewModel
         }
 
     private val entryPoints =
         ProveYourIdentityEntryPointsImpl(
-            viewModelProviderFactory = fakeViewModelProviderFactory,
-            navGraphProviders =
-                persistentSetOf(
-                    ContinueToProveYourIdentityNavGraphProvider(
-                        viewModelProviderFactory =
-                            TestViewModelProviderFactory(
-                                testViewModelProvider {
+            metroVmf =
+                object : MetroViewModelFactory() {
+                    override val viewModelProviders: Map<KClass<out ViewModel>, Provider<ViewModel>> =
+                        mapOf(
+                            ProveYourIdentityViewModel::class to fakeViewModelFactoryProvider,
+                            ContinueToProveYourIdentityViewModel::class to
+                                Provider {
                                     ContinueToProveYourIdentityViewModel(
                                         analytics = mock(),
                                         nfcChecker = mock(),
                                     )
                                 },
-                            ),
-                    ),
+                        )
+                },
+            navGraphProviders =
+                persistentSetOf(
+                    ContinueToProveYourIdentityNavGraphProvider(),
                 ),
         )
 

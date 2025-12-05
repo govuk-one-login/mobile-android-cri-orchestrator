@@ -11,8 +11,12 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
+import androidx.lifecycle.ViewModel
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.zacsweers.metro.Provider
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -25,8 +29,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.TestViewModelProviderFactory
-import uk.gov.onelogin.criorchestrator.libraries.testing.viewmodel.testViewModelProvider
+import kotlin.reflect.KClass
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -100,23 +103,29 @@ class ProveYourIdentityRootTest {
     private fun ComposeContentTestRule.displayProveYourIdentityRoot() {
         val navGraphProviders =
             persistentSetOf(
-                ContinueToProveYourIdentityNavGraphProvider(
-                    TestViewModelProviderFactory(
-                        testViewModelProvider {
-                            ContinueToProveYourIdentityViewModel(
-                                analytics = mock(),
-                                nfcChecker = mock(),
-                            )
-                        },
-                    ),
-                ),
+                ContinueToProveYourIdentityNavGraphProvider(),
             )
+        val metroVmf =
+            object : MetroViewModelFactory() {
+                override val viewModelProviders: Map<KClass<out ViewModel>, Provider<ViewModel>> =
+                    mapOf(
+                        ContinueToProveYourIdentityViewModel::class to
+                            Provider {
+                                ContinueToProveYourIdentityViewModel(
+                                    analytics = mock(),
+                                    nfcChecker = mock(),
+                                )
+                            },
+                    )
+            }
         setContent {
-            CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
-                ProveYourIdentityRoot(
-                    viewModel = viewModel,
-                    navGraphProviders = navGraphProviders,
-                )
+            CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
+                CompositionLocalProvider(LocalDropUnlessResumedDisabled provides true) {
+                    ProveYourIdentityRoot(
+                        viewModel = viewModel,
+                        navGraphProviders = navGraphProviders,
+                    )
+                }
             }
         }
     }

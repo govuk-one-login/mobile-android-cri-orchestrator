@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    api(libs.metro.viewmodel.compose)
+
     implementation(libs.metro.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)

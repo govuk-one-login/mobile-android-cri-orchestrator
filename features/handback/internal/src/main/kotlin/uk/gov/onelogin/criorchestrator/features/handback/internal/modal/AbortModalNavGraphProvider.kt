@@ -1,12 +1,11 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.modal
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.desktop.ConfirmAbortDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.mobile.AbortedRedirectToMobileWebHolderScreen
@@ -20,7 +19,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
 class AbortModalNavGraphProvider(
-    private val viewModelProviderFactory: ViewModelProvider.Factory,
     private val webNavigator: WebNavigator,
 ) : AbortNavGraphProvider {
     override fun NavGraphBuilder.contributeToGraph(
@@ -29,21 +27,21 @@ class AbortModalNavGraphProvider(
     ) {
         composable<AbortDestinations.ConfirmAbortMobile> {
             ConfirmAbortMobileScreen(
-                viewModel = viewModel(factory = viewModelProviderFactory),
+                viewModel = metroViewModel(),
                 navController = navController,
             )
         }
 
         composable<AbortDestinations.ConfirmAbortDesktop> {
             ConfirmAbortDesktopWebScreen(
-                viewModel = viewModel(factory = viewModelProviderFactory),
+                viewModel = metroViewModel(),
                 navController = navController,
             )
         }
 
         composable<AbortDestinations.AbortedReturnToDesktopWeb> {
             AbortedReturnToDesktopWebScreen(
-                viewModel = viewModel(factory = viewModelProviderFactory),
+                viewModel = metroViewModel(),
             )
         }
 
@@ -62,7 +60,7 @@ class AbortModalNavGraphProvider(
         composable<HandbackDestinations.UnrecoverableError> {
             UnrecoverableErrorScreen(
                 navController = navController,
-                viewModel = viewModel(factory = viewModelProviderFactory),
+                viewModel = metroViewModel(),
             )
         }
     }
