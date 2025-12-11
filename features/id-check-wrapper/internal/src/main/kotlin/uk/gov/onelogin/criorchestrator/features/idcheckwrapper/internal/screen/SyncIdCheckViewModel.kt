@@ -2,9 +2,15 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,17 +39,15 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheck
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journeyType
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 
 private const val STUB_BIOMETRIC_TOKEN_DELAY_MS = 2000L
 
 @Suppress("LongParameterList", "TooGenericExceptionCaught", "TooManyFunctions")
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
-@ViewModelKey(SyncIdCheckViewModel::class)
+@AssistedInject
 class SyncIdCheckViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val configStore: ConfigStore,
     private val sessionStore: SessionStore,
     private val idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore,
@@ -253,5 +257,16 @@ class SyncIdCheckViewModel(
             }
         savedStateHandle[SDK_JOURNEY_TYPE] = sessionStoreJourneyType
         return sessionStoreJourneyType
+    }
+
+    @AssistedFactory
+    @ViewModelAssistedFactoryKey(SyncIdCheckViewModel::class)
+    @ContributesIntoMap(CriOrchestratorScope::class)
+    fun interface Factory : ViewModelAssistedFactory {
+        override fun create(extras: CreationExtras): SyncIdCheckViewModel = create(extras.createSavedStateHandle())
+
+        fun create(
+            @Assisted savedStateHandle: SavedStateHandle,
+        ): SyncIdCheckViewModel
     }
 }

@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,10 +12,9 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
+@ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmNoChippedIDViewModel::class)
 class ConfirmNoChippedIDViewModel(
     private val analytics: SelectDocAnalytics,

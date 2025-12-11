@@ -2,9 +2,15 @@ package uk.gov.onelogin.criorchestrator.features.resume.internal.root
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,16 +24,14 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.features.resume.internal.analytics.ResumeAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionResumable
 import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveSession
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.CriOrchestratorViewModelScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelKey
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
-@ContributesIntoMap(CriOrchestratorViewModelScope::class, binding = binding<ViewModel>())
-@ViewModelKey(ProveYourIdentityViewModel::class)
+@AssistedInject
 class ProveYourIdentityViewModel(
     private val isSessionResumable: IsSessionResumable,
     private val refreshActiveSession: RefreshActiveSession,
     private val analytics: ResumeAnalytics,
-    private val savedStateHandle: SavedStateHandle,
+    @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(),
     LogTagProvider {
     companion object {
@@ -88,5 +92,17 @@ class ProveYourIdentityViewModel(
         analytics.trackButtonEvent(
             buttonText = R.string.cancel_button_analytics_text,
         )
+    }
+
+    @AssistedFactory
+    @ViewModelAssistedFactoryKey(ProveYourIdentityViewModel::class)
+    @ContributesIntoMap(CriOrchestratorScope::class)
+    fun interface Factory : ViewModelAssistedFactory {
+        override fun create(extras: CreationExtras): ProveYourIdentityViewModel =
+            create(extras.createSavedStateHandle())
+
+        fun create(
+            @Assisted savedStateHandle: SavedStateHandle,
+        ): ProveYourIdentityViewModel
     }
 }

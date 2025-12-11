@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.navigation
 import android.content.Context
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -20,6 +21,9 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.createGraphFactory
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.Serializable
 import org.junit.After
@@ -41,8 +45,7 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourc
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.goBack
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelGraph
-import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelProviderFactoryBindings
+import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelFactoryBindings
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
 
@@ -56,6 +59,9 @@ class SelectDocNavigationTest {
 
     @Inject
     lateinit var navGraphProvider: SelectDocNavGraphProvider
+
+    @Inject
+    lateinit var metroVmf: MetroViewModelFactory
 
     @Before
     fun setUp() {
@@ -240,15 +246,17 @@ class SelectDocNavigationTest {
 
     private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) =
         setContent {
-            CompositeNavHost(
-                navGraphProviders =
-                    persistentSetOf(
-                        InitialNavGraphProvider(navigatesTo = startNavigatesTo),
-                        navGraphProvider,
-                    ),
-                startDestination = InitialNavGraphStart,
-                onFinish = onFinish,
-            )
+            CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
+                CompositeNavHost(
+                    navGraphProviders =
+                        persistentSetOf(
+                            InitialNavGraphProvider(navigatesTo = startNavigatesTo),
+                            navGraphProvider,
+                        ),
+                    startDestination = InitialNavGraphStart,
+                    onFinish = onFinish,
+                )
+            }
         }
 }
 
@@ -276,9 +284,9 @@ private class InitialNavGraphProvider(
 
 @DependencyGraph(
     scope = CriOrchestratorScope::class,
-    bindingContainers = [ViewModelProviderFactoryBindings::class],
+    bindingContainers = [ViewModelFactoryBindings::class],
 )
-interface TestGraph : ViewModelGraph.Factory {
+interface TestGraph : ViewModelGraph {
     fun inject(test: SelectDocNavigationTest)
 
     @DependencyGraph.Factory
