@@ -38,7 +38,7 @@ jobs:
       - name: Setup GitHub Runner workflow
         uses: ./mobile-android-pipelines/actions/setup-runner
         with:
-          gradle-cache-disabled: ${{ inputs.GRADLE_CACHE_DISABLED }}
+          jdk-version: 21
 
       - name: Verify Conventional commit standards against latest hotfix git tag
         id: verify-version
@@ -50,15 +50,6 @@ jobs:
         with:
           version-name: ${{ steps.verify-version.outputs.next-version }}
 
-  publish:
-    env:
-      JDK_VERSION: 21
-    permissions:
-      id-token: write
-      contents: write
-      packages: write
-    runs-on: ubuntu-latest
-    steps:
       - name: Bundle reports folder
         uses: ./mobile-android-pipelines/actions/bundle-reports
 
@@ -88,15 +79,6 @@ jobs:
             uk.gov.onelogin.criorchestrator.sdk:sdk-shared-api'
           version-name: ${{ steps.verify-version.outputs.next-version }}
 
-  upload-to-play-store:
-    env:
-      JDK_VERSION: 21
-    permissions:
-      id-token: write
-      contents: write
-      packages: write
-    runs-on: ubuntu-latest
-    steps:
       - name: Retrieve GitHub secrets
         id: retrieve-secrets
         uses: ./mobile-android-pipelines/actions/retrieve-secrets
