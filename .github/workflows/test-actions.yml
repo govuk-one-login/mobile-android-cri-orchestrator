@@ -16,6 +16,7 @@ env:
 
 jobs:
   test-bump-version-outputs:
+    if: !startsWith(github.head_ref, 'hotfix/') && !startsWith(github.head_ref, 'temp/hotfix')
     name: Test bump-version outputs
     runs-on: ubuntu-latest
     steps:

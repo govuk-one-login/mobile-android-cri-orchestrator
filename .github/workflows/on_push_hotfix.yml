@@ -1,9 +1,11 @@
 name: On Push Hotfix
 
 on:
-  push:
-    branches:
-      - temp/hotfix
+  workflow_run:
+    workflows: [Test]
+    branches: [temp/hotfix]
+    types: [completed]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -11,25 +13,125 @@ concurrency:
 
 jobs:
   push_hotfix:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     env:
-      JDK_VERSION: 17
+      JDK_VERSION: 21
     permissions:
       id-token: write
       contents: write
       packages: write
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout codebase'
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Checkout codebase
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           lfs: 'true'
           submodules: 'true'
           fetch-depth: 0
 
-      - name: Run hotfix merge checks
-        uses: ./mobile-android-pipelines/actions/hotfix-merge
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+      - name: Setup GitHub Runner workflow
+        uses: ./mobile-android-pipelines/actions/setup-runner
         with:
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          gradle-cache-disabled: ${{ inputs.GRADLE_CACHE_DISABLED }}
+
+      - name: Verify Conventional commit standards against latest hotfix git tag
+        id: verify-version
+        uses: ./mobile-android-pipelines/actions/get-next-version-from-commit-message
+
+      - name: Increment and push hotfix git tag
+        id: increment-version
+        uses: ./mobile-android-pipelines/actions/increment-hotfix-tag
+        with:
+          version-name: ${{ steps.verify-version.outputs.next-version }}
+
+  publish:
+    env:
+      JDK_VERSION: 21
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bundle reports folder
+        uses: ./mobile-android-pipelines/actions/bundle-reports
+
+      - name: Publish to Github Packages
+        if: ${{ github.event_name == 'workflow_run' }}
+        uses: ./mobile-android-pipelines/actions/maven-publish
+        with:
+          GITHUB_ACTOR: ${{ secrets.MODULE_PUSH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_PUSH_TOKEN }}
+          VERSION_NAME: ${{ steps.increment-version.outputs.incremented-version }}
+
+      - name: Test publishing to Maven local
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: ./mobile-android-pipelines/actions/maven-publish-local
+        with:
+          expected-packages: '
+            uk.gov.onelogin.criorchestrator.features:resume-internal,
+            uk.gov.onelogin.criorchestrator.features:resume-internal-api,
+            uk.gov.onelogin.criorchestrator.features:resume-public-api,
+            uk.gov.onelogin.criorchestrator.features:select-doc-internal,
+            uk.gov.onelogin.criorchestrator.features:select-doc-internal-api,
+            uk.gov.onelogin.criorchestrator.libraries:analytics,
+            uk.gov.onelogin.criorchestrator.libraries:di,
+            uk.gov.onelogin.criorchestrator.libraries:screenshot-testing,
+            uk.gov.onelogin.criorchestrator.sdk:sdk,
+            uk.gov.onelogin.criorchestrator.sdk:sdk-internal,
+            uk.gov.onelogin.criorchestrator.sdk:sdk-shared-api'
+          version-name: ${{ steps.verify-version.outputs.next-version }}
+
+  upload-to-play-store:
+    env:
+      JDK_VERSION: 21
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve GitHub secrets
+        id: retrieve-secrets
+        uses: ./mobile-android-pipelines/actions/retrieve-secrets
+        with:
+          keystore-base64: ${{ secrets.KEYSTORE_BASE64 }}
+          google-service-account-json-base64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON_BASE64 }}
+
+      - name: Generate version code
+        id: generate-version-code
+        uses: ./mobile-android-pipelines/actions/generate-version-code
+
+      - name: Bundle release app
+        id: bundle-release-app
+        uses: ./mobile-android-pipelines/actions/bundle-release-app
+        with:
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          keystore-file-path: ${{ steps.retrieve-secrets.outputs.keystore-file-path }}
+          keystore-password: ${{ secrets.KEYSTORE_PASSWORD }}
+          keystore-key-alias: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+          keystore-key-password: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          modules: 'test-wrapper'
+          flavors: 'staging,build'
+          version-code: ${{ steps.generate-version-code.outputs.version-code }}
+          version-name: ${{ steps.increment-version.outputs.incremented-version }}
+
+      - name: Upload to Play Store
+        uses: ./mobile-android-pipelines/actions/publish-to-play-store
+        with:
+          aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
+          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
+          google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
+
+      - name: Delete hotfix branch
+        uses: ./mobile-android-pipelines/actions/delete-hotfix-branch
+
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
