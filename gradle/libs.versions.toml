@@ -31,10 +31,10 @@ paparazzi = "2.0.0-alpha02"
 robolectric = "4.15.1"
 testparameterinjector = "1.20"
 turbine = "1.2.1"
-uk-gov-logging = "0.38.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
-uk-gov-networking = "0.9.0"
-uk-gov-ui = "11.4.0"
-gov-uk-idcheck = "0.31.4" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+uk-gov-logging = "0.39.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
+uk-gov-networking = "0.10.0"
+uk-gov-ui = "11.8.0"
+gov-uk-idcheck = "0.32.10" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
