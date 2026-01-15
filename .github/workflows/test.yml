@@ -48,7 +48,7 @@ jobs:
         # Build all unit tests so that jars are available for Sonar
         run: |
           ./gradlew assembleDebugUnitTest
-          ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
+          ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest -PexcludeTags="integration"
           ./gradlew testBuildDebugUnitTest
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
@@ -77,6 +77,11 @@ jobs:
           name: jars
           path: "**/build/**/*.jar"
 
+      - name: Rename test coverage report
+        uses: ./actions/rename-coverage-reports
+        with:
+          label: unit
+
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
         with:
@@ -86,6 +91,61 @@ jobs:
         uses: ./actions/publish-analytics-report
         with:
           path: "build/reports/analytics/*.yml"
+
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+  integration-test:
+    name: Integration test
+    runs-on: ubuntu-latest
+    permissions:
+      # Set permissions for ${{ secrets.GITHUB_TOKEN }}
+      # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+      packages: read
+    env:
+      GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME}}
+      GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up GitHub runner
+        uses: ./actions/setup-runner
+
+      - name: Cache mobile-android-pipelines build
+        uses: ./actions/cache-pipelines-build
+
+      - name: Integration test
+        id: integration-tests
+        # Exclude Konsist unit tests which are actually lint checks
+        # Build all unit tests so that jars are available for Sonar
+        run: |
+          ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest -PincludeTags="integration"
+        env:
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+
+      - name: Upload test report
+        if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: integration-test-reports
+          path: "**/build/reports/tests/**/*"
+
+      - name: Rename test coverage report
+        uses: ./actions/rename-coverage-reports
+        with:
+          label: integration
+
+      - name: Upload test coverage report
+        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+        with:
+          artifact-name: integration-test-coverage
 
       - name: Clean workspace
         if: ${{ always() }}
@@ -152,6 +212,11 @@ jobs:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
+      - name: Rename test coverage report
+        uses: ./actions/rename-coverage-reports
+        with:
+          label: test-wrapper-instrumentation
+
       - name: Upload test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
         with:
@@ -166,6 +231,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - unit-test
+      - integration-test
       - test-wrapper-instrumentation-test
     steps:
       - name: Run checkout github action
@@ -190,6 +256,11 @@ jobs:
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 #v6.0.0
         with:
           name: unit-test-coverage
+
+      - name: Download integration test coverage reports
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 #v6.0.0
+        with:
+          name: integration-test-coverage
 
       - name: Download test wrapper instrumentation test coverage reports
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 #v6.0.0

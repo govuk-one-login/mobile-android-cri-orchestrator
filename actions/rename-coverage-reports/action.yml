@@ -1,0 +1,21 @@
+name: 'Rename coverage reports'
+
+inputs:
+  label:
+    description: 'Label to append to the report file name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    # TODO: Remove this? Gradle tasks could output unique reports
+    - name: Rename reports
+      shell: bash
+      run: |
+        echo "Renaming report.xml to report-$LABEL.xml"
+        find . -type f -name "$OLD" -print -execdir mv "$OLD" "$NEW" \;
+        echo "Done renaming"
+        find . -type f -name "$NEW" -print
+      env:
+        OLD: report.xml
+        NEW: report-${{ inputs.artifact-name }}.xml
