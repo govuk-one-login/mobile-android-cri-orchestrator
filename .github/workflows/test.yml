@@ -131,7 +131,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
 
       - name: Upload test report
-        if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
+        if: ${{ failure() && steps.integration-tests.outcome == 'failure' }}
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: integration-test-reports
