@@ -1,0 +1,43 @@
+name: Lint
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  merge_group:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: startsWith(github.head_ref, 'hotfix/')
+    name: Verify version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up git runner
+        uses: ./mobile-android-pipelines/actions/setup-runner
+        with:
+          jdk-version: 21
+
+      - name: Cache mobile-android-pipelines build
+        uses: ./actions/cache-pipelines-build
+
+      - name: Verify Conventional commit standards against latest hotfix git tag
+        uses: ./mobile-android-pipelines/actions/get-next-version-from-pr-branch
+
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
