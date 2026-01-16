@@ -71,4 +71,22 @@ class AbortSessionImpl(
      * This should never be called as the networking library doesn't emit loading results.
      */
     private fun unexpectedLoadingApiResponse(): Nothing = error("Loading state is not possible")
+
+    // Function is called in 'integration test'
+    fun addIntegrationTested(
+        a: Int,
+        b: Int,
+    ): Int {
+        // Add two numbers
+        return a + b
+    }
+
+    // Function is called in 'unit test'
+    fun addUnitTested(
+        a: Int,
+        b: Int,
+    ): Int {
+        // Add two numbers
+        return a + b
+    }
 }
