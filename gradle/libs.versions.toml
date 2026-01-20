@@ -1,5 +1,5 @@
 [versions]
-activityCompose = "1.11.0"
+activityCompose = "1.12.2"
 agp = "8.13.2"
 androidXCoreKtx = "1.17.0"
 androidXTest = "1.6.0"
@@ -8,13 +8,13 @@ androidXTestOrchestrator = "1.6.1"
 androidXTestRunner = "1.7.0"
 androidXTestRules = "1.7.0"
 appcompat = "1.7.1"
-composeBom = "2025.11.00"
-composable-preview-scanner = "0.7.2"
+composeBom = "2026.01.00"
+composable-preview-scanner = "0.8.1"
 compose-lint-checks = "1.4.2"
 espressoCore = "3.7.0"
 google-play-review= "2.0.2"
 imposter = "4.6.2" # https://github.com/imposter-project/imposter-jvm-engine/releases/tag/v4.6.2
-junit = "6.0.1"
+junit = "6.0.2"
 junit4 = "4.13.2"
 konsist = "0.17.3"
 kotlin = "2.2.21"
@@ -23,18 +23,18 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
 ksp = "2.3.3"
 lifecycle = "2.10.0"
-metro = "0.8.2"
-mockito = "6.1.0"
+metro = "0.9.4"
+mockito = "6.2.0"
 molecule = "2.2.0"
 navigation = "2.9.6"
 paparazzi = "2.0.0-alpha02"
 robolectric = "4.15.1"
 testparameterinjector = "1.20"
 turbine = "1.2.1"
-uk-gov-logging = "0.38.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
-uk-gov-networking = "0.9.0"
-uk-gov-ui = "11.4.0"
-gov-uk-idcheck = "0.31.4" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+uk-gov-logging = "0.39.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
+uk-gov-networking = "0.10.0"
+uk-gov-ui = "11.8.0"
+gov-uk-idcheck = "0.32.10" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
