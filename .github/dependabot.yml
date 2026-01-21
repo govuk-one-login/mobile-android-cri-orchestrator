@@ -43,9 +43,11 @@ updates:
         patterns:
           - "org.jetbrains.kotlin*"
           - "com.google.devtools.ksp*"
+      # GOV.UK common libraries (except ID Check SDK)
       govuk:
         patterns:
-          - "uk.gov*"
+          - "uk.gov.android*"
+          - "uk.gov.logging*"
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
