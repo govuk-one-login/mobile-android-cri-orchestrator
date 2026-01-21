@@ -32,13 +32,13 @@ jobs:
           submodules: 'true'
           fetch-depth: 0
 
-      - name: Clean workspace
-        uses: ./mobile-android-pipelines/actions/clean-workspace
-
       - name: Setup GitHub Runner workflow
         uses: ./mobile-android-pipelines/actions/setup-runner
         with:
           jdk-version: 21
+
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
 
       - name: Verify Conventional commit standards against latest hotfix git tag
         id: verify-version
