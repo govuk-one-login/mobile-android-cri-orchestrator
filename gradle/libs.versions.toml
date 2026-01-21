@@ -23,7 +23,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
 ksp = "2.3.3"
 lifecycle = "2.10.0"
-metro = "0.9.4"
+metro = "0.10.0"
 mockito = "6.2.0"
 molecule = "2.2.0"
 navigation = "2.9.6"
@@ -31,7 +31,7 @@ paparazzi = "2.0.0-alpha02"
 robolectric = "4.15.1"
 testparameterinjector = "1.20"
 turbine = "1.2.1"
-uk-gov-logging = "0.39.0" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
+uk-gov-logging = "0.39.1" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.10.0"
 uk-gov-ui = "11.8.0"
 gov-uk-idcheck = "0.32.10" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
