@@ -1,0 +1,47 @@
+name: Delete temporary hotfix branch
+
+on:
+  workflow_run:
+    workflows: [Publish packages]
+    branches: [temp/hotfix]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  delete_hotfix:
+    if: |
+      github.event_name == 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    env:
+      JDK_VERSION: 21
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+      - name: Setup GitHub Runner workflow
+        uses: ./mobile-android-pipelines/actions/setup-runner
+        with:
+          jdk-version: 21
+
+      - name: Delete hotfix branch
+        uses: ./mobile-android-pipelines/actions/delete-hotfix-branch
+
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
