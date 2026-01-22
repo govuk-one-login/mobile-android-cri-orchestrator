@@ -12,11 +12,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   check-pr-title:
     name: Check PR title
     runs-on: ubuntu-latest
-
     steps:
       - name: Check PR title against conventional commit standards
         uses: Oliver-Binns/Versioning@be1807ff3c5cd06edbe8fa3de54076cfd505f2df # 1.4.3
@@ -24,9 +22,9 @@ jobs:
           ACTION_TYPE: 'Validate'
 
   check-commit-messages:
+    if: !startsWith(github.head_ref, 'hotfix/')
     name: Check commit messages
     runs-on: ubuntu-latest
-    if: !startsWith(github.head_ref, 'hotfix/')
     steps:
       - name: Checkout codebase
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
