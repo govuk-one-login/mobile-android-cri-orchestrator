@@ -26,7 +26,7 @@ jobs:
   check-commit-messages:
     name: Check commit messages
     runs-on: ubuntu-latest
-
+    if: !startsWith(github.head_ref, 'hotfix/')
     steps:
       - name: Checkout codebase
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -39,3 +39,11 @@ jobs:
 
       - name: Check commit messages
         uses: ./mobile-android-pipelines/actions/verify-conventional-commit
+
+  check-hotfix-version:
+    if: startsWith(github.head_ref, 'hotfix/')
+    name: Verify version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check hotfix branch name
+        uses: ./mobile-android-pipelines/actions/get-next-version-from-pr-branch
