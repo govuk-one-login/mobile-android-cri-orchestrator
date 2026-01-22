@@ -22,7 +22,6 @@ jobs:
           ACTION_TYPE: 'Validate'
 
   check-commit-messages:
-    if: !startsWith(github.head_ref, 'hotfix/')
     name: Check commit messages
     runs-on: ubuntu-latest
     steps:
