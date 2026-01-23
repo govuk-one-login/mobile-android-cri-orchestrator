@@ -54,5 +54,5 @@ jobs:
     steps:
       - name: Check target branch is correct
         run: |
-          [[ startsWith($BASE_BRANCH, 'temp/hotfix') ]] || exit 1
+          [[ $BASE_BRANCH == temp/hotfix* ]] || exit 1
         shell: bash
