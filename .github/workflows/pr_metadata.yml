@@ -44,3 +44,15 @@ jobs:
     steps:
       - name: Check hotfix branch name
         uses: ./mobile-android-pipelines/actions/get-next-version-from-pr-branch
+
+  check-hotfix-target-branch:
+    if: startsWith(github.head_ref, 'hotfix/')
+    name: Verify version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check target branch is correct
+        run: |
+          if [[ !startsWith(github.base_ref, 'temp/hotfix') ]];
+            echo "Target branch should be temp/hotfix not ${{ github.base_ref }}"
+            exit 1
+          fi

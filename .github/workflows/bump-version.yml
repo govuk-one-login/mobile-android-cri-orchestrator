@@ -13,7 +13,7 @@ env:
 jobs:
   bump-version:
     if: |
-      !startsWith(github.head_ref, 'temp/hotfix') &&
+      github.ref_name == 'main' &&
       (github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success')
     env:
@@ -77,7 +77,7 @@ jobs:
 
   bump-hotfix-version:
     if: |
-      startsWith(github.head_ref, 'temp/hotfix') &&
+      github.ref_name == 'temp/hotfix' &&
       (github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success')
     env:
@@ -98,25 +98,25 @@ jobs:
         with:
           jdk-version: 21
 
-      - name: Verify Conventional commit standards against latest hotfix git tag
-        id: verify-version
+      - name: Get version from commit message
+        id: get-version
         uses: ./mobile-android-pipelines/actions/get-next-version-from-commit-message
 
       - name: Increment and push hotfix git tag
         id: increment-version
         uses: ./mobile-android-pipelines/actions/increment-hotfix-tag
         with:
-          version-name: ${{ steps.verify-version.outputs.next-version }}
+          version-name: ${{ steps.get-version.outputs.next-version }}
 
       - name: Create workflow outputs
         uses: ./actions/write-bump-version-outputs
         with:
-          current-version: ${{ steps.verify-version.outputs.next-version }}
+          current-version: ${{ steps.get-version.outputs.next-version }}
           new-version: ${{ steps.increment-version.outputs.incremented-version }}
           workflow-out-dir: ${{ env.WORKFLOW_OUT_DIR }}
 
       - name: Create GitHub release
-        if: steps.verify-version.outputs.next-version != steps.increment-version.outputs.incremented-version
+        if: steps.get-version.outputs.next-version != steps.increment-version.outputs.incremented-version
         uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
         with:
           tag_name: ${{ steps.increment-version.outputs.incremented-version }}
