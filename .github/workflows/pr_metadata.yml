@@ -49,11 +49,10 @@ jobs:
     if: startsWith(github.head_ref, 'hotfix/')
     name: Verify version
     runs-on: ubuntu-latest
+    env:
+      BASE_BRANCH: ${{ github.base_ref }}
     steps:
       - name: Check target branch is correct
         run: |
-          if [[ !startsWith(github.base_ref, 'temp/hotfix') ]];
-            echo "Target branch should be temp/hotfix not ${{ github.base_ref }}"
-            exit 1
-          fi
+          [[ startsWith($BASE_BRANCH, 'temp/hotfix') ]] || exit 1
         shell: bash
