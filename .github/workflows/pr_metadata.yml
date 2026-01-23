@@ -56,3 +56,4 @@ jobs:
             echo "Target branch should be temp/hotfix not ${{ github.base_ref }}"
             exit 1
           fi
+        shell: bash
