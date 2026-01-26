@@ -2,9 +2,9 @@ name: Bump version
 
 on:
   workflow_run:
-    workflows: [Test]
-    branches: [main]
-    types: [completed]
+    workflows: [ Test ]
+    branches: [ main, temp/hotfix ]
+    types: [ completed ]
   workflow_dispatch:
 
 env:
@@ -13,8 +13,9 @@ env:
 jobs:
   bump-version:
     if: |
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
+      github.ref_name == 'main' &&
+      (github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success')
     env:
       JDK_VERSION: 21
     permissions:
@@ -55,13 +56,6 @@ jobs:
         if: ${{ steps.versioning.outputs.current_version != steps.versioning.outputs.new_version }}
         uses: ./mobile-android-pipelines/actions/publish-release-tag
 
-      - name: Generate Changelog
-        uses: ./mobile-android-pipelines/actions/generate-and-upload-changelog
-        with:
-          current-version: ${{ steps.versioning.outputs.current_version }}
-          new-version: ${{ steps.versioning.outputs.new_version }}
-          version-prefix: ''
-
       - name: Create workflow outputs
         uses: ./actions/write-bump-version-outputs
         with:
@@ -76,6 +70,58 @@ jobs:
           tag_name: ${{ steps.versioning.outputs.new_version }}
           draft: false
           prerelease: ${{ steps.pre-release.outputs.enabled }}
+          generate_release_notes: true
+
+      - name: Clean workspace
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+  bump-hotfix-version:
+    if: |
+      github.ref_name == 'temp/hotfix' &&
+      (github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success')
+    env:
+      JDK_VERSION: 21
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Setup GitHub Runner workflow
+        uses: ./mobile-android-pipelines/actions/setup-runner
+        with:
+          jdk-version: 21
+
+      - name: Get version from commit message
+        id: get-version
+        uses: ./mobile-android-pipelines/actions/get-next-version-from-commit-message
+
+      - name: Increment and push hotfix git tag
+        id: increment-version
+        uses: ./mobile-android-pipelines/actions/increment-hotfix-tag
+        with:
+          version-name: ${{ steps.get-version.outputs.next-version }}
+
+      - name: Create workflow outputs
+        uses: ./actions/write-bump-version-outputs
+        with:
+          current-version: ${{ steps.get-version.outputs.next-version }}
+          new-version: ${{ steps.increment-version.outputs.incremented-version }}
+          workflow-out-dir: ${{ env.WORKFLOW_OUT_DIR }}
+
+      - name: Create GitHub release
+        if: steps.get-version.outputs.next-version != steps.increment-version.outputs.incremented-version
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
+        with:
+          tag_name: ${{ steps.increment-version.outputs.incremented-version }}
+          draft: false
+          prerelease: false
           generate_release_notes: true
 
       - name: Clean workspace

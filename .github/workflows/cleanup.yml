@@ -1,0 +1,25 @@
+name: Cleanup
+
+on:
+  workflow_run:
+    workflows: [Publish packages]
+    branches: [temp/hotfix]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  delete_hotfix_branch:
+    if: |
+      github.event_name == 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    env:
+      JDK_VERSION: 21
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete hotfix branch
+        uses: ./mobile-android-pipelines/actions/delete-hotfix-branch
