@@ -89,13 +89,7 @@ Learn more about working with [Git submodules](https://git-scm.com/book/en/v2/Gi
 
 Further documentation about this project can be found in [`docs/`](./docs/README.md).
 
-## Hotfix changes
-GitHub Actions workflows enable creating a hotfix pull request and merging a hotfix to a temporary
-hotfix branch.
+## Releasing
 
-The temporary hotfix branch is currently expected to be named "temp/hotfix".
-The hotfix branch name should be in the format "hotfix/M.m.p".
-
-Once the hotfix PR has been approved and the "Squash and merge" button pressed, the merge title
-must be in the format "Merge pull request #xxx from govuk-one-login/release/M.m.p" to allow for the
-correct version to be extracted and used as a tag.
+How to publish a [new version](./docs/how-to/publish-a-new-version.md)
+How to publish a [new hotfix version](./docs/how-to/publish-a-new-hotfix-version.md)
