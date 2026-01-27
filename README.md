@@ -88,3 +88,9 @@ Learn more about working with [Git submodules](https://git-scm.com/book/en/v2/Gi
 ## Documentation
 
 Further documentation about this project can be found in [`docs/`](./docs/README.md).
+
+## Releasing
+
+How to publish a [new version](./docs/how-to/publish-a-new-version.md)
+
+How to publish a [new hotfix version](./docs/how-to/publish-a-new-hotfix-version.md)
