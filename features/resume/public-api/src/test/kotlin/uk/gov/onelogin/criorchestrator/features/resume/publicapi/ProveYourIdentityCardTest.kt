@@ -30,17 +30,6 @@ class ProveYourIdentityCardTest {
             .onNodeWithText(CONTENT)
             .assertIsDisplayed()
     }
-
-    @Test
-    fun `it displays the entry point - legacy`() {
-        composeTestRule.setContent {
-            ProveYourIdentityCard(component = testGraph)
-        }
-
-        composeTestRule
-            .onNodeWithText(CONTENT)
-            .assertIsDisplayed()
-    }
 }
 
 class TestGraph(

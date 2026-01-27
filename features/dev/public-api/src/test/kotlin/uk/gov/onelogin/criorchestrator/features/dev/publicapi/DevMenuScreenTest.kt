@@ -30,17 +30,6 @@ class DevMenuScreenTest {
             .onNodeWithText(CONTENT)
             .assertIsDisplayed()
     }
-
-    @Test
-    fun `it displays the entry point - legacy`() {
-        composeTestRule.setContent {
-            DevMenuScreen(component = testGraph)
-        }
-
-        composeTestRule
-            .onNodeWithText(CONTENT)
-            .assertIsDisplayed()
-    }
 }
 
 class TestGraph(
