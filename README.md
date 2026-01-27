@@ -92,4 +92,5 @@ Further documentation about this project can be found in [`docs/`](./docs/README
 ## Releasing
 
 How to publish a [new version](./docs/how-to/publish-a-new-version.md)
+
 How to publish a [new hotfix version](./docs/how-to/publish-a-new-hotfix-version.md)
