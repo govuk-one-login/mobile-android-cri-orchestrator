@@ -11,6 +11,9 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.A
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import javax.net.ssl.SSLContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ContributesBinding(CriOrchestratorScope::class, binding = binding<AbortSession>())
@@ -71,4 +74,40 @@ class AbortSessionImpl(
      * This should never be called as the networking library doesn't emit loading results.
      */
     private fun unexpectedLoadingApiResponse(): Nothing = error("Loading state is not possible")
+
+    // Function is called in 'integration test'
+    fun addIntegrationTested(
+        a: Int,
+        b: Int,
+    ): Int {
+        // Add two numbers
+        return a + b
+    }
+
+    // Function is called in 'unit test'
+    fun addUnitTested(
+        a: Int,
+        b: Int,
+    ): Int {
+        // Verify that Sonar picks this up
+        // https://rules.sonarsource.com/kotlin/impact/security/RSPEC-4423/
+        @Suppress("SwallowedException")
+        val insecureSSLContext: SSLContext? =
+            try {
+                SSLContext.getInstance("TLSv1.1") // Noncompliant
+            } catch (e: NoSuchAlgorithmException) {
+                null
+            }
+        logger.debug("tag", "insecureSSLContext is null? ${insecureSSLContext == null}")
+
+        // https://rules.sonarsource.com/kotlin/impact/security/RSPEC-4347/
+        val sr = SecureRandom()
+        @Suppress("MagicNumber")
+        sr.setSeed(123456L) // Noncompliant
+        val v = sr.nextInt()
+        logger.debug("tag", "insecureRandom is $v")
+
+        // Add two numbers
+        return a + b
+    }
 }

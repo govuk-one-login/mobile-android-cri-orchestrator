@@ -16,8 +16,10 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.androidutils.FakeUriBuilderImpl
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
+import uk.gov.onelogin.criorchestrator.libraries.testing.tags.IntegrationTest
 
 @ExperimentalCoroutinesApi
+@IntegrationTest
 class IntegrationTest {
     private val fakeConfigStore = FakeConfigStore()
     private val logger = SystemLogger()
