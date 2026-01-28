@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.dropUnlessResumed
 import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
@@ -28,8 +27,8 @@ import uk.gov.android.ui.componentsv2.images.GdsIcon
 import uk.gov.android.ui.patterns.errorscreen.v2.ErrorScreen
 import uk.gov.android.ui.patterns.errorscreen.v2.ErrorScreenIcon
 import uk.gov.android.ui.theme.m3.Buttons
+import uk.gov.android.ui.theme.m3.ExtraTypography
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.android.ui.theme.m3.Typography
 import uk.gov.android.ui.theme.m3.toMappedColors
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
@@ -132,7 +131,7 @@ private fun FaceScanLimitReachedMobileScreenContent(
                     buttonType =
                         ButtonTypeV2.Icon(
                             buttonColors = GdsButtonDefaults.defaultPrimaryColors(),
-                            textStyle = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                            textStyle = ExtraTypography.bodyLargeBold,
                             icon = ImageVector.vectorResource(ic_external_site),
                             contentDescription = contentDescription,
                             shadowColor = Buttons.shadow.toMappedColors(),
