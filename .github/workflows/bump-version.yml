@@ -22,12 +22,14 @@ jobs:
       )
     env:
       JDK_VERSION: 21
+      BASE_BRANCH: ${{ github.ref_name }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Check base branch name
-        run: echo "Base branch name ${{ github.ref_name }}"
+        run: echo "Base branch name $BASE_BRANCH"
+        shell: bash
 
       - name: Run checkout github action
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -91,12 +93,14 @@ jobs:
       )
     env:
       JDK_VERSION: 21
+      BASE_BRANCH: ${{ github.ref_name }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Check base branch name
-        run: echo "Base branch name ${{ github.ref_name }}"
+        run: echo "Base branch name $BASE_BRANCH"
+        shell: bash
 
       - name: Run checkout github action
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
