@@ -15,22 +15,17 @@ env:
 jobs:
   bump-version:
     if: |
-      github.ref_name == 'main' &&
+      github.event.workflow_run.head_branch == 'main' &&
       (
         github.event_name == 'workflow_dispatch' ||
         github.event.workflow_run.conclusion == 'success'
       )
     env:
       JDK_VERSION: 21
-      BASE_BRANCH: ${{ github.ref_name }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Check base branch name
-        run: echo "Base branch name $BASE_BRANCH"
-        shell: bash
-
       - name: Run checkout github action
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -86,22 +81,17 @@ jobs:
 
   bump-hotfix-version:
     if: |
-      github.ref_name == 'temp/hotfix' &&
+      github.event.workflow_run.head_branch == 'temp/hotfix' &&
       (
         github.event_name == 'workflow_dispatch' ||
         github.event.workflow_run.conclusion == 'success'
       )
     env:
       JDK_VERSION: 21
-      BASE_BRANCH: ${{ github.ref_name }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Check base branch name
-        run: echo "Base branch name $BASE_BRANCH"
-        shell: bash
-
       - name: Run checkout github action
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
