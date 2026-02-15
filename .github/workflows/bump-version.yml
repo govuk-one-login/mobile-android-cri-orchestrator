@@ -3,7 +3,9 @@ name: Bump version
 on:
   workflow_run:
     workflows: [ Test ]
-    branches: [ main, temp/hotfix ]
+    branches:
+      - main
+      - temp/hotfix
     types: [ completed ]
   workflow_dispatch:
 
@@ -13,9 +15,11 @@ env:
 jobs:
   bump-version:
     if: |
-      github.ref_name == 'main' &&
-      (github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success')
+      github.event.workflow_run.head_branch == 'main' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.workflow_run.conclusion == 'success'
+      )
     env:
       JDK_VERSION: 21
     permissions:
@@ -77,9 +81,11 @@ jobs:
 
   bump-hotfix-version:
     if: |
-      github.ref_name == 'temp/hotfix' &&
-      (github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success')
+      github.event.workflow_run.head_branch == 'temp/hotfix' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.workflow_run.conclusion == 'success'
+      )
     env:
       JDK_VERSION: 21
     permissions:
