@@ -5,6 +5,8 @@ on:
     workflows: [ Test ]
     branches: [ main, temp/hotfix ]
     types: [ completed ]
+
+  # Workflow dispatch can be used to promote a pre-release to a normal release
   workflow_dispatch:
 
 env:
@@ -13,9 +15,11 @@ env:
 jobs:
   bump-version:
     if: |
-      github.ref_name == 'main' &&
-      (github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success')
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.ref_name == 'main' &&
+        github.event.workflow_run.conclusion == 'success'
+      )
     env:
       JDK_VERSION: 21
     permissions:
@@ -78,8 +82,7 @@ jobs:
   bump-hotfix-version:
     if: |
       github.ref_name == 'temp/hotfix' &&
-      (github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success')
+      github.event.workflow_run.conclusion == 'success'
     env:
       JDK_VERSION: 21
     permissions:
