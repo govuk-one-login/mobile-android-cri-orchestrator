@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nfc
 
+import android.nfc.NfcManager
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -8,15 +9,14 @@ import org.mockito.kotlin.given
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
-import uk.gov.idcheck.sdk.passport.nfc.checker.NfcChecker as IdCheckSdkNfcChecker
 
 class NfcCheckerImplTest {
     private val configStore = FakeConfigStore()
-    private val deviceNfcChecker = mock<IdCheckSdkNfcChecker>()
+    private val nfcManager = mock<NfcManager>()
     val nfcChecker =
         NfcCheckerImpl(
             configStore = configStore,
-            deviceNfcChecker = deviceNfcChecker,
+            nfcManager = nfcManager,
         )
 
     @Test
@@ -28,7 +28,7 @@ class NfcCheckerImplTest {
                     Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                 ),
         )
-        given(deviceNfcChecker.hasNfc()).willReturn(true)
+        givenDeviceNfc(available = true)
 
         assertTrue(nfcChecker.hasNfc())
     }
@@ -42,7 +42,7 @@ class NfcCheckerImplTest {
                     Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                 ),
         )
-        given(deviceNfcChecker.hasNfc()).willReturn(false)
+        givenDeviceNfc(available = false)
 
         assertFalse(nfcChecker.hasNfc())
     }
@@ -56,7 +56,7 @@ class NfcCheckerImplTest {
                     Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_AVAILABLE),
                 ),
         )
-        given(deviceNfcChecker.hasNfc()).willReturn(false)
+        givenDeviceNfc(available = false)
 
         assertTrue(nfcChecker.hasNfc())
     }
@@ -70,8 +70,13 @@ class NfcCheckerImplTest {
                     Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE),
                 ),
         )
-        given(deviceNfcChecker.hasNfc()).willReturn(true)
+        givenDeviceNfc(available = true)
 
         assertFalse(nfcChecker.hasNfc())
     }
+
+    private fun givenDeviceNfc(available: Boolean) =
+        given(nfcManager.defaultAdapter).willReturn(
+            if (available) mock() else null,
+        )
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import uk.gov.idcheck.repositories.api.config.NfcAvailability
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
@@ -23,6 +24,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
@@ -52,6 +54,11 @@ class LauncherDataReaderTest {
                         value =
                             Config.Value.BooleanValue(false),
                     ),
+                    Config.Entry<Config.Value.StringValue>(
+                        key = NfcConfigKey.NfcAvailability,
+                        value =
+                            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
+                    ),
                 ),
         )
     private val configStore by lazy {
@@ -73,6 +80,7 @@ class LauncherDataReaderTest {
                     documentType = DocumentType.NFC_PASSPORT,
                     backendMode = BackendMode.V2,
                     experimentalComposeNavigation = false,
+                    nfcAvailability = NfcAvailability.Device,
                 ),
             )
 

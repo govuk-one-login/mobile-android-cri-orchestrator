@@ -12,6 +12,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.La
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 
@@ -29,6 +30,11 @@ class LauncherDataReader(
 
         val experimentalComposeNavigation: Boolean =
             configStore.readSingle(IdCheckWrapperConfigKey.ExperimentalComposeNavigation).value
+
+        val nfcAvailability =
+            nfcAvailabilityFromConfigValue(
+                configStore.readSingle(NfcConfigKey.NfcAvailability).value,
+            )
 
         if (result is BiometricTokenResult.Success) {
             sessionStore.updateToDocumentSelected()
@@ -73,6 +79,7 @@ class LauncherDataReader(
                         documentType = documentVariety.toDocumentType(),
                         backendMode = backendMode,
                         experimentalComposeNavigation = experimentalComposeNavigation,
+                        nfcAvailability = nfcAvailability,
                     ),
                 )
             }
