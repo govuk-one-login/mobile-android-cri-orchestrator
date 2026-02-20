@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import uk.gov.idcheck.repositories.api.config.BackendMode
 import uk.gov.idcheck.repositories.api.config.NfcAvailability
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
