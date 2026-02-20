@@ -21,9 +21,9 @@ import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
+import uk.gov.idcheck.repositories.api.config.BackendMode
 import uk.gov.idcheck.repositories.api.config.NfcAvailability
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.idcheck.repositories.api.webhandover.journeytype.JourneyType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.ExitStateOption
