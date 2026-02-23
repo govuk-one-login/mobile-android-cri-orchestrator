@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.first
-import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
+import uk.gov.idcheck.repositories.api.config.BackendMode
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenReader
