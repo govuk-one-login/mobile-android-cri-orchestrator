@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activit
 
 import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
+import uk.gov.idcheck.repositories.api.config.Config as IdCheckSdkConfig
 
 internal fun LauncherData.toIdCheckSdkActivityParameters() =
     IdCheckSdkParameters(
@@ -9,7 +10,10 @@ internal fun LauncherData.toIdCheckSdkActivityParameters() =
         journey = this.journeyType,
         sessionId = this.sessionId,
         bioToken = this.biometricToken,
-        backendMode = this.backendMode,
-        experimentalComposeNavigation = this.experimentalComposeNavigation,
-        nfcAvailability = this.nfcAvailability,
+        config =
+            IdCheckSdkConfig(
+                backendMode = this.backendMode,
+                experimentalComposeNavigation = this.experimentalComposeNavigation,
+                nfcAvailability = this.nfcAvailability,
+            ),
     )
