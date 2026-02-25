@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.config.publicapi
 import kotlinx.collections.immutable.persistentListOf
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 object FakeConfig {
     const val ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE = "https://test.backend.url"
@@ -30,6 +31,10 @@ object FakeConfig {
                     Config.Entry<Config.Value.BooleanValue>(
                         key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
                         value = Config.Value.BooleanValue(false),
+                    ),
+                    Config.Entry<Config.Value.StringValue>(
+                        key = NfcConfigKey.NfcAvailability,
+                        value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                     ),
                 ),
         )
