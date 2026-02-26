@@ -3,8 +3,6 @@ package uk.gov.onelogin.criorchestrator
 import com.android.build.gradle.BaseExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.kotlin.dsl.findByType
-import org.gradle.kotlin.dsl.the
 import uk.gov.onelogin.criorchestrator.extensions.kotlinTestDependencies
 import uk.gov.onelogin.criorchestrator.extensions.testImplementation
 
@@ -15,13 +13,7 @@ if(project.extensions.findByType<BaseExtension>() != null) {
     configure<BaseExtension> {
         testOptions {
             unitTests.all {
-                it.useJUnitPlatform()
-                it.testLogging {
-                    events = setOf(
-                        TestLogEvent.SKIPPED,
-                        TestLogEvent.FAILED,
-                    )
-                }
+                it.configureTestTask()
             }
         }
     }
@@ -29,9 +21,23 @@ if(project.extensions.findByType<BaseExtension>() != null) {
     dependencies {
         testImplementation(testFixtures(project(":libraries:testing")))
     }
+} else {
+    tasks.withType<Test> {
+        configureTestTask()
+    }
 }
 
 dependencies {
     kotlinTestDependencies(libs)
+}
+
+private fun Test.configureTestTask() {
+    useJUnitPlatform()
+    testLogging {
+        events = setOf(
+            TestLogEvent.SKIPPED,
+            TestLogEvent.FAILED,
+        )
+    }
 }
 
