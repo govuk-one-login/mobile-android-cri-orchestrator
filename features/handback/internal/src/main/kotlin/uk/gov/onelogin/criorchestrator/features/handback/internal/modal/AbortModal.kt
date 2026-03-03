@@ -10,7 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableSet
-import uk.gov.android.ui.patterns.dialog.FullScreenDialogueTopAppBar
+import uk.gov.android.ui.componentsv2.button.GdsIconButtonDefaults
+import uk.gov.android.ui.componentsv2.topappbar.GdsTopAppBar
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNavGraphProvider
 
@@ -44,8 +45,9 @@ fun AbortModal(
         color = MaterialTheme.colorScheme.background,
     ) {
         Column {
-            FullScreenDialogueTopAppBar(
-                onCloseClick = handleDismissRequest,
+            GdsTopAppBar(
+                navigationButton = GdsIconButtonDefaults.defaultCloseContent(),
+                onClick = handleDismissRequest,
             )
             AbortModalNavHost(
                 startDestination = startDestination,
