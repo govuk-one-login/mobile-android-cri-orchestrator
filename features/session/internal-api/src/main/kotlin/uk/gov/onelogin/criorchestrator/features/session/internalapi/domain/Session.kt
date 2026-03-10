@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
+import kotlinx.serialization.Serializable
+
 /**
  * Stores the session information needed for the ID Check journey.
  * @param sessionId UUID that uniquely identifies the user's session.
@@ -8,6 +10,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
  *   This is distinct from the [redirectUri]'s 'state' query parameter.
  * redirect URI and the response state as a query parameter.
  */
+@Serializable
 data class Session(
     val sessionId: String,
     val redirectUri: String? = null,
@@ -20,6 +23,7 @@ data class Session(
     /**
      * The known states of the session.
      */
+    @Serializable
     enum class State {
         /**
          * The session has created a session.

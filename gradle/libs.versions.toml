@@ -33,6 +33,7 @@ testparameterinjector = "1.21"
 turbine = "1.2.1"
 uk-gov-logging = "0.39.7" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.11.0"
+uk-gov-securestore = "0.23.0"
 uk-gov-ui = "13.1.1"
 gov-uk-idcheck = "0.35.5" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
@@ -97,6 +98,7 @@ uk-gov-logging-api = { group = "uk.gov.logging", name = "logging-api", version.r
 uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version.ref = "uk-gov-logging" }
 uk-gov-logging-testdouble = { group = "uk.gov.logging", name = "logging-testdouble", version.ref = "uk-gov-logging" }
 uk-gov-networking = { group = "uk.gov.android", name = "network", version.ref = "uk-gov-networking" }
+uk-gov-securestore = { group = "uk.gov.securestore", name = "app", version.ref = "uk-gov-securestore" }
 uk-gov-pipelines-plugins = { module = "uk.gov.pipelines:plugins" }
 uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", version.ref = "uk-gov-ui" }
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
