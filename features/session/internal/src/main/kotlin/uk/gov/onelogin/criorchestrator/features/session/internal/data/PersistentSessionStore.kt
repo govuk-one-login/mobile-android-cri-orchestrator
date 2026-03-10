@@ -44,44 +44,40 @@ class PersistentSessionStore(
         return cache.asStateFlow()
     }
 
-    override fun write(value: Session) {
+    override suspend fun write(value: Session) {
         logger.info(tag, "Writing to session store")
-        coroutineScope.launch {
-            runCatching {
-                secureStore.upsert(KEY_SESSION, Json.encodeToString(value))
-            }.onSuccess {
-                logger.debug(tag, "New session is $value")
-                cache.value = value
-            }.onFailure { error ->
-                logger.error(tag, "Failed to write session to secure store", error)
-            }
+        runCatching {
+            secureStore.upsert(KEY_SESSION, Json.encodeToString(value))
+        }.onSuccess {
+            logger.debug(tag, "New session is $value")
+            cache.value = value
+        }.onFailure { error ->
+            logger.error(tag, "Failed to write session to secure store", error)
         }
     }
 
-    override fun clear() {
+    override suspend fun clear() {
         logger.info(tag, "Clearing the session store")
-        coroutineScope.launch {
-            runCatching {
-                secureStore.delete(KEY_SESSION)
-            }.onSuccess {
-                cache.value = null
-            }.onFailure { error ->
-                logger.error(tag, "Failed to clear session from secure store", error)
-            }
+        runCatching {
+            secureStore.delete(KEY_SESSION)
+        }.onSuccess {
+            cache.value = null
+        }.onFailure { error ->
+            logger.error(tag, "Failed to clear session from secure store", error)
         }
     }
 
-    override fun updateToAborted() =
+    override suspend fun updateToAborted() =
         updateState {
             advanceAtLeastAborted()
         }
 
-    override fun updateToDocumentSelected() =
+    override suspend fun updateToDocumentSelected() =
         updateState {
             advanceAtLeastDocumentSelected()
         }
 
-    private fun updateState(advance: Session.State.() -> Session.State) {
+    private suspend fun updateState(advance: Session.State.() -> Session.State) {
         val oldState = cache.value
         if (oldState == null) {
             logger.error(tag, "Can't update session because it is null")

@@ -16,14 +16,14 @@ interface SessionStore {
     /**
      * Store the user's ID Check session.
      */
-    fun write(value: Session)
+    suspend fun write(value: Session)
 
     /**
      * Clear the session.
      *
      * After calling, [read] emits `null`.
      */
-    fun clear()
+    suspend fun clear()
 
     /**
      * Update the stored [Session.sessionState] to at least [Session.State.DocumentSelected].
@@ -31,7 +31,7 @@ interface SessionStore {
      * If there is no [Session] or [Session.sessionState] has already advanced to or beyond
      * this state, this function does nothing.
      */
-    fun updateToDocumentSelected()
+    suspend fun updateToDocumentSelected()
 
     /**
      * Update the stored [Session.sessionState] to at least [Session.State.Aborted].
@@ -39,5 +39,5 @@ interface SessionStore {
      * If there is no [Session] or [Session.sessionState] has already advanced to or beyond
      * this state, this function does nothing.
      */
-    fun updateToAborted()
+    suspend fun updateToAborted()
 }

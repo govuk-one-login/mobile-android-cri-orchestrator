@@ -25,6 +25,7 @@ import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Serializable
 import org.junit.After
 import org.junit.Before
@@ -108,76 +109,80 @@ class HandbackNavigationTest {
     }
 
     @Test
-    fun `return to desktop`() {
-        givenDesktopJourney()
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.ReturnToDesktopWeb,
-        )
+    fun `return to desktop`() =
+        runTest {
+            givenDesktopJourney()
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.ReturnToDesktopWeb,
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertReturnToDesktopWebIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertReturnToDesktopWebIsDisplayed()
 
-        // Back navigation is disabled
-        composeTestRule.goBack()
-        composeTestRule.assertReturnToDesktopWebIsDisplayed()
-    }
-
-    @Test
-    fun `return to mobile web`() {
-        val redirectUri = "http://mam-redirect-uri?state=mock-state"
-        givenMobileJourney(
-            redirectUri = redirectUri,
-        )
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.ReturnToMobileWeb(REDIRECT_URI),
-        )
-
-        composeTestRule.clickStart()
-        composeTestRule.assertReturnToMobileWebIsDisplayed()
-
-        // Back navigation is disabled
-        composeTestRule.goBack()
-        composeTestRule.assertReturnToMobileWebIsDisplayed()
-
-        composeTestRule.clickContinueToGovUkWebsite()
-        composeTestRule.waitForIdle()
-
-        assertEquals(redirectUri, webNavigator.openUrl)
-    }
+            // Back navigation is disabled
+            composeTestRule.goBack()
+            composeTestRule.assertReturnToDesktopWebIsDisplayed()
+        }
 
     @Test
-    fun `confirm abort - desktop`() {
-        givenDesktopJourney()
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = AbortDestinations.ConfirmAbortDesktop,
-        )
+    fun `return to mobile web`() =
+        runTest {
+            val redirectUri = "http://mam-redirect-uri?state=mock-state"
+            givenMobileJourney(
+                redirectUri = redirectUri,
+            )
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.ReturnToMobileWeb(REDIRECT_URI),
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertConfirmAbortIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertReturnToMobileWebIsDisplayed()
 
-        composeTestRule.clickConfirmAbortToDesktopWebButton()
-        composeTestRule.assertAbortedReturnToDesktopWebIsDisplayed()
-    }
+            // Back navigation is disabled
+            composeTestRule.goBack()
+            composeTestRule.assertReturnToMobileWebIsDisplayed()
+
+            composeTestRule.clickContinueToGovUkWebsite()
+            composeTestRule.waitForIdle()
+
+            assertEquals(redirectUri, webNavigator.openUrl)
+        }
 
     @Test
-    fun `confirm abort - mobile`() {
-        val redirectUri = "https://redirect-uri"
-        givenMobileJourney(
-            redirectUri = redirectUri,
-        )
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = AbortDestinations.ConfirmAbortMobile,
-        )
+    fun `confirm abort - desktop`() =
+        runTest {
+            givenDesktopJourney()
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = AbortDestinations.ConfirmAbortDesktop,
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertConfirmAbortIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertConfirmAbortIsDisplayed()
 
-        composeTestRule.clickContinueToGovUkWebsite()
-        composeTestRule.waitForIdle()
+            composeTestRule.clickConfirmAbortToDesktopWebButton()
+            composeTestRule.assertAbortedReturnToDesktopWebIsDisplayed()
+        }
 
-        assertEquals(redirectUri, webNavigator.openUrl)
-        verify(onFinish).invoke()
-    }
+    @Test
+    fun `confirm abort - mobile`() =
+        runTest {
+            val redirectUri = "https://redirect-uri"
+            givenMobileJourney(
+                redirectUri = redirectUri,
+            )
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = AbortDestinations.ConfirmAbortMobile,
+            )
+
+            composeTestRule.clickStart()
+            composeTestRule.assertConfirmAbortIsDisplayed()
+
+            composeTestRule.clickContinueToGovUkWebsite()
+            composeTestRule.waitForIdle()
+
+            assertEquals(redirectUri, webNavigator.openUrl)
+            verify(onFinish).invoke()
+        }
 
     // This scenario may happen if the session was aborted in the ID Check SDK
     @Test
@@ -216,114 +221,118 @@ class HandbackNavigationTest {
 
     // https://govukverify.atlassian.net/browse/DCMAW-12934
     @Test
-    fun `unrecoverable error loop - desktop`() {
-        givenDesktopJourney()
-        abortSession.result = AbortSession.Result.Error.Unrecoverable(exception = Exception("simulated"))
-        getJourneyType.journeyType = JourneyType.DesktopAppDesktop
+    fun `unrecoverable error loop - desktop`() =
+        runTest {
+            givenDesktopJourney()
+            abortSession.result = AbortSession.Result.Error.Unrecoverable(exception = Exception("simulated"))
+            getJourneyType.journeyType = JourneyType.DesktopAppDesktop
 
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.UnrecoverableError,
-        )
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.UnrecoverableError,
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertUnrecoverableErrorIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertUnrecoverableErrorIsDisplayed()
 
-        // Try to confirm another way and fail many times
-        repeat(times = 5) {
-            composeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton()
+            // Try to confirm another way and fail many times
+            repeat(times = 5) {
+                composeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton()
+                composeTestRule.assertConfirmAbortIsDisplayed()
+
+                composeTestRule.clickConfirmAbortToDesktopWebButton()
+                composeTestRule.assertUnrecoverableErrorIsDisplayed()
+            }
+
+            // Navigate back to the confirm abort screen (still within the abort modal)
+            // It's the only screen on the stack within the abort modal.
+            composeTestRule.goBack()
             composeTestRule.assertConfirmAbortIsDisplayed()
 
-            composeTestRule.clickConfirmAbortToDesktopWebButton()
+            // Navigate back, closing the abort modal.
+            // This is the error screen we started on before we started the abort flow.
+            composeTestRule.goBack()
             composeTestRule.assertUnrecoverableErrorIsDisplayed()
+
+            composeTestRule.goBack()
+            composeTestRule.assertStartIsDisplayed()
         }
-
-        // Navigate back to the confirm abort screen (still within the abort modal)
-        // It's the only screen on the stack within the abort modal.
-        composeTestRule.goBack()
-        composeTestRule.assertConfirmAbortIsDisplayed()
-
-        // Navigate back, closing the abort modal.
-        // This is the error screen we started on before we started the abort flow.
-        composeTestRule.goBack()
-        composeTestRule.assertUnrecoverableErrorIsDisplayed()
-
-        composeTestRule.goBack()
-        composeTestRule.assertStartIsDisplayed()
-    }
 
     // https://govukverify.atlassian.net/browse/DCMAW-12934
     @Test
-    fun `unrecoverable error loop - mobile`() {
-        givenMobileJourney()
-        abortSession.result =
-            AbortSession.Result.Error.Unrecoverable(exception = Exception("simulated"))
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.UnrecoverableError,
-        )
+    fun `unrecoverable error loop - mobile`() =
+        runTest {
+            givenMobileJourney()
+            abortSession.result =
+                AbortSession.Result.Error.Unrecoverable(exception = Exception("simulated"))
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.UnrecoverableError,
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertUnrecoverableErrorIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertUnrecoverableErrorIsDisplayed()
 
-        // Try to confirm another way and fail many times
-        repeat(times = 5) {
-            composeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton()
+            // Try to confirm another way and fail many times
+            repeat(times = 5) {
+                composeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton()
+                composeTestRule.assertConfirmAbortIsDisplayed()
+
+                composeTestRule.clickConfirmAbortToMobileWebButton()
+                composeTestRule.assertUnrecoverableErrorIsDisplayed()
+            }
+
+            // Navigate back to the confirm abort screen (still within the abort modal)
+            // It's the only screen on the stack within the abort modal.
+            composeTestRule.goBack()
             composeTestRule.assertConfirmAbortIsDisplayed()
 
-            composeTestRule.clickConfirmAbortToMobileWebButton()
+            // Navigate back, closing the abort modal.
+            // This is the error screen we started on before we started the abort flow.
+            composeTestRule.goBack()
             composeTestRule.assertUnrecoverableErrorIsDisplayed()
+
+            composeTestRule.goBack()
+            composeTestRule.assertStartIsDisplayed()
         }
 
-        // Navigate back to the confirm abort screen (still within the abort modal)
-        // It's the only screen on the stack within the abort modal.
-        composeTestRule.goBack()
-        composeTestRule.assertConfirmAbortIsDisplayed()
+    @Test
+    fun `face scan limit reached - desktop`() =
+        runTest {
+            givenDesktopJourney()
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.FaceScanLimitReachedDesktop,
+            )
 
-        // Navigate back, closing the abort modal.
-        // This is the error screen we started on before we started the abort flow.
-        composeTestRule.goBack()
-        composeTestRule.assertUnrecoverableErrorIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
 
-        composeTestRule.goBack()
-        composeTestRule.assertStartIsDisplayed()
-    }
+            // Back navigation is disabled
+            composeTestRule.goBack()
+            composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
+        }
 
     @Test
-    fun `face scan limit reached - desktop`() {
-        givenDesktopJourney()
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.FaceScanLimitReachedDesktop,
-        )
+    fun `face scan limit reached - mobile`() =
+        runTest {
+            val redirectUri = "http://mam-redirect-uri?state=mock-state"
+            givenMobileJourney(
+                redirectUri = redirectUri,
+            )
+            composeTestRule.setNavGraphContent(
+                startNavigatesTo = HandbackDestinations.FaceScanLimitReachedMobile(REDIRECT_URI),
+            )
 
-        composeTestRule.clickStart()
-        composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
+            composeTestRule.clickStart()
+            composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
 
-        // Back navigation is disabled
-        composeTestRule.goBack()
-        composeTestRule.assertFaceScanLimitReachedDesktopIsDisplayed()
-    }
+            // Back navigation is disabled
+            composeTestRule.goBack()
+            composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
 
-    @Test
-    fun `face scan limit reached - mobile`() {
-        val redirectUri = "http://mam-redirect-uri?state=mock-state"
-        givenMobileJourney(
-            redirectUri = redirectUri,
-        )
-        composeTestRule.setNavGraphContent(
-            startNavigatesTo = HandbackDestinations.FaceScanLimitReachedMobile(REDIRECT_URI),
-        )
+            composeTestRule.clickContinueToGovUkWebsite()
+            composeTestRule.waitForIdle()
 
-        composeTestRule.clickStart()
-        composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
-
-        // Back navigation is disabled
-        composeTestRule.goBack()
-        composeTestRule.assertFaceScanLimitReachedMobileIsDisplayed()
-
-        composeTestRule.clickContinueToGovUkWebsite()
-        composeTestRule.waitForIdle()
-
-        assertEquals(redirectUri, webNavigator.openUrl)
-    }
+            assertEquals(redirectUri, webNavigator.openUrl)
+        }
 
     private fun ComposeTestRule.assertStartIsDisplayed() =
         composeTestRule
@@ -424,7 +433,7 @@ class HandbackNavigationTest {
             .assertIsDisplayed()
     }
 
-    private fun givenMobileJourney(redirectUri: String = "https://redirect-uri") {
+    private suspend fun givenMobileJourney(redirectUri: String = "https://redirect-uri") {
         val session =
             Session.createMobileAppMobileInstance(
                 redirectUri = redirectUri,
@@ -434,7 +443,7 @@ class HandbackNavigationTest {
             JourneyType.MobileAppMobile(redirectUri = session.redirectUri!!)
     }
 
-    private fun givenDesktopJourney() {
+    private suspend fun givenDesktopJourney() {
         val session = Session.createDesktopAppDesktopInstance()
         sessionStore.write(session)
         getJourneyType.journeyType = JourneyType.DesktopAppDesktop

@@ -153,40 +153,40 @@ class SyncIdCheckViewModel(
 
     fun onIdCheckSdkResult(exitState: IdCheckSdkExitState) {
         idCheckSdkActiveStateStore.setInactive()
-        if (exitState.hasAbortedSession()) {
-            sessionStore.updateToAborted()
-        }
-        val action =
-            when {
-                exitState.isSuccess() -> {
-                    when (journeyType) {
-                        JourneyType.DesktopAppDesktop ->
-                            SyncIdCheckAction.NavigateToReturnToDesktopWeb
-                        is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToReturnToMobileWeb(journeyType.redirectUri)
-                    }
-                }
-
-                exitState.isLimitReached() -> {
-                    when (journeyType) {
-                        is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb(journeyType.redirectUri)
-                        JourneyType.DesktopAppDesktop ->
-                            SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb
-                    }
-                }
-
-                else -> {
-                    when (journeyType) {
-                        is JourneyType.MobileAppMobile ->
-                            SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
-                        JourneyType.DesktopAppDesktop ->
-                            SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
-                    }
-                }
-            }
-
         viewModelScope.launch {
+            if (exitState.hasAbortedSession()) {
+                sessionStore.updateToAborted()
+            }
+            val action =
+                when {
+                    exitState.isSuccess() -> {
+                        when (journeyType) {
+                            JourneyType.DesktopAppDesktop ->
+                                SyncIdCheckAction.NavigateToReturnToDesktopWeb
+                            is JourneyType.MobileAppMobile ->
+                                SyncIdCheckAction.NavigateToReturnToMobileWeb(journeyType.redirectUri)
+                        }
+                    }
+
+                    exitState.isLimitReached() -> {
+                        when (journeyType) {
+                            is JourneyType.MobileAppMobile ->
+                                SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb(journeyType.redirectUri)
+                            JourneyType.DesktopAppDesktop ->
+                                SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb
+                        }
+                    }
+
+                    else -> {
+                        when (journeyType) {
+                            is JourneyType.MobileAppMobile ->
+                                SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
+                            JourneyType.DesktopAppDesktop ->
+                                SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
+                        }
+                    }
+                }
+
             _actions.emit(action)
         }
     }
