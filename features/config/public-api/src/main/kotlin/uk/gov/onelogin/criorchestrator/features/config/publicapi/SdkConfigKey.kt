@@ -64,4 +64,16 @@ sealed interface SdkConfigKey {
             name = "Debug app review prompts",
         ),
         SdkConfigKey
+
+    /**
+     * Enable the Android secure store.
+     *
+     * Set to `false` in unit tests where the Android KeyStore is unavailable.
+     * Defaults to `true`.
+     */
+    data object EnableSecureStore :
+        BooleanConfigKey(
+            name = "Enable secure store",
+        ),
+        SdkConfigKey
 }

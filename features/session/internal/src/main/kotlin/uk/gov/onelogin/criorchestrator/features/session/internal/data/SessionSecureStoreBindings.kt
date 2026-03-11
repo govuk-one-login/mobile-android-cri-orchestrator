@@ -16,11 +16,12 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 @ContributesTo(CriOrchestratorAppScope::class)
 object SessionSecureStoreBindings {
     const val STORE_ID = "uk.gov.onelogin.criorchestrator.features.session.internal.data.session"
+    const val DEVICE_STORE_ID = "$STORE_ID.device"
 
     @Provides
     @SingleIn(CriOrchestratorAppScope::class)
-    @Named(STORE_ID)
-    fun sessionSecureStore(context: Context): SecureStoreAsyncV2 =
+    @Named(DEVICE_STORE_ID)
+    fun deviceSecureStore(context: Context): SecureStoreAsyncV2 =
         SharedPrefsStoreAsyncV2().apply {
             init(
                 context,

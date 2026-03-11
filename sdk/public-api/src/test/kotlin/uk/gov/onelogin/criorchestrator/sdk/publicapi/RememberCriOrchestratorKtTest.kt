@@ -34,6 +34,10 @@ class RememberCriOrchestratorKtTest {
                         key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
                         value = Config.Value.StringValue("baseurl"),
                     ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = SdkConfigKey.EnableSecureStore,
+                        value = Config.Value.BooleanValue(false),
+                    ),
                 ),
         )
     private val criOrchestratorSdk =

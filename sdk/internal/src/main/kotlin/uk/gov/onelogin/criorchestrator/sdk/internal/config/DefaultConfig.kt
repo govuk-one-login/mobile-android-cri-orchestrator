@@ -27,6 +27,10 @@ private val defaultConfig =
                     Config.Value.BooleanValue(false),
                 ),
                 Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.EnableSecureStore,
+                    Config.Value.BooleanValue(true),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
                     key = IdCheckWrapperConfigKey.EnableManualLauncher,
                     Config.Value.BooleanValue(false),
                 ),

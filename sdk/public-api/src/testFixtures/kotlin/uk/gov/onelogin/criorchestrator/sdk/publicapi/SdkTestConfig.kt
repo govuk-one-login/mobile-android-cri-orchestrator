@@ -51,5 +51,9 @@ fun Config.Companion.createTestInstance(
                     key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
                     value = Config.Value.BooleanValue(experimentalComposeNavigation),
                 ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.EnableSecureStore,
+                    value = Config.Value.BooleanValue(false),
+                ),
             ),
     )
