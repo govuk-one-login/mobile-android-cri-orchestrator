@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator
 
 import com.android.build.gradle.BaseExtension
 import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.the
@@ -21,6 +22,7 @@ if(project.extensions.findByType<BaseExtension>() != null) {
                         TestLogEvent.SKIPPED,
                         TestLogEvent.FAILED,
                     )
+                    exceptionFormat = TestExceptionFormat.FULL
                 }
             }
         }
