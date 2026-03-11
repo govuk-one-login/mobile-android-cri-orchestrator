@@ -9,7 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.ImmutableSet
-import uk.gov.android.ui.patterns.dialog.FullScreenDialogueTopAppBar
+import uk.gov.android.ui.componentsv2.button.GdsIconButtonDefaults
+import uk.gov.android.ui.componentsv2.topappbar.GdsTopAppBar
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityDestinations
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
@@ -39,8 +40,9 @@ internal fun ProveYourIdentityModal(
         color = MaterialTheme.colorScheme.background,
     ) {
         Column {
-            FullScreenDialogueTopAppBar(
-                onCloseClick = {
+            GdsTopAppBar(
+                navigationButton = GdsIconButtonDefaults.defaultCloseContent(),
+                onClick = {
                     onCancelClick()
                     onDismissRequest()
                 },

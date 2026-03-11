@@ -1,7 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model
 
+import uk.gov.idcheck.repositories.api.config.BackendMode
+import uk.gov.idcheck.repositories.api.config.NfcAvailability
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
-import uk.gov.idcheck.repositories.api.webhandover.backend.BackendMode
 import uk.gov.idcheck.repositories.api.webhandover.documenttype.DocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.createTestToken
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -18,4 +19,5 @@ fun LauncherData.Companion.createTestInstance(
     biometricToken = biometricToken,
     backendMode = BackendMode.V2,
     experimentalComposeNavigation = experimentalComposeNavigation,
+    nfcAvailability = NfcAvailability.Device,
 )
