@@ -1,20 +1,22 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.data
+package uk.gov.onelogin.criorchestrator.sdk.internal.store
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import uk.gov.android.securestore.SecureStorageConfigurationAsync
 import uk.gov.android.securestore.SecureStoreAsyncV2
+import uk.gov.android.securestore.SharedPrefsStoreAsyncV2
 import uk.gov.android.securestore.authentication.AuthenticatorPromptConfiguration
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
+import uk.gov.onelogin.criorchestrator.libraries.store.securestore.InMemorySecureStoreAsyncV2
 
 /**
- * Provides a [SecureStoreAsyncV2] based on configuration.
+ * Provides a [uk.gov.android.securestore.SecureStoreAsyncV2] based on configuration.
  *
  * When [SdkConfigKey.EnableSecureStore] is `false`, an in-memory store is used.
  * This supports unit tests where the Android KeyStore is unavailable.
@@ -22,16 +24,11 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesBinding(
     CriOrchestratorAppScope::class,
-    binding =
-        binding<
-            @Named(SessionSecureStoreBindings.STORE_ID)
-            SecureStoreAsyncV2,
-        >(),
+    binding = binding<SecureStoreAsyncV2>(),
 )
-class SessionSecureStoreProvider(
+class ProxySecureStoreAsyncV2(
     private val configStore: ConfigStore,
-    @Named(SessionSecureStoreBindings.DEVICE_STORE_ID)
-    private val deviceStore: Provider<SecureStoreAsyncV2>,
+    private val deviceStore: Provider<SharedPrefsStoreAsyncV2>,
     private val inMemoryStore: Provider<InMemorySecureStoreAsyncV2>,
 ) : SecureStoreAsyncV2 {
     private fun store(): SecureStoreAsyncV2 =
@@ -41,7 +38,7 @@ class SessionSecureStoreProvider(
         }
 
     override fun init(
-        context: android.content.Context,
+        context: Context,
         configurationAsync: SecureStorageConfigurationAsync,
     ) = store().init(context, configurationAsync)
 

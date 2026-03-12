@@ -19,6 +19,7 @@ dependencies {
     implementation(projects.libraries.architecture)
     implementation(projects.libraries.composeUtils)
     implementation(projects.libraries.kotlinUtils)
+    implementation(projects.libraries.store)
     implementation(projects.libraries.di)
 
     testFixturesImplementation(libs.androidx.appcompat)

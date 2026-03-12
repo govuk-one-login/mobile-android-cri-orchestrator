@@ -13,6 +13,7 @@ import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.FakeSecureStoreAsyncV2
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
+import uk.gov.onelogin.criorchestrator.libraries.store.PersistentStore
 
 class PersistentSessionStoreTest {
     private val logger = SystemLogger()
@@ -22,12 +23,20 @@ class PersistentSessionStoreTest {
     private val secureStore = FakeSecureStoreAsyncV2()
     private val sessionStore = createStore()
 
-    private fun createStore() =
-        PersistentSessionStore(
+    private fun createStore(): PersistentSessionStore {
+        val persistentStore =
+            PersistentStore(
+                secureStore = secureStore,
+                key = "session",
+                logger = logger,
+                coroutineScope = testScope,
+                serializer = Session.serializer(),
+            )
+        return PersistentSessionStore(
             logger = logger,
-            secureStore = secureStore,
-            coroutineScope = testScope,
+            persistentStore = persistentStore,
         )
+    }
 
     private val initialSession = null
     private val newSession = Session.createTestInstance()

@@ -16,10 +16,12 @@ configure<PublishingExtension> {
 }
 
 dependencies {
-    // This module should depend on every other module that contributes to the dagger dependency graph
+    implementation(libs.androidx.appcompat)
     implementation(libs.uk.gov.logging.api)
     implementation(libs.uk.gov.logging.impl)
     implementation(libs.uk.gov.networking)
+    implementation(libs.uk.gov.securestore)
+    // This module should depend on every other module that contributes to the dagger dependency graph
     implementation(projects.features.config.internal)
     implementation(projects.features.config.internalApi)
     implementation(projects.features.config.publicApi)
@@ -47,6 +49,7 @@ dependencies {
     implementation(projects.libraries.di)
     implementation(projects.libraries.kotlinUtils)
     implementation(projects.libraries.navigation)
+    implementation(projects.libraries.store)
     implementation(projects.sdk.sharedApi)
 }
 

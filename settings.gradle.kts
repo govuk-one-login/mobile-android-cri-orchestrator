@@ -88,6 +88,7 @@ include(
     ":libraries:di",
     ":libraries:navigation",
     ":libraries:screenshot-testing",
+    ":libraries:store",
     ":libraries:testing",
     ":sdk:internal",
     ":sdk:public-api",

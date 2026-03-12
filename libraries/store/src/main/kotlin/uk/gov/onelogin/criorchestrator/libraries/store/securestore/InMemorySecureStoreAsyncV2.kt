@@ -1,20 +1,19 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal.data
+package uk.gov.onelogin.criorchestrator.libraries.store.securestore
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
-import dev.zacsweers.metro.Inject
 import uk.gov.android.securestore.SecureStorageConfigurationAsync
 import uk.gov.android.securestore.SecureStoreAsyncV2
 import uk.gov.android.securestore.authentication.AuthenticatorPromptConfiguration
 
 /**
- * In-memory [SecureStoreAsyncV2] for use when the Android KeyStore is unavailable.
+ * In-memory [uk.gov.android.securestore.SecureStoreAsyncV2] for use in testing.
  */
-@Inject
 class InMemorySecureStoreAsyncV2 : SecureStoreAsyncV2 {
     private val store = mutableMapOf<String, String>()
 
     override fun init(
-        context: android.content.Context,
+        context: Context,
         configurationAsync: SecureStorageConfigurationAsync,
     ) {
         // No-op
