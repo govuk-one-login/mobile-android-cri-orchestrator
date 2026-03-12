@@ -12,7 +12,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class IsSessionResumableImpl(
     private val sessionStore: SessionStore,
 ) : IsSessionResumable {
-    override fun invoke(): Flow<Boolean> =
+    override suspend fun invoke(): Flow<Boolean> =
         sessionStore.read().map {
             it != null && it.sessionState == Session.State.Created
         }

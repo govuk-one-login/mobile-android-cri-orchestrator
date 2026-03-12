@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
  * @see [Session.State.Created]
  */
 fun interface IsSessionResumable {
-    operator fun invoke(): Flow<Boolean>
+    suspend operator fun invoke(): Flow<Boolean>
 }

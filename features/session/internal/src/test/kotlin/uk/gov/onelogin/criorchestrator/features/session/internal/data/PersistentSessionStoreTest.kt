@@ -33,9 +33,10 @@ class PersistentSessionStoreTest {
     private val newSession = Session.createTestInstance()
 
     @Test
-    fun `session store returns null session if no session written`() {
-        assertEquals(initialSession, sessionStore.read().value)
-    }
+    fun `session store returns null session if no session written`() =
+        testScope.runTest {
+            assertEquals(initialSession, sessionStore.read().value)
+        }
 
     @Test
     fun `session store returns previously written session`() =

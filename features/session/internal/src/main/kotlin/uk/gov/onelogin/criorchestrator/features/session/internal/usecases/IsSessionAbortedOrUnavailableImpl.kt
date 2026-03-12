@@ -12,7 +12,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class IsSessionAbortedOrUnavailableImpl(
     private val sessionStore: SessionStore,
 ) : IsSessionAbortedOrUnavailable {
-    override fun invoke(): Flow<Boolean> =
+    override suspend fun invoke(): Flow<Boolean> =
         sessionStore.read().map {
             it == null || it.sessionState == Session.State.Aborted
         }

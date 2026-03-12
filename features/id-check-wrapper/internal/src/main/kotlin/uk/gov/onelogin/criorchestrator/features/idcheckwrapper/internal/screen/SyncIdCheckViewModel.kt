@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
+import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -55,18 +56,17 @@ class SyncIdCheckViewModel(
     val logger: Logger,
     val analytics: IdCheckWrapperAnalytics,
     private val dispatchers: CoroutineDispatchers,
-) : ViewModel() {
+) : ViewModel(),
+    LogTagProvider {
     private val _state = MutableStateFlow<SyncIdCheckState>(SyncIdCheckState.Loading)
     val state = _state.asStateFlow()
 
     private val _actions = MutableSharedFlow<SyncIdCheckAction>(replay = 1)
     val actions = _actions.asSharedFlow()
     private var sdkHasDisplayed: Boolean = savedStateHandle[SDK_HAS_DISPLAYED] ?: initiallyReturnFalse()
-    val journeyType: JourneyType = savedStateHandle[SDK_JOURNEY_TYPE] ?: initialJourneyType()
 
     companion object {
         const val SDK_HAS_DISPLAYED = "uk.gov.onelogin.criorchestrator.sdkHasDisplayed"
-        const val SDK_JOURNEY_TYPE = "uk.gov.onelogin.criorchestrator.sdkJourneyType"
     }
 
     fun onScreenStart(documentVariety: DocumentVariety) {
@@ -157,6 +157,7 @@ class SyncIdCheckViewModel(
             if (exitState.hasAbortedSession()) {
                 sessionStore.updateToAborted()
             }
+            val journeyType = journeyType()
             val action =
                 when {
                     exitState.isSuccess() -> {
@@ -244,20 +245,14 @@ class SyncIdCheckViewModel(
         return false
     }
 
-    private fun initialJourneyType(): JourneyType {
-        val sessionStoreJourneyType =
-            try {
-                sessionStore.read().value!!.journeyType
-            } catch (e: NullPointerException) {
-                logger.error(
-                    tag = this::class.java.simpleName,
-                    msg = "No session found in Session Store nor Saved State Handle",
-                )
-                throw e
-            }
-        savedStateHandle[SDK_JOURNEY_TYPE] = sessionStoreJourneyType
-        return sessionStoreJourneyType
-    }
+    private suspend fun journeyType(): JourneyType =
+        try {
+            sessionStore.read().value!!.journeyType
+        } catch (e: NullPointerException) {
+            // At this point in the journey, the session must be present
+            logger.error(tag, "No session found in Session Store")
+            throw e
+        }
 
     @AssistedFactory
     @ViewModelAssistedFactoryKey(SyncIdCheckViewModel::class)

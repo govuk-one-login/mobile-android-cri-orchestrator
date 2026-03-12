@@ -5,6 +5,7 @@ import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,20 +32,35 @@ class PersistentSessionStore(
     private val coroutineScope: CoroutineScope,
 ) : SessionStore,
     LogTagProvider {
+    private var initialise: Job
     private val cache: MutableStateFlow<Session?> = MutableStateFlow(null)
 
     init {
-        coroutineScope.launch {
-            load()
-        }
+        // Try loading the session from the secure store.
+        // Falls back to a destructive migration if the action fails.
+        initialise =
+            coroutineScope.launch {
+                runCatching {
+                    val stored = secureStore.retrieve(KEY_SESSION)
+                    val json = stored[KEY_SESSION] ?: return@runCatching null
+                    Json.decodeFromString<Session>(json)
+                }.onSuccess {
+                    cache.value = it
+                }.onFailure { error ->
+                    logger.error(tag, "Failed to load session from secure store, clearing data", error)
+                    deleteAll()
+                }
+            }
     }
 
-    override fun read(): StateFlow<Session?> {
+    override suspend fun read(): StateFlow<Session?> {
+        awaitInitialLoad()
         logger.info(tag, "Subscribing to session from session store")
         return cache.asStateFlow()
     }
 
     override suspend fun write(value: Session) {
+        awaitInitialLoad()
         logger.info(tag, "Writing to session store")
         runCatching {
             secureStore.upsert(KEY_SESSION, Json.encodeToString(value))
@@ -57,6 +73,7 @@ class PersistentSessionStore(
     }
 
     override suspend fun clear() {
+        awaitInitialLoad()
         logger.info(tag, "Clearing the session store")
         runCatching {
             secureStore.delete(KEY_SESSION)
@@ -67,15 +84,19 @@ class PersistentSessionStore(
         }
     }
 
-    override suspend fun updateToAborted() =
+    override suspend fun updateToAborted() {
+        awaitInitialLoad()
         updateState {
             advanceAtLeastAborted()
         }
+    }
 
-    override suspend fun updateToDocumentSelected() =
+    override suspend fun updateToDocumentSelected() {
+        awaitInitialLoad()
         updateState {
             advanceAtLeastDocumentSelected()
         }
+    }
 
     private suspend fun updateState(advance: Session.State.() -> Session.State) {
         val oldState = cache.value
@@ -89,22 +110,7 @@ class PersistentSessionStore(
         write(newState)
     }
 
-    /**
-     * Try loading the session from the secure store.
-     *
-     * Falls back to a destructive migration if the action fails.
-     */
-    private suspend fun load(): Session? =
-        runCatching {
-            val stored = secureStore.retrieve(KEY_SESSION)
-            val json = stored[KEY_SESSION] ?: return null
-            Json.decodeFromString<Session>(json)
-        }.onSuccess {
-            cache.value = it
-        }.onFailure { error ->
-            logger.error(tag, "Failed to load session from secure store, clearing data", error)
-            deleteAll()
-        }.getOrNull()
+    private suspend fun awaitInitialLoad() = initialise.join()
 
     private suspend fun deleteAll() {
         runCatching {

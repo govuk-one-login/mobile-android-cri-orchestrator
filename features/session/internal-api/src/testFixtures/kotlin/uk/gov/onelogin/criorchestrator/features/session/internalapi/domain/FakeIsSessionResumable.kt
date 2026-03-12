@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.asStateFlow
 class FakeIsSessionResumable : IsSessionResumable {
     val value = MutableStateFlow(false)
 
-    override fun invoke(): Flow<Boolean> = value.asStateFlow()
+    override suspend fun invoke(): Flow<Boolean> = value.asStateFlow()
 }

@@ -11,7 +11,7 @@ interface SessionStore {
     /**
      * Get the last known state of the user's ID Check session.
      */
-    fun read(): StateFlow<Session?>
+    suspend fun read(): StateFlow<Session?>
 
     /**
      * Store the user's ID Check session.

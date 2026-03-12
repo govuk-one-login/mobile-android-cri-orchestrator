@@ -8,7 +8,7 @@ class FakeSessionStore(
 ) : SessionStore {
     private val sessionFlow: MutableStateFlow<Session?> = MutableStateFlow(session)
 
-    override fun read(): StateFlow<Session?> = sessionFlow
+    override suspend fun read(): StateFlow<Session?> = sessionFlow
 
     override suspend fun write(value: Session) {
         sessionFlow.value = value

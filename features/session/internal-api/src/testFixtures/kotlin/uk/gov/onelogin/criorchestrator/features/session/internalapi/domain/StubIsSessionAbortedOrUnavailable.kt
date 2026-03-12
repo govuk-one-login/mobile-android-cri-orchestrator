@@ -8,5 +8,5 @@ class StubIsSessionAbortedOrUnavailable(
 ) : IsSessionAbortedOrUnavailable {
     val state = MutableStateFlow<Boolean>(isSessionAbortedOrUnavailable)
 
-    override fun invoke(): Flow<Boolean> = state
+    override suspend fun invoke(): Flow<Boolean> = state
 }
