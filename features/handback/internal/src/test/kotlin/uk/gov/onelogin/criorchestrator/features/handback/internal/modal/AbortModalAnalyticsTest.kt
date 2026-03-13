@@ -64,7 +64,7 @@ class AbortModalAnalyticsTest {
         val expectedEvent =
             TrackEvent
                 .Button(
-                    text = context.getString(R.string.handback_cancelbutton_analytics_text),
+                    text = context.getString(R.string.cancel_button_analytics_text),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
 
@@ -99,7 +99,7 @@ class AbortModalAnalyticsTest {
         val expectedEvent =
             TrackEvent
                 .Button(
-                    text = context.getString(R.string.handback_cancelbutton_analytics_text,
+                    text = context.getString(R.string.cancel_button_analytics_text),
                     params = HandbackAnalytics.requiredParameters,
                 ).asLegacyEvent()
 

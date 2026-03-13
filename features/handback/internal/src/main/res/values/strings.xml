@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="handback_cancelbutton_analytics_text" translatable="false">Cancel</string>
+    <string name="cancel_button_analytics_text" translatable="false">Cancel</string>
 
     <string name="handback_unrecoverableerror_title">Sorry, there’s a problem</string>
     <string name="handback_unrecoverableerror_body1">You cannot use this app to prove your identity at the moment.</string>
