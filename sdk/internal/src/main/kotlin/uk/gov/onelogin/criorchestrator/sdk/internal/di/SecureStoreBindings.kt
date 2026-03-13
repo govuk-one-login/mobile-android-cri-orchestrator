@@ -8,7 +8,7 @@ import dev.zacsweers.metro.SingleIn
 import uk.gov.android.securestore.AccessControlLevel
 import uk.gov.android.securestore.SecureStorageConfigurationAsync
 import uk.gov.android.securestore.SharedPrefsStoreAsyncV2
-import uk.gov.onelogin.criorchestrator.features.session.internal.data.SessionSecureStoreBindings.STORE_ID
+import uk.gov.onelogin.criorchestrator.features.session.internal.data.SessionStoreBindings.STORE_ID
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 import uk.gov.onelogin.criorchestrator.libraries.store.securestore.InMemorySecureStoreAsyncV2
 

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class InMemoryStore<T> : Store<T> {
+class FakePersistentStore<T> : Store<T> {
     private val state: MutableStateFlow<T?> = MutableStateFlow(null)
 
     override suspend fun read(): StateFlow<T?> = state.asStateFlow()

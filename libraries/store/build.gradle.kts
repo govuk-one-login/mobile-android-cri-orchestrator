@@ -9,6 +9,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.uk.gov.logging.api)
+
+    testImplementation(libs.uk.gov.logging.testdouble)
+
+    testFixturesImplementation(libs.androidx.appcompat)
 }
 
 mavenPublishingConfig {

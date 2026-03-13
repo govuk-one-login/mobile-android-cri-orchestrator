@@ -1,5 +1,6 @@
-package uk.gov.onelogin.criorchestrator.features.session.internal
+package uk.gov.onelogin.criorchestrator.libraries.store.securestore
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import uk.gov.android.securestore.SecureStorageConfigurationAsync
 import uk.gov.android.securestore.SecureStoreAsyncV2
@@ -17,7 +18,7 @@ class FakeSecureStoreAsyncV2 : SecureStoreAsyncV2 {
     var throwOnDeleteAll = false
 
     override fun init(
-        context: android.content.Context,
+        context: Context,
         configurationAsync: SecureStorageConfigurationAsync,
     ) {
         // No-op for tests

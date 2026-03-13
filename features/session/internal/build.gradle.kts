@@ -38,6 +38,7 @@ dependencies {
     testImplementation(testFixtures(projects.features.config.internalApi))
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(testFixtures(projects.libraries.androidUtils))
+    testImplementation(testFixtures(projects.libraries.store))
     testImplementation(testFixtures(projects.features.session.internalApi))
 }
 
