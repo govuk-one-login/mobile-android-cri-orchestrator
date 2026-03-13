@@ -8,7 +8,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheck
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 object TestWrapperConfig {
-    fun provideConfig(resources: Resources) =
+    fun baseConfig(resources: Resources) =
         Config(
             entries =
                 persistentListOf(

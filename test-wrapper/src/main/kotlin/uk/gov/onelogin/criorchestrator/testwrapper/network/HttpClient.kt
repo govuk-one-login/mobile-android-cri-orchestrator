@@ -48,7 +48,7 @@ internal class TestWrapperAuthenticationProvider(
     private val subjectTokenRepository: SubjectTokenRepository,
 ) : AuthenticationProvider {
     override suspend fun fetchBearerToken(scope: String): AuthenticationResponse {
-        val sub = subjectTokenRepository.subjectToken
+        val sub = subjectTokenRepository.read().value
         return if (sub == null) {
             stubAuthenticationProvider.fetchBearerToken(scope)
         } else {

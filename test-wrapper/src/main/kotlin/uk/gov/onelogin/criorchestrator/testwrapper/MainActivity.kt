@@ -3,7 +3,9 @@ package uk.gov.onelogin.criorchestrator.testwrapper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.rememberCoroutineScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
@@ -26,12 +28,25 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             GdsTheme {
+                val coroutineScope = rememberCoroutineScope()
                 MainContent(
                     criOrchestratorSdk = criOrchestratorSdk,
-                    onSubUpdateRequest = { subjectTokenRepository.subjectToken = it },
+                    onSubUpdateRequest = {
+                        coroutineScope.launch {
+                            onSubjectToken(it)
+                        }
+                    },
                 )
             }
         }
         analyticsLogger.logEvent(true, homeScreenViewEvent(this))
+    }
+
+    private suspend fun onSubjectToken(subjectToken: String?) {
+        if (subjectToken == null) {
+            subjectTokenRepository.clear()
+        } else {
+            subjectTokenRepository.write(subjectToken)
+        }
     }
 }

@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.uk.gov.logging.testdouble)
     implementation(libs.uk.gov.networking)
     implementation(platform(testwrapperlibs.firebase.bom))
+    implementation(projects.libraries.store)
     implementation(projects.features.config.publicApi)
     implementation(projects.features.dev.publicApi)
     implementation(projects.sdk.publicApi)
@@ -38,6 +39,7 @@ dependencies {
 
     testImplementation(platform(libs.org.junit.bom))
     testImplementation(testFixtures(projects.sdk.publicApi))
+    testImplementation(testwrapperlibs.hilt.android.testing)
 
     testFixturesImplementation(libs.androidx.ui.test.junit4)
 

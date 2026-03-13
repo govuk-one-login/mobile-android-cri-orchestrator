@@ -9,7 +9,7 @@ import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.creat
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.rememberCriOrchestrator
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
-import uk.gov.onelogin.criorchestrator.testwrapper.TestWrapperConfig
+import uk.gov.onelogin.criorchestrator.testwrapper.hilt.CriOrchestratorSdkConfigHiltModule
 import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
 
 @Composable
@@ -19,7 +19,7 @@ internal fun rememberPreviewCriOrchestratorGraph(): CriOrchestratorGraph =
             CriOrchestratorSdk.create(
                 authenticatedHttpClient = createStubHttpClient(),
                 analyticsLogger = FakeAnalyticsLogger(),
-                initialConfig = TestWrapperConfig.provideConfig(LocalResources.current),
+                initialConfig = CriOrchestratorSdkConfigHiltModule.provideInitialConfig(LocalResources.current),
                 logger = SystemLogger(),
                 applicationContext = LocalContext.current.applicationContext,
             ),
