@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.handback.internal.R
+import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.IsSessionAbortedOrUnavailable
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
@@ -15,6 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 @ViewModelKey(AbortModalViewModel::class)
 class AbortModalViewModel(
     private val isSessionAbortedOrUnavailable: IsSessionAbortedOrUnavailable,
+    private val analytics: HandbackAnalytics,
 ) : ViewModel() {
     private val _isAborted = MutableStateFlow<Boolean>(false)
     val isAborted: Flow<Boolean> = _isAborted.asStateFlow()
@@ -25,5 +28,9 @@ class AbortModalViewModel(
                 _isAborted.value = value
             }
         }
+    }
+
+    fun onCloseClick() {
+        analytics.trackButtonEvent(R.string.cancel_button_analytics_text)
     }
 }

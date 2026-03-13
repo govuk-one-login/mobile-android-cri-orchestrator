@@ -29,6 +29,7 @@ fun AbortModal(
     val isAbortedState = abortModalViewModel.isAborted.collectAsState(false)
 
     val handleDismissRequest = {
+        abortModalViewModel.onCloseClick()
         if (isAbortedState.value) {
             onFinish()
         } else {

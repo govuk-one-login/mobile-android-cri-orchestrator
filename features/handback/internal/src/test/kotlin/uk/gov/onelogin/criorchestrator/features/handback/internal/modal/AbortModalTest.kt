@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubIsSessionAbortedOrUnavailable
 
@@ -37,6 +38,7 @@ class AbortModalTest {
         val abortModalViewModel =
             AbortModalViewModel(
                 isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+                analytics = mock(),
             )
         composeTestRule.setContent {
             AbortModal(
@@ -63,6 +65,7 @@ class AbortModalTest {
         val abortModalViewModel =
             AbortModalViewModel(
                 isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+                analytics = mock(),
             )
         composeTestRule.setContent {
             AbortModal(
