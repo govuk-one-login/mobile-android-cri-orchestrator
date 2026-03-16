@@ -1,8 +1,11 @@
 name: Check PR metadata
 
-# disabled for testing
 on:
-  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
