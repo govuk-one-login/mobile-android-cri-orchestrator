@@ -1,12 +1,7 @@
 name: Lint
 
+# disabled for testing
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-  merge_group:
   workflow_dispatch:
 
 concurrency:

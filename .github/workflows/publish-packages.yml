@@ -4,11 +4,12 @@ on:
   workflow_run:
     workflows: [Bump version]
     types: [completed]
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
+  # disabled for testing
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
 
 env:
   WORKFLOW_OUT_DIR: ./workflow-outputs
