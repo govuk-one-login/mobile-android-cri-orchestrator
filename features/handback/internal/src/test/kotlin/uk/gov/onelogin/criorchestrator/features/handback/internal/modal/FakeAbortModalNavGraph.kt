@@ -13,6 +13,8 @@ object FakeAbortModalNavGraph {
             onFinish: () -> Unit,
         ) {
             composable<AbortDestinations.ConfirmAbortMobile> {}
+            composable<AbortDestinations.ConfirmAbortDesktop> {}
+            composable<AbortDestinations.AbortedReturnToDesktopWeb> {}
         }
     }
 }

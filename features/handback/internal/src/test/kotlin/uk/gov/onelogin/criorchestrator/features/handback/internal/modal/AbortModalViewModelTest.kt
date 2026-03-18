@@ -5,6 +5,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubIsSessionAbortedOrUnavailable
 
 class AbortModalViewModelTest {
@@ -12,6 +13,7 @@ class AbortModalViewModelTest {
     private val viewModel =
         AbortModalViewModel(
             isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+            analytics = mock(),
         )
 
     @Test
