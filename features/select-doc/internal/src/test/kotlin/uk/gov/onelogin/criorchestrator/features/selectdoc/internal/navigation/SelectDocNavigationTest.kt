@@ -48,6 +48,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelFactoryBindings
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
+import java.time.Clock
 
 @RunWith(AndroidJUnit4::class)
 class SelectDocNavigationTest {
@@ -300,6 +302,8 @@ interface TestGraph : ViewModelGraph {
             nfcChecker: NfcChecker = NfcChecker { true },
             @Provides
             resourceProvider: ResourceProvider = FakeResourceProvider(),
+            @Provides
+            clock: Clock = testClock(),
         ): TestGraph
     }
 }

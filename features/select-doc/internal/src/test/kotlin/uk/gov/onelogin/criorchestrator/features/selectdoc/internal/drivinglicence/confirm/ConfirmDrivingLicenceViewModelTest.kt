@@ -10,15 +10,19 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 
 @ExtendWith(MainDispatcherExtension::class)
 class ConfirmDrivingLicenceViewModelTest {
     private val analyticsLogger = mock<SelectDocAnalytics>()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private val viewModel by lazy {
         ConfirmDrivingLicenceViewModel(
             analytics = analyticsLogger,
+            earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
         )
     }
 

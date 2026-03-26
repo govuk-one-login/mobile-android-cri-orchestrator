@@ -29,7 +29,9 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 
 @RunWith(AndroidJUnit4::class)
 class SelectDrivingLicenceScreenTest {
@@ -44,12 +46,14 @@ class SelectDrivingLicenceScreenTest {
 
     private val navController: NavController = mock()
     private val nfcChecker = mock<NfcChecker>()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private val viewModel: SelectDrivingLicenceViewModel by lazy {
         spy(
             SelectDrivingLicenceViewModel(
                 analytics = mock(),
                 nfcChecker = nfcChecker,
+                earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
             ),
         )
     }

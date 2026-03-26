@@ -17,9 +17,11 @@ import uk.gov.logging.api.v3dot1.model.ViewEvent
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
@@ -34,6 +36,7 @@ class ConfirmDrivingLicenceScreenAnalyticsTest {
     val reportingAnalyticsLoggerRule = ReportingAnalyticsLoggerRule()
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val context: Context = ApplicationProvider.getApplicationContext()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private val continueButton =
         hasText(context.getString(R.string.confirmdocument_confirmbutton))
@@ -50,6 +53,7 @@ class ConfirmDrivingLicenceScreenAnalyticsTest {
     private val viewModel =
         ConfirmDrivingLicenceViewModel(
             analytics = analytics,
+            earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
         )
 
     @Test

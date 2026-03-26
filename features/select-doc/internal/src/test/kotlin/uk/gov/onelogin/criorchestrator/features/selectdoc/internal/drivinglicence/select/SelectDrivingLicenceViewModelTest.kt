@@ -15,17 +15,21 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.N
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
     private val analyticsLogger: SelectDocAnalytics = mock()
     private val nfcChecker = mock<NfcChecker>()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private val viewModel by lazy {
         SelectDrivingLicenceViewModel(
             analytics = analyticsLogger,
             nfcChecker = nfcChecker,
+            earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
         )
     }
 

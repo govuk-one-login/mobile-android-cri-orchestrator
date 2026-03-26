@@ -6,16 +6,28 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmDrivingLicenceViewModel::class)
 class ConfirmDrivingLicenceViewModel(
     private val analytics: SelectDocAnalytics,
+    earliestAcceptableExpiryDate: EarliestAcceptableDrivingLicenceExpiryDate,
 ) : ViewModel() {
+    private val _state =
+        MutableStateFlow(
+            ConfirmDrivingLicenceState(
+                earliestExpiryDate = earliestAcceptableExpiryDate(),
+            ),
+        )
+    val state: StateFlow<ConfirmDrivingLicenceState> = _state
+
     private val _action = MutableSharedFlow<ConfirmDrivingLicenceAction.NavigateToSyncIdCheck>()
     val action: Flow<ConfirmDrivingLicenceAction.NavigateToSyncIdCheck> = _action
 

@@ -20,11 +20,15 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmDrivingLicenceScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private lateinit var image: SemanticsMatcher
     private lateinit var confirmButton: SemanticsMatcher
@@ -36,6 +40,7 @@ class ConfirmDrivingLicenceScreenTest {
         spy(
             ConfirmDrivingLicenceViewModel(
                 analytics = mock(),
+                earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
             ),
         )
 
