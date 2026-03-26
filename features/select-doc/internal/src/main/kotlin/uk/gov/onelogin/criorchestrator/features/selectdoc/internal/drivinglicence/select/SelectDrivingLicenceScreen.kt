@@ -30,10 +30,12 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
 import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
 import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
+import uk.gov.android.ui.componentsv2.warning.GdsWarningText
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.util.date.formatGdsDate
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
@@ -78,6 +80,7 @@ internal fun SelectDrivingLicenceScreen(
         onContinueClicked = viewModel::onContinueClicked,
         onReadMoreClick = viewModel::onReadMoreClick,
         displayReadMoreButton = state.displayReadMoreButton,
+        expiryDateText = state.expiryDate.formatGdsDate(),
     )
 }
 
@@ -88,6 +91,7 @@ internal fun SelectDrivingLicenceScreenContent(
     onContinueClicked: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     displayReadMoreButton: Boolean,
+    expiryDateText: String,
     modifier: Modifier = Modifier,
 ) {
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -109,6 +113,15 @@ internal fun SelectDrivingLicenceScreenContent(
                     Text(
                         text = stringResource(R.string.selectdocument_drivinglicence_body),
                         style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                    )
+                }
+                item {
+                    GdsWarningText(
+                        stringResource(
+                            R.string.selectdocument_drivinglicence_expired_warning,
+                            expiryDateText,
+                        ),
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
@@ -184,6 +197,7 @@ internal fun PreviewDrivingLicenceSelectionScreen(
         SelectDrivingLicenceScreenContent(
             onReadMoreClick = { },
             displayReadMoreButton = params.displayReadMoreButton,
+            expiryDateText = "26 December 2025",
             onContinueClicked = {},
         )
     }

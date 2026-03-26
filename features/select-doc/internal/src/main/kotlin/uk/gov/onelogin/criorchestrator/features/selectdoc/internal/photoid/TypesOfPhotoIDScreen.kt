@@ -9,11 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -31,23 +33,32 @@ import uk.gov.android.ui.theme.spacingSingle
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.components.FullWidthImage
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.util.date.formatGdsDate
 
 @Composable
 internal fun TypesOfPhotoIDScreen(
     viewModel: TypesOfPhotoIDViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
 
-    TypesOfPhotoIDScreenContent(modifier)
+    TypesOfPhotoIDScreenContent(
+        expiryDateText = state.expiryDate.formatGdsDate(),
+        modifier = modifier,
+    )
 }
 
 @Composable
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
-internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
+internal fun TypesOfPhotoIDScreenContent(
+    expiryDateText: String,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
@@ -140,7 +151,7 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                 item {
                     PhotoIDInformation(
                         title = stringResource(R.string.typesofphotoid_drivinglicence_title),
-                        body = stringResource(R.string.typesofphotoid_drivinglicence_body),
+                        body = stringResource(R.string.typesofphotoid_drivinglicence_body_2),
                         image = {
                             FullWidthImage(
                                 painter = painterResource(R.drawable.driving_licence_small),
@@ -148,12 +159,21 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                                     stringResource(R.string.typesofphotoid_drivinglicence_imagedescription),
                             )
                         },
+                        preBody = {
+                            Text(
+                                text = stringResource(R.string.typesofphotoid_drivinglicence_body_1),
+                                modifier = Modifier.padding(horizontal = horizontalPadding),
+                            )
+                        },
                         bulletedList = {
                             PhotoIDBulletedList(
                                 stringResource(R.string.typesofphotoid_drivinglicence_bulletbody),
                                 persistentListOf(
                                     ListItem(
-                                        stringResource(R.string.typesofphotoid_drivinglicence_bullet1),
+                                        stringResource(
+                                            R.string.typesofphotoid_drivinglicence_bullet1,
+                                            expiryDateText,
+                                        ),
                                     ),
                                     ListItem(
                                         stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
@@ -179,6 +199,7 @@ private fun PhotoIDInformation(
     horizontalPadding: Dp,
     modifier: Modifier = Modifier,
     image: @Composable () -> Unit = { },
+    preBody: @Composable () -> Unit = { },
     bulletedList: @Composable () -> Unit = { },
 ) {
     Column(
@@ -198,6 +219,8 @@ private fun PhotoIDInformation(
         Column(
             verticalArrangement = Arrangement.spacedBy(spacingDouble),
         ) {
+            preBody()
+
             bulletedList()
 
             Text(
@@ -233,6 +256,8 @@ private fun PhotoIDBulletedList(
 @Composable
 internal fun PreviewTypesOfPhotoIDScreen() {
     GdsTheme {
-        TypesOfPhotoIDScreenContent()
+        TypesOfPhotoIDScreenContent(
+            expiryDateText = "26 December 2025",
+        )
     }
 }

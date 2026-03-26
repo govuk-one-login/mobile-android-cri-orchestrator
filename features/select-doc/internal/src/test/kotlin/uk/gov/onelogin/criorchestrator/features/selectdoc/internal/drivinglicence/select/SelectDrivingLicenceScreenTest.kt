@@ -29,6 +29,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.OldestDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
@@ -50,6 +51,7 @@ class SelectDrivingLicenceScreenTest {
             SelectDrivingLicenceViewModel(
                 analytics = mock(),
                 nfcChecker = nfcChecker,
+                oldestDrivingLicenceExpiryDate = OldestDrivingLicenceExpiryDate(),
             ),
         )
     }

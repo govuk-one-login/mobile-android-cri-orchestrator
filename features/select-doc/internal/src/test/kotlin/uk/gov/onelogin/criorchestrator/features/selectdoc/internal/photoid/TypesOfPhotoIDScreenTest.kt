@@ -16,6 +16,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.OldestDrivingLicenceExpiryDate
 
 @RunWith(AndroidJUnit4::class)
 class TypesOfPhotoIDScreenTest {
@@ -31,6 +32,7 @@ class TypesOfPhotoIDScreenTest {
         spy(
             TypesOfPhotoIDViewModel(
                 analytics = mock(),
+                oldestDrivingLicenceExpiryDate = OldestDrivingLicenceExpiryDate(),
             ),
         )
 

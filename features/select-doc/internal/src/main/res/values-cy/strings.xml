@@ -94,7 +94,8 @@
 
     <!--    Driving Licence strings    -->
     <string name="selectdocument_drivinglicence_title">A oes gennych drwydded yrru cerdyn-llun y DU?</string>
-    <string name="selectdocument_drivinglicence_body">Gallwch ddefnyddio trwydded yrru lawn neu dros dro y DU.\n\nRhaid i’ch trwydded yrru y DU fod yn gerdyn-llun plastig, nid trwydded bapur.\n\nNi allwch ddefnyddio eich trwydded yrru y DU os yw wedi dod i ben.</string>
+    <string name="selectdocument_drivinglicence_body">Gallwch ddefnyddio trwydded yrru lawn neu dros dro y DU.\n\nRhaid i\u2019ch trwydded yrru y DU fod yn gerdyn-llun plastig, nid trwydded bapur.</string>
+    <string name="selectdocument_drivinglicence_expired_warning">Gallwch ddefnyddio trwydded yrru sydd wedi dod i ben os daeth i ben ar neu ar ôl %1$s a cafodd ei chyhoeddi gan DVLA.</string>
     <string name="selectdocument_drivinglicence_readmore_button">Darllenwch fwy am y mathau o ID gyda llun y gallwch eu defnyddio</string>
 
     <string name="selectdocument_drivinglicence_selection_yes">Oes</string>

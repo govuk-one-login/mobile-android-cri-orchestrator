@@ -20,6 +20,7 @@ import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.OldestDrivingLicenceExpiryDate
 
 @RunWith(AndroidJUnit4::class)
 class ConfirmDrivingLicenceScreenTest {
@@ -36,6 +37,7 @@ class ConfirmDrivingLicenceScreenTest {
         spy(
             ConfirmDrivingLicenceViewModel(
                 analytics = mock(),
+                oldestDrivingLicenceExpiryDate = OldestDrivingLicenceExpiryDate(),
             ),
         )
 

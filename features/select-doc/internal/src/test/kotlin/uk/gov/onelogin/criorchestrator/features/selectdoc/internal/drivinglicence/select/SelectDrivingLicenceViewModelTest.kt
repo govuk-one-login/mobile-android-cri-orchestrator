@@ -15,6 +15,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.N
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.OldestDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
@@ -26,6 +27,7 @@ class SelectDrivingLicenceViewModelTest {
         SelectDrivingLicenceViewModel(
             analytics = analyticsLogger,
             nfcChecker = nfcChecker,
+            oldestDrivingLicenceExpiryDate = OldestDrivingLicenceExpiryDate(),
         )
     }
 
