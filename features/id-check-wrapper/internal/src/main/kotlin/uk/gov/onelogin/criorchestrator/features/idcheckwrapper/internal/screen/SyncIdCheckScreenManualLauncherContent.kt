@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.dropUnlessResumed
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -15,9 +16,9 @@ import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
-import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
-import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
-import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadios
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadiosTitle
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
@@ -66,15 +67,17 @@ internal fun SyncIdCheckScreenManualLauncherContent(
                 )
             }
             item {
-                GdsSelection(
+                GdsRadios(
                     title =
-                        RadioSelectionTitle(
+                        GdsRadiosTitle(
                             text = "Select an ID check result",
-                            titleType = TitleType.BoldText,
+                            style = GdsHeadingStyle.Body,
+                            fontWeight = FontWeight.Bold,
                         ),
                     items = exitStateOptions,
                     selectedItem = selectedExitState,
                     onItemSelected = onExitStateSelected,
+                    modifier = Modifier.padding(horizontalPadding),
                 )
             }
         },
