@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
@@ -21,8 +22,9 @@ import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
-import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
-import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadios
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadiosTitle
 import uk.gov.android.ui.componentsv2.list.GdsBulletedList
 import uk.gov.android.ui.componentsv2.list.ListItem
 import uk.gov.android.ui.componentsv2.list.ListTitle
@@ -138,7 +140,7 @@ internal fun SelectBrpScreenContent(
                 }
 
                 item {
-                    GdsSelection(
+                    GdsRadios(
                         items =
                             SelectBrpConstants.selectionItems
                                 .map { stringResource(it) }
@@ -146,10 +148,12 @@ internal fun SelectBrpScreenContent(
                         selectedItem = selectedItem,
                         onItemSelected = { selectedItem = it },
                         title =
-                            RadioSelectionTitle(
+                            GdsRadiosTitle(
                                 stringResource(R.string.selectdocument_brp_selection_title),
-                                uk.gov.android.ui.componentsv2.inputs.radio.TitleType.BoldText,
+                                GdsHeadingStyle.Body,
+                                fontWeight = FontWeight.Bold,
                             ),
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
             },

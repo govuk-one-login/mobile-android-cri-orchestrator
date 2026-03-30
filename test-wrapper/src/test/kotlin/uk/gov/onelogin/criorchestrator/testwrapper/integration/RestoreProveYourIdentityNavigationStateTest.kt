@@ -11,6 +11,7 @@ import androidx.compose.ui.test.isHeading
 import androidx.compose.ui.test.isSelectable
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -97,7 +98,8 @@ class RestoreProveYourIdentityNavigationStateTest {
             composeTestRule.goBack()
 
             composeTestRule
-                .onNode(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
+                .onAllNodes(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
+                .onFirst()
                 // It's not displayed because we scrolled down earlier
                 .assertExists()
 

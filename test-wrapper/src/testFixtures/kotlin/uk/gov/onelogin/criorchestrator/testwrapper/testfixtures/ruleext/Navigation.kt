@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isHeading
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -42,7 +43,8 @@ fun ComposeTestRule.continueToSelectDocument() {
 }
 
 fun ComposeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence: Boolean) {
-    onNode(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
+    onAllNodes(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
+        .onFirst()
         .assertIsDisplayed()
 
     val selection =
