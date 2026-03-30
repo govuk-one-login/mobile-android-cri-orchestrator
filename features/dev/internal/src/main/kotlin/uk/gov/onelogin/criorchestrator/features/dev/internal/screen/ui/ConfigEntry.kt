@@ -26,13 +26,14 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kotlinx.collections.immutable.ImmutableList
-import uk.gov.android.ui.componentsv2.inputs.radio.GdsSelection
-import uk.gov.android.ui.componentsv2.inputs.radio.RadioSelectionTitle
-import uk.gov.android.ui.componentsv2.inputs.radio.TitleType
+import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadios
+import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadiosTitle
 import uk.gov.android.ui.theme.m3.GdsLocalColorScheme
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3.Switch
 import uk.gov.android.ui.theme.m3.defaultColors
+import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.OptionConfigKey
 
@@ -227,18 +228,18 @@ private fun ConfigOptionsEntryDialog(
                     containerColor = MaterialTheme.colorScheme.background,
                 ),
         ) {
-            GdsSelection(
+            GdsRadios(
                 title =
-                    RadioSelectionTitle(
+                    GdsRadiosTitle(
                         text = name,
-                        titleType = TitleType.Heading,
+                        style = GdsHeadingStyle.Title3,
                     ),
                 items = options,
                 selectedItem = options.indexOf(value),
                 onItemSelected = {
                     onValueChange(options[it])
                 },
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(spacingDouble),
             )
         }
     }
