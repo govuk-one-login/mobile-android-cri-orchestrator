@@ -13,6 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
+import java.time.LocalDate
 
 @ExtendWith(MainDispatcherExtension::class)
 class ConfirmDrivingLicenceViewModelTest {
@@ -25,6 +26,19 @@ class ConfirmDrivingLicenceViewModelTest {
             earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
         )
     }
+
+    @Test
+    fun `it emits an initial state`() =
+        runTest {
+            viewModel.state.test {
+                assertEquals(
+                    ConfirmDrivingLicenceState(
+                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                    ),
+                    awaitItem(),
+                )
+            }
+        }
 
     @Test
     fun `when screen starts, it sends analytics`() {

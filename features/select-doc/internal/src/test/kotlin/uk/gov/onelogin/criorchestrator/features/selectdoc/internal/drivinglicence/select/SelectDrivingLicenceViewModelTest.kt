@@ -18,6 +18,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
+import java.time.LocalDate
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
@@ -37,6 +38,20 @@ class SelectDrivingLicenceViewModelTest {
     fun setUp() {
         given(nfcChecker.hasNfc()).willReturn(false)
     }
+
+    @Test
+    fun `it emits the initial state`() =
+        runTest {
+            viewModel.state.test {
+                assertEquals(
+                    SelectDrivingLicenseState(
+                        displayReadMoreButton = false,
+                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                    ),
+                    awaitItem(),
+                )
+            }
+        }
 
     @Test
     fun `when screen starts, it sends analytics`() {
