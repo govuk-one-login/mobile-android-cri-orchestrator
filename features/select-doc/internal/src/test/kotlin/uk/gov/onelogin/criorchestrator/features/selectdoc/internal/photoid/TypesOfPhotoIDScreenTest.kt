@@ -3,10 +3,9 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 import android.content.Context
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onParent
-import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.swipeUp
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
@@ -16,6 +15,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 
 @RunWith(AndroidJUnit4::class)
 class TypesOfPhotoIDScreenTest {
@@ -27,10 +28,12 @@ class TypesOfPhotoIDScreenTest {
     private lateinit var brpImage: SemanticsMatcher
     private lateinit var drivingLicenceImage: SemanticsMatcher
 
+    private val earliestAcceptableDrivingLicenceExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val viewModel =
         spy(
             TypesOfPhotoIDViewModel(
                 analytics = mock(),
+                earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
             ),
         )
 
@@ -58,32 +61,13 @@ class TypesOfPhotoIDScreenTest {
     }
 
     @Test
-    fun `when talkback is enabled, the image description is read correctly`() {
+    fun `images have content descriptions for talkback`() {
         composeTestRule
-            .onNode(ukPassportImage)
-            .assertExists()
-
-        composeTestRule
-            .onNode(nonUKPassportImage)
-            .assertExists()
-
-        swipeToAdditionalContent()
-
-        composeTestRule
-            .onNode(brpImage)
-            .assertExists()
-
-        composeTestRule
-            .onNode(drivingLicenceImage)
-            .assertExists()
-    }
-
-    private fun swipeToAdditionalContent() {
-        composeTestRule
-            .onNode(nonUKPassportImage)
-            .onParent()
-            .performTouchInput {
-                swipeUp()
-            }
+            .onNode(hasScrollToNodeAction())
+            // Scroll to each image matching by the content description
+            .performScrollToNode(ukPassportImage)
+            .performScrollToNode(nonUKPassportImage)
+            .performScrollToNode(brpImage)
+            .performScrollToNode(drivingLicenceImage)
     }
 }

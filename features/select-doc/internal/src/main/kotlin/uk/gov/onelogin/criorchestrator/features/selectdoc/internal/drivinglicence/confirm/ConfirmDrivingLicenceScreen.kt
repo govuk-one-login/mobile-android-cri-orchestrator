@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -19,13 +21,16 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
+import uk.gov.android.ui.componentsv2.date.formatFullDate
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
+import uk.gov.android.ui.componentsv2.warning.GdsWarningText
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.previewEarliestAcceptableDrivingLicenceExpiryDateText
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
 
 @Composable
@@ -34,6 +39,8 @@ internal fun ConfirmDrivingLicenceScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -49,6 +56,7 @@ internal fun ConfirmDrivingLicenceScreen(
     ConfirmDrivingLicenceScreenContent(
         title = stringResource(ConfirmDrivingLicenceConstants.titleId),
         confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
+        earliestExpiryDateText = state.earliestExpiryDate.formatFullDate(),
         onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
@@ -58,6 +66,7 @@ internal fun ConfirmDrivingLicenceScreen(
 internal fun ConfirmDrivingLicenceScreenContent(
     title: String,
     confirmButtonText: String,
+    earliestExpiryDateText: String,
     onPrimaryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -77,6 +86,15 @@ internal fun ConfirmDrivingLicenceScreenContent(
                 item {
                     Text(
                         text = stringResource(R.string.confirmdocument_drivinglicence_body_1),
+                        modifier = Modifier.padding(horizontal = horizontalPadding),
+                    )
+                }
+                item {
+                    GdsWarningText(
+                        stringResource(
+                            R.string.drivinglicence_expired_warning,
+                            earliestExpiryDateText,
+                        ),
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
@@ -117,6 +135,7 @@ internal fun PreviewConfirmDrivingLicenceScreen() {
         ConfirmDrivingLicenceScreenContent(
             title = stringResource(ConfirmDrivingLicenceConstants.titleId),
             confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
+            earliestExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
             onPrimaryClick = { },
         )
     }

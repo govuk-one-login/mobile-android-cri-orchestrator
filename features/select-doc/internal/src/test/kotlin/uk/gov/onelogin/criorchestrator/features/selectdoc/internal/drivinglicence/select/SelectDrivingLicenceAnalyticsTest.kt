@@ -22,9 +22,11 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.N
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
 import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
@@ -44,6 +46,7 @@ class SelectDrivingLicenceAnalyticsTest {
     private val yesOption = hasText(context.getString(R.string.selectdocument_drivinglicence_selection_yes))
 
     private val nfcChecker = mock<NfcChecker>()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val navController: NavController = mock()
 
     private val analytics =
@@ -60,6 +63,7 @@ class SelectDrivingLicenceAnalyticsTest {
             SelectDrivingLicenceViewModel(
                 analytics = analytics,
                 nfcChecker = nfcChecker,
+                earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
             ),
         )
     }

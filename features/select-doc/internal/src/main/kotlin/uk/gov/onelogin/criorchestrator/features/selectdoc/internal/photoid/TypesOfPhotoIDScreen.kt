@@ -2,21 +2,23 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import uk.gov.android.ui.componentsv2.date.formatFullDate
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
@@ -31,23 +33,32 @@ import uk.gov.android.ui.theme.spacingSingle
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.components.FullWidthImage
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.previewEarliestAcceptableDrivingLicenceExpiryDateText
 
 @Composable
 internal fun TypesOfPhotoIDScreen(
     viewModel: TypesOfPhotoIDViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
 
-    TypesOfPhotoIDScreenContent(modifier)
+    TypesOfPhotoIDScreenContent(
+        drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+        modifier = modifier,
+    )
 }
 
 @Composable
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
-internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
+internal fun TypesOfPhotoIDScreenContent(
+    drivingLicenceExpiryDateText: String,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
@@ -72,167 +83,197 @@ internal fun TypesOfPhotoIDScreenContent(modifier: Modifier = Modifier) {
                     )
                 }
 
-                item {
-                    PhotoIDInformation(
-                        title = stringResource(R.string.typesofphotoid_ukpassport_title),
-                        body = stringResource(R.string.typesofphotoid_ukpassport_body),
-                        image = {
-                            FullWidthImage(
-                                painter = painterResource(R.drawable.uk_passport_small),
-                                contentDescription =
-                                    stringResource(R.string.typesofphotoid_ukpassport_imagedescription),
-                            )
-                        },
-                        horizontalPadding = horizontalPadding,
-                    )
-                }
+                ukPassportItems(horizontalPadding = horizontalPadding)
 
-                item {
-                    PhotoIDInformation(
-                        title = stringResource(R.string.typesofphotoid_nonukpassport_title),
-                        body = stringResource(R.string.typesofphotoid_nonukpassport_body),
-                        image = {
-                            FullWidthImage(
-                                painter = painterResource(R.drawable.nfc_passport_small),
-                                contentDescription =
-                                    stringResource(R.string.typesofphotoid_nonukpassport_imagedescription),
-                            )
-                        },
-                        bulletedList = {
-                            PhotoIDBulletedList(
-                                stringResource(R.string.typesofphotoid_nonukpassport_bulletbody),
-                                listOf(
-                                    R.string.typesofphotoid_nonukpassport_bullet1,
-                                    R.string.typesofphotoid_nonukpassport_bullet2,
-                                ).map { ListItem(stringResource(it)) }.toPersistentList(),
-                                Modifier.padding(horizontal = horizontalPadding),
-                            )
-                        },
-                        horizontalPadding = horizontalPadding,
-                    )
-                }
+                nonUkPassportItems(horizontalPadding = horizontalPadding)
 
-                item {
-                    PhotoIDInformation(
-                        title = stringResource(R.string.typesofphotoid_brp_title),
-                        body = stringResource(R.string.typesofphotoid_brp_body),
-                        image = {
-                            FullWidthImage(
-                                painter = painterResource(R.drawable.brp_small),
-                                contentDescription = stringResource(R.string.typesofphotoid_brp_imagedescription),
-                            )
-                        },
-                        bulletedList = {
-                            PhotoIDBulletedList(
-                                stringResource(R.string.typesofphotoid_brp_bulletbody),
-                                listOf(
-                                    R.string.typesofphotoid_brp_bullet1,
-                                    R.string.typesofphotoid_brp_bullet2,
-                                    R.string.typesofphotoid_brp_bullet3,
-                                ).map { ListItem(stringResource(it)) }.toPersistentList(),
-                                Modifier.padding(horizontal = horizontalPadding),
-                            )
-                        },
-                        horizontalPadding = horizontalPadding,
-                    )
-                }
+                ukBiometricPermitOrCardItems(horizontalPadding = horizontalPadding)
 
-                item {
-                    PhotoIDInformation(
-                        title = stringResource(R.string.typesofphotoid_drivinglicence_title),
-                        body = stringResource(R.string.typesofphotoid_drivinglicence_body),
-                        image = {
-                            FullWidthImage(
-                                painter = painterResource(R.drawable.driving_licence_small),
-                                contentDescription =
-                                    stringResource(R.string.typesofphotoid_drivinglicence_imagedescription),
-                            )
-                        },
-                        bulletedList = {
-                            PhotoIDBulletedList(
-                                stringResource(R.string.typesofphotoid_drivinglicence_bulletbody),
-                                persistentListOf(
-                                    ListItem(
-                                        stringResource(R.string.typesofphotoid_drivinglicence_bullet1),
-                                    ),
-                                    ListItem(
-                                        stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
-                                    ),
-                                ),
-                                Modifier.padding(horizontal = horizontalPadding),
-                            )
-                        },
-                        horizontalPadding = horizontalPadding,
-                    )
-                }
+                ukPhotoCardDrivingLicenceItems(
+                    horizontalPadding = horizontalPadding,
+                    earliestExpiryDateText = drivingLicenceExpiryDateText,
+                )
             },
         )
     }
 }
 
-@Composable
-@OptIn(UnstableDesignSystemAPI::class)
-@Suppress("LongParameterList")
-private fun PhotoIDInformation(
-    title: String,
-    body: String,
-    horizontalPadding: Dp,
-    modifier: Modifier = Modifier,
-    image: @Composable () -> Unit = { },
-    bulletedList: @Composable () -> Unit = { },
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(spacingSingle),
-    ) {
-        GdsHeading(
-            text = title,
-            textAlign = GdsHeadingAlignment.LeftAligned,
-            style = GdsHeadingStyle.Body,
-            modifier =
-                Modifier
-                    .padding(horizontal = horizontalPadding)
-                    .padding(top = spacingSingle),
+private fun LazyListScope.ukPassportItems(horizontalPadding: Dp) {
+    item {
+        Heading(
+            stringResource(R.string.typesofphotoid_ukpassport_title),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
         )
+    }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(spacingDouble),
-        ) {
-            bulletedList()
+    item {
+        Text(
+            text = stringResource(R.string.typesofphotoid_ukpassport_body),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
 
-            Text(
-                text = body,
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-            )
+    item {
+        FullWidthImage(
+            painter = painterResource(R.drawable.uk_passport_small),
+            contentDescription =
+                stringResource(R.string.typesofphotoid_ukpassport_imagedescription),
+        )
+    }
+}
 
-            image()
-        }
+private fun LazyListScope.nonUkPassportItems(horizontalPadding: Dp) {
+    item {
+        Heading(
+            stringResource(R.string.typesofphotoid_nonukpassport_title),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        GdsBulletedList(
+            title = listTitle(stringResource(R.string.typesofphotoid_nonukpassport_bulletbody)),
+            bulletListItems =
+                listOf(
+                    R.string.typesofphotoid_nonukpassport_bullet1,
+                    R.string.typesofphotoid_nonukpassport_bullet2,
+                ).map { ListItem(stringResource(it)) }.toPersistentList(),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        Text(
+            text = stringResource(R.string.typesofphotoid_nonukpassport_body),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        FullWidthImage(
+            painter = painterResource(R.drawable.nfc_passport_small),
+            contentDescription =
+                stringResource(R.string.typesofphotoid_nonukpassport_imagedescription),
+        )
+    }
+}
+
+private fun LazyListScope.ukBiometricPermitOrCardItems(horizontalPadding: Dp) {
+    item {
+        Heading(
+            stringResource(R.string.typesofphotoid_brp_title),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        GdsBulletedList(
+            title = listTitle(stringResource(R.string.typesofphotoid_brp_bulletbody)),
+            bulletListItems =
+                listOf(
+                    R.string.typesofphotoid_brp_bullet1,
+                    R.string.typesofphotoid_brp_bullet2,
+                    R.string.typesofphotoid_brp_bullet3,
+                ).map { ListItem(stringResource(it)) }.toPersistentList(),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        Text(
+            text = stringResource(R.string.typesofphotoid_brp_body),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        FullWidthImage(
+            painter = painterResource(R.drawable.brp_small),
+            contentDescription = stringResource(R.string.typesofphotoid_brp_imagedescription),
+        )
+    }
+}
+
+private fun LazyListScope.ukPhotoCardDrivingLicenceItems(
+    horizontalPadding: Dp,
+    earliestExpiryDateText: String,
+) {
+    item {
+        Heading(
+            stringResource(R.string.typesofphotoid_drivinglicence_title),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        Text(
+            text = stringResource(R.string.typesofphotoid_drivinglicence_body_1),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        Text(
+            text = stringResource(R.string.typesofphotoid_drivinglicence_body_2),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        GdsBulletedList(
+            title = listTitle(stringResource(R.string.typesofphotoid_drivinglicence_bulletbody)),
+            bulletListItems =
+                persistentListOf(
+                    ListItem(
+                        stringResource(
+                            R.string.typesofphotoid_drivinglicence_bullet1,
+                            earliestExpiryDateText,
+                        ),
+                    ),
+                    ListItem(
+                        stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
+                    ),
+                ),
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    }
+
+    item {
+        FullWidthImage(
+            painter = painterResource(R.drawable.driving_licence_small),
+            contentDescription =
+                stringResource(R.string.typesofphotoid_drivinglicence_imagedescription),
+        )
     }
 }
 
 @Composable
-private fun PhotoIDBulletedList(
-    title: String,
-    items: ImmutableList<ListItem>,
+private fun Heading(
+    text: String,
     modifier: Modifier = Modifier,
-) {
-    GdsBulletedList(
-        title =
-            ListTitle(
-                title,
-                TitleType.Text,
-            ),
-        bulletListItems = items,
-        modifier = modifier,
-    )
-}
+) = GdsHeading(
+    text = text,
+    textAlign = GdsHeadingAlignment.LeftAligned,
+    style = GdsHeadingStyle.Body,
+    modifier = modifier.padding(top = spacingSingle),
+)
 
-@Preview(heightDp = 1600, uiMode = UI_MODE_NIGHT_YES)
-@Preview(heightDp = 1600)
-@Preview(heightDp = 1600, locale = "cy")
+private fun listTitle(title: String) =
+    ListTitle(
+        text = title,
+        titleType = TitleType.Text,
+    )
+
+private const val PREVIEW_HEIGHT = 1700
+
+@Preview(heightDp = PREVIEW_HEIGHT, uiMode = UI_MODE_NIGHT_YES)
+@Preview(heightDp = PREVIEW_HEIGHT)
+@Preview(heightDp = PREVIEW_HEIGHT, locale = "cy")
 @Composable
 internal fun PreviewTypesOfPhotoIDScreen() {
     GdsTheme {
-        TypesOfPhotoIDScreenContent()
+        TypesOfPhotoIDScreenContent(
+            drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+        )
     }
 }

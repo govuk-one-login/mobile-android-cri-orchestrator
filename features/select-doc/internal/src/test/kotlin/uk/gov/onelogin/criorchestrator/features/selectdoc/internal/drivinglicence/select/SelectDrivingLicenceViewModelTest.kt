@@ -15,17 +15,22 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.N
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
+import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
+import java.time.LocalDate
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
     private val analyticsLogger: SelectDocAnalytics = mock()
     private val nfcChecker = mock<NfcChecker>()
+    private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
 
     private val viewModel by lazy {
         SelectDrivingLicenceViewModel(
             analytics = analyticsLogger,
             nfcChecker = nfcChecker,
+            earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
         )
     }
 
@@ -33,6 +38,20 @@ class SelectDrivingLicenceViewModelTest {
     fun setUp() {
         given(nfcChecker.hasNfc()).willReturn(false)
     }
+
+    @Test
+    fun `it emits the initial state`() =
+        runTest {
+            viewModel.state.test {
+                assertEquals(
+                    SelectDrivingLicenseState(
+                        displayReadMoreButton = false,
+                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                    ),
+                    awaitItem(),
+                )
+            }
+        }
 
     @Test
     fun `when screen starts, it sends analytics`() {
