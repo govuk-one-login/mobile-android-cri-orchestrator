@@ -10,6 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -47,6 +48,7 @@ class TypesOfPhotoIDScreenAnalyticsTest {
         TypesOfPhotoIDViewModel(
             analytics = analytics,
             earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
+            configStore = FakeConfigStore(),
         )
 
     @Before

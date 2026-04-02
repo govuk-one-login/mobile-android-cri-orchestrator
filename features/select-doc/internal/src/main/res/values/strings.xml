@@ -76,6 +76,12 @@
     <string name="typesofphotoid_drivinglicence_bullet2">was issued by DVLA (see section 4c on your licence)</string>
     <string name="typesofphotoid_drivinglicence_imagedescription">An example of what a UK photocard driving licence looks like. It’s a pink and blue card with the UK flag.</string>
 
+    <!-- Driving licence information to be displayed when not accepting expired licences -->
+    <string name="typesofphotoid_drivinglicence_no_expired_bulletbody">You can use a UK driving licence if it:</string>
+    <string name="typesofphotoid_drivinglicence_no_expired_bullet1">is a plastic photocard, not a paper licence</string>
+    <string name="typesofphotoid_drivinglicence_no_expired_bullet2">has not expired</string>
+    <string name="typesofphotoid_drivinglicence_no_expired_body">It can be a full or provisional UK driving licence. </string>
+
     <string name="selectdocument_brp_title">Do you have a UK biometric residence card or permit?</string>
 
     <string name="selectdocument_brp_bullet_title">This can be a:</string>
@@ -96,6 +102,7 @@
     <!--    Driving Licence strings    -->
     <string name="selectdocument_drivinglicence_title">Do you have a UK photocard driving licence?</string>
     <string name="selectdocument_drivinglicence_body">You can use a full or provisional UK driving licence.\n\nYour UK driving licence must be a plastic photocard, not a paper licence.</string>
+    <string name="selectdocument_drivinglicence_no_expired_body">You can use a full or provisional UK driving licence.\n\nYour UK driving licence must be a plastic photocard, not a paper licence.\n\nYou cannot use your UK driving licence if it has expired.</string>
     <string name="selectdocument_drivinglicence_readmore_button">Read more about the types of photo ID you can use</string>
 
     <string name="selectdocument_drivinglicence_selection_yes">Yes</string>
