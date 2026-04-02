@@ -47,14 +47,8 @@ jobs:
         id: unit-tests
         # Exclude Konsist unit tests which are actually lint checks
         # Build all unit tests so that jars are available for Sonar
-        #
-        # Compiles test fixture jars to work around Sonar issue:
-        # https://community.sonarsource.com/t/sonar-plugin-fails-with-android-testfixtures-enabled-execution-failed-for-identitytransform/124818
         run: |
           ./gradlew assembleDebugUnitTest
-
-          ./gradlew createFullJarDebugTestFixtures
-
           ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
           ./gradlew testBuildDebugUnitTest
         env:
