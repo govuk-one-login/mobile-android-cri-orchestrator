@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
@@ -19,11 +21,14 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class ConfirmDrivingLicenceViewModel(
     private val analytics: SelectDocAnalytics,
     earliestAcceptableExpiryDate: EarliestAcceptableDrivingLicenceExpiryDate,
+    configStore: ConfigStore,
 ) : ViewModel() {
     private val _state =
         MutableStateFlow(
             ConfirmDrivingLicenceState(
                 earliestExpiryDate = earliestAcceptableExpiryDate(),
+                enableExpiredDrivingLicences =
+                    configStore.readSingle(SdkConfigKey.EnableExpiredDrivingLicences).value,
             ),
         )
     val state: StateFlow<ConfirmDrivingLicenceState> = _state

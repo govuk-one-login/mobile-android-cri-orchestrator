@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -22,6 +24,7 @@ class SelectDrivingLicenceViewModel(
     private val analytics: SelectDocAnalytics,
     private val nfcChecker: NfcChecker,
     private val earliestAcceptableExpiryDate: EarliestAcceptableDrivingLicenceExpiryDate,
+    configStore: ConfigStore,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectDrivingLicenceAction>()
     val actions: Flow<SelectDrivingLicenceAction> = _actions
@@ -31,6 +34,8 @@ class SelectDrivingLicenceViewModel(
             SelectDrivingLicenseState(
                 displayReadMoreButton = nfcChecker.hasNfc(),
                 earliestExpiryDate = earliestAcceptableExpiryDate(),
+                enableExpiredDrivingLicences =
+                    configStore.readSingle(SdkConfigKey.EnableExpiredDrivingLicences).value,
             ),
         )
     val state: StateFlow<SelectDrivingLicenseState> = _state

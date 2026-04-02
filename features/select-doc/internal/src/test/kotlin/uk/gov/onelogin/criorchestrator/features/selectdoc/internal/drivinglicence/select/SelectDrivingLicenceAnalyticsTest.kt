@@ -18,6 +18,7 @@ import org.mockito.kotlin.mock
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
@@ -64,6 +65,7 @@ class SelectDrivingLicenceAnalyticsTest {
                 analytics = analytics,
                 nfcChecker = nfcChecker,
                 earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
+                configStore = FakeConfigStore(),
             ),
         )
     }

@@ -33,6 +33,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verifyNoMoreInteractions
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
@@ -293,6 +295,7 @@ interface TestGraph : ViewModelGraph {
 
     @DependencyGraph.Factory
     interface Factory {
+        @Suppress("LongParameterList")
         fun create(
             @Provides
             analytics: SelectDocAnalytics = mock(),
@@ -304,6 +307,8 @@ interface TestGraph : ViewModelGraph {
             resourceProvider: ResourceProvider = FakeResourceProvider(),
             @Provides
             clock: Clock = testClock(),
+            @Provides
+            configStore: ConfigStore = FakeConfigStore(),
         ): TestGraph
     }
 }
