@@ -36,6 +36,10 @@ object FakeConfig {
                         key = NfcConfigKey.NfcAvailability,
                         value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                     ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = SdkConfigKey.EnableExpiredDrivingLicences,
+                        value = Config.Value.BooleanValue(true),
+                    ),
                 ),
         )
 }

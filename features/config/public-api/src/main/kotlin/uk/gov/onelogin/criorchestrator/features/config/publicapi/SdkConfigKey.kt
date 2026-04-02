@@ -64,4 +64,10 @@ sealed interface SdkConfigKey {
             name = "Debug app review prompts",
         ),
         SdkConfigKey
+
+    data object EnableExpiredDrivingLicences :
+        BooleanConfigKey(
+            name = "Enable expired driving licences",
+        ),
+        SdkConfigKey
 }

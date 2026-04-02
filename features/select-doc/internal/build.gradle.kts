@@ -25,6 +25,7 @@ dependencies {
     testImplementation(testFixtures(projects.libraries.analytics))
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(testFixtures(projects.features.session.internalApi))
+    testImplementation(testFixtures(projects.features.config.internalApi))
 }
 
 mavenPublishingConfig {

@@ -4,4 +4,5 @@ import java.time.LocalDate
 
 data class TypesOfPhotoIDState(
     val earliestExpiryDate: LocalDate,
+    val enableExpiredDrivingLicences: Boolean,
 )

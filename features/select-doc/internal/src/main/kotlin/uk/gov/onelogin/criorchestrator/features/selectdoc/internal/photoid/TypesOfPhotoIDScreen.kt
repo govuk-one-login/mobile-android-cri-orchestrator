@@ -48,6 +48,7 @@ internal fun TypesOfPhotoIDScreen(
 
     TypesOfPhotoIDScreenContent(
         drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+        enableExpiredDrivingLicences = state.enableExpiredDrivingLicences,
         modifier = modifier,
     )
 }
@@ -57,6 +58,7 @@ internal fun TypesOfPhotoIDScreen(
 @OptIn(UnstableDesignSystemAPI::class)
 internal fun TypesOfPhotoIDScreenContent(
     drivingLicenceExpiryDateText: String,
+    enableExpiredDrivingLicences: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -92,6 +94,7 @@ internal fun TypesOfPhotoIDScreenContent(
                 ukPhotoCardDrivingLicenceItems(
                     horizontalPadding = horizontalPadding,
                     earliestExpiryDateText = drivingLicenceExpiryDateText,
+                    enableExpiredDrivingLicences = enableExpiredDrivingLicences,
                 )
             },
         )
@@ -194,9 +197,11 @@ private fun LazyListScope.ukBiometricPermitOrCardItems(horizontalPadding: Dp) {
     }
 }
 
+@Suppress("LongMethod")
 private fun LazyListScope.ukPhotoCardDrivingLicenceItems(
     horizontalPadding: Dp,
     earliestExpiryDateText: String,
+    enableExpiredDrivingLicences: Boolean,
 ) {
     item {
         Heading(
@@ -205,37 +210,62 @@ private fun LazyListScope.ukPhotoCardDrivingLicenceItems(
         )
     }
 
-    item {
-        Text(
-            text = stringResource(R.string.typesofphotoid_drivinglicence_body_1),
-            modifier = Modifier.padding(horizontal = horizontalPadding),
-        )
-    }
+    if (enableExpiredDrivingLicences) {
+        item {
+            Text(
+                text = stringResource(R.string.typesofphotoid_drivinglicence_body_1),
+                modifier = Modifier.padding(horizontal = horizontalPadding),
+            )
+        }
 
-    item {
-        Text(
-            text = stringResource(R.string.typesofphotoid_drivinglicence_body_2),
-            modifier = Modifier.padding(horizontal = horizontalPadding),
-        )
-    }
+        item {
+            Text(
+                text = stringResource(R.string.typesofphotoid_drivinglicence_body_2),
+                modifier = Modifier.padding(horizontal = horizontalPadding),
+            )
+        }
 
-    item {
-        GdsBulletedList(
-            title = listTitle(stringResource(R.string.typesofphotoid_drivinglicence_bulletbody)),
-            bulletListItems =
-                persistentListOf(
-                    ListItem(
-                        stringResource(
-                            R.string.typesofphotoid_drivinglicence_bullet1,
-                            earliestExpiryDateText,
+        item {
+            GdsBulletedList(
+                title = listTitle(stringResource(R.string.typesofphotoid_drivinglicence_bulletbody)),
+                bulletListItems =
+                    persistentListOf(
+                        ListItem(
+                            stringResource(
+                                R.string.typesofphotoid_drivinglicence_bullet1,
+                                earliestExpiryDateText,
+                            ),
+                        ),
+                        ListItem(
+                            stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
                         ),
                     ),
-                    ListItem(
-                        stringResource(R.string.typesofphotoid_drivinglicence_bullet2),
+                modifier = Modifier.padding(horizontal = horizontalPadding),
+            )
+        }
+    } else {
+        item {
+            GdsBulletedList(
+                title = listTitle(stringResource(R.string.typesofphotoid_drivinglicence_no_expired_bulletbody)),
+                bulletListItems =
+                    persistentListOf(
+                        ListItem(
+                            stringResource(R.string.typesofphotoid_drivinglicence_no_expired_bullet1),
+                        ),
+                        ListItem(
+                            stringResource(R.string.typesofphotoid_drivinglicence_no_expired_bullet2),
+                        ),
                     ),
-                ),
-            modifier = Modifier.padding(horizontal = horizontalPadding),
-        )
+                modifier = Modifier.padding(horizontal = horizontalPadding),
+            )
+        }
+
+        item {
+            Text(
+                text = stringResource(R.string.typesofphotoid_drivinglicence_no_expired_body),
+                modifier = Modifier.padding(horizontal = horizontalPadding),
+            )
+        }
     }
 
     item {
@@ -274,6 +304,20 @@ internal fun PreviewTypesOfPhotoIDScreen() {
     GdsTheme {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = true,
+        )
+    }
+}
+
+@Preview(heightDp = PREVIEW_HEIGHT, uiMode = UI_MODE_NIGHT_YES)
+@Preview(heightDp = PREVIEW_HEIGHT)
+@Preview(heightDp = PREVIEW_HEIGHT, locale = "cy")
+@Composable
+internal fun PreviewTypesOfPhotoIDScreenNoExpired() {
+    GdsTheme {
+        TypesOfPhotoIDScreenContent(
+            drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = false,
         )
     }
 }

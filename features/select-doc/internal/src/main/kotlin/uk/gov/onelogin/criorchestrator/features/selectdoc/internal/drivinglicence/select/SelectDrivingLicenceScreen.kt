@@ -82,17 +82,19 @@ internal fun SelectDrivingLicenceScreen(
         onReadMoreClick = viewModel::onReadMoreClick,
         displayReadMoreButton = state.displayReadMoreButton,
         earliestExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+        enableExpiredDrivingLicences = state.enableExpiredDrivingLicences,
     )
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
-@Suppress("LongMethod")
+@Suppress("LongMethod", "LongParameterList")
 @Composable
 internal fun SelectDrivingLicenceScreenContent(
     onContinueClicked: (Int) -> Unit,
     onReadMoreClick: () -> Unit,
     displayReadMoreButton: Boolean,
     earliestExpiryDateText: String,
+    enableExpiredDrivingLicences: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -112,19 +114,28 @@ internal fun SelectDrivingLicenceScreenContent(
             body = { horizontalPadding ->
                 item {
                     Text(
-                        text = stringResource(R.string.selectdocument_drivinglicence_body),
+                        text =
+                            stringResource(
+                                if (enableExpiredDrivingLicences) {
+                                    R.string.selectdocument_drivinglicence_body
+                                } else {
+                                    R.string.selectdocument_drivinglicence_no_expired_body
+                                },
+                            ),
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
-                item {
-                    GdsWarningText(
-                        stringResource(
-                            R.string.drivinglicence_expired_warning,
-                            earliestExpiryDateText,
-                        ),
-                        modifier = Modifier.padding(horizontal = horizontalPadding),
-                    )
+                if (enableExpiredDrivingLicences) {
+                    item {
+                        GdsWarningText(
+                            stringResource(
+                                R.string.drivinglicence_expired_warning,
+                                earliestExpiryDateText,
+                            ),
+                            modifier = Modifier.padding(horizontal = horizontalPadding),
+                        )
+                    }
                 }
                 if (displayReadMoreButton) {
                     item {
@@ -181,10 +192,10 @@ internal class SelectDrivingLicenceScreenPreviewParameterProvider : PreviewParam
     override val values =
         sequenceOf(
             PreviewParams(
-                displayReadMoreButton = true,
+                displayReadMoreButton = true
             ),
             PreviewParams(
-                displayReadMoreButton = false,
+                displayReadMoreButton = false
             ),
         )
 }
@@ -200,6 +211,21 @@ internal fun PreviewDrivingLicenceSelectionScreen(
             onReadMoreClick = { },
             displayReadMoreButton = params.displayReadMoreButton,
             earliestExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = true,
+            onContinueClicked = {},
+        )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewDrivingLicenceSelectionScreenNoExpired() {
+    GdsTheme {
+        SelectDrivingLicenceScreenContent(
+            onReadMoreClick = { },
+            displayReadMoreButton = true,
+            earliestExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = false,
             onContinueClicked = {},
         )
     }
