@@ -57,16 +57,19 @@ internal fun ConfirmDrivingLicenceScreen(
         title = stringResource(ConfirmDrivingLicenceConstants.titleId),
         confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
         earliestExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+        enableExpiredDrivingLicences = state.enableExpiredDrivingLicences,
         onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
 }
 
+@Suppress("LongMethod", "LongParameterList")
 @Composable
 internal fun ConfirmDrivingLicenceScreenContent(
     title: String,
     confirmButtonText: String,
     earliestExpiryDateText: String,
+    enableExpiredDrivingLicences: Boolean,
     onPrimaryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -89,14 +92,16 @@ internal fun ConfirmDrivingLicenceScreenContent(
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
-                item {
-                    GdsWarningText(
-                        stringResource(
-                            R.string.drivinglicence_expired_warning,
-                            earliestExpiryDateText,
-                        ),
-                        modifier = Modifier.padding(horizontal = horizontalPadding),
-                    )
+                if (enableExpiredDrivingLicences) {
+                    item {
+                        GdsWarningText(
+                            stringResource(
+                                R.string.drivinglicence_expired_warning,
+                                earliestExpiryDateText,
+                            ),
+                            modifier = Modifier.padding(horizontal = horizontalPadding),
+                        )
+                    }
                 }
                 item {
                     Text(
@@ -136,6 +141,21 @@ internal fun PreviewConfirmDrivingLicenceScreen() {
             title = stringResource(ConfirmDrivingLicenceConstants.titleId),
             confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
             earliestExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = true,
+            onPrimaryClick = { },
+        )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewConfirmDrivingLicenceScreenNoExpired() {
+    GdsTheme {
+        ConfirmDrivingLicenceScreenContent(
+            title = stringResource(ConfirmDrivingLicenceConstants.titleId),
+            confirmButtonText = stringResource(ConfirmDrivingLicenceConstants.buttonTextId),
+            earliestExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredDrivingLicences = false,
             onPrimaryClick = { },
         )
     }

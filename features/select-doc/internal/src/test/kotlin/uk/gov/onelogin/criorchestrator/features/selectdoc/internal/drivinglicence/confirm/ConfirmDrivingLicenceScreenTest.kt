@@ -17,6 +17,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
@@ -41,6 +42,7 @@ class ConfirmDrivingLicenceScreenTest {
             ConfirmDrivingLicenceViewModel(
                 analytics = mock(),
                 earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
+                configStore = FakeConfigStore(),
             ),
         )
 

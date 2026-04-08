@@ -78,6 +78,10 @@ class CriOrchestratorSingletonImplTest {
                                 key = NfcConfigKey.NfcAvailability,
                                 Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                             ),
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = SdkConfigKey.EnableExpiredDrivingLicences,
+                                Config.Value.BooleanValue(false),
+                            ),
                             customEntry,
                         ),
                 ),

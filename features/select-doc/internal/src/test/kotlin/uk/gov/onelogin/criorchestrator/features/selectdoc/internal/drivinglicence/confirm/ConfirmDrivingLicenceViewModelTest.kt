@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -19,11 +22,13 @@ import java.time.LocalDate
 class ConfirmDrivingLicenceViewModelTest {
     private val analyticsLogger = mock<SelectDocAnalytics>()
     private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
+    private val configStore = FakeConfigStore()
 
     private val viewModel by lazy {
         ConfirmDrivingLicenceViewModel(
             analytics = analyticsLogger,
             earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
+            configStore = configStore,
         )
     }
 
@@ -34,6 +39,27 @@ class ConfirmDrivingLicenceViewModelTest {
                 assertEquals(
                     ConfirmDrivingLicenceState(
                         earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                        enableExpiredDrivingLicences = true,
+                    ),
+                    awaitItem(),
+                )
+            }
+        }
+
+    fun `given expired driving licences disabled, it emits an initial state`() =
+        runTest {
+            configStore.write(
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.EnableExpiredDrivingLicences,
+                    value = Config.Value.BooleanValue(false),
+                ),
+            )
+
+            viewModel.state.test {
+                assertEquals(
+                    ConfirmDrivingLicenceState(
+                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                        enableExpiredDrivingLicences = false,
                     ),
                     awaitItem(),
                 )
