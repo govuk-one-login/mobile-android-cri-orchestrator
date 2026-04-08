@@ -20,4 +20,5 @@ fun LauncherData.Companion.createTestInstance(
     backendMode = BackendMode.V2,
     experimentalComposeNavigation = experimentalComposeNavigation,
     nfcAvailability = NfcAvailability.Device,
+    enableExpiredDrivingLicences = false,
 )

@@ -15,5 +15,6 @@ internal fun LauncherData.toIdCheckSdkActivityParameters() =
                 backendMode = this.backendMode,
                 experimentalComposeNavigation = this.experimentalComposeNavigation,
                 nfcAvailability = this.nfcAvailability,
+                enableExpiredDrivingLicences = this.enableExpiredDrivingLicences,
             ),
     )

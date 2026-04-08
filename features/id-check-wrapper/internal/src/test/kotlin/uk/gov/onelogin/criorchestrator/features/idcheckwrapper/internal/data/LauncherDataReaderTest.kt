@@ -59,6 +59,11 @@ class LauncherDataReaderTest {
                         value =
                             Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                     ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = SdkConfigKey.EnableExpiredDrivingLicences,
+                        value =
+                            Config.Value.BooleanValue(false),
+                    ),
                 ),
         )
     private val configStore by lazy {
@@ -81,6 +86,7 @@ class LauncherDataReaderTest {
                     backendMode = BackendMode.V2,
                     experimentalComposeNavigation = false,
                     nfcAvailability = NfcAvailability.Device,
+                    enableExpiredDrivingLicences = false,
                 ),
             )
 
@@ -163,6 +169,39 @@ class LauncherDataReaderTest {
                     launcherData =
                         expectedLauncherDataResult.launcherData.copy(
                             backendMode = BackendMode.Bypass,
+                        ),
+                ),
+                launcherDataResult,
+            )
+        }
+
+    @Test
+    fun `given different expired driving licences config, read gets the launcher data`() =
+        runTest {
+            initialConfig =
+                initialConfig.combinedWith(
+                    Config(
+                        entries =
+                            persistentListOf(
+                                Config.Entry<Config.Value.BooleanValue>(
+                                    key = SdkConfigKey.EnableExpiredDrivingLicences,
+                                    value = Config.Value.BooleanValue(true),
+                                ),
+                            ),
+                    ),
+                )
+
+            val launcherDataReader = createLauncherDataReader()
+            val launcherDataResult =
+                launcherDataReader.read(
+                    documentVariety = documentVariety,
+                )
+
+            assertEquals(
+                expectedLauncherDataResult.copy(
+                    launcherData =
+                        expectedLauncherDataResult.launcherData.copy(
+                            enableExpiredDrivingLicences = true,
                         ),
                 ),
                 launcherDataResult,
