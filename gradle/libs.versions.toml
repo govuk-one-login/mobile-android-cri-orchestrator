@@ -33,7 +33,7 @@ testparameterinjector = "1.21"
 turbine = "1.2.1"
 uk-gov-logging = "0.39.9" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.11.0"
-uk-gov-ui = "16.3.0"
+uk-gov-ui = "16.4.0"
 gov-uk-idcheck = "0.37.0" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 [libraries]
