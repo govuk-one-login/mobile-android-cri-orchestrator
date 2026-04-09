@@ -43,25 +43,38 @@ jobs:
       - name: Cache mobile-android-pipelines build
         uses: ./actions/cache-pipelines-build
 
+      - name: Get version
+        id: versioning
+        uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          dry-run: true
+
       - name: Unit test
         id: unit-tests
         # Exclude Konsist unit tests which are actually lint checks
         # Build all unit tests so that jars are available for Sonar
+        # Provide a version number so that Sonar can find jars that include the version in the name
         run: |
-          ./gradlew assembleDebugUnitTest
-          ./gradlew testDebugUnitTest -x konsist-test:testDebugUnitTest
-          ./gradlew testBuildDebugUnitTest
+          ./gradlew \
+              assembleDebugUnitTest \
+              testDebugUnitTest -x konsist-test:testDebugUnitTest \
+              testBuildDebugUnitTest \
+              -PversionName="$VERSION_NAME"
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+          VERSION_NAME: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
 
       - name: Verify screenshots
         run: |
-          ./gradlew verifyPaparazziDebug
-          ./gradlew verifyPaparazziBuildDebug
+          ./gradlew \
+              verifyPaparazziDebug \
+              verifyPaparazziBuildDebug \
+              -PversionName="$VERSION_NAME"
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+          VERSION_NAME: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
