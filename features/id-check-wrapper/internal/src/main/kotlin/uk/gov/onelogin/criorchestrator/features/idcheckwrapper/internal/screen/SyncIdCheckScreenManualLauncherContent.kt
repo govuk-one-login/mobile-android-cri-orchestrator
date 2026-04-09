@@ -145,6 +145,7 @@ internal fun PreviewSyncIdCheckManualLauncherContent() {
                     backendMode = BackendMode.V2,
                     experimentalComposeNavigation = false,
                     nfcAvailability = NfcAvailability.Device,
+                    enableExpiredDrivingLicences = false,
                 ),
             exitStateOptions = ExitStateOption.entries.map { it.displayName }.toPersistentList(),
             selectedExitState = 0,
