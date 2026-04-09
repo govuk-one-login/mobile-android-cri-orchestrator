@@ -25,10 +25,11 @@ jobs:
           submodules: 'true'
           fetch-depth: 0
 
-      - name: Set up git runner
-        uses: ./mobile-android-pipelines/actions/setup-runner
+      - name: Set up GitHub runner
+        uses: ./mobile-android-pipelines/actions/common-prerequisites
         with:
           jdk-version: 21
+          install-vale: true
 
       - name: Cache mobile-android-pipelines build
         uses: ./actions/cache-pipelines-build
