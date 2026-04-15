@@ -80,7 +80,7 @@ class CriOrchestratorSingletonImplTest {
                             ),
                             Config.Entry<Config.Value.BooleanValue>(
                                 key = SdkConfigKey.EnableExpiredDrivingLicences,
-                                Config.Value.BooleanValue(false),
+                                Config.Value.BooleanValue(true),
                             ),
                             customEntry,
                         ),
