@@ -40,7 +40,7 @@ private val defaultConfig =
                 ),
                 Config.Entry<Config.Value.BooleanValue>(
                     key = SdkConfigKey.EnableExpiredDrivingLicences,
-                    Config.Value.BooleanValue(false),
+                    Config.Value.BooleanValue(true),
                 ),
             ),
     )
