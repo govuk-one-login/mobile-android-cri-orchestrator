@@ -29,7 +29,7 @@ molecule = "2.2.0"
 navigation = "2.9.8"
 paparazzi = "2.0.0-alpha02"
 robolectric = "4.15.1"
-testparameterinjector = "1.21"
+testparameterinjector = "1.22"
 turbine = "1.2.1"
 uk-gov-logging = "0.39.15" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.11.0"
