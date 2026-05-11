@@ -8,7 +8,7 @@ androidXTestOrchestrator = "1.6.1"
 androidXTestRunner = "1.7.0"
 androidXTestRules = "1.7.0"
 appcompat = "1.7.1"
-composeBom = "2026.04.01"
+composeBom = "2026.05.00"
 composable-preview-scanner = "0.8.2"
 compose-lint-checks = "1.4.2"
 espressoCore = "3.7.0"
@@ -33,8 +33,8 @@ testparameterinjector = "1.21"
 turbine = "1.2.1"
 uk-gov-logging = "0.39.15" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.11.0"
-uk-gov-ui = "16.6.0"
-gov-uk-idcheck = "0.37.5" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+uk-gov-ui = "16.7.0"
+gov-uk-idcheck = "0.37.13" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
