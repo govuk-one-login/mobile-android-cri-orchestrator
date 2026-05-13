@@ -10,7 +10,6 @@ fun Config.Companion.createTestInstance(
     enableManualLauncher: Boolean = false,
     bypassIdCheckAsyncBackend: Boolean = false,
     experimentalComposeNavigation: Boolean = false,
-    enableExpiredDrivingLicences: Boolean = false,
 ): Config =
     Config(
         entries =
@@ -30,10 +29,6 @@ fun Config.Companion.createTestInstance(
                 Config.Entry<Config.Value.StringValue>(
                     key = NfcConfigKey.NfcAvailability,
                     value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = SdkConfigKey.EnableExpiredDrivingLicences,
-                    value = Config.Value.BooleanValue(enableExpiredDrivingLicences),
                 ),
             ),
     )

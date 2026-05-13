@@ -12,8 +12,6 @@ import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
@@ -35,7 +33,6 @@ class SelectDrivingLicenceViewModelTest {
             analytics = analyticsLogger,
             nfcChecker = nfcChecker,
             earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
-            configStore = configStore,
         )
     }
 
@@ -52,28 +49,6 @@ class SelectDrivingLicenceViewModelTest {
                     SelectDrivingLicenseState(
                         displayReadMoreButton = false,
                         earliestExpiryDate = LocalDate.of(2025, 12, 26),
-                        enableExpiredDrivingLicences = true,
-                    ),
-                    awaitItem(),
-                )
-            }
-        }
-
-    @Test
-    fun `given expired driving licences are disabled, it emits the initial state`() =
-        runTest {
-            configStore.write(
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = SdkConfigKey.EnableExpiredDrivingLicences,
-                    value = Config.Value.BooleanValue(false),
-                ),
-            )
-            viewModel.state.test {
-                assertEquals(
-                    SelectDrivingLicenseState(
-                        displayReadMoreButton = false,
-                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
-                        enableExpiredDrivingLicences = false,
                     ),
                     awaitItem(),
                 )

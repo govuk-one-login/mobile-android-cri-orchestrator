@@ -4,5 +4,4 @@ import java.time.LocalDate
 
 data class ConfirmDrivingLicenceState(
     val earliestExpiryDate: LocalDate,
-    val enableExpiredDrivingLicences: Boolean,
 )

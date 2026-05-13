@@ -16,7 +16,6 @@ data class LauncherData(
     val backendMode: BackendMode,
     val experimentalComposeNavigation: Boolean,
     val nfcAvailability: NfcAvailability,
-    val enableExpiredDrivingLicences: Boolean,
 ) {
     companion object;
 

@@ -27,7 +27,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
@@ -55,7 +54,6 @@ class SelectDrivingLicenceScreenTest {
                 analytics = mock(),
                 nfcChecker = nfcChecker,
                 earliestAcceptableExpiryDate = earliestAcceptableExpiryDate,
-                configStore = FakeConfigStore(),
             ),
         )
     }

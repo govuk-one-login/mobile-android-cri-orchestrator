@@ -36,9 +36,6 @@ class LauncherDataReader(
                 configStore.readSingle(NfcConfigKey.NfcAvailability).value,
             )
 
-        val enableExpiredDrivingLicences: Boolean =
-            configStore.readSingle(SdkConfigKey.EnableExpiredDrivingLicences).value
-
         if (result is BiometricTokenResult.Success) {
             sessionStore.updateToDocumentSelected()
         }
@@ -83,7 +80,6 @@ class LauncherDataReader(
                         backendMode = backendMode,
                         experimentalComposeNavigation = experimentalComposeNavigation,
                         nfcAvailability = nfcAvailability,
-                        enableExpiredDrivingLicences = enableExpiredDrivingLicences,
                     ),
                 )
             }
