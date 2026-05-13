@@ -23,7 +23,7 @@ object CriOrchestratorSdkHiltModule {
         analyticsLogger: AnalyticsLogger,
         application: Application,
         logger: Logger,
-        httpClient: GenericHttpClient,
+        @HttpClientGeneric httpClient: GenericHttpClient,
         resources: Resources,
     ): CriOrchestratorSdk =
         CriOrchestratorSdk.create(
