@@ -16,7 +16,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class TypesOfPhotoIDViewModel(
     private val analytics: SelectDocAnalytics,
     earliestAcceptableDrivingLicenceExpiryDate: EarliestAcceptableDrivingLicenceExpiryDate,
-    configStore: ConfigStore,
 ) : ViewModel() {
     private val _state =
         MutableStateFlow(

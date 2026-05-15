@@ -48,7 +48,6 @@ class TypesOfPhotoIDScreenAnalyticsTest {
         TypesOfPhotoIDViewModel(
             analytics = analytics,
             earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
-            configStore = FakeConfigStore(),
         )
 
     @Before
