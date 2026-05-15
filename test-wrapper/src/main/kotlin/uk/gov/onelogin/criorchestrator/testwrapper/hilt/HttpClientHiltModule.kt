@@ -15,7 +15,8 @@ import javax.inject.Singleton
 object HttpClientHiltModule {
     @Provides
     @Singleton
-    fun providesHttpClient(
+    @HttpClientGeneric
+    fun providesGenericHttpClient(
         resources: Resources,
         subjectTokenRepository: SubjectTokenRepository,
     ): GenericHttpClient =
