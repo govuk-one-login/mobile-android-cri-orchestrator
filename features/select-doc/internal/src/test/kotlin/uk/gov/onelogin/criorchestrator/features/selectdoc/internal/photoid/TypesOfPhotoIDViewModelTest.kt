@@ -23,7 +23,6 @@ class TypesOfPhotoIDViewModelTest {
         TypesOfPhotoIDViewModel(
             analytics = analyticsLogger,
             earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableExpiryDate,
-            configStore = configStore,
         )
     }
 
