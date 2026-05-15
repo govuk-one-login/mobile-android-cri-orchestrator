@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
@@ -26,8 +25,6 @@ class SelectDrivingLicenceViewModelTest {
     private val analyticsLogger: SelectDocAnalytics = mock()
     private val nfcChecker = mock<NfcChecker>()
     private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
-    private val configStore = FakeConfigStore()
-
     private val viewModel by lazy {
         SelectDrivingLicenceViewModel(
             analytics = analyticsLogger,

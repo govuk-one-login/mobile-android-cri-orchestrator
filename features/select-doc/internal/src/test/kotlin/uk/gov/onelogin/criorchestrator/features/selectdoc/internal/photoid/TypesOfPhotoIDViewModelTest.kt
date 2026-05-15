@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
-import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
@@ -17,8 +16,6 @@ import java.time.LocalDate
 class TypesOfPhotoIDViewModelTest {
     private val analyticsLogger = mock<SelectDocAnalytics>()
     private val earliestAcceptableExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
-
-    private val configStore = FakeConfigStore()
     private val viewModel by lazy {
         TypesOfPhotoIDViewModel(
             analytics = analyticsLogger,
