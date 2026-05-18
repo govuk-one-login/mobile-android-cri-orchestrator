@@ -5,5 +5,4 @@ import java.time.LocalDate
 data class SelectDrivingLicenseState(
     val displayReadMoreButton: Boolean,
     val earliestExpiryDate: LocalDate,
-    val enableExpiredDrivingLicences: Boolean,
 )
