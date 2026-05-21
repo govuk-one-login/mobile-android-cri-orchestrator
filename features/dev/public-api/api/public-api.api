@@ -1,0 +1,12 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/features/dev/publicapi/DevMenuEntryPoints {
+	public abstract fun DevMenuScreen (Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/dev/publicapi/DevMenuEntryPointsProviders {
+	public abstract fun devMenuEntryPoints ()Luk/gov/onelogin/criorchestrator/features/dev/publicapi/DevMenuEntryPoints;
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/dev/publicapi/DevMenuScreenKt {
+	public static final fun DevMenuScreen (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+

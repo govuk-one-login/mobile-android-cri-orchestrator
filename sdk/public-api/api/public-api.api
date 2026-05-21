@@ -1,0 +1,58 @@
+public abstract interface class androidx/databinding/DataBindingComponent {
+}
+
+public class androidx/databinding/library/baseAdapters/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+
+public class uk/gov/onelogin/criorchestrator/sdk/publicapi/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+
+public final class uk/gov/onelogin/criorchestrator/sdk/publicapi/CriOrchestratorSdkExt {
+	public static final field $stable I
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/sdk/publicapi/CriOrchestratorSdkExt;
+	public final fun create (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk$Companion;Luk/gov/android/network/client/GenericHttpClient;Luk/gov/logging/api/analytics/logging/AnalyticsLogger;Luk/gov/onelogin/criorchestrator/features/config/publicapi/Config;Luk/gov/logging/api/Logger;Landroid/content/Context;)Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk;
+}
+
+public class uk/gov/onelogin/criorchestrator/sdk/publicapi/DataBinderMapperImpl : androidx/databinding/DataBinderMapper {
+	public fun <init> ()V
+	public fun collectDependencies ()Ljava/util/List;
+	public fun convertBrIdToString (I)Ljava/lang/String;
+	public fun getDataBinder (Landroidx/databinding/DataBindingComponent;Landroid/view/View;I)Landroidx/databinding/ViewDataBinding;
+	public fun getDataBinder (Landroidx/databinding/DataBindingComponent;[Landroid/view/View;I)Landroidx/databinding/ViewDataBinding;
+	public fun getLayoutId (Ljava/lang/String;)I
+}
+
+public class uk/gov/onelogin/criorchestrator/sdk/publicapi/DataBindingTriggerClass {
+	public fun <init> ()V
+}
+
+public final class uk/gov/onelogin/criorchestrator/sdk/publicapi/RememberCriOrchestratorKt {
+	public static final fun rememberCriOrchestrator (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk;Landroidx/compose/runtime/Composer;I)Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph;
+}
+
+public class uk/gov/onelogin/idcheck/sdk/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+
+public class uk/gov/onelogin/idcheck/ui/presentation/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+

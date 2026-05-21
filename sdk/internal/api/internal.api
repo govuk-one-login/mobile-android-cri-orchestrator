@@ -1,0 +1,27 @@
+public abstract interface class androidx/databinding/DataBindingComponent {
+}
+
+public class androidx/databinding/library/baseAdapters/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+
+public class uk/gov/onelogin/idcheck/sdk/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+
+public class uk/gov/onelogin/idcheck/ui/presentation/BR {
+	public static field _all I
+	public static field buttonViewModel I
+	public static field errorViewModel I
+	public static field viewModel I
+	public fun <init> ()V
+}
+

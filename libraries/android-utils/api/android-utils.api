@@ -1,0 +1,18 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilder {
+	public abstract fun buildUri (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl : uk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilder {
+	public fun <init> ()V
+	public fun buildUri (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl$MetroFactory : dev/zacsweers/metro/internal/Factory {
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl$MetroFactory;
+	public final fun create ()Ldev/zacsweers/metro/internal/Factory;
+	public synthetic fun invoke ()Ljava/lang/Object;
+	public final fun invoke ()Luk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl;
+	public final fun mirrorFunction ()Luk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl;
+	public final fun newInstance ()Luk/gov/onelogin/criorchestrator/libraries/androidutils/UriBuilderImpl;
+}
+

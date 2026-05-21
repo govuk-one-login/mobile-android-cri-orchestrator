@@ -1,0 +1,33 @@
+public abstract class uk/gov/onelogin/criorchestrator/libraries/analytics/Analytics {
+	public fun <init> (Luk/gov/onelogin/criorchestrator/libraries/analytics/resources/ResourceProvider;Luk/gov/logging/api/analytics/logging/AnalyticsLogger;Luk/gov/logging/api/v3dot1/model/RequiredParameters;)V
+	public final fun trackButtonEvent (I)V
+	public final fun trackFormSubmission (II)V
+	public final fun trackScreen (Luk/gov/onelogin/criorchestrator/libraries/analytics/ScreenId;I)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/analytics/ScreenId {
+	public abstract fun getRawId ()Ljava/lang/String;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider : uk/gov/onelogin/criorchestrator/libraries/analytics/resources/ResourceProvider {
+	public fun <init> (Landroid/content/Context;)V
+	public fun getEnglishString (I)Ljava/lang/String;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider$MetroFactory : dev/zacsweers/metro/internal/Factory {
+	public static final field Companion Luk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider$MetroFactory$Companion;
+	public synthetic fun <init> (Ldev/zacsweers/metro/Provider;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun invoke ()Ljava/lang/Object;
+	public final fun invoke ()Luk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider;
+	public final fun mirrorFunction (Landroid/content/Context;)Luk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider$MetroFactory$Companion {
+	public final fun create (Ldev/zacsweers/metro/Provider;)Ldev/zacsweers/metro/internal/Factory;
+	public final fun newInstance (Landroid/content/Context;)Luk/gov/onelogin/criorchestrator/libraries/analytics/resources/AndroidResourceProvider;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/analytics/resources/ResourceProvider {
+	public abstract fun getEnglishString (I)Ljava/lang/String;
+}
+

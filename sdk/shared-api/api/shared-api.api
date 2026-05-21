@@ -1,0 +1,20 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorAppGraph {
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorAppGraph$MetroContributionToCriOrchestratorAppScope : uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorAppGraph {
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph {
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph$MetroContributionToCriOrchestratorScope : uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph {
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk {
+	public static final field Companion Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk$Companion;
+	public abstract fun getAppGraph ()Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorAppGraph;
+}
+
+public final class uk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk$Companion {
+}
+

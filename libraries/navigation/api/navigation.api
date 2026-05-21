@@ -1,0 +1,11 @@
+public final class uk/gov/onelogin/criorchestrator/libraries/navigation/CompositeNavHostKt {
+	public static final fun CompositeNavHost (Lkotlinx/collections/immutable/ImmutableSet;Luk/gov/onelogin/criorchestrator/libraries/navigation/NavigationDestination;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/navigation/NavGraphProvider {
+	public abstract fun contributeToGraph (Landroidx/navigation/NavGraphBuilder;Landroidx/navigation/NavController;Lkotlin/jvm/functions/Function0;)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/navigation/NavigationDestination {
+}
+

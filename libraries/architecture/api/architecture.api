@@ -1,0 +1,4 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/libraries/architecture/CriOrchestratorService {
+	public abstract fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

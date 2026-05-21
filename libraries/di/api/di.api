@@ -1,0 +1,31 @@
+public abstract class uk/gov/onelogin/criorchestrator/libraries/di/CriOrchestratorAppScope {
+}
+
+public abstract class uk/gov/onelogin/criorchestrator/libraries/di/CriOrchestratorScope {
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/di/viewmodel/CriOrchestratorViewModelFactory : dev/zacsweers/metrox/viewmodel/MetroViewModelFactory {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+}
+
+public abstract class uk/gov/onelogin/criorchestrator/libraries/di/viewmodel/CriOrchestratorViewModelScope {
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/di/viewmodel/ViewModelFactoryBindings {
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/libraries/di/viewmodel/ViewModelFactoryBindings;
+	public final fun bindMetroViewModelFactory (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)Ldev/zacsweers/metrox/viewmodel/MetroViewModelFactory;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/di/viewmodel/ViewModelFactoryBindings$BindMetroViewModelFactoryMetroFactory : dev/zacsweers/metro/internal/Factory {
+	public static final field Companion Luk/gov/onelogin/criorchestrator/libraries/di/viewmodel/ViewModelFactoryBindings$BindMetroViewModelFactoryMetroFactory$Companion;
+	public synthetic fun <init> (Ldev/zacsweers/metro/Provider;Ldev/zacsweers/metro/Provider;Ldev/zacsweers/metro/Provider;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun invoke ()Ldev/zacsweers/metrox/viewmodel/MetroViewModelFactory;
+	public synthetic fun invoke ()Ljava/lang/Object;
+	public final fun mirrorFunction (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)Ldev/zacsweers/metrox/viewmodel/MetroViewModelFactory;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/di/viewmodel/ViewModelFactoryBindings$BindMetroViewModelFactoryMetroFactory$Companion {
+	public final fun bindMetroViewModelFactory (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)Ldev/zacsweers/metrox/viewmodel/MetroViewModelFactory;
+	public final fun create (Ldev/zacsweers/metro/Provider;Ldev/zacsweers/metro/Provider;Ldev/zacsweers/metro/Provider;)Ldev/zacsweers/metro/internal/Factory;
+}
+

@@ -4,8 +4,8 @@ import com.android.build.api.dsl.LibraryExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import uk.gov.onelogin.criorchestrator.extensions.androidTestDependencies
-import uk.gov.onelogin.criorchestrator.extensions.excludeAndroidClassesFromJacocoCoverage
 import uk.gov.onelogin.criorchestrator.extensions.disableJavadocGeneration
+import uk.gov.onelogin.criorchestrator.extensions.excludeAndroidClassesFromJacocoCoverage
 import uk.gov.onelogin.criorchestrator.extensions.kotlinTestDependencies
 import uk.gov.onelogin.criorchestrator.extensions.setInstrumentationTestingConfig
 import uk.gov.onelogin.criorchestrator.extensions.setJavaVersion
@@ -21,6 +21,7 @@ listOf(
     "uk.gov.onelogin.criorchestrator.di-config",
     "uk.gov.onelogin.criorchestrator.publishing-id-config",
     "uk.gov.onelogin.criorchestrator.unit-test-config",
+    "uk.gov.onelogin.criorchestrator.public-api-config",
 ).forEach {
     project.plugins.apply(it)
 }
@@ -42,6 +43,7 @@ project.disableJavadocGeneration()
 
 // https://github.com/cashapp/paparazzi/issues/955
 project.excludeAndroidClassesFromJacocoCoverage()
+
 
 dependencies {
     androidTestDependencies(libs)

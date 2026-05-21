@@ -1,0 +1,15 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSession {
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSessionProviders {
+	public abstract fun refreshActiveSession ()Luk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSession;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSessionProviders$MetroContributionToCriOrchestratorAppScope : uk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSessionProviders {
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSessionProvidersKt {
+	public static final fun getRefreshActiveSession (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk;)Luk/gov/onelogin/criorchestrator/features/session/publicapi/RefreshActiveSession;
+}
+

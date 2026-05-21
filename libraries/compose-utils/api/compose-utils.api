@@ -1,0 +1,16 @@
+public final class uk/gov/onelogin/criorchestrator/libraries/composeutils/DialogPropertiesKt {
+	public static final fun getFullScreenDialogProperties ()Landroidx/compose/ui/window/DialogProperties;
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/composeutils/DropUnlessResumedUnlessDisabledKt {
+	public static final fun dropUnlessResumedUnlessDisabledForTesting (Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)Lkotlin/jvm/functions/Function0;
+	public static final fun getLocalDropUnlessResumedDisabled ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public abstract interface annotation class uk/gov/onelogin/criorchestrator/libraries/composeutils/LightDarkBothLocalesPreview : java/lang/annotation/Annotation {
+}
+
+public final class uk/gov/onelogin/criorchestrator/libraries/composeutils/OneTimeLaunchedEffectKt {
+	public static final fun OneTimeLaunchedEffect (Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+}
+

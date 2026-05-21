@@ -1,0 +1,12 @@
+public final class uk/gov/onelogin/criorchestrator/features/resume/publicapi/ProveYourIdentityCardKt {
+	public static final fun ProveYourIdentityCard (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorGraph;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/resume/publicapi/ProveYourIdentityEntryPoints {
+	public abstract fun ProveYourIdentityCard (Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/resume/publicapi/ProveYourIdentityEntryPointsProviders {
+	public abstract fun proveYourIdentityEntryPoints ()Luk/gov/onelogin/criorchestrator/features/resume/publicapi/ProveYourIdentityEntryPoints;
+}
+

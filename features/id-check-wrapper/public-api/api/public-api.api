@@ -1,0 +1,45 @@
+public abstract interface class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey {
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey$EnableManualLauncher : uk/gov/onelogin/criorchestrator/features/config/publicapi/BooleanConfigKey, uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey {
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey$EnableManualLauncher;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey$ExperimentalComposeNavigation : uk/gov/onelogin/criorchestrator/features/config/publicapi/BooleanConfigKey, uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey {
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/IdCheckWrapperConfigKey$ExperimentalComposeNavigation;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActive {
+	public abstract fun invoke ()Z
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActiveProviders {
+	public abstract fun isIdCheckSdkActive ()Luk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActive;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActiveProviders$MetroContributionToCriOrchestratorAppScope : uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActiveProviders {
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActiveProvidersKt {
+	public static final fun isIdCheckSdkActive (Luk/gov/onelogin/criorchestrator/sdk/sharedapi/CriOrchestratorSdk;)Luk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/idchecksdkactivestate/IsIdCheckSdkActive;
+}
+
+public abstract interface class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/nfc/NfcConfigKey {
+}
+
+public final class uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/nfc/NfcConfigKey$NfcAvailability : uk/gov/onelogin/criorchestrator/features/config/publicapi/OptionConfigKey, uk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/nfc/NfcConfigKey {
+	public static final field INSTANCE Luk/gov/onelogin/criorchestrator/features/idcheckwrapper/publicapi/nfc/NfcConfigKey$NfcAvailability;
+	public static final field OPTION_AVAILABLE Ljava/lang/String;
+	public static final field OPTION_DEVICE Ljava/lang/String;
+	public static final field OPTION_NOT_AVAILABLE Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
