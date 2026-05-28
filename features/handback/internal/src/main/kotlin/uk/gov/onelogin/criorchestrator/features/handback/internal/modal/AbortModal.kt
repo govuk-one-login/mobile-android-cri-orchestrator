@@ -28,9 +28,13 @@ fun AbortModal(
 ) {
     val isAbortedState = abortModalViewModel.isAborted.collectAsState(false)
 
+    val isAbortedDestination =
+        startDestination is AbortDestinations.AbortedReturnToDesktopWeb ||
+            startDestination is AbortDestinations.AbortedRedirectToMobileWebHolder
+
     val handleDismissRequest = {
         abortModalViewModel.onCloseClick()
-        if (isAbortedState.value) {
+        if (isAbortedDestination || isAbortedState.value) {
             onFinish()
         } else {
             onDismissRequest()

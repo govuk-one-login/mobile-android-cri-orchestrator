@@ -83,6 +83,33 @@ class AbortModalTest {
         assertFalse("hasCalledOnDismissed should be false!", hasCalledOnDismissed)
     }
 
+    @Test
+    fun `when startDestination is AbortedReturnToDesktopWeb, dismissing dialog calls onFinish`() {
+        val isSessionAbortedOrUnavailable =
+            StubIsSessionAbortedOrUnavailable(
+                false,
+            )
+        val abortModalViewModel =
+            AbortModalViewModel(
+                isSessionAbortedOrUnavailable = isSessionAbortedOrUnavailable,
+                analytics = mock(),
+            )
+        composeTestRule.setContent {
+            AbortModal(
+                abortModalViewModel = abortModalViewModel,
+                startDestination = AbortDestinations.AbortedReturnToDesktopWeb,
+                navGraphProviders = persistentSetOf(FakeAbortModalNavGraph.Provider()),
+                onDismissRequest = ::onDismissRequest,
+                onFinish = ::onFinish,
+            )
+        }
+
+        composeTestRule.onNodeWithContentDescription("Close").performClick()
+
+        assertTrue("hasCalledOnFinished should be true!", hasCalledOnFinished)
+        assertFalse("hasCalledOnDismissed should be false!", hasCalledOnDismissed)
+    }
+
     private fun onDismissRequest() {
         hasCalledOnDismissed = true
     }
