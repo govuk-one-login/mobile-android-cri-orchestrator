@@ -44,9 +44,7 @@ internal fun ProveYourIdentityRoot(
                 }.collect {
                     when (it) {
                         ProveYourIdentityRootUiAction.AllowModalToShow ->
-                            navController.navigate(DESTINATION_MODAL) {
-                                launchSingleTop = true
-                            }
+                            navController.navigate(DESTINATION_MODAL)
                     }
                 }
         }
