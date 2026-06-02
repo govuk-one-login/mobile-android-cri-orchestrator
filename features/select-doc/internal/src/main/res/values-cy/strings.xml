@@ -89,7 +89,7 @@
     <string name="selectdocument_brp_bullet_brc">cerdyn preswylio biometreg y DU (BRC)</string>
     <string name="selectdocument_brp_bullet_fwp">trwydded Gweithwyr Ffiniol y DU (FWP)</string>
 
-    <string name="selectdocument_brp_expiry">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben.</string>
+    <string name="selectdocument_brp_expiry">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 24 mis ar ôl ei ddyddiad dod i ben.</string>
 
     <string name="selectdocument_brp_read_more_button">Darllenwch fwy am y mathau o ID gyda llun y gallwch eu defnyddio</string>
 

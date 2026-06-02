@@ -89,7 +89,7 @@
     <string name="selectdocument_brp_bullet_brc">UK biometric residence card (BRC)</string>
     <string name="selectdocument_brp_bullet_fwp">UK Frontier Worker permit (FWP)</string>
 
-    <string name="selectdocument_brp_expiry">You can use an expired BRP, BRC or FWP up to 18 months after its expiry date.</string>
+    <string name="selectdocument_brp_expiry">You can use an expired BRP, BRC or FWP up to 24 months after its expiry date.</string>
 
     <string name="selectdocument_brp_read_more_button">Read more about the types of photo ID you can use</string>
 
