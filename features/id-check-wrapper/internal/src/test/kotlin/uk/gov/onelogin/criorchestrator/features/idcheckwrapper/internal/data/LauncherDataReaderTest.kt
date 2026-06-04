@@ -59,6 +59,11 @@ class LauncherDataReaderTest {
                         value =
                             Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                     ),
+                    Config.Entry<Config.Value.BooleanValue>(
+                        key = SdkConfigKey.EnableExpiredBRP,
+                        value =
+                            Config.Value.BooleanValue(false),
+                    ),
                 ),
         )
     private val configStore by lazy {
@@ -81,6 +86,7 @@ class LauncherDataReaderTest {
                     backendMode = BackendMode.V2,
                     experimentalComposeNavigation = false,
                     nfcAvailability = NfcAvailability.Device,
+                    enableExpiredBRP = false,
                 ),
             )
 

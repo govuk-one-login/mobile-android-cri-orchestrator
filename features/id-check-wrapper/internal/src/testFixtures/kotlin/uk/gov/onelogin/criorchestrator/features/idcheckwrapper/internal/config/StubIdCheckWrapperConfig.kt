@@ -30,5 +30,9 @@ fun Config.Companion.createTestInstance(
                     key = NfcConfigKey.NfcAvailability,
                     value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
                 ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.EnableExpiredBRP,
+                    value = Config.Value.BooleanValue(false),
+                ),
             ),
     )
