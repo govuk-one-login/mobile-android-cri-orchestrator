@@ -7,6 +7,8 @@ import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -15,7 +17,11 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 @ViewModelKey(ConfirmBrpViewModel::class)
 class ConfirmBrpViewModel(
     private val analytics: SelectDocAnalytics,
+    configStore: ConfigStore,
 ) : ViewModel() {
+    val enableExpiredBRP: Boolean =
+        configStore.readSingle(SdkConfigKey.EnableExpiredBRP).value
+
     private val _action = MutableSharedFlow<ConfirmBrpAction.NavigateToSyncIdCheck>()
     val action: Flow<ConfirmBrpAction.NavigateToSyncIdCheck> = _action
 
