@@ -48,6 +48,7 @@ internal fun TypesOfPhotoIDScreen(
 
     TypesOfPhotoIDScreenContent(
         drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+        enableExpiredBRP = state.enableExpiredBrp,
         modifier = modifier,
     )
 }
@@ -57,6 +58,7 @@ internal fun TypesOfPhotoIDScreen(
 @OptIn(UnstableDesignSystemAPI::class)
 internal fun TypesOfPhotoIDScreenContent(
     drivingLicenceExpiryDateText: String,
+    enableExpiredBRP: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -87,7 +89,10 @@ internal fun TypesOfPhotoIDScreenContent(
 
                 nonUkPassportItems(horizontalPadding = horizontalPadding)
 
-                ukBiometricPermitOrCardItems(horizontalPadding = horizontalPadding)
+                ukBiometricPermitOrCardItems(
+                    horizontalPadding = horizontalPadding,
+                    enableExpiredBRP = enableExpiredBRP,
+                )
 
                 ukPhotoCardDrivingLicenceItems(
                     horizontalPadding = horizontalPadding,
@@ -158,7 +163,10 @@ private fun LazyListScope.nonUkPassportItems(horizontalPadding: Dp) {
     }
 }
 
-private fun LazyListScope.ukBiometricPermitOrCardItems(horizontalPadding: Dp) {
+private fun LazyListScope.ukBiometricPermitOrCardItems(
+    horizontalPadding: Dp,
+    enableExpiredBRP: Boolean,
+) {
     item {
         Heading(
             stringResource(R.string.typesofphotoid_brp_title),
@@ -181,7 +189,12 @@ private fun LazyListScope.ukBiometricPermitOrCardItems(horizontalPadding: Dp) {
 
     item {
         Text(
-            text = stringResource(R.string.typesofphotoid_brp_body),
+            text =
+                if (enableExpiredBRP) {
+                    stringResource(R.string.typesofphotoid_brp_body_extended)
+                } else {
+                    stringResource(R.string.typesofphotoid_brp_body)
+                },
             modifier = Modifier.padding(horizontal = horizontalPadding),
         )
     }
@@ -275,6 +288,7 @@ internal fun PreviewTypesOfPhotoIDScreen() {
     GdsTheme {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredBRP = true,
         )
     }
 }
@@ -287,6 +301,7 @@ internal fun PreviewTypesOfPhotoIDScreenNoExpired() {
     GdsTheme {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredBRP = true,
         )
     }
 }
