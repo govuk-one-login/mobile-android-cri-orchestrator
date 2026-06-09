@@ -192,3 +192,15 @@ internal fun PreviewSelectBrpScreen() {
         )
     }
 }
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewSelectBrpScreenNoExpired() {
+    GdsTheme {
+        SelectBrpScreenContent(
+            enableExpiredBRP = false,
+            onReadMoreClicked = {},
+            onContinueClicked = {},
+        )
+    }
+}

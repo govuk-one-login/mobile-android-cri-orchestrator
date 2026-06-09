@@ -135,3 +135,16 @@ internal fun PreviewConfirmBrpScreen() {
         )
     }
 }
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewConfirmBrpScreenNoExpired() {
+    GdsTheme {
+        ConfirmBrpScreenContent(
+            title = stringResource(ConfirmBrpConstants.titleId),
+            confirmButtonText = stringResource(ConfirmBrpConstants.buttonTextId),
+            enableExpiredBRP = false,
+            onPrimaryClick = { },
+        )
+    }
+}

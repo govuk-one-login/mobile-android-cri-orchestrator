@@ -301,7 +301,7 @@ internal fun PreviewTypesOfPhotoIDScreenNoExpired() {
     GdsTheme {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
-            enableExpiredBRP = true,
+            enableExpiredBRP = false,
         )
     }
 }
