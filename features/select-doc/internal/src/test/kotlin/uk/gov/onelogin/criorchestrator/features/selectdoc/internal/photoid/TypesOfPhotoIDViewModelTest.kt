@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
-import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
@@ -32,26 +30,6 @@ class TypesOfPhotoIDViewModelTest {
     @Test
     fun `it emits the initial state`() =
         runTest {
-            viewModel.state.test {
-                assertEquals(
-                    TypesOfPhotoIDState(
-                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
-                        enableExpiredBrp = true,
-                    ),
-                    awaitItem(),
-                )
-            }
-        }
-
-    @Test
-    fun `given expired BRP is enabled, it emits the initial state`() =
-        runTest {
-            configStore.write(
-                Config.Entry(
-                    key = SdkConfigKey.EnableExpiredBRP,
-                    value = Config.Value.BooleanValue(true),
-                ),
-            )
             viewModel.state.test {
                 assertEquals(
                     TypesOfPhotoIDState(

@@ -38,7 +38,7 @@ object FakeConfig {
                     ),
                     Config.Entry<Config.Value.BooleanValue>(
                         key = SdkConfigKey.EnableExpiredBRP,
-                        value = Config.Value.BooleanValue(false),
+                        value = Config.Value.BooleanValue(true),
                     ),
                 ),
         )
