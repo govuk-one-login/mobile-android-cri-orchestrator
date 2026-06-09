@@ -7,6 +7,8 @@ import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
+import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
@@ -15,9 +17,13 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 @ViewModelKey(SelectBrpViewModel::class)
 class SelectBrpViewModel(
     private val analytics: SelectDocAnalytics,
+    configStore: ConfigStore,
 ) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
+
+    val enableExpiredBRP: Boolean =
+        configStore.readSingle(SdkConfigKey.EnableExpiredBRP).value
 
     fun onScreenStart() {
         analytics.trackScreen(

@@ -20,6 +20,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 
 @RunWith(AndroidJUnit4::class)
@@ -31,9 +32,16 @@ class SelectBrpScreenTest {
     private lateinit var noOption: SemanticsMatcher
     private lateinit var continueButton: SemanticsMatcher
     private lateinit var readMore: SemanticsMatcher
+    private val configStore = FakeConfigStore()
 
     private val navController: NavController = mock()
-    private val viewModel = spy(SelectBrpViewModel(analytics = mock()))
+    private val viewModel =
+        spy(
+            SelectBrpViewModel(
+                analytics = mock(),
+                configStore = configStore,
+            ),
+        )
 
     @Before
     fun setUp() {
