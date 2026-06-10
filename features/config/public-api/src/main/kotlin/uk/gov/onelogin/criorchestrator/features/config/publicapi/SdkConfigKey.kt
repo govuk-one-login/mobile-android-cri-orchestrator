@@ -64,4 +64,10 @@ sealed interface SdkConfigKey {
             name = "Debug app review prompts",
         ),
         SdkConfigKey
+
+    data object EnableExpiredBRP :
+        BooleanConfigKey(
+            name = "Enable expired BRP",
+        ),
+        SdkConfigKey
 }

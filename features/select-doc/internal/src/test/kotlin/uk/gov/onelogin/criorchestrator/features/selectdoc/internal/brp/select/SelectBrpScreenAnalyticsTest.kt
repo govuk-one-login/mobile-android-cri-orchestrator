@@ -17,6 +17,7 @@ import org.junit.runner.RunWith
 import uk.gov.logging.api.v3dot1.logger.asLegacyEvent
 import uk.gov.logging.api.v3dot1.model.TrackEvent
 import uk.gov.logging.api.v3dot1.model.ViewEvent
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
@@ -41,6 +42,7 @@ class SelectBrpScreenAnalyticsTest {
     private val yesOption = hasText(context.getString(SelectBrpConstants.selectionItems[0]))
     private val noOption = hasText(context.getString(SelectBrpConstants.selectionItems[1]))
     private val continueButton = hasText(context.getString(SelectBrpConstants.continueButtonTextId))
+    private val configStore = FakeConfigStore()
 
     private val analytics =
         SelectDocAnalytics(
@@ -48,7 +50,7 @@ class SelectBrpScreenAnalyticsTest {
             analyticsLogger = analyticsLogger,
         )
 
-    private val viewModel = SelectBrpViewModel(analytics)
+    private val viewModel = SelectBrpViewModel(analytics, configStore)
 
     @Before
     fun setup() {

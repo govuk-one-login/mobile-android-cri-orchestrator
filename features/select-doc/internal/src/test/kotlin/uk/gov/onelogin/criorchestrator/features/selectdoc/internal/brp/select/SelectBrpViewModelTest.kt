@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verify
+import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
@@ -17,10 +18,12 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 @ExtendWith(MainDispatcherExtension::class)
 class SelectBrpViewModelTest {
     private val analytics = mock<SelectDocAnalytics>()
+    private val configStore = FakeConfigStore()
 
     private val viewModel by lazy {
         SelectBrpViewModel(
             analytics = analytics,
+            configStore = configStore,
         )
     }
 

@@ -7,6 +7,7 @@
 
     <string name="confirmdocument_brp_title">Cadarnhau eich bod am barhau gyda’ch BRP, BRC neu FWP</string>
     <string name="confirmdocument_brp_body_1">Gwnewch yn siwr bod eich BRP, BRC neu FWP gwreiddiol gyda chi. Ni allwch ddefnyddio llungopi neu unrhyw gopi digidol.</string>
+    <string name="confirmdocument_brp_expired_warning_legacy">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben.</string>
     <string name="confirmdocument_brp_expired_warning">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 24 mis ar ôl ei ddyddiad dod i ben.</string>
     <string name="confirmdocument_brp_body_2">Ni fyddwch yn gallu dewis math gwahanol o ID gyda llun ar ôl cadarnhau.</string>
     <string name="selectdoc_imagedescription_brp">Enghraifft o beth mae trwydded neu gerdyn biometrig y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda arwyddlun llywodraeth y DU a’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
@@ -65,6 +66,7 @@
     <string name="typesofphotoid_brp_bullet1">trwydded breswylio biometrig (BRP)</string>
     <string name="typesofphotoid_brp_bullet2">cerdyn preswylio biometrig (BRC)</string>
     <string name="typesofphotoid_brp_bullet3">trwydded Gweithiwr Frontier (FWP)</string>
+    <string name="typesofphotoid_brp_body_legacy">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 18 mis ar ôl ei ddyddiad dod i ben.\n\nEr enghraifft, os daeth eich BRP i ben ar 31 Hydref 2024, gallwch ei ddefnyddio i brofi eich hunaniaeth tan 30 Ebrill 2026.</string>
     <string name="typesofphotoid_brp_body">Gallwch ddefnyddio BRP, BRC neu FWP sydd wedi dod i ben hyd at 24 mis ar ôl ei ddyddiad dod i ben.\n\nEr enghraifft, os daeth eich BRP i ben ar 31 Hydref 2024, gallwch ei ddefnyddio i brofi eich hunaniaeth tan 30 Hydref 2026.</string>
     <string name="typesofphotoid_brp_imagedescription">Enghraifft o beth mae trwydded neu gerdyn biometrig y DU yn edrych fel. Mae’n gerdyn pinc a glas gyda arwyddlun llywodraeth y DU a’r symbol sglodyn biometrig. Mae’r symbol yn betryal gyda chylch yn y canol.</string>
 

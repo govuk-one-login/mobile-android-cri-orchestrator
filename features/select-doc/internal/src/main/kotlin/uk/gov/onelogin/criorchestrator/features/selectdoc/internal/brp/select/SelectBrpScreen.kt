@@ -73,6 +73,7 @@ fun SelectBrpScreen(
         onReadMoreClicked = viewModel::onReadMoreClicked,
         onContinueClicked = viewModel::onContinueClicked,
         modifier = modifier,
+        enableExpiredBRP = viewModel.enableExpiredBRP,
     )
 }
 
@@ -80,6 +81,7 @@ fun SelectBrpScreen(
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun SelectBrpScreenContent(
+    enableExpiredBRP: Boolean,
     onReadMoreClicked: () -> Unit,
     onContinueClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -122,7 +124,11 @@ internal fun SelectBrpScreenContent(
 
                 item {
                     GdsWarningText(
-                        stringResource(R.string.selectdocument_brp_expiry),
+                        if (enableExpiredBRP) {
+                            stringResource(R.string.confirmdocument_brp_expired_warning)
+                        } else {
+                            stringResource(R.string.confirmdocument_brp_expired_warning_legacy)
+                        },
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
@@ -180,6 +186,19 @@ internal fun SelectBrpScreenContent(
 internal fun PreviewSelectBrpScreen() {
     GdsTheme {
         SelectBrpScreenContent(
+            enableExpiredBRP = true,
+            onReadMoreClicked = {},
+            onContinueClicked = {},
+        )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewSelectBrpScreenNoExpired() {
+    GdsTheme {
+        SelectBrpScreenContent(
+            enableExpiredBRP = false,
             onReadMoreClicked = {},
             onContinueClicked = {},
         )

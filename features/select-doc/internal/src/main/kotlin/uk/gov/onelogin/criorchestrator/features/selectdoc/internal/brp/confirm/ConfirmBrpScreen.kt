@@ -50,6 +50,7 @@ internal fun ConfirmBrpScreen(
     ConfirmBrpScreenContent(
         title = stringResource(ConfirmBrpConstants.titleId),
         confirmButtonText = stringResource(ConfirmBrpConstants.buttonTextId),
+        enableExpiredBRP = viewModel.enableExpiredBRP,
         onPrimaryClick = viewModel::onConfirmClick,
         modifier = modifier,
     )
@@ -59,6 +60,7 @@ internal fun ConfirmBrpScreen(
 internal fun ConfirmBrpScreenContent(
     title: String,
     confirmButtonText: String,
+    enableExpiredBRP: Boolean,
     onPrimaryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -83,7 +85,11 @@ internal fun ConfirmBrpScreenContent(
                 }
                 item {
                     GdsWarningText(
-                        stringResource(R.string.confirmdocument_brp_expired_warning),
+                        if (enableExpiredBRP) {
+                            stringResource(R.string.confirmdocument_brp_expired_warning)
+                        } else {
+                            stringResource(R.string.confirmdocument_brp_expired_warning_legacy)
+                        },
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )
                 }
@@ -124,6 +130,20 @@ internal fun PreviewConfirmBrpScreen() {
         ConfirmBrpScreenContent(
             title = stringResource(ConfirmBrpConstants.titleId),
             confirmButtonText = stringResource(ConfirmBrpConstants.buttonTextId),
+            enableExpiredBRP = true,
+            onPrimaryClick = { },
+        )
+    }
+}
+
+@LightDarkBothLocalesPreview
+@Composable
+internal fun PreviewConfirmBrpScreenNoExpired() {
+    GdsTheme {
+        ConfirmBrpScreenContent(
+            title = stringResource(ConfirmBrpConstants.titleId),
+            confirmButtonText = stringResource(ConfirmBrpConstants.buttonTextId),
+            enableExpiredBRP = false,
             onPrimaryClick = { },
         )
     }
