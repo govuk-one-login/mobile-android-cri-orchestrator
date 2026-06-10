@@ -125,9 +125,9 @@ internal fun SelectBrpScreenContent(
                 item {
                     GdsWarningText(
                         if (enableExpiredBRP) {
-                            stringResource(R.string.confirmdocument_brp_expired_warning_extended)
-                        } else {
                             stringResource(R.string.confirmdocument_brp_expired_warning)
+                        } else {
+                            stringResource(R.string.confirmdocument_brp_expired_warning_legacy)
                         },
                         modifier = Modifier.padding(horizontal = horizontalPadding),
                     )

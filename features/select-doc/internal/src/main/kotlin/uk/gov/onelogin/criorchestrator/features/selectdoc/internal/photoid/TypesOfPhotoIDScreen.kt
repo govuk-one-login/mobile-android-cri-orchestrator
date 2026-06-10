@@ -191,9 +191,9 @@ private fun LazyListScope.ukBiometricPermitOrCardItems(
         Text(
             text =
                 if (enableExpiredBRP) {
-                    stringResource(R.string.typesofphotoid_brp_body_extended)
-                } else {
                     stringResource(R.string.typesofphotoid_brp_body)
+                } else {
+                    stringResource(R.string.typesofphotoid_brp_body_legacy)
                 },
             modifier = Modifier.padding(horizontal = horizontalPadding),
         )
