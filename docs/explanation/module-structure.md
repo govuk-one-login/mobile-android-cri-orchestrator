@@ -9,7 +9,7 @@ The purpose of this document is to explain the rationale behind the module struc
 
 Before thinking about the structure of feature modules, why build an SDK in a modular way at all?
 
-We're building SDKs that provide whole features with lots of screens, navigation, and internal functionality. With this in mind, we can reasonably expect these SDKs to grow in size and complexity as we add more and more features. So, unlike a simple utility library (like a network client) that's naturally limited in scope, we should build a feature-rich SDK the same attention to scaling that an app codebase would. One way we can do this is by modularising it (see [the growing codebase problem]).
+We're building SDKs that provide whole features with lots of screens, navigation, and internal functionality. With this in mind, we can reasonably expect these SDKs to grow in size and complexity as we add more and more features. So, unlike a basic utility library (like a network client) that's naturally limited in scope, we should build a feature-rich SDK the same attention to scaling that an app codebase would. One way we can do this is by modularising it (see [the growing codebase problem]).
 
 ## Why build feature modules?
 
@@ -41,9 +41,9 @@ Next, we need to consider that an SDK also needs to provide an actual public API
 
 The internal API handles communication between features within the SDK and doesn’t need to be exposed outside of it. However, we need to share the public API externally so developers can interact with the SDK’s features. To manage this, we introduce a third type of module specifically for the SDK’s public API.
 
-One positive side-effect of using this separation is that changes to the public API of the SDK become obvious. We can more easily spot breaking changes in code review or require additional reviews on these interfaces for example.
+One positive side-effect of using this separation is that changes to the public API of the SDK become obvious. We can more quickly spot breaking changes in code review or require additional reviews on these interfaces for example.
 
-One thing to note is that not all features would need a public API. And not all modules may need an API/implementation split (simple utility libraries, for example).
+One thing to note is that not all features would need a public API. And not all modules may need an API/implementation split (basic utility libraries, for example).
 
 ---
 

@@ -7,8 +7,8 @@
 The Credential Issuer (CRI) Orchestrator coordinates identity proofing capability for the [GOV.UK One Login app](https://github.com/govuk-one-login/mobile-android-one-login-app).
 It builds on the [ID Check SDK](https://github.com/govuk-one-login/mobile-id-check-android-sdk) used in the [GOV.UK ID Check app](https://github.com/govuk-one-login/mobile-id-check-android) with additional functionality including REST API based web-to-app handoff and document selection.
 
-Currently the only CRI supported within the SDK is the [Document Checking CRI (DCMAW)](https://github.com/govuk-one-login/mobile-id-check-async), but this component could be extended in the future to allow for additional app-based CRI‍s.
-In particular, adding support for the Address-Check and Fraud CRI‍s into the app would enable a complete end-to-end identity proofing journey within the GOV.UK One Login app.
+Currently the only CRI supported within the SDK is the [Document Checking CRI (DCMAW)](https://github.com/govuk-one-login/mobile-id-check-async), but this component could be extended in the future to include additional app-based CRI‍s.
+In particular, adding support for the Address-Check and Fraud CRI‍s into the app would provide a complete end-to-end identity proofing journey within the GOV.UK One Login app.
 
 See the [Mobile App Integration](https://github.com/govuk-one-login/architecture/blob/main/adr/0178-mobile-app-integration.md) ADR for more details.
 
@@ -53,11 +53,11 @@ implementation(libs.criorchestrator)
 
 ## Usage
 
-You can allow users to continue to prove their identity by placing the `ProveYourIdentityCard` on screen. Providing the user has an active session, it will display and launch the full-screen "You can now continue your identity check" modal.
+You can let users continue to prove their identity by placing the `ProveYourIdentityCard` on screen. Providing the user has an active session, it will display and launch the full-screen "You can now continue your identity check" modal.
 
 See the [Orchestration of ID Check SDK in One Login app tech design](https://govukverify.atlassian.net/wiki/spaces/DCMAW/pages/3800006819/Orchestration+of+ID+Check+SDK+in+One+Login+app) for more details.
 
-Since the ID Check SDK launched by the CRI Orchestrator uses view binding and data binding, consumers of the CRI Orchestrator will need to enable view binding and data binding in their app's `build.gradle` file:
+Since the ID Check SDK launched by the CRI Orchestrator uses view binding and data binding, consumers of the CRI Orchestrator will need to configure view binding and data binding in their app's `build.gradle` file:
 
 ```kt
 // build.gradle.kts
@@ -73,7 +73,7 @@ See the `test-wrapper` module for an example of how to set this up.
 
 ## Development
 
-Enable Git LFS:
+Activate Git LFS:
 
 ```bash
 git lfs install

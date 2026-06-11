@@ -21,7 +21,7 @@ Tactical decisions within the team, describing how we structure this project, li
 
 We'd like to record the decisions to help contributors understand the rationale behind the architecture of the project. In the development of [govuk-one-login/mobile-android-cri-orchestrator], we make architectural decisions impacting future work. The rationale behind these decisions isn't always clear when looking at the code alone.
 
-We also want a place to document our team's decisions which don't need a full cross-pod or cross-programme review. ADRs with strategic implications in [govuk-one-login/architecture] need a review from a Lead Architect, Security and Technical Writer. Technical Designs (TD) need a review from Tech Leads, Security, Architects, and QA. Teams have autonomy to design and deliver a solution within those goalposts.
+We also want a place to document our team's decisions which don't need a full cross-pod or cross-programme review. ADRs with strategic implications in [govuk-one-login/architecture] need a review from a Lead Architect, Security and Technical Writer. Technical Designs (TD) need a review from Tech Leads, Security, Architects, and QA. Teams have autonomy to design and provide a solution within those goalposts.
 
 The intended audience for these documents include:
 
@@ -31,7 +31,7 @@ The intended audience for these documents include:
 
 ## Format
 
-We should keep formatting simple:
+We should keep formatting basic:
 
 - Infer dates and authors from the Git history.
 - Write in markdown.
