@@ -52,7 +52,7 @@ Developers may still need to write instrumented tests for niche use cases.
 
 - Contributors should prefer to build local Robolectric tests over instrumented tests.
 - Non-interactive UI screenshot tests still don't need to use Robolectric.
-- Unit tests that can mock framework classes, without much effort, still don't need to use Robolectric.
+- Unit tests that can mock framework classes seamlessly still don't need to use Robolectric.
 - The project has an additional dependency and maintenance burden on Robolectric.
 - Maintainers must maintain JUnit 4 for Robolectric tests alongside JUnit 5 for other local tests.
 - In total local tests run for longer because they now include slower UI tests.
