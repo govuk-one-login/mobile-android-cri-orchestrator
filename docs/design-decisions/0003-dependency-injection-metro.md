@@ -9,7 +9,7 @@ Android apps often use [Hilt] for dependency injection (DI). Hilt is an opiniona
 
 The decision to use Hilt for apps is fairly straightforward because [Hilt is Google's recommended approach for DI in apps].
 
-However, we also need to create shared libraries and software development kits (SDK), such as this project, to extract reusable tools to share between products. Libraries and SDKs are also likely to need a simple way to manage dependencies and could benefit from a dependency injection framework to do this heavy lifting.
+However, we also need to create shared libraries and software development kits (SDK), such as this project, to extract reusable tools to share between products. Libraries and SDKs are also likely to need a clear and straightforward way to manage dependencies and could benefit from a dependency injection framework to do this heavy lifting.
 
 ## Options
 
@@ -26,14 +26,14 @@ Downsides of using Hilt:
 
 [Dagger] is a well known dependency injection framework and is the foundation onto which [Hilt] and [Anvil] build.
 
-Dagger requires developers to write more boilerplate but is less opinionated and more flexible.
+Dagger needs developers to write more boilerplate but is less opinionated and more flexible.
 
 Benefits of pure Dagger:
 - There is no risk of conflicts with the host app because library developers can define their own components and scopes.
 
 Downsides of pure Dagger:
-- It requires boilerplate to merge separate Dagger components
-- It requires boilerplate to attach Dagger modules to Dagger components
+- It needs boilerplate to merge separate Dagger components
+- It needs boilerplate to attach Dagger modules to Dagger components
 
  
 ### Metro (chosen)

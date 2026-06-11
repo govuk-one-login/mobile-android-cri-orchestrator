@@ -45,7 +45,7 @@ The [Metro documentation] is a great resource for learning more about Metro, the
 
 ## Share and reuse build logic
 
-In a multi-module project, it's easy to end up in a situation where the same build logic is duplicated across many modules, which is a maintenance burden.
+In a multi-module project, it's common to end up in a situation where the same build logic is duplicated across many modules, which is a maintenance burden.
 
 CRI Orchestrator SDK uses [govuk-one-login/mobile-android-pipelines] which contains a selection of Gradle plugins as a foundation for it's build logic. On top of this, it has it's own `build-logic` project for project local convention plugins (see [project build-logic]).
 
@@ -131,7 +131,7 @@ This flexibility facilitates manual testing - for example:
 
 The public API restricts changing configuration at runtime after initialisation. However the (optional) developer menu doesn't have the same restriction, facilitating manual testing in non-production builds.
 
-When adding a new feature, consider whether it needs any configuration options to enable testers to test it out.
+When adding a new feature, consider whether it needs any configuration options for testers to test it out.
 
 ## Prefer local tests over device tests
 
