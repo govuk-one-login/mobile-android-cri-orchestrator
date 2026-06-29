@@ -3,7 +3,7 @@
   "services": [
     {
       "serviceTag": "id-check",
-      "promotionType": "securePipelines",
+      "promotionType": "library",
       "checks": [
         {
           "checkTypes": [
