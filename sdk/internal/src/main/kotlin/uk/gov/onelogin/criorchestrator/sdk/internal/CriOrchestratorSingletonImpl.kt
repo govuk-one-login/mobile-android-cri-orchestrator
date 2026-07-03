@@ -4,7 +4,7 @@ import android.content.Context
 import dev.zacsweers.metro.createGraphFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -23,7 +23,7 @@ import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
  *   IO, Default and Unconfined dispatchers.
  */
 class CriOrchestratorSingletonImpl(
-    authenticatedHttpClient: GenericHttpClient,
+    authenticatedHttpClient: NetworkService,
     analyticsLogger: AnalyticsLogger,
     userConfig: Config,
     logger: Logger,

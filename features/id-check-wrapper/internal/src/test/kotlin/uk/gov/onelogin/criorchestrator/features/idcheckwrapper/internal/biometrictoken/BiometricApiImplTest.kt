@@ -11,10 +11,9 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
-import uk.gov.android.network.client.ContentType
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.service.NetworkService
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
@@ -24,6 +23,7 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import java.util.stream.Stream
 import kotlin.test.assertEquals
+import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 class BiometricApiImplTest {
     private lateinit var biometricApiImpl: BiometricApi
@@ -46,7 +46,7 @@ class BiometricApiImplTest {
 
         biometricApiImpl =
             BiometricApiImpl(
-                httpClient = createTestHttpClient(),
+                networkService = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
     }
@@ -70,18 +70,19 @@ class BiometricApiImplTest {
         expectedDocumentString: String,
         documentVariety: DocumentVariety,
     ) {
-        val mockHttpClient: GenericHttpClient = mock()
+        val mockHttpClient: NetworkService = mock()
         biometricApiImpl =
             BiometricApiImpl(
-                httpClient = mockHttpClient,
+                networkService = mockHttpClient,
                 configStore = fakeConfigStore,
             )
         runTest {
             whenever(
-                mockHttpClient.makeRequest(any()),
+                mockHttpClient.makeRequest(any(), any()),
             ).thenReturn(
-                ApiResponse.Success<String>(
-                    "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                ApiResponseV2.Success(
+                    response = "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                    status = 200,
                 ),
             )
             biometricApiImpl.getBiometricToken("sessionId", documentVariety)
@@ -96,7 +97,7 @@ class BiometricApiImplTest {
                             "sessionId",
                             expectedDocumentString,
                         ),
-                    contentType = ContentType.APPLICATION_JSON,
+                    headers = listOf("content-type" to "application/json"),
                 ),
             )
         }

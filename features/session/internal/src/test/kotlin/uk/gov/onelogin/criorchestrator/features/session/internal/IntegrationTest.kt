@@ -39,7 +39,7 @@ class IntegrationTest {
         )
         activeSessionApi =
             ActiveSessionApiImpl(
-                httpClient = createTestHttpClient(),
+                networkService = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
 

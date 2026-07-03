@@ -32,7 +32,7 @@ class RealAbortSessionApiTest {
         )
         api =
             RealAbortSessionApi(
-                httpClient = createTestHttpClient(),
+                networkService = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
     }

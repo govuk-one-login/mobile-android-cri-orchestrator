@@ -1,22 +1,22 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
 import dev.zacsweers.metro.Inject
-import uk.gov.android.network.api.ApiRequest
 import uk.gov.android.network.api.ApiResponse
-import uk.gov.android.network.client.ContentType
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiRequest.BiometricRequest
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
+import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 
 @Inject
 class BiometricApiImpl(
-    private val httpClient: GenericHttpClient,
+    private val networkService: NetworkService,
     private val configStore: ConfigStore,
 ) : BiometricApi,
     LogTagProvider {
@@ -32,11 +32,15 @@ class BiometricApiImpl(
                         sessionId,
                         documentVariety.toDocumentType().backendRepresentation,
                     ),
-                contentType = ContentType.APPLICATION_JSON,
+                headers = listOf("content-type" to "application/json"),
             )
 
-        return httpClient.makeRequest(
-            apiRequest = request,
-        )
+        return when (val response = networkService.makeRequest(request)) {
+            is ApiResponseV2.Success -> ApiResponse.Success(response.response)
+            is ApiResponseV2.Failure -> ApiResponse.Failure(
+                status = response.status ?: 0,
+                error = response.error,
+            )
+        }
     }
 }

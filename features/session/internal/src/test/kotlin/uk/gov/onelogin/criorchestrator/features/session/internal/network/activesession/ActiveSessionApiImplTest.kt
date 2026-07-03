@@ -32,7 +32,7 @@ class ActiveSessionApiImplTest {
         )
         activeSessionApiImpl =
             ActiveSessionApiImpl(
-                httpClient = createTestHttpClient(),
+                networkService = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
     }

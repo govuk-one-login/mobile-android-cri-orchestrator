@@ -7,17 +7,18 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import uk.gov.android.network.api.ApiRequest
-import uk.gov.android.network.api.ApiResponse
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
+import uk.gov.android.network.api.v2.ApiRequest
 import uk.gov.android.network.auth.AuthenticationResponse
-import uk.gov.android.network.client.GenericHttpClient
-import uk.gov.android.network.client.StubHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.GRANT_TYPE
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.SUBJECT_TOKEN_TYPE
 import javax.inject.Provider
 import kotlin.test.assertEquals
 import kotlin.test.fail
+import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 class MockStsAuthenticationProviderTest {
     private val resources = mock<Resources>()
@@ -32,7 +33,7 @@ class MockStsAuthenticationProviderTest {
 
     @Test
     fun `it should make a request to exchange the subject token`() {
-        val mockClient = mock<GenericHttpClient>()
+        val mockClient = mock<NetworkService>()
 
         val provider =
             MockStsAuthenticationProvider(
@@ -61,26 +62,28 @@ class MockStsAuthenticationProviderTest {
     @Test
     fun `it should correctly return a well-formed authentication response`() {
         val accessToken = "example_access_token"
-
-        val provider =
-            MockStsAuthenticationProvider(
-                client =
-                    Provider {
-                        StubHttpClient(
-                            ApiResponse.Success(
-                                """
-                                {
-                                  "access_token": "$accessToken",
-                                  "expires_in": 10
-                                }
-                                """.trimIndent(),
-                            ),
-                        )
-                    },
-                resources = resources,
-            )
+        val mockClient = mock<NetworkService>()
 
         runTest {
+            whenever(mockClient.makeRequest(any(), any())).thenReturn(
+                ApiResponseV2.Success(
+                    response =
+                        """
+                        {
+                          "access_token": "$accessToken",
+                          "expires_in": 10
+                        }
+                        """.trimIndent(),
+                    status = 200,
+                ),
+            )
+
+            val provider =
+                MockStsAuthenticationProvider(
+                    client = Provider { mockClient },
+                    resources = resources,
+                )
+
             when (val response = provider.fetchBearerToken(scope, subjectToken)) {
                 is AuthenticationResponse.Failure ->
                     fail("expected a success response")
@@ -94,27 +97,29 @@ class MockStsAuthenticationProviderTest {
     @Test
     fun `it should ignore additional json attributes`() {
         val accessToken = "example_access_token"
-
-        val provider =
-            MockStsAuthenticationProvider(
-                client =
-                    Provider {
-                        StubHttpClient(
-                            ApiResponse.Success(
-                                """
-                                {
-                                  "access_token": "$accessToken",
-                                  "expires_in": 10,
-                                  "token_type": "bearer"
-                                }
-                                """.trimIndent(),
-                            ),
-                        )
-                    },
-                resources = resources,
-            )
+        val mockClient = mock<NetworkService>()
 
         runTest {
+            whenever(mockClient.makeRequest(any(), any())).thenReturn(
+                ApiResponseV2.Success(
+                    response =
+                        """
+                        {
+                          "access_token": "$accessToken",
+                          "expires_in": 10,
+                          "token_type": "bearer"
+                        }
+                        """.trimIndent(),
+                    status = 200,
+                ),
+            )
+
+            val provider =
+                MockStsAuthenticationProvider(
+                    client = Provider { mockClient },
+                    resources = resources,
+                )
+
             when (val response = provider.fetchBearerToken(scope, subjectToken)) {
                 is AuthenticationResponse.Failure ->
                     fail("expected a success response")

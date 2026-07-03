@@ -2,23 +2,26 @@ package uk.gov.onelogin.criorchestrator.testwrapper.network
 
 import android.content.res.Resources
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.ApiRequest
-import uk.gov.android.network.api.ApiResponse.Success
+import uk.gov.android.network.api.v2.ApiRequest
 import uk.gov.android.network.auth.AuthenticationProvider
 import uk.gov.android.network.auth.AuthenticationResponse
-import uk.gov.android.network.client.GenericHttpClient
 import uk.gov.android.network.client.KtorHttpClient
+import uk.gov.android.network.service.DefaultNetworkService
+import uk.gov.android.network.service.NetworkService
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 import uk.gov.onelogin.criorchestrator.testwrapper.SubjectTokenRepository
 import javax.inject.Provider
+import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 internal fun createHttpClient(
     subjectTokenRepository: SubjectTokenRepository,
     resources: Resources,
-): GenericHttpClient =
-    KtorHttpClient(
-        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+): NetworkService =
+    DefaultNetworkService(
+        KtorHttpClient(
+            userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+        ),
     ).apply {
         setAuthenticationProvider(
             TestWrapperAuthenticationProvider(
@@ -33,9 +36,11 @@ internal fun createHttpClient(
         )
     }
 
-internal fun createStubHttpClient(): GenericHttpClient =
-    KtorHttpClient(
-        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+internal fun createStubHttpClient(): NetworkService =
+    DefaultNetworkService(
+        KtorHttpClient(
+            userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+        ),
     ).apply {
         setAuthenticationProvider(
             StubAuthenticationProvider(),
@@ -58,7 +63,7 @@ internal class TestWrapperAuthenticationProvider(
 }
 
 internal class MockStsAuthenticationProvider(
-    val client: Provider<GenericHttpClient>,
+    val client: Provider<NetworkService>,
     val resources: Resources,
 ) {
     suspend fun fetchBearerToken(
@@ -80,11 +85,11 @@ internal class MockStsAuthenticationProvider(
             )
 
         val response = client.get().makeRequest(request)
-        if (response !is Success<*>) {
+        if (response !is ApiResponseV2.Success) {
             return AuthenticationResponse.Failure(Exception("Could not exchange token with STS mock"))
         }
 
-        val tokenResponse = jsonFormat.decodeFromString<TokenResponse>(response.response.toString())
+        val tokenResponse = jsonFormat.decodeFromString<TokenResponse>(response.response)
         return AuthenticationResponse.Success(tokenResponse.accessToken)
     }
 
