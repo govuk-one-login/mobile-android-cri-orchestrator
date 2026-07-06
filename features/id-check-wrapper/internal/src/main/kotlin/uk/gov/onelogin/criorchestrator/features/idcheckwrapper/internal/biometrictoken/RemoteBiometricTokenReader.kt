@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometr
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.v2.ApiResponse
 import uk.gov.android.network.service.TransportException
@@ -31,7 +32,15 @@ class RemoteBiometricTokenReader(
         sessionId: String,
         documentVariety: DocumentVariety,
     ): BiometricTokenResult {
-        val response = biometricApi.getBiometricToken(sessionId, documentVariety)
+        val response =
+            try {
+                biometricApi.getBiometricToken(sessionId, documentVariety)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                logger.error(tag, "Failed to get biometric token: ${e.message}", e)
+                return BiometricTokenResult.Error(error = e)
+            }
 
         return when (response) {
             is ApiResponse.Failure -> {

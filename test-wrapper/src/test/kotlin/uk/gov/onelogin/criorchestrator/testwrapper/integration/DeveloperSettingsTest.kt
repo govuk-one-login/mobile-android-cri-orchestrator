@@ -16,9 +16,16 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.TransportException
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -44,9 +51,19 @@ class DeveloperSettingsTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
+    private val mockNetworkService =
+        mock<NetworkService>().also {
+            runBlocking {
+                whenever(it.makeRequest(any(), any())).thenReturn(
+                    ApiResponse.Failure(error = TransportException(cause = null)),
+                )
+            }
+        }
+
     val criOrchestratorSdk =
         CriOrchestratorSdk.createTestInstance(
             applicationContext = context,
+            authenticatedHttpClient = mockNetworkService,
             initialConfig =
                 Config.createTestInstance(
                     isNfcAvailable = false,
