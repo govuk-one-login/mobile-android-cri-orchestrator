@@ -4,7 +4,8 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.TransportException
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.AbortSessionApi
@@ -33,24 +34,28 @@ class AbortSessionImpl(
         val response = abortSessionApi.abortSession(session.sessionId)
 
         when (response) {
-            is ApiResponse.Success<*> ->
+            is ApiResponse.Success ->
                 logger.info(tag, "Aborted session")
 
-            is ApiResponse.Failure ->
-                logger.error(tag, "Failed to abort session", response.error)
-
-            ApiResponse.Loading -> unexpectedLoadingApiResponse()
-
-            ApiResponse.Offline ->
-                logger.debug(tag, "Failed to abort session - device is offline")
+            is ApiResponse.Failure -> {
+                if (response.error is TransportException) {
+                    logger.debug(tag, "Failed to abort session - device is offline")
+                } else {
+                    logger.error(tag, "Failed to abort session", response.error)
+                }
+            }
         }
 
         val result =
             when (response) {
-                is ApiResponse.Failure -> AbortSession.Result.Error.Unrecoverable(response.error)
-                ApiResponse.Offline -> AbortSession.Result.Error.Offline
-                is ApiResponse.Success<*> -> AbortSession.Result.Success
-                ApiResponse.Loading -> unexpectedLoadingApiResponse()
+                is ApiResponse.Failure -> {
+                    if (response.error is TransportException) {
+                        AbortSession.Result.Error.Offline
+                    } else {
+                        AbortSession.Result.Error.Unrecoverable(response.error)
+                    }
+                }
+                is ApiResponse.Success -> AbortSession.Result.Success
             }
 
         when (result) {
@@ -66,9 +71,4 @@ class AbortSessionImpl(
 
         return result
     }
-
-    /**
-     * This should never be called as the networking library doesn't emit loading results.
-     */
-    private fun unexpectedLoadingApiResponse(): Nothing = error("Loading state is not possible")
 }

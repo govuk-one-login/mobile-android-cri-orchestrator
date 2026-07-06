@@ -11,8 +11,8 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v2.ApiResponse
 import uk.gov.android.network.service.NetworkService
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -23,7 +23,6 @@ import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
 import java.util.stream.Stream
 import kotlin.test.assertEquals
-import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 class BiometricApiImplTest {
     private lateinit var biometricApiImpl: BiometricApi
@@ -54,14 +53,13 @@ class BiometricApiImplTest {
     @Test
     fun `biometric API implementation returns stubbed response`() =
         runTest {
-            val expected =
-                ApiResponse.Success<String>(
-                    "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
-                )
-
             val result =
                 biometricApiImpl.getBiometricToken("sessionId", DocumentVariety.NFC_PASSPORT)
-            assertEquals(expected, result)
+            val success = result as ApiResponse.Success
+            assertEquals(
+                "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                success.response,
+            )
         }
 
     @ParameterizedTest(name = "{0}")
@@ -80,7 +78,7 @@ class BiometricApiImplTest {
             whenever(
                 mockHttpClient.makeRequest(any(), any()),
             ).thenReturn(
-                ApiResponseV2.Success(
+                ApiResponse.Success(
                     response = "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
                     status = 200,
                 ),

@@ -3,7 +3,8 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometr
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.binding
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkingException
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricApi
@@ -21,7 +22,7 @@ class ConfigurableBiometricApi(
     override suspend fun getBiometricToken(
         sessionId: String,
         documentVariety: DocumentVariety,
-    ): ApiResponse =
+    ): ApiResponse<String, NetworkingException> =
         if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
             fakeBiometricApi().getBiometricToken(sessionId, documentVariety)
         } else {

@@ -2,7 +2,8 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network.active
 
 import dev.zacsweers.metro.Inject
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkingException
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 
@@ -10,7 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 class FakeActiveSessionApi(
     private val configStore: ConfigStore,
 ) : ActiveSessionApi {
-    override suspend fun getActiveSession(): ApiResponse {
+    override suspend fun getActiveSession(): ApiResponse<String, NetworkingException> {
         val redirectUri =
             when (configStore.readSingle(SdkConfigKey.BypassJourneyType).value) {
                 SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE -> "https://example/redirect"
@@ -23,6 +24,6 @@ class FakeActiveSessionApi(
                 redirectUri = redirectUri,
                 state = "11112222333344445555666677778888",
             )
-        return ApiResponse.Success<String>(Json.encodeToString(response))
+        return ApiResponse.Success(response = Json.encodeToString(response), status = 200)
     }
 }

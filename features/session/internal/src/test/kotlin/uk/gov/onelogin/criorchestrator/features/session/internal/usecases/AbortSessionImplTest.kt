@@ -5,10 +5,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
-import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.given
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.ApiResponseException
+import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.service.TransportException
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.AbortSessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.AbortSession
@@ -57,7 +59,7 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is success, it updates the session to aborted`() =
         runTest {
-            givenResponse(ApiResponse.Success(""))
+            givenResponse(ApiResponse.Success(response = "", status = 200))
             assertNotNull(sessionStore.read().first())
 
             abortSession()
@@ -71,7 +73,7 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is success, it returns success`() =
         runTest {
-            givenResponse(ApiResponse.Success(""))
+            givenResponse(ApiResponse.Success(response = "", status = 200))
 
             val result = abortSession()
 
@@ -81,7 +83,12 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is unrecoverable error, it doesn't clear the session store`() =
         runTest {
-            givenResponse(ApiResponse.Failure(401, error = Exception("error")))
+            givenResponse(
+                ApiResponse.Failure(
+                    error = ApiResponseException("error", null),
+                    status = 401,
+                ),
+            )
             assertNotNull(sessionStore.read().first())
 
             abortSession()
@@ -92,8 +99,8 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is unrecoverable error, it returns error`() =
         runTest {
-            val exception = Exception("error")
-            givenResponse(ApiResponse.Failure(401, error = exception))
+            val exception = ApiResponseException("error", null)
+            givenResponse(ApiResponse.Failure(error = exception, status = 401))
 
             val result = abortSession()
 
@@ -103,7 +110,7 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is offline, it doesn't clear the session store`() =
         runTest {
-            givenResponse(ApiResponse.Offline)
+            givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
             assertNotNull(sessionStore.read().first())
 
             abortSession()
@@ -114,23 +121,13 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is offline, it returns error`() =
         runTest {
-            givenResponse(ApiResponse.Offline)
+            givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
 
             val result = abortSession()
 
             assertEquals(AbortSession.Result.Error.Offline, result)
         }
 
-    @Test
-    fun `given api response is loading, it throws`() =
-        runTest {
-            givenResponse(ApiResponse.Loading)
-
-            assertThrows<IllegalStateException> {
-                abortSession()
-            }
-        }
-
-    private suspend fun givenResponse(apiResponse: ApiResponse) =
+    private suspend fun givenResponse(apiResponse: ApiResponse<String, NetworkingException>) =
         given(abortSessionApi.abortSession(sessionId)).willReturn(apiResponse)
 }

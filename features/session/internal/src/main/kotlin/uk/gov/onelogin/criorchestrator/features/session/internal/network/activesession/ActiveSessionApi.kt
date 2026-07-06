@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession
 
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkingException
 
 /**
  * The ID Check async backend's 'active session' API.
@@ -17,5 +18,5 @@ fun interface ActiveSessionApi {
      * - the user hasn't selected a document, and
      * - the user hasn't aborted the session
      */
-    suspend fun getActiveSession(): ApiResponse
+    suspend fun getActiveSession(): ApiResponse<String, NetworkingException>
 }

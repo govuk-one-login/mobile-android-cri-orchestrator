@@ -3,7 +3,8 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometr
 import dev.zacsweers.metro.Inject
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkingException
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 
 @Inject
@@ -17,7 +18,7 @@ class FakeBiometricTokenApi : BiometricApi {
     override suspend fun getBiometricToken(
         sessionId: String,
         documentVariety: DocumentVariety,
-    ): ApiResponse {
+    ): ApiResponse<String, NetworkingException> {
         val response =
             BiometricToken(
                 accessToken = "SlAV32hkKG",
@@ -25,9 +26,7 @@ class FakeBiometricTokenApi : BiometricApi {
             )
         val responseString = json.encodeToString(response)
 
-        return ApiResponse.Success<String>(
-            responseString,
-        )
+        return ApiResponse.Success(response = responseString, status = 200)
     }
 }
 

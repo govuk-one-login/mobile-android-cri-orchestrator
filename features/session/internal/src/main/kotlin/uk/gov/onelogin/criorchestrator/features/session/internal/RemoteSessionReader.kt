@@ -5,7 +5,9 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.service.TransportException
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApi
@@ -35,18 +37,17 @@ class RemoteSessionReader(
         logResponse(response)
 
         return when (response) {
-            ApiResponse.Loading,
-            ApiResponse.Offline,
-            -> {
-                return SessionReader.Result.Unknown
-            }
             is ApiResponse.Failure -> {
-                when (response.status) {
-                    NOT_FOUND -> SessionReader.Result.IsNotActive
-                    else -> SessionReader.Result.Unknown
+                if (response.error is TransportException) {
+                    SessionReader.Result.Unknown
+                } else {
+                    when (response.status) {
+                        NOT_FOUND -> SessionReader.Result.IsNotActive
+                        else -> SessionReader.Result.Unknown
+                    }
                 }
             }
-            is ApiResponse.Success<*> -> {
+            is ApiResponse.Success -> {
                 val session = parseSession(response)
                 when (session) {
                     null -> SessionReader.Result.Unknown
@@ -56,10 +57,10 @@ class RemoteSessionReader(
         }
     }
 
-    private fun parseSession(response: ApiResponse.Success<*>): Session? =
+    private fun parseSession(response: ApiResponse.Success<String>): Session? =
         try {
             val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
-                json.decodeFromString(response.response.toString())
+                json.decodeFromString(response.response)
             Session(
                 sessionId = parsedResponse.sessionId,
                 redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
@@ -69,19 +70,22 @@ class RemoteSessionReader(
             null
         }
 
-    private fun logResponse(response: ApiResponse) {
+    private fun logResponse(response: ApiResponse<String, NetworkingException>) {
         when (response) {
-            is ApiResponse.Success<*> ->
+            is ApiResponse.Success ->
                 logger.debug(tag, "Got active session")
 
-            is ApiResponse.Failure ->
-                logger.error(tag, "Failed to fetch active session", response.error)
-
-            ApiResponse.Loading ->
-                logger.debug(tag, "Loading ... fetching active session ...")
-
-            ApiResponse.Offline ->
-                logger.debug(tag, "Failed to fetch active session - device is offline")
+            is ApiResponse.Failure -> {
+                if (response.error is TransportException) {
+                    logger.debug(tag, "Failed to fetch active session - device is offline")
+                } else {
+                    logger.error(
+                        tag,
+                        "Failed to fetch active session",
+                        response.error,
+                    )
+                }
+            }
         }
     }
 

@@ -2,13 +2,13 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network.abort
 
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.first
-import uk.gov.android.network.api.ApiResponse
 import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v2.ApiResponse
 import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.NetworkingException
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
-import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
 
 private const val ABORT_SESSION_ENDPOINT = "/async/abortSession"
 
@@ -18,7 +18,7 @@ class RealAbortSessionApi(
     private val configStore: ConfigStore,
 ) : AbortSessionApi,
     LogTagProvider {
-    override suspend fun abortSession(sessionId: String): ApiResponse {
+    override suspend fun abortSession(sessionId: String): ApiResponse<String, NetworkingException> {
         val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value
         val request =
             ApiRequest.Post(
@@ -29,12 +29,6 @@ class RealAbortSessionApi(
                     ),
                 headers = listOf("content-type" to "application/json"),
             )
-        return when (val response = networkService.makeRequest(request)) {
-            is ApiResponseV2.Success -> ApiResponse.Success(response.response)
-            is ApiResponseV2.Failure -> ApiResponse.Failure(
-                status = response.status ?: 0,
-                error = response.error,
-            )
-        }
+        return networkService.makeRequest(request)
     }
 }

@@ -4,7 +4,8 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.TransportException
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
@@ -33,25 +34,27 @@ class RemoteBiometricTokenReader(
         val response = biometricApi.getBiometricToken(sessionId, documentVariety)
 
         return when (response) {
-            ApiResponse.Offline -> BiometricTokenResult.Offline
-
             is ApiResponse.Failure -> {
-                logger.error(
-                    tag,
-                    "Failed to get biometric token: ${response.error.message}",
-                    response.error,
-                )
-                BiometricTokenResult.Error(
-                    statusCode = response.status,
-                    error = response.error,
-                )
+                if (response.error is TransportException) {
+                    BiometricTokenResult.Offline
+                } else {
+                    logger.error(
+                        tag,
+                        "Failed to get biometric token: ${response.error.message}",
+                        response.error,
+                    )
+                    BiometricTokenResult.Error(
+                        statusCode = response.status,
+                        error = response.error,
+                    )
+                }
             }
 
-            is ApiResponse.Success<*> -> {
+            is ApiResponse.Success -> {
                 try {
                     val parsedResponse =
                         json.decodeFromString<BiometricApiResponse.BiometricSuccess>(
-                            response.response.toString(),
+                            response.response,
                         )
 
                     logger.debug(tag, "Got the biometric token")
@@ -69,11 +72,6 @@ class RemoteBiometricTokenReader(
                     )
                 }
             }
-
-            ApiResponse.Loading ->
-                BiometricTokenResult.Error(
-                    error = IllegalStateException("Loading state should not be returned"),
-                )
         }
     }
 }
