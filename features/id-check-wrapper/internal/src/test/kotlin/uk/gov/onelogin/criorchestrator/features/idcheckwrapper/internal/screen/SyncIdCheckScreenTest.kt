@@ -194,6 +194,22 @@ class SyncIdCheckScreenTest {
             verify(navController).navigate(HandbackDestinations.UnrecoverableError)
         }
 
+    @Test
+    fun `when data launcher returns 401 error, navigate to no valid session error screen`() =
+        runTest {
+            biometricTokenResult =
+                BiometricTokenResult.Error(
+                    Exception("Test error"),
+                    statusCode = STATUS_UNAUTHORIZED,
+                )
+
+            composeTestRule.setScreenContent(viewModel)
+
+            composeTestRule.waitForIdle()
+
+            verify(navController).navigate(HandbackDestinations.NoValidSessionError)
+        }
+
     private fun ComposeContentTestRule.selectOption(text: String) =
         onNodeWithText(text, useUnmergedTree = true)
             .performScrollTo()
@@ -212,3 +228,5 @@ class SyncIdCheckScreenTest {
             )
         }
 }
+
+private const val STATUS_UNAUTHORIZED = 401

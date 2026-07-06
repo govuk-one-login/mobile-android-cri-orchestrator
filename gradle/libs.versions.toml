@@ -34,7 +34,7 @@ turbine = "1.2.1"
 uk-gov-logging = "0.39.15" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.11.0"
 uk-gov-ui = "16.7.0"
-gov-uk-idcheck = "0.42.13" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+gov-uk-idcheck = "0.43.0" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -102,6 +102,7 @@ uk-gov-ui-components-v2 = { group = "uk.gov.android", name = "componentsv2", ver
 uk-gov-ui-patterns = { group = "uk.gov.android", name = "patterns", version.ref = "uk-gov-ui" }
 uk-gov-ui-theme = { group = "uk.gov.android", name = "theme", version.ref = "uk-gov-ui" }
 uk-gov-idcheck-repositories-api = { module = "uk.gov.onelogin.idcheck:repositories-api", version.ref = "gov-uk-idcheck" }
+uk-gov-idcheck-ui-pages = { module = "uk.gov.onelogin.idcheck:ui-pages", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-ui-presentation = { module = "uk.gov.onelogin.idcheck:ui-presentation", version.ref = "gov-uk-idcheck" }
 uk-gov-idcheck-sdk = { module = "uk.gov.onelogin.idcheck:sdk", version.ref = "gov-uk-idcheck" }
 

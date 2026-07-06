@@ -21,6 +21,8 @@ dependencies {
     implementation(libs.google.play.review)
     implementation(libs.google.play.review.kotlin)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.uk.gov.idcheck.sdk)
+    implementation(libs.uk.gov.idcheck.ui.pages)
 
     testFixturesImplementation(testFixtures(projects.libraries.navigation))
 

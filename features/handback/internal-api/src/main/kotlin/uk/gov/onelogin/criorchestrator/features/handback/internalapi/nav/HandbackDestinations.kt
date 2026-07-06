@@ -22,4 +22,7 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
 
     @Serializable
     data object FaceScanLimitReachedDesktop : HandbackDestinations
+
+    @Serializable
+    data object NoValidSessionError : HandbackDestinations
 }

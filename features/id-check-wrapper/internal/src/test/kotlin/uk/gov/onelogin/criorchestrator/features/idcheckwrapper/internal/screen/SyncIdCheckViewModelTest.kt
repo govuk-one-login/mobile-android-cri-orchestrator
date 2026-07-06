@@ -152,7 +152,8 @@ class SyncIdCheckViewModelTest {
                 ExitStateOption.entries
                     .filter {
                         it.exitState !is IdCheckSdkExitState.HappyPath &&
-                            it.exitState !is IdCheckSdkExitState.FaceScanLimitReached
+                            it.exitState !is IdCheckSdkExitState.FaceScanLimitReached &&
+                            it.exitState !is IdCheckSdkExitState.NoValidSessionError
                     }.mapNotNull {
                         it.exitState
                     }.stream()
@@ -220,7 +221,35 @@ class SyncIdCheckViewModelTest {
                         ).stream()
                     }
 
-            return Stream.of(happyPaths, unhappyPaths, limitReachedPaths).flatMap { it }
+            val noValidSessionErrorPaths =
+                ExitStateOption.entries
+                    .filter {
+                        it.exitState is IdCheckSdkExitState.NoValidSessionError
+                    }.mapNotNull {
+                        it.exitState
+                    }.stream()
+                    .flatMap { sdkResult ->
+                        listOf(
+                            Arguments.of(
+                                sdkResult,
+                                Session.createDesktopAppDesktopInstance(),
+                                SyncIdCheckAction.NavigateToNoValidSessionError,
+                            ),
+                            Arguments.of(
+                                sdkResult,
+                                Session.createMobileAppMobileInstance(),
+                                SyncIdCheckAction.NavigateToNoValidSessionError,
+                            ),
+                        ).stream()
+                    }
+
+            return Stream
+                .of(
+                    happyPaths,
+                    unhappyPaths,
+                    limitReachedPaths,
+                    noValidSessionErrorPaths,
+                ).flatMap { it }
         }
     }
 
@@ -384,6 +413,22 @@ class SyncIdCheckViewModelTest {
         }
 
     @Test
+    fun `when get biometric token fails with 401 status, it navigates to no valid session error`() =
+        runTest {
+            biometricTokenResult =
+                BiometricTokenResult.Error(
+                    Exception("Error"),
+                    statusCode = STATUS_UNAUTHORIZED,
+                )
+
+            viewModel.actions.test {
+                viewModel.onScreenStart(documentVariety = documentVariety)
+
+                assertEquals(SyncIdCheckAction.NavigateToNoValidSessionError, awaitItem())
+            }
+        }
+
+    @Test
     fun `when get biometric token fails with unrecoverable error, it navigates to recoverable error`() =
         runTest {
             biometricTokenResult = BiometricTokenResult.Offline
@@ -451,3 +496,5 @@ class SyncIdCheckViewModelTest {
             }
         }
 }
+
+private const val STATUS_UNAUTHORIZED = 401
