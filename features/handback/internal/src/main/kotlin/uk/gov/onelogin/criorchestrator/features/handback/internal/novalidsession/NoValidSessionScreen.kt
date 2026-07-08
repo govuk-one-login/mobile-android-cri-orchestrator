@@ -39,7 +39,7 @@ private fun generateParameters(): NoValidSessionErrorParameters =
 )
 @Composable
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun ErrorPagePreview(
+internal fun ErrorPagePreview(
     @PreviewParameter(NoValidSessionErrorProvider::class)
     parameters: NoValidSessionErrorParameters,
 ) {
