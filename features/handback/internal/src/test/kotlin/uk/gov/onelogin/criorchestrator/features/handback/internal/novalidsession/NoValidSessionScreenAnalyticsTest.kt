@@ -44,7 +44,9 @@ class NoValidSessionScreenAnalyticsTest {
     @Before
     fun setup() {
         composTestRule.setContent {
-            NoValidSessionScreen(viewModel)
+            NoValidSessionScreen {
+                viewModel.onScreenStart()
+            }
         }
     }
 

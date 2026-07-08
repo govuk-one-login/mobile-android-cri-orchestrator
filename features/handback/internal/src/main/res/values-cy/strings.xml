@@ -37,4 +37,10 @@
     <string name="handback_facescanlimitreachedmobile_body2">Parhewch i GOV.UK i weld os gallwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_facescanlimitreachedmobile_body2_content_description">Parhewch i Gov dot yoo kay i weld os gallwch brofi eich hunaniaeth mewn ffordd arall.</string>
     <string name="handback_facescanlimitreachedmobile_button">Parhau i wefan GOV.UK</string>
+
+    <!-- No Valid Session error screen -->
+    <string name="handback_no_valid_session_title">Nid oeddem yn gallu cadarnhau eich hunaniaeth</string>
+    <string name="handback_no_valid_session_para_1">Gall hyn fod oherwydd eich bod wedi dechrau profi eich hunaniaeth mwy nag awr yn ôl.</string>
+    <string name="handback_no_valid_session_para_2">Mae angen i chi ddechrau eto.</string>
+    <string name="handback_no_valid_session_para_3">Ewch yn ôl i wefan GOV.UK. Dewch o hyd i\'r gwasanaeth roeddech yn ceisio ei ddefnyddio a cheisiwch brofi eich hunaniaeth eto.</string>
 </resources>

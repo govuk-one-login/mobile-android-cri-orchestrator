@@ -9,7 +9,6 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenReader
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.BiometricTokenResult
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
-import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.nav.toDocumentType
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
@@ -76,16 +75,17 @@ class LauncherDataReader(
             }
 
             is BiometricTokenResult.Success -> {
-                LauncherDataReaderResult.Success(
-                    LauncherData(
-                        session = session,
-                        biometricToken = result.token,
-                        documentType = documentVariety.toDocumentType(),
-                        backendMode = backendMode,
-                        experimentalComposeNavigation = experimentalComposeNavigation,
-                        nfcAvailability = nfcAvailability,
-                    ),
-                )
+//                LauncherDataReaderResult.Success(
+//                    LauncherData(
+//                        session = session,
+//                        biometricToken = result.token,
+//                        documentType = documentVariety.toDocumentType(),
+//                        backendMode = backendMode,
+//                        experimentalComposeNavigation = experimentalComposeNavigation,
+//                        nfcAvailability = nfcAvailability,
+//                    ),
+//                )
+                LauncherDataReaderResult.NoValidSessionError
             }
         }
     }
