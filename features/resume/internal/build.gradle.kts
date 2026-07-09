@@ -27,7 +27,7 @@ dependencies {
     testImplementation(libs.uk.gov.logging.testdouble)
     testImplementation(projects.features.idCheckWrapper.internalApi)
     testImplementation(testFixtures(projects.features.session.internalApi))
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
 }
 
 mavenPublishingConfig {

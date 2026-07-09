@@ -1,6 +1,6 @@
 package uk.gov.onelogin.criorchestrator
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.the
@@ -11,8 +11,8 @@ import uk.gov.onelogin.criorchestrator.extensions.uiTestDependencies
 //https://github.com/gradle/gradle/issues/15383
 val libs = the<LibrariesForLibs>()
 
-configure<BaseExtension> {
-    testOptions {
+configure<CommonExtension> {
+    testOptions.apply {
         unitTests.all {
             it.useJUnitPlatform()
         }

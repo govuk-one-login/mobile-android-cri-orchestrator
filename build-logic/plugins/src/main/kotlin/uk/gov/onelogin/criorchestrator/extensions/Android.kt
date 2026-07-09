@@ -4,17 +4,9 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.withType
 
 private const val BASE_APPLICATION_ID = "uk.gov.onelogin.criorchestrator"
 internal const val BASE_NAMESPACE = "uk.gov.onelogin.criorchestrator"
-
-/**
- * Type alias for configuring both Android application and Android library modules.
- */
-private typealias AndroidExtension = CommonExtension<*, *, *, *, *, *>
 
 /**
  * Set an application ID that starts with [BASE_APPLICATION_ID].
@@ -29,34 +21,36 @@ fun ApplicationExtension.setApplicationId(suffix: String) {
 /**
  * Set a namespace that starts with [BASE_NAMESPACE].
  */
-fun AndroidExtension.setNamespace(project: Project) {
+fun CommonExtension.setNamespace(project: Project) {
     val suffix = project.modulePathAsPackage()
     val namespace = "$BASE_NAMESPACE.$suffix"
     this.namespace = namespace
 }
 
-internal fun AndroidExtension.setJavaVersion() =
-    compileOptions {
+internal fun CommonExtension.setJavaVersion() {
+    compileOptions.apply {
         sourceCompatibility = JavaVersion.toVersion(JAVA_VERSION)
         targetCompatibility = JavaVersion.toVersion(JAVA_VERSION)
     }
+}
 
-internal fun AndroidExtension.setPackagingConfig() =
-    packaging {
+internal fun CommonExtension.setPackagingConfig() {
+    packaging.apply {
         resources {
             merges += "/META-INF/{AL2.0,LGPL2.1}"
             merges += "/META-INF/{LICENSE.md,LICENSE-notice.md}"
             merges += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
+}
 
-internal fun AndroidExtension.setUiConfig() {
-    defaultConfig {
+internal fun CommonExtension.setUiConfig() {
+    defaultConfig.apply {
         vectorDrawables {
             useSupportLibrary = true
         }
     }
-    buildFeatures {
+    buildFeatures.apply {
         compose = true
     }
 }
@@ -72,8 +66,8 @@ internal fun ApplicationExtension.setBuildTypes() {
     }
 }
 
-internal fun AndroidExtension.setInstrumentationTestingConfig() {
-    defaultConfig {
+internal fun CommonExtension.setInstrumentationTestingConfig() {
+    defaultConfig.apply {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
