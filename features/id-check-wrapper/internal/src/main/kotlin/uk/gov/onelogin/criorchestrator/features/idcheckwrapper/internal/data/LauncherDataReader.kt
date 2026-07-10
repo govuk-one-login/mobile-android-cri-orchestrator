@@ -49,14 +49,18 @@ class LauncherDataReader(
             }
         return when (result) {
             is BiometricTokenResult.Error -> {
-                LauncherDataReaderResult.UnrecoverableError(
-                    statusCode = result.statusCode,
-                    error =
-                        DataReaderError(
-                            message = "Failed to get biometric token",
-                            cause = result.error,
-                        ),
-                )
+                if (result.statusCode == STATUS_UNAUTHORIZED) {
+                    LauncherDataReaderResult.NoValidSessionError
+                } else {
+                    LauncherDataReaderResult.UnrecoverableError(
+                        statusCode = result.statusCode,
+                        error =
+                            DataReaderError(
+                                message = "Failed to get biometric token",
+                                cause = result.error,
+                            ),
+                    )
+                }
             }
 
             // The network library is currently not returning this status
@@ -103,9 +107,13 @@ sealed interface LauncherDataReaderResult {
         val error: DataReaderError,
         val statusCode: Int?,
     ) : LauncherDataReaderResult
+
+    data object NoValidSessionError : LauncherDataReaderResult
 }
 
 data class DataReaderError(
     val message: String,
     val cause: Exception?,
 )
+
+private const val STATUS_UNAUTHORIZED = 401

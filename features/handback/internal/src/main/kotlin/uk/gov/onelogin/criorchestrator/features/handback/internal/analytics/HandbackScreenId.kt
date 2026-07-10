@@ -17,4 +17,5 @@ enum class HandbackScreenId(
 
     FaceScanLimitReachedDesktop(rawId = "445f537d-c73c-46ba-b8df-e902a334a6d0"),
     FaceScanLimitReachedMobile(rawId = "40d79ac7-6193-4e67-8255-87893fd6b51a"),
+    NoValidSessionError(rawId = "032b7fcf-f427-4ee7-83d1-02768fbda9cb"),
 }

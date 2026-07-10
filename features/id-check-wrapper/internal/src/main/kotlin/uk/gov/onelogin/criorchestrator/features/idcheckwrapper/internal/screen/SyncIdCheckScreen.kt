@@ -155,6 +155,9 @@ private fun SyncIdCheckActionHandler(
                 SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb -> {
                     navController.navigate(HandbackDestinations.FaceScanLimitReachedDesktop)
                 }
+                SyncIdCheckAction.NavigateToNoValidSessionError -> {
+                    navController.navigate(HandbackDestinations.NoValidSessionError)
+                }
             }
         }
     }
