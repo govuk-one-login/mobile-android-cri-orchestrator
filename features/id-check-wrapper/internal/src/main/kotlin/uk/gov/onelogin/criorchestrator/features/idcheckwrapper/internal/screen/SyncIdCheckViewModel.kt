@@ -27,6 +27,7 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.hasAbortedSession
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isLimitReached
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.isSuccess
+import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.activity.noValidSession
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperAnalytics
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.analytics.IdCheckWrapperScreenId
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.data.LauncherDataReader
@@ -162,6 +163,7 @@ class SyncIdCheckViewModel(
                     when (journeyType) {
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToReturnToDesktopWeb
+
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToReturnToMobileWeb(journeyType.redirectUri)
                     }
@@ -171,15 +173,21 @@ class SyncIdCheckViewModel(
                     when (journeyType) {
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb(journeyType.redirectUri)
+
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb
                     }
+                }
+
+                exitState.noValidSession() -> {
+                    SyncIdCheckAction.NavigateToNoValidSessionError
                 }
 
                 else -> {
                     when (journeyType) {
                         is JourneyType.MobileAppMobile ->
                             SyncIdCheckAction.NavigateToAbortedRedirectToMobileWebHolder(journeyType.redirectUri)
+
                         JourneyType.DesktopAppDesktop ->
                             SyncIdCheckAction.NavigateToAbortedReturnToDesktopWeb
                     }
@@ -229,6 +237,12 @@ class SyncIdCheckViewModel(
                                 logger = logger,
                             ),
                     )
+
+            LauncherDataReaderResult.NoValidSessionError -> {
+                _actions.emit(
+                    SyncIdCheckAction.NavigateToNoValidSessionError,
+                )
+            }
         }
     }
 

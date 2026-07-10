@@ -90,17 +90,17 @@ class LauncherDataReaderTest {
             )
     }
 
-    private fun createLauncherDataReader(sessionStore: SessionStore = LauncherDataReaderTest.sessionStore) =
-        LauncherDataReader(
-            sessionStore = sessionStore,
-            biometricTokenReader =
-                StubBiometricTokenReader(
-                    BiometricTokenResult.Success(
-                        biometricToken,
-                    ),
-                ),
-            configStore = configStore,
-        )
+    private fun createLauncherDataReader(
+        sessionStore: SessionStore = LauncherDataReaderTest.sessionStore,
+        biometricTokenResult: BiometricTokenResult = BiometricTokenResult.Success(biometricToken),
+    ) = LauncherDataReader(
+        sessionStore = sessionStore,
+        biometricTokenReader =
+            StubBiometricTokenReader(
+                biometricTokenResult,
+            ),
+        configStore = configStore,
+    )
 
     @Test
     fun `read gets the launcher data`() =
@@ -132,6 +132,23 @@ class LauncherDataReaderTest {
                             documentType = DocumentType.BRP,
                         ),
                 ),
+                launcherDataResult,
+            )
+        }
+
+    @Test
+    fun `given bio token 401 failure, read gets the launcher data`() =
+        runTest {
+            val launcherDataReader =
+                createLauncherDataReader(
+                    biometricTokenResult = BiometricTokenResult.Error(Exception(), STATUS_UNAUTHORIZED),
+                )
+            val launcherDataResult =
+                launcherDataReader.read(
+                    documentVariety = DocumentVariety.BRP,
+                )
+            assertEquals(
+                LauncherDataReaderResult.NoValidSessionError,
                 launcherDataResult,
             )
         }
@@ -258,3 +275,5 @@ class LauncherDataReaderTest {
             )
         }
 }
+
+private const val STATUS_UNAUTHORIZED = 401

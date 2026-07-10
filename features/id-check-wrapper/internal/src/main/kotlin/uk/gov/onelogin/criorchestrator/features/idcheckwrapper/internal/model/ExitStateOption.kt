@@ -30,6 +30,7 @@ enum class ExitStateOption(
     ),
     UnknownDocumentType(IdCheckSdkExitState.UnknownDocumentType),
     Nowhere(IdCheckSdkExitState.Nowhere),
+    NoValidSession(IdCheckSdkExitState.NoValidSessionError),
     ;
 
     constructor(

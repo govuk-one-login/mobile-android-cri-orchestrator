@@ -12,6 +12,8 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitr
 import uk.gov.onelogin.criorchestrator.features.handback.internal.facescanlimitreached.mobile.FaceScanLimitReachedMobileScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.modal.AbortModal
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
+import uk.gov.onelogin.criorchestrator.features.handback.internal.novalidsession.NoValidSessionScreen
+import uk.gov.onelogin.criorchestrator.features.handback.internal.novalidsession.NoValidSessionViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebScreen
 import uk.gov.onelogin.criorchestrator.features.handback.internal.unrecoverableerror.UnrecoverableErrorScreen
@@ -125,6 +127,13 @@ class HandbackNavGraphProvider(
                 onDismissRequest = { navController.popBackStack() },
                 onFinish = onFinish,
             )
+        }
+
+        composable<HandbackDestinations.NoValidSessionError> {
+            val viewModel: NoValidSessionViewModel = metroViewModel()
+            NoValidSessionScreen {
+                viewModel.onScreenStart()
+            }
         }
     }
 }

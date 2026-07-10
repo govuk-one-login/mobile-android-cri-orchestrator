@@ -30,4 +30,6 @@ sealed interface SyncIdCheckAction {
     ) : SyncIdCheckAction
 
     data object NavigateToLimitReachedReturnToDesktopWeb : SyncIdCheckAction
+
+    data object NavigateToNoValidSessionError : SyncIdCheckAction
 }
