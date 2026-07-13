@@ -5,8 +5,10 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.TransportException
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -37,7 +39,7 @@ class FakeAbortSessionApiTest {
                     ),
             )
             val result = fakeApi.abortSession("sessionId")
-            assertEquals(ApiResponse.Success(""), result)
+            assertEquals(ApiResponse.Success(response = "", status = 200), result)
         }
 
     @Test
@@ -54,7 +56,8 @@ class FakeAbortSessionApiTest {
                     ),
             )
             val result = fakeApi.abortSession("sessionId")
-            assertEquals(ApiResponse.Offline, result)
+            assertTrue(result is ApiResponse.Failure)
+            assertTrue((result as ApiResponse.Failure).error is TransportException)
         }
 
     @Test

@@ -24,7 +24,8 @@ kotlinx-serialization-json = "1.11.0"
 ksp = "2.3.7"
 lifecycle = "2.10.0"
 metro = "1.1.1"
-mockito = "6.3.0"
+mockito-android = "5.23.0"
+mockito-kotlin = "6.3.0"
 molecule = "2.2.0"
 navigation = "2.9.7"
 paparazzi = "2.0.0-alpha05"
@@ -34,7 +35,8 @@ turbine = "1.2.1"
 uk-gov-logging = "0.40.12" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.14.0"
 uk-gov-ui = "17.1.1"
-gov-uk-idcheck = "0.43.0" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+gov-uk-idcheck = "0.44.0" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+
 
 [libraries]
 android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -91,7 +93,8 @@ org-junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter" }
 org-junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine" }
 org-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 org-junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine" }
-org-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito" }
+org-mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito-android" }
+org-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 uk-gov-logging-api = { group = "uk.gov.logging", name = "logging-api", version.ref = "uk-gov-logging" }
 uk-gov-logging-impl = { group = "uk.gov.logging", name = "logging-impl", version.ref = "uk-gov-logging" }

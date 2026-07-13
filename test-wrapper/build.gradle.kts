@@ -42,5 +42,6 @@ dependencies {
     testFixturesImplementation(libs.androidx.ui.test.junit4)
 
     androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.org.mockito.android)
     androidTestImplementation(testFixtures(projects.sdk.publicApi))
 }

@@ -6,7 +6,7 @@ import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -24,7 +24,7 @@ interface BaseCriOrchestratorAppGraph {
     fun interface Factory {
         @Suppress("LongParameterList")
         fun create(
-            @Provides authenticatedHttpClient: GenericHttpClient,
+            @Provides authenticatedHttpClient: NetworkService,
             @Provides analyticsLogger: AnalyticsLogger,
             @Provides initialConfig: Config,
             @Provides logger: Logger,
@@ -43,5 +43,5 @@ interface BaseCriOrchestratorAppGraph {
 
     fun analyticsLogger(): AnalyticsLogger
 
-    fun authenticatedHttpClient(): GenericHttpClient
+    fun authenticatedHttpClient(): NetworkService
 }

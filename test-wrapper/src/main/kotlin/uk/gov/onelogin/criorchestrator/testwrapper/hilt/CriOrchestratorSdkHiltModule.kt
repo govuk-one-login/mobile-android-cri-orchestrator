@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.CriOrchestratorSdkExt.create
@@ -23,11 +23,11 @@ object CriOrchestratorSdkHiltModule {
         analyticsLogger: AnalyticsLogger,
         application: Application,
         logger: Logger,
-        httpClient: GenericHttpClient,
+        networkService: NetworkService,
         resources: Resources,
     ): CriOrchestratorSdk =
         CriOrchestratorSdk.create(
-            authenticatedHttpClient = httpClient,
+            authenticatedHttpClient = networkService,
             analyticsLogger = analyticsLogger,
             initialConfig = TestWrapperConfig.provideConfig(resources),
             logger = logger,

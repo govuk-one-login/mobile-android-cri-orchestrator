@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.ApiResponse
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.ApiResponseException
+import uk.gov.android.network.service.TransportException
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.BiometricApiResponse
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
@@ -32,32 +34,12 @@ class RemoteBiometricTokenReaderTest {
     }
 
     @Test
-    fun `emits error when api response is loading`() =
+    fun `emits offline when api response is a transport failure`() =
         runTest {
             whenever(
-                biometricApi.getBiometricToken(
-                    SESSION_ID,
-                    documentType,
-                ),
+                biometricApi.getBiometricToken(SESSION_ID, documentType),
             ).thenReturn(
-                ApiResponse.Loading,
-            )
-
-            val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
-
-            assert(result is BiometricTokenResult.Error)
-        }
-
-    @Test
-    fun `emits error when api response is offline`() =
-        runTest {
-            whenever(
-                biometricApi.getBiometricToken(
-                    SESSION_ID,
-                    documentType,
-                ),
-            ).thenReturn(
-                ApiResponse.Offline,
+                ApiResponse.Failure(error = TransportException(cause = null)),
             )
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
@@ -69,11 +51,13 @@ class RemoteBiometricTokenReaderTest {
     fun `emits error when api response is failure`() =
         runTest {
             whenever(
-                biometricApi.getBiometricToken(
-                    SESSION_ID,
-                    documentType,
+                biometricApi.getBiometricToken(SESSION_ID, documentType),
+            ).thenReturn(
+                ApiResponse.Failure(
+                    error = ApiResponseException("error", null),
+                    status = 400,
                 ),
-            ).thenReturn(ApiResponse.Failure(status = 400, error = Exception("error")))
+            )
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
             val error = result as BiometricTokenResult.Error
@@ -94,11 +78,8 @@ class RemoteBiometricTokenReaderTest {
             val encoded = json.encodeToString(successData)
 
             whenever(
-                biometricApi.getBiometricToken(
-                    SESSION_ID,
-                    documentType,
-                ),
-            ).thenReturn(ApiResponse.Success(encoded))
+                biometricApi.getBiometricToken(SESSION_ID, documentType),
+            ).thenReturn(ApiResponse.Success(response = encoded, status = 200))
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
@@ -109,12 +90,11 @@ class RemoteBiometricTokenReaderTest {
     fun `emits error when api response is success but parsing fails`() =
         runTest {
             whenever(
-                biometricApi.getBiometricToken(
-                    SESSION_ID,
-                    documentType,
-                ),
-            ).thenReturn(ApiResponse.Success("invalid json"))
+                biometricApi.getBiometricToken(SESSION_ID, documentType),
+            ).thenReturn(ApiResponse.Success(response = "invalid json", status = 200))
+
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
+
             assert(result is BiometricTokenResult.Error)
         }
 }

@@ -11,10 +11,9 @@ import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.ApiRequest
-import uk.gov.android.network.api.ApiResponse
-import uk.gov.android.network.client.ContentType
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkService
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
@@ -46,7 +45,7 @@ class BiometricApiImplTest {
 
         biometricApiImpl =
             BiometricApiImpl(
-                httpClient = createTestHttpClient(),
+                networkService = createTestHttpClient(),
                 configStore = fakeConfigStore,
             )
     }
@@ -54,14 +53,13 @@ class BiometricApiImplTest {
     @Test
     fun `biometric API implementation returns stubbed response`() =
         runTest {
-            val expected =
-                ApiResponse.Success<String>(
-                    "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
-                )
-
             val result =
                 biometricApiImpl.getBiometricToken("sessionId", DocumentVariety.NFC_PASSPORT)
-            assertEquals(expected, result)
+            val success = result as ApiResponse.Success
+            assertEquals(
+                "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                success.response,
+            )
         }
 
     @ParameterizedTest(name = "{0}")
@@ -70,18 +68,19 @@ class BiometricApiImplTest {
         expectedDocumentString: String,
         documentVariety: DocumentVariety,
     ) {
-        val mockHttpClient: GenericHttpClient = mock()
+        val mockHttpClient: NetworkService = mock()
         biometricApiImpl =
             BiometricApiImpl(
-                httpClient = mockHttpClient,
+                networkService = mockHttpClient,
                 configStore = fakeConfigStore,
             )
         runTest {
             whenever(
-                mockHttpClient.makeRequest(any()),
+                mockHttpClient.makeRequest(any(), any()),
             ).thenReturn(
-                ApiResponse.Success<String>(
-                    "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                ApiResponse.Success(
+                    response = "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                    status = 200,
                 ),
             )
             biometricApiImpl.getBiometricToken("sessionId", documentVariety)
@@ -96,7 +95,7 @@ class BiometricApiImplTest {
                             "sessionId",
                             expectedDocumentString,
                         ),
-                    contentType = ContentType.APPLICATION_JSON,
+                    headers = listOf("content-type" to "application/json"),
                 ),
             )
         }

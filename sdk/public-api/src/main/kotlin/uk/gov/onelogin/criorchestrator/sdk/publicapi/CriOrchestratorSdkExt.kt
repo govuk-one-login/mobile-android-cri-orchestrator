@@ -1,7 +1,7 @@
 package uk.gov.onelogin.criorchestrator.sdk.publicapi
 
 import android.content.Context
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -18,7 +18,7 @@ object CriOrchestratorSdkExt {
      * Take care to ensure that only one instance of this object is created.
      */
     fun CriOrchestratorSdk.Companion.create(
-        authenticatedHttpClient: GenericHttpClient,
+        authenticatedHttpClient: NetworkService,
         analyticsLogger: AnalyticsLogger,
         initialConfig: Config,
         logger: Logger,

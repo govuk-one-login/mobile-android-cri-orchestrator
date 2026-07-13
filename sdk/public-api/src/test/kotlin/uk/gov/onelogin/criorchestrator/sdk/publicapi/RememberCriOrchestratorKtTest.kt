@@ -14,8 +14,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertInstanceOf
 import org.mockito.kotlin.mock
-import uk.gov.android.network.api.ApiResponse
-import uk.gov.android.network.client.StubHttpClient
+import uk.gov.android.network.service.NetworkService
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -38,7 +37,7 @@ class RememberCriOrchestratorKtTest {
         )
     private val criOrchestratorSdk =
         CriOrchestratorSdk.create(
-            authenticatedHttpClient = StubHttpClient(apiResponse = ApiResponse.Offline),
+            authenticatedHttpClient = mock<NetworkService>(),
             analyticsLogger = mock<AnalyticsLogger>(),
             initialConfig = initialConfig,
             logger = SystemLogger(),

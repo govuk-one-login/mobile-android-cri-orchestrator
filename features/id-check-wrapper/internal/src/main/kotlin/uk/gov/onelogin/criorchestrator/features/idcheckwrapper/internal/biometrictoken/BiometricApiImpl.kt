@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken
 
 import dev.zacsweers.metro.Inject
-import uk.gov.android.network.api.ApiRequest
-import uk.gov.android.network.api.ApiResponse
-import uk.gov.android.network.client.ContentType
-import uk.gov.android.network.client.GenericHttpClient
+import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.NetworkingException
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
@@ -16,14 +16,14 @@ private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 
 @Inject
 class BiometricApiImpl(
-    private val httpClient: GenericHttpClient,
+    private val networkService: NetworkService,
     private val configStore: ConfigStore,
 ) : BiometricApi,
     LogTagProvider {
     override suspend fun getBiometricToken(
         sessionId: String,
         documentVariety: DocumentVariety,
-    ): ApiResponse {
+    ): ApiResponse<String, NetworkingException> {
         val request =
             ApiRequest.Post(
                 url = "${configStore.readSingle(IdCheckAsyncBackendBaseUrl).value}$BIOMETRIC_TOKEN_ENDPOINT",
@@ -32,11 +32,9 @@ class BiometricApiImpl(
                         sessionId,
                         documentVariety.toDocumentType().backendRepresentation,
                     ),
-                contentType = ContentType.APPLICATION_JSON,
+                headers = listOf("content-type" to "application/json"),
             )
 
-        return httpClient.makeRequest(
-            apiRequest = request,
-        )
+        return networkService.makeRequest(request)
     }
 }
