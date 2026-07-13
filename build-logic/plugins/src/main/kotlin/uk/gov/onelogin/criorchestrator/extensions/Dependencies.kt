@@ -72,7 +72,7 @@ internal fun DependencyHandlerScope.kotlinTestDependencies(libs: LibrariesForLib
     testFixturesImplementation(libs.kotlinx.coroutines.test)
     testFixturesImplementation(libs.org.mockito.kotlin)
 
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testImplementation(libs.app.cash.turbine)
     testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.kotlinx.coroutines.test)

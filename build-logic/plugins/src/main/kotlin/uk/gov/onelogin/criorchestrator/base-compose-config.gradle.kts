@@ -1,6 +1,6 @@
 package uk.gov.onelogin.criorchestrator
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
@@ -20,8 +20,8 @@ listOf(
     project.plugins.apply(it.get().pluginId)
 }
 
-configure<BaseExtension> {
-    testOptions {
+configure<CommonExtension> {
+    testOptions.apply {
         // https://github.com/cashapp/molecule?tab=readme-ov-file#testing
         unitTests.isReturnDefaultValues = true
     }

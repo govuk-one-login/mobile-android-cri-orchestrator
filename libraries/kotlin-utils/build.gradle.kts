@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.org.junit.jupiter.api)
     testImplementation(platform(libs.org.junit.bom))
