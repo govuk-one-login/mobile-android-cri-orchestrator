@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.14.0/schemas/schema.json",
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.15.0/schemas/schema.json",
   "services": [
     {
       "product": "ID Check",
@@ -7,109 +7,139 @@
       "promotionType": "library",
       "automated": [
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/lint.yml",
             "path": "$.jobs.lint"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/lint.yml",
             "path": "$.jobs.lint-structure"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/lint.yml",
             "path": "$.jobs.lint-github-actions"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "unit",
-            "integration",
-            "regression"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/test.yml",
             "path": "$.jobs.unit-test"
-          }
+          },
+          "checks": [
+            {
+              "name": "unit"
+            },
+            {
+              "name": "integration"
+            },
+            {
+              "name": "regression"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/test.yml",
             "path": "$.jobs.assemble-instrumentation-tests"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "integration",
-            "regression"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/test.yml",
             "path": "$.jobs.test-wrapper-instrumentation-test"
-          }
+          },
+          "checks": [
+            {
+              "name": "integration"
+            },
+            {
+              "name": "regression"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting",
-            "secret scanning",
-            "unit test coverage",
-            "vulnerability detection"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/test.yml",
             "path": "$.jobs.sonar-scan"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "secret scanning"
+            },
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/pr_metadata.yml",
             "path": "$.jobs.check-pr-title"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/pr_metadata.yml",
             "path": "$.jobs.check-commit-messages"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ]
         }
       ]
     }
