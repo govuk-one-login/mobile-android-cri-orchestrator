@@ -50,17 +50,40 @@
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/test.yml",
-            "path": "$.jobs.unit-test"
+            "path": "$.jobs.unit-test.steps[?@.id=='unit-tests']"
           },
           "checks": [
             {
               "name": "unit"
             },
             {
-              "name": "integration"
-            },
-            {
               "name": "regression"
+            }
+          ]
+        },
+        {
+          "phase": "pre-merge",
+          "provider": "GitHub",
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "path": "$.jobs.unit-test.steps[?@.name=='Verify screenshots']"
+          },
+          "checks": [
+            {
+              "name": "visual regression"
+            }
+          ]
+        },
+        {
+          "phase": "pre-merge",
+          "provider": "GitHub",
+          "config": {
+            "file": ".github/workflows/test.yml",
+            "path": "$.jobs.unit-test.steps[?@.name=='Upload jars']"
+          },
+          "checks": [
+            {
+              "name": "code quality"
             }
           ]
         },
