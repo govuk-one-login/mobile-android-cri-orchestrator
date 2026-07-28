@@ -1,5 +1,5 @@
 <!-- vale Google.We = NO -->
-<!-- vale Vale.Spelling["SDK", "SDKs"] = NO -->
+<!-- vale Vale.Spelling["SDK", "SDKs", "SDK's"] = NO -->
 
 # About the module structure
 
