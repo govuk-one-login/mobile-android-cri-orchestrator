@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CRIOrchestratorTemplate"
+        android:enableOnBackInvokedCallback="false"
         tools:replace="android:fullBackupContent, android:dataExtractionRules, android:theme"
         tools:targetApi="35">
         <activity
