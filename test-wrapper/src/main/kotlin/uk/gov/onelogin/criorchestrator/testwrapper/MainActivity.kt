@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.testwrapper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         setContent {
             GdsTheme {
                 MainContent(

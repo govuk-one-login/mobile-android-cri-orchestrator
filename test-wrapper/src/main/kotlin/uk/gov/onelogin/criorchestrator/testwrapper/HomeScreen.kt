@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
+import uk.gov.android.ui.patterns.edgetoedgescreen.EdgeToEdgeWrapperScreen
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
@@ -17,28 +18,30 @@ fun HomeScreen(
     criOrchestratorGraph: CriOrchestratorGraph,
     onRefreshActiveSessionClick: () -> Unit,
     modifier: Modifier = Modifier,
-) = LeftAlignedScreen(
-    modifier = modifier,
-    title = { horizontalPadding ->
-        GdsHeading(
-            text = "Home",
-            modifier = Modifier.padding(horizontal = horizontalPadding),
-        )
-    },
-    body = { horizontalPadding ->
-        item {
-            ProveYourIdentityCard(
-                graph = criOrchestratorGraph,
+) = EdgeToEdgeWrapperScreen { paddingValues ->
+    LeftAlignedScreen(
+        modifier = modifier.padding(paddingValues),
+        title = { horizontalPadding ->
+            GdsHeading(
+                text = "Home",
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             )
-        }
-        item {
-            GdsButton(
-                text = "Refresh active session",
-                buttonType = ButtonTypeV2.Primary(),
-                onClick = onRefreshActiveSessionClick,
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-            )
-        }
-    },
-)
+        },
+        body = { horizontalPadding ->
+            item {
+                ProveYourIdentityCard(
+                    graph = criOrchestratorGraph,
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                )
+            }
+            item {
+                GdsButton(
+                    text = "Refresh active session",
+                    buttonType = ButtonTypeV2.Primary(),
+                    onClick = onRefreshActiveSessionClick,
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                )
+            }
+        },
+    )
+}
