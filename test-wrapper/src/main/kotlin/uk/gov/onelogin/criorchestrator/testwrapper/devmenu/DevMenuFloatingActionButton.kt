@@ -20,7 +20,8 @@ internal fun DevMenuFloatingActionButton(
         onClick = onClick,
         icon = { Icon(painterResource(R.drawable.ic_settings), null) },
         text = { Text(text = "Developer settings") },
-        containerColor = MaterialTheme.colorScheme.secondary,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
         shape = FloatingActionButtonDefaults.smallShape,
     )
 }
