@@ -29,7 +29,7 @@ class ComposePreviewsKonsistTest {
             .withComposablePreviewAnnotations()
             .assertTrue {
                 it.hasAnnotationWithName("PreviewLightDark") ||
-                    it.hasAnnotationWithName("LightDarkBothLocalesPreview") ||
+                    it.hasAnnotationWithName("LightDarkBothLocalesPreviews") ||
                     it.hasCustomLightDarkPreviewAnnotations()
             }
     }

@@ -34,7 +34,7 @@ import uk.gov.android.ui.theme.m3.toMappedColors
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobileweb.WebNavigator
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 fun FaceScanLimitReachedMobileScreen(
@@ -145,7 +145,7 @@ private fun FaceScanLimitReachedMobileScreenContent(
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun FaceScanLimitReachedMobileScreen() {
     GdsTheme {
