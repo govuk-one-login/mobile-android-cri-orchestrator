@@ -5,4 +5,4 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 
 @Preview(locale = "cy")
 @PreviewLightDark
-annotation class LightDarkBothLocalesPreview
+annotation class LightDarkBothLocalesPreviews
