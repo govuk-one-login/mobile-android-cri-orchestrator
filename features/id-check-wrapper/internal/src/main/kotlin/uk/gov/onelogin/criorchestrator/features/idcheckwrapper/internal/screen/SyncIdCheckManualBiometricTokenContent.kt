@@ -15,7 +15,7 @@ import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadios
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadiosTitle
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 internal fun SyncIdCheckManualBiometricTokenContent(
@@ -47,7 +47,7 @@ internal fun SyncIdCheckManualBiometricTokenContent(
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewBiometricTokenDebug() {
     GdsTheme {

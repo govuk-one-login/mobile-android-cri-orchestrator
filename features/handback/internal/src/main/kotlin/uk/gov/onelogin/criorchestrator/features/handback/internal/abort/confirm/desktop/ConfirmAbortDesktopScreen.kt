@@ -28,7 +28,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
@@ -126,7 +126,7 @@ internal fun ConfirmAbortDesktopWebContent(
 }
 
 @Composable
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 internal fun PreviewConfirmAbortDesktopWeb() {
     GdsTheme {
         ConfirmAbortDesktopWebContent(

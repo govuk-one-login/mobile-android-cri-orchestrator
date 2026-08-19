@@ -27,7 +27,7 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 internal fun ConfirmBrpScreen(
@@ -123,7 +123,7 @@ internal fun ConfirmBrpScreenContent(
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewConfirmBrpScreen() {
     GdsTheme {
@@ -136,7 +136,7 @@ internal fun PreviewConfirmBrpScreen() {
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewConfirmBrpScreenNoExpired() {
     GdsTheme {

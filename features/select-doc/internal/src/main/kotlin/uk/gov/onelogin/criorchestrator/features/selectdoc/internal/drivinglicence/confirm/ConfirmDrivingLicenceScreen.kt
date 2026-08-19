@@ -31,7 +31,7 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.previewEarliestAcceptableDrivingLicenceExpiryDateText
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 internal fun ConfirmDrivingLicenceScreen(
@@ -129,7 +129,7 @@ internal fun ConfirmDrivingLicenceScreenContent(
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewConfirmDrivingLicenceScreen() {
     GdsTheme {
@@ -142,7 +142,7 @@ internal fun PreviewConfirmDrivingLicenceScreen() {
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewConfirmDrivingLicenceScreenNoExpired() {
     GdsTheme {

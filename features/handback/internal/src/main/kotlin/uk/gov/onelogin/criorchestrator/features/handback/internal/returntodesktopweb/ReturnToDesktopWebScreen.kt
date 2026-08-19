@@ -19,7 +19,7 @@ import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 fun ReturnToDesktopWebScreen(
@@ -89,7 +89,7 @@ fun ReturnToDesktopWebScreenContent(modifier: Modifier = Modifier) {
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun PreviewReturnToDesktopWebScreen() {
     GdsTheme {

@@ -25,7 +25,7 @@ import uk.gov.android.ui.patterns.errorscreen.v2.ErrorScreenIcon
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internal.R
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreview
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
 internal fun RecoverableErrorScreen(
@@ -123,7 +123,7 @@ internal fun RecoverableErrorScreenContent(
     }
 }
 
-@LightDarkBothLocalesPreview
+@LightDarkBothLocalesPreviews
 @Composable
 internal fun RecoverableErrorScreenPreview() {
     GdsTheme {
