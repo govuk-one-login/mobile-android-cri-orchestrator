@@ -1,6 +1,6 @@
 package uk.gov.onelogin.criorchestrator.testwrapper
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 /**
