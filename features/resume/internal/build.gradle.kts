@@ -4,7 +4,7 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.analytics-report")
 }
 
-apply(from = rootProject.file("mobile-android-pipelines/buildLogic/gradle/snapshot-test-filter.gradle.kts"))
+// apply(from = rootProject.file("mobile-android-pipelines/buildLogic/gradle/snapshot-test-filter.gradle.kts"))
 
 dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)
