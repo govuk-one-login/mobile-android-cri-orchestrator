@@ -11,12 +11,12 @@ gradle.taskGraph.whenReady {
         if (isSnapshotTask) {
             logger.lifecycle("📸 Running snapshot tests only in task: $name")
             filter {
-                includeTestsMatching("**/*ScreenshotTest.class")
+                include("**/*ScreenshotTest.class")
             }
         } else {
             logger.lifecycle("🚫 Excluding snapshot tests in task: $name")
             filter {
-                excludeTestsMatching("**/*ScreenshotTest.class")
+                exclude("**/*ScreenshotTest.class")
             }
         }
     }
