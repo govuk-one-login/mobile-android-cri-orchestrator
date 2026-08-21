@@ -8,6 +8,16 @@ repositories {
     google()
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.sonarsource.scanner.gradle" &&
+            requested.name == "sonarqube-gradle-plugin"
+        ) {
+            useVersion("7.4.0.8496")
+        }
+    }
+}
+
 dependencies {
     listOf(
         libs.android.build.tool,
