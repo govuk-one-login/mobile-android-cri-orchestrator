@@ -8,13 +8,15 @@ gradle.taskGraph.whenReady {
             it.contains("paparazzi", ignoreCase = true)
         }
         logger.lifecycle("🔍 Snapshot task detected: $isSnapshotTask")
-        doFirst {
-            if (isSnapshotTask) {
-                logger.lifecycle("📸 Running snapshot tests only in task: $name")
-                include("**/*ScreenshotTest.class")
-            } else {
-                logger.lifecycle("🚫 Excluding snapshot tests in task: $name")
-                exclude("**/*ScreenshotTest.class")
+        if (isSnapshotTask) {
+            logger.lifecycle("📸 Running snapshot tests only in task: $name")
+            filter {
+                includeTestsMatching("**/*ScreenshotTest.class")
+            }
+        } else {
+            logger.lifecycle("🚫 Excluding snapshot tests in task: $name")
+            filter {
+                excludeTestsMatching("**/*ScreenshotTest.class")
             }
         }
     }
