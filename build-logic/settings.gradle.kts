@@ -7,13 +7,6 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == "org.sonarqube") {
-                useVersion("7.4.0.8496")
-            }
-        }
-    }
 }
 
 dependencyResolutionManagement {
