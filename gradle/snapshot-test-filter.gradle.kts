@@ -3,11 +3,11 @@
 // this filter to modules with only screenshot tests (e.g. ui-component) will result in no tests
 // being discovered during unit test runs.
 gradle.taskGraph.whenReady {
-    val snapshotKeywords = listOf("recordPaparazzi", "verifyPaparazzi")
-    val isSnapshotTask = allTasks.any { task -> snapshotKeywords.any(task.name::contains) }
-    logger.lifecycle("🔍 Snapshot task detected: $isSnapshotTask")
-
-    project.tasks.withType(Test::class.java).configureEach {
+    project.tasks.withType<Test>().configureEach {
+        val isSnapshotTask = gradle.startParameter.taskNames.any {
+            it.contains("paparazzi", ignoreCase = true)
+        }
+        logger.lifecycle("🔍 Snapshot task detected: $isSnapshotTask")
         doFirst {
             if (isSnapshotTask) {
                 logger.lifecycle("📸 Running snapshot tests only in task: $name")
