@@ -18,6 +18,102 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  component-tests:
+    name: Component tests
+    runs-on: ubuntu-latest
+    permissions:
+      # Set permissions for ${{ secrets.GITHUB_TOKEN }}
+      # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+      contents: read
+      packages: read
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up GitHub runner
+        uses: ./actions/setup-runner
+
+      - name: Component test
+        id: component-tests
+        # Exclude Konsist unit tests which are actually lint checks
+        # Build all unit tests so that jars are available for Sonar
+        # Provide a version number so that Sonar can find jars that include the version in the name
+        uses: ./actions/gradle-checks
+        with:
+          test-type: "component"
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          version-name: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
+
+      - name: Upload test report
+        if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-test-reports
+          path: "**/build/reports/tests/**/*"
+
+      - name: Upload component test coverage report
+        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+        with:
+          artifact-name: component-reports
+          path: "**/build/reports/jacoco/**/*.xml"
+
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+  contract-tests:
+    name: Contract tests
+    runs-on: ubuntu-latest
+    permissions:
+      # Set permissions for ${{ secrets.GITHUB_TOKEN }}
+      # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+      contents: read
+      packages: read
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up GitHub runner
+        uses: ./actions/setup-runner
+
+      - name: Contract test
+        id: contract-tests
+        # Exclude Konsist unit tests which are actually lint checks
+        # Build all unit tests so that jars are available for Sonar
+        # Provide a version number so that Sonar can find jars that include the version in the name
+        uses: ./actions/gradle-checks
+        with:
+          test-type: "contract"
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          version-name: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
+
+      - name: Upload test report
+        if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: contract-test-reports
+          path: "**/build/reports/tests/**/*"
+
+      - name: Upload contract test coverage report
+        uses: ./mobile-android-pipelines/actions/upload-coverage-reports
+        with:
+          artifact-name: contract-reports
+          path: "**/build/reports/jacoco/**/*.xml"
+
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
   unit-test:
     name: Unit test
     runs-on: ubuntu-latest
@@ -54,27 +150,12 @@ jobs:
         # Exclude Konsist unit tests which are actually lint checks
         # Build all unit tests so that jars are available for Sonar
         # Provide a version number so that Sonar can find jars that include the version in the name
-        run: |
-          ./gradlew \
-              assembleDebugUnitTest \
-              testDebugUnitTest -x konsist-test:testDebugUnitTest \
-              testBuildDebugUnitTest \
-              -PversionName="$VERSION_NAME"
-        env:
-          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
-          VERSION_NAME: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
-
-      - name: Verify screenshots
-        run: |
-          ./gradlew \
-              verifyPaparazziDebug \
-              verifyPaparazziBuildDebug \
-              -PversionName="$VERSION_NAME"
-        env:
-          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
-          VERSION_NAME: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
+        uses: ./actions/gradle-checks
+        with:
+          test-type: "unit"
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          version-name: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
@@ -91,15 +172,51 @@ jobs:
           name: jars
           path: "**/build/**/*.jar"
 
-      - name: Upload test coverage report
+      - name: Upload unit test coverage report
         uses: ./mobile-android-pipelines/actions/upload-coverage-reports
         with:
-          artifact-name: unit-test-coverage
+          artifact-name: unit-reports
+          path: "**/build/reports/jacoco/**/*.xml"
 
       - name: Publish analytics test report
         uses: ./actions/publish-analytics-report
         with:
           path: "build/reports/analytics/*.yml"
+
+      - name: Clean workspace
+        if: ${{ always() }}
+        uses: ./mobile-android-pipelines/actions/clean-workspace
+
+  snapshot-tests:
+    name: Snapshot tests
+    runs-on: ubuntu-latest
+    permissions:
+      # Set permissions for ${{ secrets.GITHUB_TOKEN }}
+      # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+      contents: read
+      packages: read
+    steps:
+      - name: Run checkout github action
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Set up GitHub runner
+        uses: ./actions/setup-runner
+
+      - name: Snapshot test
+        id: snapshot-tests
+        # Exclude Konsist unit tests which are actually lint checks
+        # Build all unit tests so that jars are available for Sonar
+        # Provide a version number so that Sonar can find jars that include the version in the name
+        uses: ./actions/gradle-checks
+        with:
+          test-type: "snapshot"
+          github-token: ${{ secrets.MODULE_FETCH_TOKEN }}
+          github-actor: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          version-name: ${{ github.ref == 'refs/heads/main' && steps.versioning.outputs.new_version || '' }}
 
       - name: Clean workspace
         if: ${{ always() }}
