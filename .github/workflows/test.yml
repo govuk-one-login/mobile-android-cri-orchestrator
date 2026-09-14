@@ -37,6 +37,12 @@ jobs:
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
 
+      - name: Get version
+        id: versioning
+        uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          dry-run: true
+
       - name: Component test
         id: component-tests
         # Exclude Konsist unit tests which are actually lint checks
@@ -84,6 +90,12 @@ jobs:
 
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
+
+      - name: Get version
+        id: versioning
+        uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          dry-run: true
 
       - name: Contract test
         id: contract-tests
@@ -205,6 +217,12 @@ jobs:
 
       - name: Set up GitHub runner
         uses: ./actions/setup-runner
+
+      - name: Get version
+        id: versioning
+        uses: ./mobile-android-pipelines/actions/increment-version
+        with:
+          dry-run: true
 
       - name: Snapshot test
         id: snapshot-tests
