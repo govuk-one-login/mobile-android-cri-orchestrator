@@ -26,7 +26,7 @@ then
     :features:resume:internal:unitTestDebug \
     :features:select-doc:internal:unitTestDebug \
     :features:session:internal:unitTestDebug \
-    :test-wrapper:testDebugUnitTest
+    :test-wrapper:testBuildDebugUnitTest
 else
   echo "Running unit checks with environment variables (GitHub workflow)..."
   ./gradlew \
@@ -39,6 +39,6 @@ else
     :features:resume:internal:unitTestDebug \
     :features:select-doc:internal:unitTestDebug \
     :features:session:internal:unitTestDebug \
-    :test-wrapper:testDebugUnitTest \
+    :test-wrapper:testBuildDebugUnitTest \
     -PversionName="$VERSION_NAME"
 fi

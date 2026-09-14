@@ -26,7 +26,7 @@ then
     :features:resume:public-api:componentTestDebug \
     :features:select-doc:internal:componentTestDebug \
     :libraries:compose-utils:componentTestDebug \
-    :libraries:navigation:componentTestDebug \
+    :libraries:navigation:componentTestDebug
 else
   echo "Running component checks with environment variables (GitHub workflow)..."
   ./gradlew \
