@@ -5,17 +5,17 @@
 
 The purpose of this document is to explain the rationale behind the module structure this project. For reference, the module structure is based on the [Android SDK architecture sample project].
 
-## Why build modular SDKs?
+## Why build modular SDKs
 
 Before thinking about the structure of feature modules, why build an SDK in a modular way at all?
 
 We're building SDKs that provide whole features with lots of screens, navigation, and internal functionality. With this in mind, we can reasonably expect these SDKs to grow in size and complexity as we add more and more features. So, unlike a basic utility library (like a network client) that's naturally limited in scope, we should build a feature-rich SDK the same attention to scaling that an app codebase would. One way we can do this is by modularising it (see [the growing codebase problem]).
 
-## Why build feature modules?
+## Why build feature modules
 
 When we build a modular codebase, we can do this horizontally by layer (for example data, domain, UI) or vertically by feature. Both can work but as the codebase grows, modularising by feature can help us to achieve a design with [high cohesion and low coupling] which is easier to maintain ("code that changes together stays together").
 
-## Why split API and implementation modules?
+## Why split API and implementation modules
 
 ### To encourage decoupling and encapsulation
 
@@ -35,7 +35,7 @@ A solution that overcomes these problems is for features to supply a separate AP
 
 Another benefit of splitting API from implementation is the improvement on incremental compilation performance which leads to better developer experience. If we had features depending directly on other features, changing one feature can trigger a cascade of recompilation across many other dependent features. In contrast, when splitting API and implementation, we can change a feature's implementation without recompiling any others. As the codebase grows, this benefit becomes more noticeable.
 
-## Why add a public API module?
+## Why add a public API module
 
 Next, we need to consider that an SDK also needs to provide an actual public API. This is unlike an app where there is no 'public API' (only a user interface). To use the terminology from the [sample project], an app’s feature module would only provide an 'internal API', whereas an SDK has an 'internal API' and a 'public API'.
 
