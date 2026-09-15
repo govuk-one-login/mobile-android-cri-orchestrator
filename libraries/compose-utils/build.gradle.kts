@@ -10,7 +10,6 @@ plugins {
 testTypeConfig {
     testTypes(
         "component",
-        "unit",
     )
 }
 
