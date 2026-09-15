@@ -4,10 +4,19 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.imposter-test-config")
     id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
     id("uk.gov.onelogin.criorchestrator.analytics-report")
+    id("uk.gov.onelogin.criorchestrator.test-config")
     alias(libs.plugins.kotlin.serialization)
 }
 
 apply(from = rootProject.file("mobile-android-pipelines/buildLogic/gradle/snapshot-test-filter.gradle.kts"))
+
+testTypeConfig {
+    testTypes(
+        "component",
+        "unit",
+        "contract",
+    )
+}
 
 dependencies {
     implementation(libs.androidx.navigation.compose)
