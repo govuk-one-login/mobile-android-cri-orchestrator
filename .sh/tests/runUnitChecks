@@ -7,7 +7,7 @@ set -o errexit
 # able to defer them to the gradle commands.
 #
 # For example:
-# - Terminal usage: `VERSION_NAME="1.2.3" ./.sh/runUnitChecks`
+# - Terminal usage: `VERSION_NAME="1.2.3" ./.sh/test/runUnitChecks`
 # See `config/unit-gradle-checks/action.yml` for workflow usage deferring to the `env` configuration.
 
 find ./.sh -type f -exec shellcheck {} +

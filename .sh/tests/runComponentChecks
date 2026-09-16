@@ -7,7 +7,7 @@ set -o errexit
 # able to defer it to the gradle commands.
 #
 # For example:
-# - Terminal usage: `VERSION_NAME="1.2.3" ./.sh/runUnitChecks`
+# - Terminal usage: `VERSION_NAME="1.2.3" ./.sh/test/runComponentChecks`
 # See `config/unit-gradle-checks/action.yml` for workflow usage deferring to the `env` configuration.
 
 find ./.sh -type f -exec shellcheck {} +
@@ -30,7 +30,7 @@ then
 else
   echo "Running component checks with environment variables (GitHub workflow)..."
   ./gradlew \
-:features:dev:internal:componentTestDebug \
+    :features:dev:internal:componentTestDebug \
     :features:dev:public-api:componentTestDebug \
     :features:error:internal:componentTestDebug \
     :features:handback:internal:componentTestDebug \
