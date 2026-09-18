@@ -2,9 +2,8 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometr
 
 import dev.zacsweers.metro.Inject
 import uk.gov.android.network.api.v2.ApiRequest
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkService
-import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.service.v2.NetworkService
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
@@ -23,7 +22,7 @@ class BiometricApiImpl(
     override suspend fun getBiometricToken(
         sessionId: String,
         documentVariety: DocumentVariety,
-    ): ApiResponse<String, NetworkingException> {
+    ): NetworkServiceResponse {
         val request =
             ApiRequest.Post(
                 url = "${configStore.readSingle(IdCheckAsyncBackendBaseUrl).value}$BIOMETRIC_TOKEN_ENDPOINT",

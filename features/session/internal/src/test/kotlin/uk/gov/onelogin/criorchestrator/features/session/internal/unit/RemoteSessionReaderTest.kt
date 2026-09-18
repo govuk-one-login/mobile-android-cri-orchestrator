@@ -15,10 +15,10 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.ApiResponseException
-import uk.gov.android.network.service.NetworkingException
 import uk.gov.android.network.service.TransportException
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.RemoteSessionReader
 import uk.gov.onelogin.criorchestrator.features.session.internal.SessionReader
@@ -54,7 +54,7 @@ class RemoteSessionReaderTest {
     @ParameterizedTest(name = "{0} and correctly writes to session store")
     @MethodSource("assertCorrectApiResponseHandling")
     fun `session reader returns `(
-        apiResponse: ApiResponse<String, NetworkingException>,
+        apiResponse: NetworkServiceResponse,
         logEntry: String,
         expectedResult: SessionReader.Result,
     ) = runTest {
@@ -82,6 +82,7 @@ class RemoteSessionReaderTest {
                         ApiResponse.Failure(
                             error = ApiResponseException("test exception", null),
                             status = 401,
+                            null,
                         ),
                     ),
                     "Failed to fetch active session",
@@ -93,6 +94,7 @@ class RemoteSessionReaderTest {
                         ApiResponse.Failure(
                             error = ApiResponseException("test exception", null),
                             status = 404,
+                            null,
                         ),
                     ),
                     "Failed to fetch active session",
@@ -103,6 +105,8 @@ class RemoteSessionReaderTest {
                         "false with expected log entry when API response is a transport failure (offline)",
                         ApiResponse.Failure(
                             error = TransportException(cause = null),
+                            null,
+                            null,
                         ),
                     ),
                     "Failed to fetch active session - device is offline",
@@ -114,7 +118,7 @@ class RemoteSessionReaderTest {
                         "true with expected log entry when API response is Success with correct " +
                             "response format - with redirectUri (mobile journey)",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId": "test session ID",
@@ -138,7 +142,7 @@ class RemoteSessionReaderTest {
                         "true with expected log entry when API response is Success with correct " +
                             "response format - with new parameters",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId": "test session ID",
@@ -163,7 +167,7 @@ class RemoteSessionReaderTest {
                         "true with expected log entry when API response is Success with correct " +
                             "response format - with existing query parameters on the redirect URI",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId": "test session ID",
@@ -187,7 +191,7 @@ class RemoteSessionReaderTest {
                         "true with expected log entry when API response is Success with correct " +
                             "response format - with state that requires URI encoding",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId": "test session ID",
@@ -211,7 +215,7 @@ class RemoteSessionReaderTest {
                         "true with expected log entry when API response is Success with correct " +
                             "response format - no redirectUri (desktop journey)",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId": "test session ID",
@@ -234,7 +238,7 @@ class RemoteSessionReaderTest {
                         "false with expected log entry when API response is Success but with " +
                             "incorrect response format",
                         ApiResponse.Success(
-                            response =
+                            body =
                                 """
                                 {
                                     "sessionId_WRONG": "test session ID",

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.ApiResponseException
 import uk.gov.android.network.service.TransportException
 import uk.gov.logging.api.Logger
@@ -82,7 +82,7 @@ class RemoteBiometricTokenReaderTest {
 
             whenever(
                 biometricApi.getBiometricToken(SESSION_ID, documentType),
-            ).thenReturn(ApiResponse.Success(response = encoded, status = 200))
+            ).thenReturn(ApiResponse.Success(body = encoded, status = 200))
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 
@@ -94,7 +94,7 @@ class RemoteBiometricTokenReaderTest {
         runTest {
             whenever(
                 biometricApi.getBiometricToken(SESSION_ID, documentType),
-            ).thenReturn(ApiResponse.Success(response = "invalid json", status = 200))
+            ).thenReturn(ApiResponse.Success(body = "invalid json", status = 200))
 
             val result = biometricTokenReader.getBiometricToken(SESSION_ID, documentType)
 

@@ -12,8 +12,8 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.v2.ApiRequest
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.api.v3.ApiResponse
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.IdCheckAsyncBackendBaseUrl
@@ -60,7 +60,7 @@ class BiometricApiImplTest {
             val success = result as ApiResponse.Success
             assertEquals(
                 "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
-                success.response,
+                success.body,
             )
         }
 
@@ -81,7 +81,7 @@ class BiometricApiImplTest {
                 mockHttpClient.makeRequest(any(), any()),
             ).thenReturn(
                 ApiResponse.Success(
-                    response = "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+                    body = "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
                     status = 200,
                 ),
             )

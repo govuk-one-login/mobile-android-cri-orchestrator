@@ -3,8 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network.active
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.binding
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
@@ -15,7 +14,7 @@ class ConfigurableActiveSessionApi(
     private val realActiveSessionApi: Provider<ActiveSessionApiImpl>,
     private val fakeActiveSessionApi: Provider<FakeActiveSessionApi>,
 ) : ActiveSessionApi {
-    override suspend fun getActiveSession(): ApiResponse<String, NetworkingException> =
+    override suspend fun getActiveSession(): NetworkServiceResponse =
         if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
             fakeActiveSessionApi()
         } else {

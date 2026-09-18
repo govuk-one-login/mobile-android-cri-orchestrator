@@ -4,7 +4,7 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
 import uk.gov.idcheck.repositories.api.vendor.BiometricToken
 import uk.gov.logging.api.LogTagProvider
@@ -64,7 +64,7 @@ class RemoteBiometricTokenReader(
                 try {
                     val parsedResponse =
                         json.decodeFromString<BiometricApiResponse.BiometricSuccess>(
-                            response.response,
+                            response.body,
                         )
 
                     logger.debug(tag, "Got the biometric token")

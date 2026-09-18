@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -48,7 +48,7 @@ class ActiveSessionApiImplTest {
                 "{\"sessionId\":\"37aae92b-a51e-4f68-b571-8e455fb0ec34\"," +
                     "\"redirectUri\":\"https://example/redirect\"," +
                     "\"state\":\"11112222333344445555666677778888\"}",
-                success.response,
+                success.body,
             )
         }
 }
