@@ -1,7 +1,7 @@
 package uk.gov.onelogin.criorchestrator.sdk.publicapi
 
 import android.content.Context
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.logging.api.Logger
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config

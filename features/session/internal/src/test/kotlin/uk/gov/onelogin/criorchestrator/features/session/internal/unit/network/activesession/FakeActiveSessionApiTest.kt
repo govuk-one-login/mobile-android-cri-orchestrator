@@ -3,7 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.unit.network.a
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -36,7 +36,7 @@ class FakeActiveSessionApiTest {
                         "state": "11112222333344445555666677778888"
                     }
                     """.replace("\\s".toRegex(), ""),
-                result.response,
+                result.body,
             )
         }
 
@@ -59,7 +59,7 @@ class FakeActiveSessionApiTest {
                         "state": "11112222333344445555666677778888"
                     }
                     """.replace("\\s".toRegex(), ""),
-                result.response,
+                result.body,
             )
         }
 }

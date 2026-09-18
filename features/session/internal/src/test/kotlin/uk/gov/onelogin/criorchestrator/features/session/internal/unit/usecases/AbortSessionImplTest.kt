@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.given
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.ApiResponseException
-import uk.gov.android.network.service.NetworkingException
 import uk.gov.android.network.service.TransportException
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.AbortSessionApi
 import uk.gov.onelogin.criorchestrator.features.session.internal.usecases.AbortSessionImpl
@@ -60,7 +60,7 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is success, it updates the session to aborted`() =
         runTest {
-            givenResponse(ApiResponse.Success(response = "", status = 200))
+            givenResponse(ApiResponse.Success(body = "", status = 200))
             assertNotNull(sessionStore.read().first())
 
             abortSession()
@@ -74,7 +74,7 @@ class AbortSessionImplTest {
     @Test
     fun `given api response is success, it returns success`() =
         runTest {
-            givenResponse(ApiResponse.Success(response = "", status = 200))
+            givenResponse(ApiResponse.Success(body = "", status = 200))
 
             val result = abortSession()
 
@@ -129,6 +129,6 @@ class AbortSessionImplTest {
             assertEquals(AbortSession.Result.Error.Offline, result)
         }
 
-    private suspend fun givenResponse(apiResponse: ApiResponse<String, NetworkingException>) =
+    private suspend fun givenResponse(apiResponse: NetworkServiceResponse) =
         given(abortSessionApi.abortSession(sessionId)).willReturn(apiResponse)
 }

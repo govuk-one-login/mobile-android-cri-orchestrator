@@ -7,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
@@ -40,7 +40,7 @@ class FakeAbortSessionApiTest {
                     ),
             )
             val result = fakeApi.abortSession("sessionId")
-            assertEquals(ApiResponse.Success(response = "", status = 200), result)
+            assertEquals(ApiResponse.Success(body = "", status = 200), result)
         }
 
     @Test
