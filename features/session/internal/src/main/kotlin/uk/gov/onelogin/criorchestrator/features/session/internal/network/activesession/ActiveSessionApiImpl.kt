@@ -3,9 +3,8 @@ package uk.gov.onelogin.criorchestrator.features.session.internal.network.active
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.first
 import uk.gov.android.network.api.v2.ApiRequest
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkService
-import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.service.v2.NetworkService
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -18,7 +17,7 @@ class ActiveSessionApiImpl(
     private val configStore: ConfigStore,
 ) : ActiveSessionApi,
     LogTagProvider {
-    override suspend fun getActiveSession(): ApiResponse<String, NetworkingException> {
+    override suspend fun getActiveSession(): NetworkServiceResponse {
         val baseUrl = configStore.read(SdkConfigKey.IdCheckAsyncBackendBaseUrl).first().value
         val request =
             ApiRequest.Get(

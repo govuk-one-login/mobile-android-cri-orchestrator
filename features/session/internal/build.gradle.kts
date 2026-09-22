@@ -1,7 +1,15 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.imposter-test-config")
+    id("uk.gov.onelogin.criorchestrator.test-config")
     alias(libs.plugins.kotlin.serialization)
+}
+
+testTypeConfig {
+    testTypes(
+        "contract",
+        "unit",
+    )
 }
 
 dependencies {

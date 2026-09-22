@@ -2,9 +2,17 @@ plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
     id("uk.gov.onelogin.criorchestrator.analytics-report")
+    id("uk.gov.onelogin.criorchestrator.test-config")
 }
 
 apply(from = rootProject.file("mobile-android-pipelines/buildLogic/gradle/snapshot-test-filter.gradle.kts"))
+
+testTypeConfig {
+    testTypes(
+        "component",
+        "unit",
+    )
+}
 
 dependencies {
     api(libs.androidx.lifecycle.viewmodel.compose)

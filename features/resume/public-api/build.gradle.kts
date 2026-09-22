@@ -1,6 +1,13 @@
 plugins {
     id("uk.gov.onelogin.criorchestrator.android-lib-config")
     id("uk.gov.onelogin.criorchestrator.ui-config")
+    id("uk.gov.onelogin.criorchestrator.test-config")
+}
+
+testTypeConfig {
+    testTypes(
+        "component",
+    )
 }
 
 dependencies {
