@@ -5,9 +5,9 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApi
@@ -60,7 +60,7 @@ class RemoteSessionReader(
     private fun parseSession(response: ApiResponse.Success<String>): Session? =
         try {
             val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
-                json.decodeFromString(response.response)
+                json.decodeFromString(response.body)
             Session(
                 sessionId = parsedResponse.sessionId,
                 redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
@@ -70,7 +70,7 @@ class RemoteSessionReader(
             null
         }
 
-    private fun logResponse(response: ApiResponse<String, NetworkingException>) {
+    private fun logResponse(response: NetworkServiceResponse) {
         when (response) {
             is ApiResponse.Success ->
                 logger.debug(tag, "Got active session")

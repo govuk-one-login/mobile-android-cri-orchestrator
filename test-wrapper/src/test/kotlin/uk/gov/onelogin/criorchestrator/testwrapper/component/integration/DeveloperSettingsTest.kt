@@ -23,9 +23,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey

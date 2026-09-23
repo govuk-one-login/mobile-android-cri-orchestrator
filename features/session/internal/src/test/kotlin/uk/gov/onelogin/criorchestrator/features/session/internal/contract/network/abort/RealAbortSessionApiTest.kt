@@ -4,7 +4,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import uk.gov.android.network.api.v2.ApiResponse
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -44,6 +44,6 @@ class RealAbortSessionApiTest {
         runTest {
             val result = api.abortSession("sessionId")
             val success = result as ApiResponse.Success
-            assertEquals("example", success.response)
+            assertEquals("example", success.body)
         }
 }

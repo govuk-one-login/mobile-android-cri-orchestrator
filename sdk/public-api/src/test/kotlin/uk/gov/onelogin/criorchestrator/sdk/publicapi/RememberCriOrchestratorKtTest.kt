@@ -14,7 +14,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertInstanceOf
 import org.mockito.kotlin.mock
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
 import uk.gov.logging.testdouble.SystemLogger
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config

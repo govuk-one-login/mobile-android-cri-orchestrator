@@ -11,7 +11,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.v2.ApiRequest
 import uk.gov.android.network.auth.AuthenticationResponse
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.GRANT_TYPE
@@ -19,7 +19,7 @@ import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthentication
 import javax.inject.Provider
 import kotlin.test.assertEquals
 import kotlin.test.fail
-import uk.gov.android.network.api.v2.ApiResponse as ApiResponseV2
+import uk.gov.android.network.api.v3.ApiResponse as ApiResponseV2
 
 class MockStsAuthenticationProviderTest {
     private val resources = mock<Resources>()
@@ -68,7 +68,7 @@ class MockStsAuthenticationProviderTest {
         runTest {
             whenever(mockClient.makeRequest(any(), any())).thenReturn(
                 ApiResponseV2.Success(
-                    response =
+                    body =
                         """
                         {
                           "access_token": "$accessToken",
@@ -103,7 +103,7 @@ class MockStsAuthenticationProviderTest {
         runTest {
             whenever(mockClient.makeRequest(any(), any())).thenReturn(
                 ApiResponseV2.Success(
-                    response =
+                    body =
                         """
                         {
                           "access_token": "$accessToken",
