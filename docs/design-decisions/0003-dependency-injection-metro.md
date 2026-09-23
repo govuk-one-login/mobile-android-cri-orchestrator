@@ -36,7 +36,7 @@ Downsides of pure Dagger:
 - It needs boilerplate to attach Dagger modules to Dagger components
 
  
-### Metro (chosen)
+### Metro - chosen
 
 [Metro] makes dependency injection easier by automatically merging binding containers (equivalent to Dagger modules) and dependency graphs/providers (equivalent to Dagger component interfaces). Rather than of requiring manually adding binding containers to a graph or making the graph extend all provider interfaces, Metro will aggregate bindings and providers into a graph automatically.
 
