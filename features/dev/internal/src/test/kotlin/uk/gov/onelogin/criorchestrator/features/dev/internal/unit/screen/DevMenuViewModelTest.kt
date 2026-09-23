@@ -22,40 +22,38 @@ class DevMenuViewModelTest {
         )
 
     @Test
-    fun `it emits initial state`() =
-        runTest {
-            viewModel.state.test {
-                assertEquals(
-                    DevMenuUiState(
-                        entries = stubConfig().entries,
-                    ),
-                    awaitItem(),
-                )
-            }
+    fun `it emits initial state`() = runTest {
+        viewModel.state.test {
+            assertEquals(
+                DevMenuUiState(
+                    entries = stubConfig().entries,
+                ),
+                awaitItem(),
+            )
         }
+    }
 
     @Test
-    fun `when an entry changes, it emits a new state`() =
-        runTest {
-            val oldEntry = stubStringConfigEntry()
-            val newEntry =
-                stubStringConfigEntry().copy(value = Config.Value.StringValue("updated value"))
-            val expectedEntries =
-                stubConfig()
-                    .entries
-                    .minus(oldEntry)
-                    .plus(newEntry)
-                    .toPersistentList()
-            viewModel.state.test {
-                skipItems(1)
-                viewModel.onEntryChange(newEntry)
-                val state = awaitItem()
-                assertEquals(
-                    DevMenuUiState(
-                        entries = expectedEntries,
-                    ),
-                    state,
-                )
-            }
+    fun `when an entry changes, it emits a new state`() = runTest {
+        val oldEntry = stubStringConfigEntry()
+        val newEntry =
+            stubStringConfigEntry().copy(value = Config.Value.StringValue("updated value"))
+        val expectedEntries =
+            stubConfig()
+                .entries
+                .minus(oldEntry)
+                .plus(newEntry)
+                .toPersistentList()
+        viewModel.state.test {
+            skipItems(1)
+            viewModel.onEntryChange(newEntry)
+            val state = awaitItem()
+            assertEquals(
+                DevMenuUiState(
+                    entries = expectedEntries,
+                ),
+                state,
+            )
         }
+    }
 }

@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.unit.returntodesktopweb
 
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
@@ -14,8 +16,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.appreview.Requ
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebConstants
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntodesktopweb.ReturnToDesktopWebViewModel
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 @ExtendWith(MainDispatcherExtension::class)
 class ReturnToDesktopWebViewModelTest {
@@ -41,14 +41,13 @@ class ReturnToDesktopWebViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when screen starts, it triggers a review after two seconds`() =
-        runTest {
-            viewModel.onScreenStart()
+    fun `when screen starts, it triggers a review after two seconds`() = runTest {
+        viewModel.onScreenStart()
 
-            advanceTimeBy(2.seconds)
-            verifyNoInteractions(requestAppReview)
+        advanceTimeBy(2.seconds)
+        verifyNoInteractions(requestAppReview)
 
-            advanceTimeBy(1.milliseconds)
-            verify(requestAppReview).invoke()
-        }
+        advanceTimeBy(1.milliseconds)
+        verify(requestAppReview).invoke()
+    }
 }

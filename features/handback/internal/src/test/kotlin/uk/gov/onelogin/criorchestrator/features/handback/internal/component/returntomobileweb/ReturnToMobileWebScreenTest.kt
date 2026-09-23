@@ -7,6 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +20,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobile
 import uk.gov.onelogin.criorchestrator.features.handback.internal.returntomobileweb.ReturnToMobileWebViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
-import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class ReturnToMobileWebScreenTest {

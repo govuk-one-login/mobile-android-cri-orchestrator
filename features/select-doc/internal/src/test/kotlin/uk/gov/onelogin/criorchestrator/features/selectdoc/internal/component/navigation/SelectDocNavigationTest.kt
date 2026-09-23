@@ -24,6 +24,7 @@ import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
+import java.time.Clock
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.Serializable
 import org.junit.After
@@ -51,7 +52,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelFactoryBi
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
-import java.time.Clock
 
 @RunWith(AndroidJUnit4::class)
 class SelectDocNavigationTest {
@@ -203,13 +203,11 @@ class SelectDocNavigationTest {
         composeTestRule.assertStartIsDisplayed()
     }
 
-    private fun ComposeTestRule.assertStartIsDisplayed() =
-        onNodeWithText(START_BUTTON)
-            .assertIsDisplayed()
+    private fun ComposeTestRule.assertStartIsDisplayed() = onNodeWithText(START_BUTTON)
+        .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickStart() =
-        onNodeWithText(START_BUTTON)
-            .performClick()
+    private fun ComposeTestRule.clickStart() = onNodeWithText(START_BUTTON)
+        .performClick()
 
     private fun ComposeTestRule.assertSelectPassportIsDisplayed() =
         onNodeWithText(context.getString(R.string.selectdocument_passport_title))
@@ -248,20 +246,19 @@ class SelectDocNavigationTest {
         onNodeWithText(context.getString(R.string.typesofphotoid_title))
             .assertIsDisplayed()
 
-    private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) =
-        setContent {
-            CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
-                CompositeNavHost(
-                    navGraphProviders =
-                        persistentSetOf(
-                            InitialNavGraphProvider(navigatesTo = startNavigatesTo),
-                            navGraphProvider,
-                        ),
-                    startDestination = InitialNavGraphStart,
-                    onFinish = onFinish,
-                )
-            }
+    private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) = setContent {
+        CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
+            CompositeNavHost(
+                navGraphProviders =
+                    persistentSetOf(
+                        InitialNavGraphProvider(navigatesTo = startNavigatesTo),
+                        navGraphProvider,
+                    ),
+                startDestination = InitialNavGraphStart,
+                onFinish = onFinish,
+            )
         }
+    }
 }
 
 private const val START_BUTTON = "Start button"
@@ -269,13 +266,9 @@ private const val START_BUTTON = "Start button"
 @Serializable
 internal data object InitialNavGraphStart : NavigationDestination
 
-private class InitialNavGraphProvider(
-    private val navigatesTo: NavigationDestination,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+private class InitialNavGraphProvider(private val navigatesTo: NavigationDestination) :
+    ProveYourIdentityNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<InitialNavGraphStart> {
             Button(
                 onClick = { navController.navigate(navigatesTo) },

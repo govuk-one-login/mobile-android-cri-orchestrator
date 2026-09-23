@@ -1,13 +1,13 @@
 package uk.gov.onelogin.criorchestrator.libraries.testing
 
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import uk.gov.logging.api.analytics.AnalyticsEvent
 import uk.gov.logging.api.analytics.logging.AnalyticsLogger
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 
 /**
  * A JUnit 4 test rule that logs analytics events to a file in the build directory.
@@ -17,10 +17,7 @@ import java.io.FileWriter
 class ReportingAnalyticsLoggerRule : TestRule {
     val analyticsLogger = TestReportAnalyticsLogger()
 
-    override fun apply(
-        base: Statement,
-        description: Description,
-    ): Statement {
+    override fun apply(base: Statement, description: Description): Statement {
         val className = description.testClass.simpleName
         val methodName = description.methodName
         return object : Statement() {
@@ -48,10 +45,7 @@ class TestReportAnalyticsLogger : AnalyticsLogger {
     private var isEnabled = true
     val loggedEvents: MutableList<AnalyticsEvent> = mutableListOf()
 
-    override fun logEvent(
-        shouldLogEvent: Boolean,
-        vararg events: AnalyticsEvent,
-    ) {
+    override fun logEvent(shouldLogEvent: Boolean, vararg events: AnalyticsEvent) {
         if (!isEnabled) {
             return
         }
@@ -62,10 +56,7 @@ class TestReportAnalyticsLogger : AnalyticsLogger {
         this.isEnabled = isEnabled
     }
 
-    fun prepareReport(
-        testClassName: String,
-        testMethodName: String,
-    ) {
+    fun prepareReport(testClassName: String, testMethodName: String) {
         reportFile(testClassName, testMethodName).bufferedWriter().use { writer ->
             writer.write("")
             writer.appendLine("test_class_name: $testClassName")
@@ -73,10 +64,7 @@ class TestReportAnalyticsLogger : AnalyticsLogger {
         }
     }
 
-    fun writeReport(
-        testClassName: String,
-        testMethodName: String,
-    ) {
+    fun writeReport(testClassName: String, testMethodName: String) {
         val reportFile = reportFile(testClassName, testMethodName)
         BufferedWriter(FileWriter(reportFile, true)).use { writer ->
             writer.appendLine("total_events: ${loggedEvents.size}")
@@ -91,10 +79,7 @@ class TestReportAnalyticsLogger : AnalyticsLogger {
         }
     }
 
-    private fun reportFile(
-        testClassName: String,
-        testMethodName: String,
-    ): File {
+    private fun reportFile(testClassName: String, testMethodName: String): File {
         val buildDir = File("build/reports/analytics")
         if (!buildDir.exists() && !buildDir.mkdirs()) {
             error("Failed to create build directory")

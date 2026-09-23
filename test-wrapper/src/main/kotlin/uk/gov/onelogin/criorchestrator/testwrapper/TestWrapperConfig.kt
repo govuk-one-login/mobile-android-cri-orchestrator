@@ -8,46 +8,45 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheck
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
 
 object TestWrapperConfig {
-    fun provideConfig(resources: Resources) =
-        Config(
-            entries =
-                persistentListOf(
-                    Config.Entry(
-                        key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
-                        Config.Value.StringValue(
-                            value = resources.getString(R.string.backendAsyncUrl),
-                        ),
-                    ),
-                    Config.Entry(
-                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                        Config.Value.BooleanValue(
-                            value = false,
-                        ),
-                    ),
-                    Config.Entry(
-                        key = SdkConfigKey.DebugAppReviewPrompts,
-                        Config.Value.BooleanValue(
-                            value = false,
-                        ),
-                    ),
-                    Config.Entry<Config.Value.StringValue>(
-                        key = NfcConfigKey.NfcAvailability,
-                        Config.Value.StringValue(
-                            value = NfcConfigKey.NfcAvailability.OPTION_DEVICE,
-                        ),
-                    ),
-                    Config.Entry(
-                        key = IdCheckWrapperConfigKey.EnableManualLauncher,
-                        Config.Value.BooleanValue(
-                            value = true,
-                        ),
-                    ),
-                    Config.Entry(
-                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                        Config.Value.BooleanValue(
-                            value = false,
-                        ),
+    fun provideConfig(resources: Resources) = Config(
+        entries =
+            persistentListOf(
+                Config.Entry(
+                    key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                    Config.Value.StringValue(
+                        value = resources.getString(R.string.backendAsyncUrl),
                     ),
                 ),
-        )
+                Config.Entry(
+                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                    Config.Value.BooleanValue(
+                        value = false,
+                    ),
+                ),
+                Config.Entry(
+                    key = SdkConfigKey.DebugAppReviewPrompts,
+                    Config.Value.BooleanValue(
+                        value = false,
+                    ),
+                ),
+                Config.Entry<Config.Value.StringValue>(
+                    key = NfcConfigKey.NfcAvailability,
+                    Config.Value.StringValue(
+                        value = NfcConfigKey.NfcAvailability.OPTION_DEVICE,
+                    ),
+                ),
+                Config.Entry(
+                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                    Config.Value.BooleanValue(
+                        value = true,
+                    ),
+                ),
+                Config.Entry(
+                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                    Config.Value.BooleanValue(
+                        value = false,
+                    ),
+                ),
+            ),
+    )
 }

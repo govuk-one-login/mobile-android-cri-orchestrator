@@ -8,17 +8,13 @@ sealed interface HandbackDestinations : ProveYourIdentityDestinations {
     data object UnrecoverableError : HandbackDestinations
 
     @Serializable
-    data class ReturnToMobileWeb(
-        val redirectUri: String,
-    ) : HandbackDestinations
+    data class ReturnToMobileWeb(val redirectUri: String) : HandbackDestinations
 
     @Serializable
     data object ReturnToDesktopWeb : HandbackDestinations
 
     @Serializable
-    data class FaceScanLimitReachedMobile(
-        val redirectUri: String,
-    ) : HandbackDestinations
+    data class FaceScanLimitReachedMobile(val redirectUri: String) : HandbackDestinations
 
     @Serializable
     data object FaceScanLimitReachedDesktop : HandbackDestinations

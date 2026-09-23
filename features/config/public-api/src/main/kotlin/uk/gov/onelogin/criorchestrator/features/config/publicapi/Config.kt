@@ -11,9 +11,7 @@ import kotlinx.collections.immutable.toPersistentList
  *
  * @property entries The items of configuration
  */
-data class Config(
-    val entries: ImmutableList<Entry<Value>> = persistentListOf(),
-) {
+data class Config(val entries: ImmutableList<Entry<Value>> = persistentListOf()) {
     init {
         // Ensure no duplicate values
         assert(entries.map { it.key }.toSet().size == entries.size)
@@ -23,20 +21,19 @@ data class Config(
 
     val keys: List<ConfigKey<Value>> by lazy { entries.map { it.key } }
 
-    fun combinedWith(config: Config): Config =
-        Config(
-            entries =
-                entries
-                    .toMutableList()
-                    .apply {
-                        removeIf {
-                            it.key in config.keys
-                        }
-                        addAll(
-                            config.entries,
-                        )
-                    }.toPersistentList(),
-        )
+    fun combinedWith(config: Config): Config = Config(
+        entries =
+            entries
+                .toMutableList()
+                .apply {
+                    removeIf {
+                        it.key in config.keys
+                    }
+                    addAll(
+                        config.entries,
+                    )
+                }.toPersistentList(),
+    )
 
     operator fun <T : Value> get(key: ConfigKey<T>): T {
         val entry = entries.find { it.key == key }
@@ -51,22 +48,15 @@ data class Config(
         return entry.value as T
     }
 
-    data class Entry<out T : Value>(
-        val key: ConfigKey<T>,
-        val value: T,
-    ) {
+    data class Entry<out T : Value>(val key: ConfigKey<T>, val value: T) {
         init {
             key.requireValidValue(value)
         }
     }
 
     sealed interface Value {
-        data class StringValue(
-            val value: String,
-        ) : Value
+        data class StringValue(val value: String) : Value
 
-        data class BooleanValue(
-            val value: Boolean,
-        ) : Value
+        data class BooleanValue(val value: Boolean) : Value
     }
 }

@@ -35,12 +35,10 @@ class ProveYourIdentityCardTest {
     }
 }
 
-class TestGraph(
-    private val content: String,
-) : ProveYourIdentityEntryPointsProviders,
+class TestGraph(private val content: String) :
+    ProveYourIdentityEntryPointsProviders,
     CriOrchestratorGraph {
-    override fun proveYourIdentityEntryPoints(): ProveYourIdentityEntryPoints =
-        ProveYourIdentityEntryPoints {
-            Text(content)
-        }
+    override fun proveYourIdentityEntryPoints(): ProveYourIdentityEntryPoints = ProveYourIdentityEntryPoints {
+        Text(content)
+    }
 }

@@ -23,6 +23,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
+import org.robolectric.annotation.Config as RobolectricConfig
 import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
 import uk.gov.android.network.service.v2.NetworkService
@@ -40,7 +41,6 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DO_YOU_HAVE_A_DR
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.DO_YOU_HAVE_A_PASSPORT
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.START
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
-import org.robolectric.annotation.Config as RobolectricConfig
 
 @RunWith(AndroidJUnit4::class)
 @RobolectricConfig(application = Application::class)

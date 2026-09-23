@@ -33,7 +33,4 @@ class FakeBiometricTokenApi : BiometricApi {
 // This is to avoid having a json string because github has flagged "accessToken" and security issue
 // Additionally, BiometricToken is not serializable in repositories library
 @Serializable
-private data class BiometricToken(
-    val accessToken: String,
-    val opaqueId: String,
-)
+private data class BiometricToken(val accessToken: String, val opaqueId: String)

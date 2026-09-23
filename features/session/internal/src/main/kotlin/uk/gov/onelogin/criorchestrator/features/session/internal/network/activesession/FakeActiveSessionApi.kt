@@ -8,9 +8,7 @@ import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 
 @Inject
-class FakeActiveSessionApi(
-    private val configStore: ConfigStore,
-) : ActiveSessionApi {
+class FakeActiveSessionApi(private val configStore: ConfigStore) : ActiveSessionApi {
     override suspend fun getActiveSession(): NetworkServiceResponse {
         val redirectUri =
             when (configStore.readSingle(SdkConfigKey.BypassJourneyType).value) {

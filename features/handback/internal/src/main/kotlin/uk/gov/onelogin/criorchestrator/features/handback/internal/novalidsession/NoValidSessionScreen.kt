@@ -20,14 +20,13 @@ fun NoValidSessionScreen(onScreenStart: () -> Unit) {
 }
 
 @Composable
-private fun generateParameters(): NoValidSessionErrorParameters =
-    NoValidSessionErrorParameters(
-        title = stringResource(R.string.handback_no_valid_session_title),
-        para1 = stringResource(R.string.handback_no_valid_session_para_1),
-        para2 = stringResource(R.string.handback_no_valid_session_para_2),
-        para3 = stringResource(R.string.handback_no_valid_session_para_3),
-        isV1 = false,
-    )
+private fun generateParameters(): NoValidSessionErrorParameters = NoValidSessionErrorParameters(
+    title = stringResource(R.string.handback_no_valid_session_title),
+    para1 = stringResource(R.string.handback_no_valid_session_para_1),
+    para2 = stringResource(R.string.handback_no_valid_session_para_2),
+    para3 = stringResource(R.string.handback_no_valid_session_para_3),
+    isV1 = false,
+)
 
 @Preview(
     showBackground = true,

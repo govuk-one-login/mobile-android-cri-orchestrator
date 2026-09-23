@@ -21,10 +21,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
-fun AbortedReturnToDesktopWebScreen(
-    viewModel: AbortedReturnToDesktopWebViewModel,
-    modifier: Modifier = Modifier,
-) {
+fun AbortedReturnToDesktopWebScreen(viewModel: AbortedReturnToDesktopWebViewModel, modifier: Modifier = Modifier) {
     AbortedReturnToDesktopWebContent(modifier)
 
     LaunchedEffect(Unit) {

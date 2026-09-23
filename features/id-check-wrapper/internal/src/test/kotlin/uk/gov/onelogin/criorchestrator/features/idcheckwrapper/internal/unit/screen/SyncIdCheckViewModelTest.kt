@@ -2,6 +2,8 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.unit.sc
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import java.util.stream.Stream
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -52,8 +54,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.creat
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
-import java.util.stream.Stream
-import kotlin.time.Duration.Companion.seconds
 
 @ExtendWith(MainDispatcherExtension::class)
 class SyncIdCheckViewModelTest {
@@ -258,99 +258,94 @@ class SyncIdCheckViewModelTest {
     }
 
     @Test
-    fun `before screen is started, starts loading`() =
-        runTest {
-            viewModel.state.test {
-                assertEquals(SyncIdCheckState.Loading, awaitItem())
-                cancel()
-            }
+    fun `before screen is started, starts loading`() = runTest {
+        viewModel.state.test {
+            assertEquals(SyncIdCheckState.Loading, awaitItem())
+            cancel()
         }
+    }
 
     @Test
-    fun `given manual launcher enabled, when screen is started, it loads the manual launcher`() =
-        runTest {
-            enableManualLauncher = true
-            viewModel.state.test {
-                skipItems(1) // Loading
-                viewModel.onScreenStart(documentVariety = documentVariety)
+    fun `given manual launcher enabled, when screen is started, it loads the manual launcher`() = runTest {
+        enableManualLauncher = true
+        viewModel.state.test {
+            skipItems(1) // Loading
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(
-                    manualLauncherState(),
-                    awaitItem(),
-                )
-            }
+            assertEquals(
+                manualLauncherState(),
+                awaitItem(),
+            )
         }
+    }
 
     @Test
-    fun `given manual launcher isn't enabled, when screen is started, it loads the automatic launcher`() =
-        runTest {
-            enableManualLauncher = false
-            viewModel.state.test {
-                skipItems(1) // Loading
-                viewModel.onScreenStart(documentVariety = documentVariety)
+    fun `given manual launcher isn't enabled, when screen is started, it loads the automatic launcher`() = runTest {
+        enableManualLauncher = false
+        viewModel.state.test {
+            skipItems(1) // Loading
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(
-                    automaticLauncherState(),
-                    awaitItem(),
-                )
-            }
+            assertEquals(
+                automaticLauncherState(),
+                awaitItem(),
+            )
         }
+    }
 
     @Test
-    fun `given manual launcher is enabled, when stub exit state is selected, it updates the state`() =
-        runTest {
-            enableManualLauncher = true
-            viewModel.state.test {
-                skipItems(1) // Loading
-                viewModel.onScreenStart(documentVariety = documentVariety)
+    fun `given manual launcher is enabled, when stub exit state is selected, it updates the state`() = runTest {
+        enableManualLauncher = true
+        viewModel.state.test {
+            skipItems(1) // Loading
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(
-                    manualLauncherState(
-                        activityResultContractParameters =
-                            activityResultContractParameters.copy(
-                                stubExitState = ExitStateOption.None,
-                            ),
-                        manualLauncher =
-                            manualLauncher.copy(
-                                selectedExitState = 0,
-                            ),
-                    ),
-                    awaitItem(),
-                )
+            assertEquals(
+                manualLauncherState(
+                    activityResultContractParameters =
+                        activityResultContractParameters.copy(
+                            stubExitState = ExitStateOption.None,
+                        ),
+                    manualLauncher =
+                        manualLauncher.copy(
+                            selectedExitState = 0,
+                        ),
+                ),
+                awaitItem(),
+            )
 
+            viewModel.onStubExitStateSelected(1)
+
+            assertEquals(
+                manualLauncherState(
+                    activityResultContractParameters =
+                        activityResultContractParameters.copy(
+                            stubExitState = ExitStateOption.HappyPath,
+                        ),
+                    manualLauncher =
+                        manualLauncher.copy(
+                            selectedExitState = 1,
+                        ),
+                ),
+                awaitItem(),
+            )
+        }
+    }
+
+    @Test
+    fun `given manual launcher isn't enabled, when stub exit state is selected, it throws`() = runTest {
+        enableManualLauncher = false
+        viewModel.state.test {
+            skipItems(1) // Loading
+            viewModel.onScreenStart(documentVariety = documentVariety)
+
+            skipItems(1) // Automatic launcher
+
+            assertThrows<IllegalArgumentException> {
                 viewModel.onStubExitStateSelected(1)
-
-                assertEquals(
-                    manualLauncherState(
-                        activityResultContractParameters =
-                            activityResultContractParameters.copy(
-                                stubExitState = ExitStateOption.HappyPath,
-                            ),
-                        manualLauncher =
-                            manualLauncher.copy(
-                                selectedExitState = 1,
-                            ),
-                    ),
-                    awaitItem(),
-                )
             }
         }
-
-    @Test
-    fun `given manual launcher isn't enabled, when stub exit state is selected, it throws`() =
-        runTest {
-            enableManualLauncher = false
-            viewModel.state.test {
-                skipItems(1) // Loading
-                viewModel.onScreenStart(documentVariety = documentVariety)
-
-                skipItems(1) // Automatic launcher
-
-                assertThrows<IllegalArgumentException> {
-                    viewModel.onStubExitStateSelected(1)
-                }
-            }
-        }
+    }
 
     @Test
     fun `when sdk launch request is received, it emits the launch action and sets ID Check SDK state to active`() =
@@ -402,85 +397,80 @@ class SyncIdCheckViewModelTest {
     }
 
     @Test
-    fun `when get biometric token fails with unrecoverable error, it navigates to unrecoverable error`() =
-        runTest {
-            biometricTokenResult =
-                BiometricTokenResult.Error(
-                    Exception("Error"),
-                )
+    fun `when get biometric token fails with unrecoverable error, it navigates to unrecoverable error`() = runTest {
+        biometricTokenResult =
+            BiometricTokenResult.Error(
+                Exception("Error"),
+            )
 
-            viewModel.actions.test {
-                viewModel.onScreenStart(documentVariety = documentVariety)
+        viewModel.actions.test {
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(SyncIdCheckAction.NavigateToUnrecoverableError, awaitItem())
-            }
+            assertEquals(SyncIdCheckAction.NavigateToUnrecoverableError, awaitItem())
         }
+    }
 
     @Test
-    fun `when get biometric token fails with 401 status, it navigates to no valid session error`() =
-        runTest {
-            biometricTokenResult =
-                BiometricTokenResult.Error(
-                    Exception("Error"),
-                    statusCode = STATUS_UNAUTHORIZED,
-                )
+    fun `when get biometric token fails with 401 status, it navigates to no valid session error`() = runTest {
+        biometricTokenResult =
+            BiometricTokenResult.Error(
+                Exception("Error"),
+                statusCode = STATUS_UNAUTHORIZED,
+            )
 
-            viewModel.actions.test {
-                viewModel.onScreenStart(documentVariety = documentVariety)
+        viewModel.actions.test {
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(SyncIdCheckAction.NavigateToNoValidSessionError, awaitItem())
-            }
+            assertEquals(SyncIdCheckAction.NavigateToNoValidSessionError, awaitItem())
         }
+    }
 
     @Test
-    fun `when get biometric token fails with unrecoverable error, it navigates to recoverable error`() =
-        runTest {
-            biometricTokenResult = BiometricTokenResult.Offline
+    fun `when get biometric token fails with unrecoverable error, it navigates to recoverable error`() = runTest {
+        biometricTokenResult = BiometricTokenResult.Offline
 
-            viewModel.actions.test {
-                viewModel.onScreenStart(documentVariety = documentVariety)
+        viewModel.actions.test {
+            viewModel.onScreenStart(documentVariety = documentVariety)
 
-                assertEquals(SyncIdCheckAction.NavigateToRecoverableError, awaitItem())
-            }
+            assertEquals(SyncIdCheckAction.NavigateToRecoverableError, awaitItem())
         }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `test that launcher is not triggered twice`() =
-        runTest {
-            viewModel.actions.test {
-                viewModel.onIdCheckSdkLaunchRequest(launcherData)
+    fun `test that launcher is not triggered twice`() = runTest {
+        viewModel.actions.test {
+            viewModel.onIdCheckSdkLaunchRequest(launcherData)
 
-                assertEquals(
-                    SyncIdCheckAction.LaunchIdCheckSdk(launcherData, logger),
+            assertEquals(
+                SyncIdCheckAction.LaunchIdCheckSdk(launcherData, logger),
+                awaitItem(),
+            )
+
+            viewModel.onIdCheckSdkLaunchRequest(launcherData)
+
+            ensureAllEventsConsumed() // No more launch actions
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `sdk launcher is not triggered when screen start executed again`() = runTest {
+        viewModel.actions
+            .test {
+                viewModel.onScreenStart(documentVariety = documentVariety)
+
+                viewModel.onIdCheckSdkLaunchRequest(launcherData)
+                assertInstanceOf<SyncIdCheckAction.LaunchIdCheckSdk>(
                     awaitItem(),
                 )
 
-                viewModel.onIdCheckSdkLaunchRequest(launcherData)
+                viewModel.onScreenStart(documentVariety = documentVariety)
 
                 ensureAllEventsConsumed() // No more launch actions
+                verify(launcherDataReader, times(1)).read(any())
             }
-        }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `sdk launcher is not triggered when screen start executed again`() =
-        runTest {
-            viewModel.actions
-                .test {
-                    viewModel.onScreenStart(documentVariety = documentVariety)
-
-                    viewModel.onIdCheckSdkLaunchRequest(launcherData)
-                    assertInstanceOf<SyncIdCheckAction.LaunchIdCheckSdk>(
-                        awaitItem(),
-                    )
-
-                    viewModel.onScreenStart(documentVariety = documentVariety)
-
-                    ensureAllEventsConsumed() // No more launch actions
-                    verify(launcherDataReader, times(1)).read(any())
-                }
-        }
+    }
 
     @Test
     fun `given id check backend bypass is enabled, when screen is started, it displays the stub bio token screen`() =

@@ -90,12 +90,10 @@ class SyncIdCheckViewModel(
         }
     }
 
-    fun onStubGetBiometricToken(
-        documentVariety: DocumentVariety,
-        selectedItem: Int,
-    ) {
+    fun onStubGetBiometricToken(documentVariety: DocumentVariety, selectedItem: Int) {
         when (selectedItem) {
             0 -> loadLauncher(documentVariety)
+
             1 -> {
                 viewModelScope.launch {
                     _actions.emit(SyncIdCheckAction.NavigateToRecoverableError)
@@ -199,10 +197,7 @@ class SyncIdCheckViewModel(
         }
     }
 
-    private suspend fun loadLauncher(
-        documentVariety: DocumentVariety,
-        enableManualLauncher: Boolean,
-    ) {
+    private suspend fun loadLauncher(documentVariety: DocumentVariety, enableManualLauncher: Boolean) {
         val launcherDataResult = launcherDataReader.read(documentVariety)
         val manualLauncher =
             if (enableManualLauncher) {
@@ -279,8 +274,6 @@ class SyncIdCheckViewModel(
     fun interface Factory : ViewModelAssistedFactory {
         override fun create(extras: CreationExtras): SyncIdCheckViewModel = create(extras.createSavedStateHandle())
 
-        fun create(
-            @Assisted savedStateHandle: SavedStateHandle,
-        ): SyncIdCheckViewModel
+        fun create(@Assisted savedStateHandle: SavedStateHandle): SyncIdCheckViewModel
     }
 }

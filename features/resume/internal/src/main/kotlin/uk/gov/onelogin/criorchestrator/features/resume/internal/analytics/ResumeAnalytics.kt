@@ -9,10 +9,8 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 
 @Inject
-class ResumeAnalytics(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
+class ResumeAnalytics(resourceProvider: ResourceProvider, analyticsLogger: AnalyticsLogger) :
+    Analytics(
         resourceProvider = resourceProvider,
         analyticsLogger = analyticsLogger,
         requiredParameters = requiredParameters,

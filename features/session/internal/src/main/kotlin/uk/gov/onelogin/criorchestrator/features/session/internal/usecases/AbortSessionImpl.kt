@@ -55,6 +55,7 @@ class AbortSessionImpl(
                         AbortSession.Result.Error.Unrecoverable(response.error)
                     }
                 }
+
                 is ApiResponse.Success -> AbortSession.Result.Success
             }
 
@@ -64,6 +65,7 @@ class AbortSessionImpl(
             -> {
                 // Don't clear the session store
             }
+
             AbortSession.Result.Success -> {
                 sessionStore.updateToAborted()
             }

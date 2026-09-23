@@ -14,10 +14,8 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.Docum
 private const val BIOMETRIC_TOKEN_ENDPOINT = "/async/biometricToken"
 
 @Inject
-class BiometricApiImpl(
-    private val networkService: NetworkService,
-    private val configStore: ConfigStore,
-) : BiometricApi,
+class BiometricApiImpl(private val networkService: NetworkService, private val configStore: ConfigStore) :
+    BiometricApi,
     LogTagProvider {
     override suspend fun getBiometricToken(
         sessionId: String,

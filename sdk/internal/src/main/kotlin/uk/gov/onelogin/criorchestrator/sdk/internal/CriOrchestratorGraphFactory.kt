@@ -18,9 +18,8 @@ fun createCriOrchestratorGraph(
     appGraph: CriOrchestratorAppGraph,
     activity: Activity,
     context: Context,
-): CriOrchestratorGraph =
-    createGraphFactory<BaseCriOrchestratorGraph.Factory>().create(
-        baseAppGraph = appGraph as BaseCriOrchestratorAppGraph,
-        activity = activity,
-        context = context,
-    ) as CriOrchestratorGraph
+): CriOrchestratorGraph = createGraphFactory<BaseCriOrchestratorGraph.Factory>().create(
+    baseAppGraph = appGraph as BaseCriOrchestratorAppGraph,
+    activity = activity,
+    context = context,
+) as CriOrchestratorGraph

@@ -76,8 +76,7 @@ class NfcCheckerImplTest {
         assertFalse(nfcChecker.hasNfc())
     }
 
-    private fun givenDeviceNfc(available: Boolean) =
-        given(nfcManager.defaultAdapter).willReturn(
-            if (available) mock() else null,
-        )
+    private fun givenDeviceNfc(available: Boolean) = given(nfcManager.defaultAdapter).willReturn(
+        if (available) mock() else null,
+    )
 }

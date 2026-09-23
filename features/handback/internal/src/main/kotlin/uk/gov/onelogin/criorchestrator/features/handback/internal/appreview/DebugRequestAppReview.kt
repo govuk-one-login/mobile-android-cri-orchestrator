@@ -5,9 +5,7 @@ import android.widget.Toast
 import dev.zacsweers.metro.Inject
 
 @Inject
-class DebugRequestAppReview(
-    private val context: Context,
-) : RequestAppReview {
+class DebugRequestAppReview(private val context: Context) : RequestAppReview {
     var hasRequestedReview: Boolean = false
 
     override suspend fun invoke() {

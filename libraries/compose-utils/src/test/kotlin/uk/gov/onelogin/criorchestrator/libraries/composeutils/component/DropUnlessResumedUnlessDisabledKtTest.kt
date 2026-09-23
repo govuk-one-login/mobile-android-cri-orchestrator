@@ -98,20 +98,17 @@ class DropUnlessResumedUnlessDisabledKtTest {
         verify(onClick).invoke()
     }
 
-    private fun ComposeTestRule.clickButton() =
-        composeTestRule
-            .onNodeWithText(BUTTON)
-            .performClick()
+    private fun ComposeTestRule.clickButton() = composeTestRule
+        .onNodeWithText(BUTTON)
+        .performClick()
 }
 
 @Composable
-private fun TestContent(
-    lifecycleOwner: LifecycleOwner,
-    onClick: () -> Unit,
-) = CompositionLocalProvider(LocalLifecycleOwner provides lifecycleOwner) {
-    Button(
-        onClick = dropUnlessResumedUnlessDisabledForTesting { onClick() },
-    ) {
-        Text(BUTTON)
+private fun TestContent(lifecycleOwner: LifecycleOwner, onClick: () -> Unit) =
+    CompositionLocalProvider(LocalLifecycleOwner provides lifecycleOwner) {
+        Button(
+            onClick = dropUnlessResumedUnlessDisabledForTesting { onClick() },
+        ) {
+            Text(BUTTON)
+        }
     }
-}

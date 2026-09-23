@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.unit.usecases
 
+import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -18,7 +19,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Abort
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
-import kotlin.test.assertTrue
 
 class AbortSessionImplTest {
     private val session = Session.createTestInstance()
@@ -38,96 +38,88 @@ class AbortSessionImplTest {
         )
 
     @Test
-    fun `given session is null, it logs an error`() =
-        runTest {
-            sessionStore.clear()
+    fun `given session is null, it logs an error`() = runTest {
+        sessionStore.clear()
 
-            abortSession()
+        abortSession()
 
-            assertTrue(logger.contains("Tried to abort a non-existent session"))
-        }
-
-    @Test
-    fun `given session is null, it returns success`() =
-        runTest {
-            sessionStore.clear()
-
-            val result = abortSession()
-
-            assertEquals(AbortSession.Result.Success, result)
-        }
+        assertTrue(logger.contains("Tried to abort a non-existent session"))
+    }
 
     @Test
-    fun `given api response is success, it updates the session to aborted`() =
-        runTest {
-            givenResponse(ApiResponse.Success(body = "", status = 200))
-            assertNotNull(sessionStore.read().first())
+    fun `given session is null, it returns success`() = runTest {
+        sessionStore.clear()
 
-            abortSession()
+        val result = abortSession()
 
-            assertEquals(
-                session.copy(sessionState = Session.State.Aborted),
-                sessionStore.read().first(),
-            )
-        }
+        assertEquals(AbortSession.Result.Success, result)
+    }
 
     @Test
-    fun `given api response is success, it returns success`() =
-        runTest {
-            givenResponse(ApiResponse.Success(body = "", status = 200))
+    fun `given api response is success, it updates the session to aborted`() = runTest {
+        givenResponse(ApiResponse.Success(body = "", status = 200))
+        assertNotNull(sessionStore.read().first())
 
-            val result = abortSession()
+        abortSession()
 
-            assertEquals(AbortSession.Result.Success, result)
-        }
-
-    @Test
-    fun `given api response is unrecoverable error, it doesn't clear the session store`() =
-        runTest {
-            givenResponse(
-                ApiResponse.Failure(
-                    error = ApiResponseException("error", null),
-                    status = 401,
-                ),
-            )
-            assertNotNull(sessionStore.read().first())
-
-            abortSession()
-
-            assertNotNull(sessionStore.read().first())
-        }
+        assertEquals(
+            session.copy(sessionState = Session.State.Aborted),
+            sessionStore.read().first(),
+        )
+    }
 
     @Test
-    fun `given api response is unrecoverable error, it returns error`() =
-        runTest {
-            val exception = ApiResponseException("error", null)
-            givenResponse(ApiResponse.Failure(error = exception, status = 401))
+    fun `given api response is success, it returns success`() = runTest {
+        givenResponse(ApiResponse.Success(body = "", status = 200))
 
-            val result = abortSession()
+        val result = abortSession()
 
-            assertEquals(AbortSession.Result.Error.Unrecoverable(exception), result)
-        }
+        assertEquals(AbortSession.Result.Success, result)
+    }
 
     @Test
-    fun `given api response is offline, it doesn't clear the session store`() =
-        runTest {
-            givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
-            assertNotNull(sessionStore.read().first())
+    fun `given api response is unrecoverable error, it doesn't clear the session store`() = runTest {
+        givenResponse(
+            ApiResponse.Failure(
+                error = ApiResponseException("error", null),
+                status = 401,
+            ),
+        )
+        assertNotNull(sessionStore.read().first())
 
-            abortSession()
+        abortSession()
 
-            assertNotNull(sessionStore.read().first())
-        }
+        assertNotNull(sessionStore.read().first())
+    }
 
     @Test
-    fun `given api response is offline, it returns error`() =
-        runTest {
-            givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
+    fun `given api response is unrecoverable error, it returns error`() = runTest {
+        val exception = ApiResponseException("error", null)
+        givenResponse(ApiResponse.Failure(error = exception, status = 401))
 
-            val result = abortSession()
+        val result = abortSession()
 
-            assertEquals(AbortSession.Result.Error.Offline, result)
-        }
+        assertEquals(AbortSession.Result.Error.Unrecoverable(exception), result)
+    }
+
+    @Test
+    fun `given api response is offline, it doesn't clear the session store`() = runTest {
+        givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
+        assertNotNull(sessionStore.read().first())
+
+        abortSession()
+
+        assertNotNull(sessionStore.read().first())
+    }
+
+    @Test
+    fun `given api response is offline, it returns error`() = runTest {
+        givenResponse(ApiResponse.Failure(error = TransportException(cause = null)))
+
+        val result = abortSession()
+
+        assertEquals(AbortSession.Result.Error.Offline, result)
+    }
 
     private suspend fun givenResponse(apiResponse: NetworkServiceResponse) =
         given(abortSessionApi.abortSession(sessionId)).willReturn(apiResponse)

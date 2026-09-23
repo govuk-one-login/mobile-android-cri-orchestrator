@@ -101,8 +101,6 @@ class ProveYourIdentityViewModel(
         override fun create(extras: CreationExtras): ProveYourIdentityViewModel =
             create(extras.createSavedStateHandle())
 
-        fun create(
-            @Assisted savedStateHandle: SavedStateHandle,
-        ): ProveYourIdentityViewModel
+        fun create(@Assisted savedStateHandle: SavedStateHandle): ProveYourIdentityViewModel
     }
 }

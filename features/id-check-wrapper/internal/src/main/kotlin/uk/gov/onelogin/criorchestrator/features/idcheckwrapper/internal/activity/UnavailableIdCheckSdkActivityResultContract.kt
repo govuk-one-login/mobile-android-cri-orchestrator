@@ -17,16 +17,11 @@ internal class UnavailableIdCheckSdkActivityResultContract :
     ActivityResultContract<
         IdCheckSdkParameters,
         IdCheckSdkExitState,
-    >() {
-    override fun createIntent(
-        context: Context,
-        input: IdCheckSdkParameters,
-    ): Intent = fail()
+        >() {
+    override fun createIntent(context: Context, input: IdCheckSdkParameters): Intent = fail()
 
-    override fun parseResult(
-        resultCode: Int,
-        intent: Intent?,
-    ): IdCheckSdkExitState = IdCheckSdkActivityResultContract.defaultParseResultBehaviour().transform(intent)
+    override fun parseResult(resultCode: Int, intent: Intent?): IdCheckSdkExitState =
+        IdCheckSdkActivityResultContract.defaultParseResultBehaviour().transform(intent)
 
     private fun fail(): Nothing = error("Can't launch ID Check SDK while loading")
 }

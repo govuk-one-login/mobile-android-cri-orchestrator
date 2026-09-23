@@ -21,8 +21,7 @@ import org.junit.rules.TestRule
  * - https://github.com/cashapp/paparazzi/issues/1149
  * - https://issuetracker.google.com/issues/375395107#comment2
  */
-fun createMoleculePaparazziCompatRule(): TestRule =
-    Paparazzi(
-        renderingMode = SHRINK,
-        showSystemUi = false,
-    )
+fun createMoleculePaparazziCompatRule(): TestRule = Paparazzi(
+    renderingMode = SHRINK,
+    showSystemUi = false,
+)

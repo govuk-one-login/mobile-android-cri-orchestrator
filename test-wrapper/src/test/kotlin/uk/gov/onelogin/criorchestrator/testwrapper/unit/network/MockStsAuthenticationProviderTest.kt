@@ -1,6 +1,9 @@
 package uk.gov.onelogin.criorchestrator.testwrapper.unit.network
 
 import android.content.res.Resources
+import javax.inject.Provider
+import kotlin.test.assertEquals
+import kotlin.test.fail
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -10,16 +13,13 @@ import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v3.ApiResponse as ApiResponseV2
 import uk.gov.android.network.auth.AuthenticationResponse
 import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.GRANT_TYPE
 import uk.gov.onelogin.criorchestrator.testwrapper.network.MockStsAuthenticationProvider.Companion.SUBJECT_TOKEN_TYPE
-import javax.inject.Provider
-import kotlin.test.assertEquals
-import kotlin.test.fail
-import uk.gov.android.network.api.v3.ApiResponse as ApiResponseV2
 
 class MockStsAuthenticationProviderTest {
     private val resources = mock<Resources>()

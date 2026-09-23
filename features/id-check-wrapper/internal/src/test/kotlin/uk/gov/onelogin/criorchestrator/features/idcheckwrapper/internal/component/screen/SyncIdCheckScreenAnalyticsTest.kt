@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.rememberNavController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertContains
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +35,6 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidReso
 import uk.gov.onelogin.criorchestrator.libraries.kotlinutils.CoroutineDispatchers
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
-import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
 class SyncIdCheckScreenAnalyticsTest {

@@ -7,16 +7,16 @@ import uk.gov.onelogin.criorchestrator.features.session.publicapi.RefreshActiveS
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @ContributesBinding(CriOrchestratorAppScope::class)
-class RefreshActiveSessionImpl(
-    private val sessionReader: SessionReader,
-    private val sessionStore: SessionStore,
-) : RefreshActiveSession {
+class RefreshActiveSessionImpl(private val sessionReader: SessionReader, private val sessionStore: SessionStore) :
+    RefreshActiveSession {
     override suspend fun invoke() {
         val result = sessionReader.isActiveSession()
 
         when (result) {
             is SessionReader.Result.IsActive -> sessionStore.write(result.session)
+
             SessionReader.Result.IsNotActive -> sessionStore.updateToDocumentSelected()
+
             SessionReader.Result.Unknown -> {
                 // Couldn't determine the state of the session; do nothing.
             }

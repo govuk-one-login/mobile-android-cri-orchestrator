@@ -13,9 +13,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmPassportViewModel::class)
-class ConfirmPassportViewModel(
-    private val analytics: SelectDocAnalytics,
-) : ViewModel() {
+class ConfirmPassportViewModel(private val analytics: SelectDocAnalytics) : ViewModel() {
     private val _action = MutableSharedFlow<ConfirmPassportAction.NavigateToSyncIdCheck>()
     val action: Flow<ConfirmPassportAction.NavigateToSyncIdCheck> = _action
 

@@ -21,10 +21,9 @@ class ConfigurableBiometricApi(
     override suspend fun getBiometricToken(
         sessionId: String,
         documentVariety: DocumentVariety,
-    ): NetworkServiceResponse =
-        if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
-            fakeBiometricApi().getBiometricToken(sessionId, documentVariety)
-        } else {
-            realBiometricApi().getBiometricToken(sessionId, documentVariety)
-        }
+    ): NetworkServiceResponse = if (configStore.readSingle(SdkConfigKey.BypassIdCheckAsyncBackend).value) {
+        fakeBiometricApi().getBiometricToken(sessionId, documentVariety)
+    } else {
+        realBiometricApi().getBiometricToken(sessionId, documentVariety)
+    }
 }

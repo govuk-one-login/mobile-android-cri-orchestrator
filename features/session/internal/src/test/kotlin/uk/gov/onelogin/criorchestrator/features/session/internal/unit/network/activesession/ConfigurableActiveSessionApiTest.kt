@@ -31,32 +31,30 @@ class ConfigurableActiveSessionApiTest {
     }
 
     @Test
-    fun `given config to bypass backend is enabled, it uses fake implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(true),
-                ),
-            )
+    fun `given config to bypass backend is enabled, it uses fake implementation`() = runTest {
+        configStore.write(
+            Config.Entry(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(true),
+            ),
+        )
 
-            api.getActiveSession()
+        api.getActiveSession()
 
-            verify(fakeActiveSessionApi).getActiveSession()
-        }
+        verify(fakeActiveSessionApi).getActiveSession()
+    }
 
     @Test
-    fun `given config to bypass backend is disabled, it uses real implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(false),
-                ),
-            )
+    fun `given config to bypass backend is disabled, it uses real implementation`() = runTest {
+        configStore.write(
+            Config.Entry(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(false),
+            ),
+        )
 
-            api.getActiveSession()
+        api.getActiveSession()
 
-            verify(realActiveSessionApi).getActiveSession()
-        }
+        verify(realActiveSessionApi).getActiveSession()
+    }
 }

@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internal.contract.network.abort
 
+import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
@@ -12,7 +13,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.A
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.abort.RealAbortSessionApi
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RealAbortSessionApiTest {
@@ -40,10 +40,9 @@ class RealAbortSessionApiTest {
     }
 
     @Test
-    fun `it responds`() =
-        runTest {
-            val result = api.abortSession("sessionId")
-            val success = result as ApiResponse.Success
-            assertEquals("example", success.body)
-        }
+    fun `it responds`() = runTest {
+        val result = api.abortSession("sessionId")
+        val success = result as ApiResponse.Success
+        assertEquals("example", success.body)
+    }
 }

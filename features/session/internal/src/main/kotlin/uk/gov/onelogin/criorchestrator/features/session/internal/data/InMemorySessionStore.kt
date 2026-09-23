@@ -14,9 +14,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesBinding(CriOrchestratorAppScope::class, binding = binding<SessionStore>())
-class InMemorySessionStore(
-    private val logger: Logger,
-) : SessionStore,
+class InMemorySessionStore(private val logger: Logger) :
+    SessionStore,
     LogTagProvider {
     private var session: MutableStateFlow<Session?> = MutableStateFlow(null)
 
@@ -35,13 +34,11 @@ class InMemorySessionStore(
         session.value = null
     }
 
-    override fun updateToAborted() =
-        with(session) {
-            value = value?.copyUpdateState { advanceAtLeastAborted() }
-        }
+    override fun updateToAborted() = with(session) {
+        value = value?.copyUpdateState { advanceAtLeastAborted() }
+    }
 
-    override fun updateToDocumentSelected() =
-        with(session) {
-            value = value?.copyUpdateState { advanceAtLeastDocumentSelected() }
-        }
+    override fun updateToDocumentSelected() = with(session) {
+        value = value?.copyUpdateState { advanceAtLeastDocumentSelected() }
+    }
 }

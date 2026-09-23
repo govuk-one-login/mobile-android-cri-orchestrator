@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import kotlin.reflect.KClass
 import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +20,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.root.ProveYourId
 import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestInstance
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
-import kotlin.reflect.KClass
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityEntryPointsImplTest {

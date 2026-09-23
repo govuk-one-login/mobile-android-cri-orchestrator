@@ -4,14 +4,9 @@ import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.model.LauncherData
 
 sealed interface SyncIdCheckAction {
-    data class LaunchIdCheckSdk(
-        val launcherData: LauncherData,
-        val logger: Logger,
-    ) : SyncIdCheckAction
+    data class LaunchIdCheckSdk(val launcherData: LauncherData, val logger: Logger) : SyncIdCheckAction
 
-    data class NavigateToReturnToMobileWeb(
-        val redirectUri: String,
-    ) : SyncIdCheckAction
+    data class NavigateToReturnToMobileWeb(val redirectUri: String) : SyncIdCheckAction
 
     data object NavigateToReturnToDesktopWeb : SyncIdCheckAction
 
@@ -19,15 +14,11 @@ sealed interface SyncIdCheckAction {
 
     data object NavigateToUnrecoverableError : SyncIdCheckAction
 
-    data class NavigateToAbortedRedirectToMobileWebHolder(
-        val redirectUri: String,
-    ) : SyncIdCheckAction
+    data class NavigateToAbortedRedirectToMobileWebHolder(val redirectUri: String) : SyncIdCheckAction
 
     data object NavigateToAbortedReturnToDesktopWeb : SyncIdCheckAction
 
-    data class NavigateToLimitReachedReturnToMobileWeb(
-        val redirectUri: String,
-    ) : SyncIdCheckAction
+    data class NavigateToLimitReachedReturnToMobileWeb(val redirectUri: String) : SyncIdCheckAction
 
     data object NavigateToLimitReachedReturnToDesktopWeb : SyncIdCheckAction
 

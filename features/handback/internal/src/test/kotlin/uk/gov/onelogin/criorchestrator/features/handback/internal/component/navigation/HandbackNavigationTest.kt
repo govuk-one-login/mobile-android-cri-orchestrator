@@ -24,6 +24,7 @@ import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
+import kotlin.test.assertEquals
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.Serializable
 import org.junit.After
@@ -70,7 +71,6 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import uk.gov.onelogin.criorchestrator.libraries.di.viewmodel.ViewModelFactoryBindings
 import uk.gov.onelogin.criorchestrator.libraries.navigation.CompositeNavHost
 import uk.gov.onelogin.criorchestrator.libraries.navigation.NavigationDestination
-import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class HandbackNavigationTest {
@@ -325,27 +325,23 @@ class HandbackNavigationTest {
         assertEquals(redirectUri, webNavigator.openUrl)
     }
 
-    private fun ComposeTestRule.assertStartIsDisplayed() =
-        composeTestRule
-            .onNodeWithText(START_BUTTON)
-            .assertIsDisplayed()
+    private fun ComposeTestRule.assertStartIsDisplayed() = composeTestRule
+        .onNodeWithText(START_BUTTON)
+        .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickStart() =
-        composeTestRule
-            .onNodeWithText(START_BUTTON)
-            .performClick()
+    private fun ComposeTestRule.clickStart() = composeTestRule
+        .onNodeWithText(START_BUTTON)
+        .performClick()
 
-    private fun ComposeTestRule.assertReturnToMobileWebIsDisplayed() =
-        composeTestRule
-            .onNodeWithText(context.getString(R.string.handback_returntomobileweb_title))
-            .assertIsDisplayed()
+    private fun ComposeTestRule.assertReturnToMobileWebIsDisplayed() = composeTestRule
+        .onNodeWithText(context.getString(R.string.handback_returntomobileweb_title))
+        .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickContinueToGovUkWebsite() =
-        composeTestRule
-            .onNode(
-                hasTextStartingWith(context.getString(R.string.handback_returntomobileweb_button)),
-            ).assertIsDisplayed()
-            .performClick()
+    private fun ComposeTestRule.clickContinueToGovUkWebsite() = composeTestRule
+        .onNode(
+            hasTextStartingWith(context.getString(R.string.handback_returntomobileweb_button)),
+        ).assertIsDisplayed()
+        .performClick()
 
     private fun ComposeTestRule.assertReturnToDesktopWebIsDisplayed() {
         composeTestRule
@@ -356,40 +352,35 @@ class HandbackNavigationTest {
             .assertIsDisplayed()
     }
 
-    private fun ComposeTestRule.assertUnrecoverableErrorIsDisplayed() =
-        composeTestRule
-            .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_title))
-            .filterInDialogElseAll()
-            .onFirst()
-            .assertIsDisplayed()
+    private fun ComposeTestRule.assertUnrecoverableErrorIsDisplayed() = composeTestRule
+        .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_title))
+        .filterInDialogElseAll()
+        .onFirst()
+        .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton() =
-        composeTestRule
-            .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_button))
-            .filterInDialogElseAll()
-            .onFirst()
-            .assertIsDisplayed()
-            .performClick()
+    private fun ComposeTestRule.clickUnrecoverableErrorConfirmAnotherWayButton() = composeTestRule
+        .onAllNodesWithText(context.getString(R.string.handback_unrecoverableerror_button))
+        .filterInDialogElseAll()
+        .onFirst()
+        .assertIsDisplayed()
+        .performClick()
 
-    private fun ComposeTestRule.assertConfirmAbortIsDisplayed() =
-        composeTestRule
-            .onAllNodesWithText(context.getString(R.string.handback_confirmabort_title))
-            .filterInDialogElseAll()
-            .onFirst()
-            .assertIsDisplayed()
+    private fun ComposeTestRule.assertConfirmAbortIsDisplayed() = composeTestRule
+        .onAllNodesWithText(context.getString(R.string.handback_confirmabort_title))
+        .filterInDialogElseAll()
+        .onFirst()
+        .assertIsDisplayed()
 
-    private fun ComposeTestRule.clickConfirmAbortToDesktopWebButton() =
-        composeTestRule
-            .onNodeWithText(context.getString(R.string.handback_confirmabortdesktopweb_button))
-            .assertIsDisplayed()
-            .performClick()
+    private fun ComposeTestRule.clickConfirmAbortToDesktopWebButton() = composeTestRule
+        .onNodeWithText(context.getString(R.string.handback_confirmabortdesktopweb_button))
+        .assertIsDisplayed()
+        .performClick()
 
-    private fun ComposeTestRule.clickConfirmAbortToMobileWebButton() =
-        composeTestRule
-            .onNode(
-                hasTextStartingWith(context.getString(R.string.handback_confirmabortmobileweb_button)),
-            ).assertIsDisplayed()
-            .performClick()
+    private fun ComposeTestRule.clickConfirmAbortToMobileWebButton() = composeTestRule
+        .onNode(
+            hasTextStartingWith(context.getString(R.string.handback_confirmabortmobileweb_button)),
+        ).assertIsDisplayed()
+        .performClick()
 
     private fun ComposeTestRule.assertAbortedReturnToDesktopWebIsDisplayed() {
         composeTestRule
@@ -444,20 +435,19 @@ class HandbackNavigationTest {
         isSessionAbortedOrUnavailable.state.value = true
     }
 
-    private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) =
-        setContent {
-            CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
-                CompositeNavHost(
-                    navGraphProviders =
-                        persistentSetOf(
-                            InitialNavGraphProvider(navigatesTo = startNavigatesTo),
-                            navGraphProvider,
-                        ),
-                    startDestination = InitialNavGraphStart,
-                    onFinish = onFinish,
-                )
-            }
+    private fun ComposeContentTestRule.setNavGraphContent(startNavigatesTo: NavigationDestination) = setContent {
+        CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {
+            CompositeNavHost(
+                navGraphProviders =
+                    persistentSetOf(
+                        InitialNavGraphProvider(navigatesTo = startNavigatesTo),
+                        navGraphProvider,
+                    ),
+                startDestination = InitialNavGraphStart,
+                onFinish = onFinish,
+            )
         }
+    }
 }
 
 private const val START_BUTTON = "Start button"
@@ -465,13 +455,9 @@ private const val START_BUTTON = "Start button"
 @Serializable
 internal data object InitialNavGraphStart : NavigationDestination
 
-private class InitialNavGraphProvider(
-    private val navigatesTo: NavigationDestination,
-) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+private class InitialNavGraphProvider(private val navigatesTo: NavigationDestination) :
+    ProveYourIdentityNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<InitialNavGraphStart> {
             Button(
                 onClick = { navController.navigate(navigatesTo) },

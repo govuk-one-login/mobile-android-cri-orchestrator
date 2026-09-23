@@ -14,9 +14,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(FaceScanLimitReachedMobileViewModel::class)
-class FaceScanLimitReachedMobileViewModel(
-    private val analytics: HandbackAnalytics,
-) : ViewModel() {
+class FaceScanLimitReachedMobileViewModel(private val analytics: HandbackAnalytics) : ViewModel() {
     private val _actions = MutableSharedFlow<FaceScanLimitReachedMobileAction>()
     val actions: SharedFlow<FaceScanLimitReachedMobileAction> = _actions.asSharedFlow()
 

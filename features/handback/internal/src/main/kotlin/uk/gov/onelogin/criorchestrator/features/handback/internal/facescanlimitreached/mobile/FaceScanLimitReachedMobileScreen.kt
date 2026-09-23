@@ -71,10 +71,7 @@ fun FaceScanLimitReachedMobileScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-private fun FaceScanLimitReachedMobileScreenContent(
-    onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun FaceScanLimitReachedMobileScreenContent(onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = colorScheme.background,

@@ -68,11 +68,10 @@ internal fun ProveYourIdentityModalNavHost(
 
 @PreviewLightDark
 @Composable
-internal fun ProveYourIdentityModalPreview() =
-    GdsTheme {
-        ProveYourIdentityModal(
-            onDismissRequest = {},
-            onCancelClick = {},
-        ) {
-        }
+internal fun ProveYourIdentityModalPreview() = GdsTheme {
+    ProveYourIdentityModal(
+        onDismissRequest = {},
+        onCancelClick = {},
+    ) {
     }
+}

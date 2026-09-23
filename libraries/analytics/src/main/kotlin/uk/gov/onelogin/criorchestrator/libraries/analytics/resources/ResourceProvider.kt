@@ -10,7 +10,5 @@ fun interface ResourceProvider {
      * Function that returns the English versions of strings for non-user-facing usage,
      * typically for analytics.
      */
-    fun getEnglishString(
-        @StringRes resId: Int,
-    ): String
+    fun getEnglishString(@StringRes resId: Int): String
 }

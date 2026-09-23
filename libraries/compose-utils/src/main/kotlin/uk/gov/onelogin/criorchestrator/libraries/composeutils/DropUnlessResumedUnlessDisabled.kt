@@ -16,12 +16,11 @@ import org.jetbrains.annotations.VisibleForTesting
  * to `true` in your test.
  */
 @Composable
-fun dropUnlessResumedUnlessDisabledForTesting(block: () -> Unit) =
-    if (LocalDropUnlessResumedDisabled.current) {
-        { block() }
-    } else {
-        dropUnlessResumed { block() }
-    }
+fun dropUnlessResumedUnlessDisabledForTesting(block: () -> Unit) = if (LocalDropUnlessResumedDisabled.current) {
+    { block() }
+} else {
+    dropUnlessResumed { block() }
+}
 
 /**
  * Whether to disable the [dropUnlessResumed] behaviour.

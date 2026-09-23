@@ -11,10 +11,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
 class ContinueToProveYourIdentityNavGraphProvider : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<ProveYourIdentityDestinations.ContinueToProveYourIdentity> {
             ContinueToProveYourIdentityScreen(
                 viewModel = metroViewModel(),

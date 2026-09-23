@@ -94,26 +94,15 @@ class LauncherDataReader(
 }
 
 sealed interface LauncherDataReaderResult {
-    data class Success(
-        val launcherData: LauncherData,
-    ) : LauncherDataReaderResult
+    data class Success(val launcherData: LauncherData) : LauncherDataReaderResult
 
-    data class RecoverableError(
-        val error: DataReaderError,
-        val statusCode: Int?,
-    ) : LauncherDataReaderResult
+    data class RecoverableError(val error: DataReaderError, val statusCode: Int?) : LauncherDataReaderResult
 
-    data class UnrecoverableError(
-        val error: DataReaderError,
-        val statusCode: Int?,
-    ) : LauncherDataReaderResult
+    data class UnrecoverableError(val error: DataReaderError, val statusCode: Int?) : LauncherDataReaderResult
 
     data object NoValidSessionError : LauncherDataReaderResult
 }
 
-data class DataReaderError(
-    val message: String,
-    val cause: Exception?,
-)
+data class DataReaderError(val message: String, val cause: Exception?)
 
 private const val STATUS_UNAUTHORIZED = 401

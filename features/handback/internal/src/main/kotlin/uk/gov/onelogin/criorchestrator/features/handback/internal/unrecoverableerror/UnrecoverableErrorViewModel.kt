@@ -39,6 +39,7 @@ class UnrecoverableErrorViewModel(
                 when (getJourneyType()) {
                     JourneyType.DesktopAppDesktop ->
                         UnrecoverableErrorAction.NavigateToConfirmAbortDesktop
+
                     is JourneyType.MobileAppMobile ->
                         UnrecoverableErrorAction.NavigateToConfirmAbortMobile
                 }

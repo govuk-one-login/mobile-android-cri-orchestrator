@@ -1,12 +1,12 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.unit.abort.aborted.desktop
 
+import kotlin.test.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebConstants
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.aborted.desktop.AbortedReturnToDesktopWebViewModel
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackAnalytics
 import uk.gov.onelogin.criorchestrator.features.handback.internal.analytics.HandbackScreenId
-import kotlin.test.Test
 
 class AbortedReturnToDesktopWebViewModelTest {
     private val analytics = mock<HandbackAnalytics>()

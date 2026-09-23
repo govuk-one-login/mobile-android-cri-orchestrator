@@ -54,202 +54,190 @@ class ProveYourIdentityViewModelTest {
     }
 
     @Test
-    fun `given no saved state and session is resumable, when started, card starts hidden then shows`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle = SavedStateHandle(emptyMap())
-            viewModel.state.test {
-                assertEquals(HIDDEN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                assertEquals(SHOWN_STATE, awaitItem())
-                expectNoEvents()
-            }
+    fun `given no saved state and session is resumable, when started, card starts hidden then shows`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle = SavedStateHandle(emptyMap())
+        viewModel.state.test {
+            assertEquals(HIDDEN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            assertEquals(SHOWN_STATE, awaitItem())
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `given no saved state and session isn't resumable, when started, card stays hidden`() =
-        runTest {
+    fun `given no saved state and session isn't resumable, when started, card stays hidden`() = runTest {
+        refreshActiveSession.willHaveActiveSession = false
+        savedStateHandle =
+            SavedStateHandle(emptyMap())
+        viewModel.state.test {
+            assertEquals(HIDDEN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `given card was shown and session is resumable, when started, card stays shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
+                ),
+            )
+        viewModel.state.test {
+            assertEquals(SHOWN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `given card was shown and session isn't resumable, when started, card is shown then hidden`() = runTest {
+        refreshActiveSession.willHaveActiveSession = false
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
+                ),
+            )
+        viewModel.state.test {
+            assertEquals(SHOWN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            assertEquals(HIDDEN_STATE, awaitItem())
+        }
+    }
+
+    @Test
+    fun `given card was hidden and session is resumable, when started, card is hidden then shows`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
+                ),
+            )
+        viewModel.state.test {
+            assertEquals(HIDDEN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            assertEquals(SHOWN_STATE, awaitItem())
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `given card was hidden and session isn't resumable, when started, card stays hidden`() = runTest {
+        refreshActiveSession.willHaveActiveSession = false
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
+                ),
+            )
+        viewModel.state.test {
+            assertEquals(HIDDEN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `given session changes, when started and restarted, card reflects the changes`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle = SavedStateHandle(emptyMap())
+        viewModel.state.test {
+            assertEquals(HIDDEN_STATE, awaitItem())
+            viewModel.onScreenStart()
+            assertEquals(SHOWN_STATE, awaitItem())
+
             refreshActiveSession.willHaveActiveSession = false
-            savedStateHandle =
-                SavedStateHandle(emptyMap())
-            viewModel.state.test {
-                assertEquals(HIDDEN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                expectNoEvents()
-            }
-        }
+            viewModel.onScreenStart()
+            assertEquals(HIDDEN_STATE, awaitItem())
 
-    @Test
-    fun `given card was shown and session is resumable, when started, card stays shown`() =
-        runTest {
             refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
-                    ),
-                )
-            viewModel.state.test {
-                assertEquals(SHOWN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                expectNoEvents()
-            }
+            viewModel.onScreenStart()
+            assertEquals(SHOWN_STATE, awaitItem())
+
+            expectNoEvents()
         }
-
-    @Test
-    fun `given card was shown and session isn't resumable, when started, card is shown then hidden`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = false
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
-                    ),
-                )
-            viewModel.state.test {
-                assertEquals(SHOWN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                assertEquals(HIDDEN_STATE, awaitItem())
-            }
-        }
-
-    @Test
-    fun `given card was hidden and session is resumable, when started, card is hidden then shows`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
-                    ),
-                )
-            viewModel.state.test {
-                assertEquals(HIDDEN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                assertEquals(SHOWN_STATE, awaitItem())
-                expectNoEvents()
-            }
-        }
-
-    @Test
-    fun `given card was hidden and session isn't resumable, when started, card stays hidden`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = false
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
-                    ),
-                )
-            viewModel.state.test {
-                assertEquals(HIDDEN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                expectNoEvents()
-            }
-        }
-
-    @Test
-    fun `given session changes, when started and restarted, card reflects the changes`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle = SavedStateHandle(emptyMap())
-            viewModel.state.test {
-                assertEquals(HIDDEN_STATE, awaitItem())
-                viewModel.onScreenStart()
-                assertEquals(SHOWN_STATE, awaitItem())
-
-                refreshActiveSession.willHaveActiveSession = false
-                viewModel.onScreenStart()
-                assertEquals(HIDDEN_STATE, awaitItem())
-
-                refreshActiveSession.willHaveActiveSession = true
-                viewModel.onScreenStart()
-                assertEquals(SHOWN_STATE, awaitItem())
-
-                expectNoEvents()
-            }
-        }
+    }
 
     // Modal tests
 
     @Test
-    fun `given no saved state and session is resumable, when started, modal is shown`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle = SavedStateHandle(emptyMap())
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
-                expectNoEvents()
-            }
+    fun `given no saved state and session is resumable, when started, modal is shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle = SavedStateHandle(emptyMap())
+        viewModel.actions.test {
+            viewModel.onScreenStart()
+            assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `given card was hidden and session is resumable, when started, modal is shown`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
-                    ),
-                )
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
-                expectNoEvents()
-            }
+    fun `given card was hidden and session is resumable, when started, modal is shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to false,
+                ),
+            )
+        viewModel.actions.test {
+            viewModel.onScreenStart()
+            assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `given card was shown and session is resumable, when started, modal is not re-shown`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle =
-                SavedStateHandle(
-                    mapOf(
-                        ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
-                    ),
-                )
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                expectNoEvents()
-            }
+    fun `given card was shown and session is resumable, when started, modal is not re-shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle =
+            SavedStateHandle(
+                mapOf(
+                    ProveYourIdentityViewModel.SAVED_SHOW_CARD to true,
+                ),
+            )
+        viewModel.actions.test {
+            viewModel.onScreenStart()
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `given session becomes active two times, when started and restarted, modal is re-shown`() =
-        runTest {
+    fun `given session becomes active two times, when started and restarted, modal is re-shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle = SavedStateHandle(emptyMap())
+        viewModel.actions.test {
+            viewModel.onScreenStart()
+            assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
+
+            refreshActiveSession.willHaveActiveSession = false
+            viewModel.onScreenStart()
+            expectNoEvents()
+
             refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle = SavedStateHandle(emptyMap())
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
-
-                refreshActiveSession.willHaveActiveSession = false
-                viewModel.onScreenStart()
-                expectNoEvents()
-
-                refreshActiveSession.willHaveActiveSession = true
-                viewModel.onScreenStart()
-                assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
-                expectNoEvents()
-            }
+            viewModel.onScreenStart()
+            assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `given session remains active, when started and restarted, modal isn't re-shown`() =
-        runTest {
-            refreshActiveSession.willHaveActiveSession = true
-            savedStateHandle = SavedStateHandle(emptyMap())
-            viewModel.actions.test {
-                viewModel.onScreenStart()
-                assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
+    fun `given session remains active, when started and restarted, modal isn't re-shown`() = runTest {
+        refreshActiveSession.willHaveActiveSession = true
+        savedStateHandle = SavedStateHandle(emptyMap())
+        viewModel.actions.test {
+            viewModel.onScreenStart()
+            assertEquals(ProveYourIdentityRootUiAction.AllowModalToShow, awaitItem())
 
-                viewModel.onScreenStart()
-                expectNoEvents()
-            }
+            viewModel.onScreenStart()
+            expectNoEvents()
         }
+    }
 
     @Test
     fun `when start button is clicked, it sends analytics`() {

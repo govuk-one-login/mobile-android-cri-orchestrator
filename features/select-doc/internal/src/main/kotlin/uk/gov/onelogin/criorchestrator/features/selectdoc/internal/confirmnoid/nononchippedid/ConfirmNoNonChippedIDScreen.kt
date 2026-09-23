@@ -55,10 +55,7 @@ internal fun ConfirmNoNonChippedIDScreen(
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmNoNonChippedIDContent(
-    onConfirmClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun ConfirmNoNonChippedIDContent(onConfirmClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,

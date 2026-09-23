@@ -9,11 +9,8 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class)
-class IsSessionAbortedOrUnavailableImpl(
-    private val sessionStore: SessionStore,
-) : IsSessionAbortedOrUnavailable {
-    override fun invoke(): Flow<Boolean> =
-        sessionStore.read().map {
-            it == null || it.sessionState == Session.State.Aborted
-        }
+class IsSessionAbortedOrUnavailableImpl(private val sessionStore: SessionStore) : IsSessionAbortedOrUnavailable {
+    override fun invoke(): Flow<Boolean> = sessionStore.read().map {
+        it == null || it.sessionState == Session.State.Aborted
+    }
 }

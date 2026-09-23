@@ -17,6 +17,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.TestScope
@@ -25,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config as RobolectricConfig
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
@@ -42,8 +44,6 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continue
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.seeLoading
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.seeReturnToGovUkOnComputer
-import kotlin.time.Duration.Companion.seconds
-import org.robolectric.annotation.Config as RobolectricConfig
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
@@ -69,74 +69,72 @@ class RestoreProveYourIdentityNavigationStateTest {
         )
 
     @Test
-    fun `restore 'prove your identity' navigation state within another nav graph`() =
-        testScope.runTest {
-            val testActions = MutableSharedFlow<MainContentTestAction>()
-            stateRestorationTester.setContent {
-                GdsTheme {
-                    MainContent(
-                        criOrchestratorSdk = criOrchestratorSdk,
-                        onSubUpdateRequest = {},
-                        testActions = testActions,
-                    )
-                }
+    fun `restore 'prove your identity' navigation state within another nav graph`() = testScope.runTest {
+        val testActions = MutableSharedFlow<MainContentTestAction>()
+        stateRestorationTester.setContent {
+            GdsTheme {
+                MainContent(
+                    criOrchestratorSdk = criOrchestratorSdk,
+                    onSubUpdateRequest = {},
+                    testActions = testActions,
+                )
             }
-
-            composeTestRule.continueToSelectDocument()
-
-            composeTestRule
-                .onNodeWithText(NO, useUnmergedTree = true)
-                .performScrollTo()
-                .performClick()
-
-            testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
-
-            composeTestRule
-                .onNodeWithText(ANOTHER_SCREEN)
-                .assertIsDisplayed()
-
-            composeTestRule.goBack()
-
-            composeTestRule
-                .onAllNodes(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
-                .onFirst()
-                // It's not displayed because we scrolled down earlier
-                .assertExists()
-
-            composeTestRule
-                .onNode(hasAnySibling(hasText(NO)) and isSelectable(), useUnmergedTree = true)
-                .assertIsSelected()
         }
+
+        composeTestRule.continueToSelectDocument()
+
+        composeTestRule
+            .onNodeWithText(NO, useUnmergedTree = true)
+            .performScrollTo()
+            .performClick()
+
+        testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
+
+        composeTestRule
+            .onNodeWithText(ANOTHER_SCREEN)
+            .assertIsDisplayed()
+
+        composeTestRule.goBack()
+
+        composeTestRule
+            .onAllNodes(isHeading() and hasText(DO_YOU_HAVE_A_DRIVING_LICENCE))
+            .onFirst()
+            // It's not displayed because we scrolled down earlier
+            .assertExists()
+
+        composeTestRule
+            .onNode(hasAnySibling(hasText(NO)) and isSelectable(), useUnmergedTree = true)
+            .assertIsSelected()
+    }
 
     @Test
-    fun `restore 'abort' navigation state within another nav graph`() =
-        testScope.runTest {
-            val testActions = MutableSharedFlow<MainContentTestAction>()
-            stateRestorationTester.setContent {
-                GdsTheme {
-                    MainContent(
-                        criOrchestratorSdk = criOrchestratorSdk,
-                        onSubUpdateRequest = {},
-                        testActions = testActions,
-                    )
-                }
+    fun `restore 'abort' navigation state within another nav graph`() = testScope.runTest {
+        val testActions = MutableSharedFlow<MainContentTestAction>()
+        stateRestorationTester.setContent {
+            GdsTheme {
+                MainContent(
+                    criOrchestratorSdk = criOrchestratorSdk,
+                    onSubUpdateRequest = {},
+                    testActions = testActions,
+                )
             }
-
-            composeTestRule.continueToSelectDocument()
-            composeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence = false)
-            composeTestRule.confirmNoDrivingLicence()
-            composeTestRule.continueToCheckIfCanProveIdentityAnotherWay()
-            composeTestRule.seeLoading(testScope = this, duration = 1.seconds)
-            composeTestRule.seeReturnToGovUkOnComputer()
-
-            testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
-
-            composeTestRule
-                .onNodeWithText(ANOTHER_SCREEN)
-                .assertIsDisplayed()
-
-            composeTestRule.goBack()
-
-            composeTestRule.seeReturnToGovUkOnComputer()
         }
+
+        composeTestRule.continueToSelectDocument()
+        composeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence = false)
+        composeTestRule.confirmNoDrivingLicence()
+        composeTestRule.continueToCheckIfCanProveIdentityAnotherWay()
+        composeTestRule.seeLoading(testScope = this, duration = 1.seconds)
+        composeTestRule.seeReturnToGovUkOnComputer()
+
+        testActions.emit(MainContentTestAction.NavigateToAnotherScreen)
+
+        composeTestRule
+            .onNodeWithText(ANOTHER_SCREEN)
+            .assertIsDisplayed()
+
+        composeTestRule.goBack()
+
+        composeTestRule.seeReturnToGovUkOnComputer()
+    }
 }

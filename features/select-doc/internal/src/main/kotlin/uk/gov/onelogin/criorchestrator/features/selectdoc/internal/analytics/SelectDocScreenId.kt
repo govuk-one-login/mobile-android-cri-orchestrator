@@ -2,9 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics
 
 import uk.gov.onelogin.criorchestrator.libraries.analytics.ScreenId
 
-enum class SelectDocScreenId(
-    override val rawId: String,
-) : ScreenId {
+enum class SelectDocScreenId(override val rawId: String) : ScreenId {
     SelectPassport(rawId = "ccb1caa0-0331-4122-9f35-78ce28e0b4b5"),
     ConfirmPassport(rawId = "6bc099b5-8194-4d3f-86ed-cb815d8f0056"),
     ConfirmBrp(rawId = "cd406643-bfc3-4664-b3ac-f15c9f7469fa"),

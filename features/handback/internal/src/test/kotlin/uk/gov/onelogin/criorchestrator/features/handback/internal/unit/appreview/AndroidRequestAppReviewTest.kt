@@ -33,14 +33,13 @@ class AndroidRequestAppReviewTest {
     }
 
     @Test
-    fun `when request a review is called, it launches the prompt`(): Unit =
-        runBlocking {
-            withMockReviewManagerFactory {
-                androidRequestAppReview()
-            }
-
-            verify(manager).launchReviewFlow(activity, reviewInfo)
+    fun `when request a review is called, it launches the prompt`(): Unit = runBlocking {
+        withMockReviewManagerFactory {
+            androidRequestAppReview()
         }
+
+        verify(manager).launchReviewFlow(activity, reviewInfo)
+    }
 
     private suspend fun withMockReviewManagerFactory(block: suspend () -> Unit) =
         Mockito.mockStatic<ReviewManagerFactory>(ReviewManagerFactory::class.java).use { factory ->

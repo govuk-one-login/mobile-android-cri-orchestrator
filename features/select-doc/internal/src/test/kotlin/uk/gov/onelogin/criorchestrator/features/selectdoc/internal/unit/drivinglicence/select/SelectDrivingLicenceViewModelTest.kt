@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.unit.drivinglicence.select
 
 import app.cash.turbine.test
+import java.time.LocalDate
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -21,7 +22,6 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicenc
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.select.SelectDrivingLicenseState
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
-import java.time.LocalDate
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectDrivingLicenceViewModelTest {
@@ -42,18 +42,17 @@ class SelectDrivingLicenceViewModelTest {
     }
 
     @Test
-    fun `it emits the initial state`() =
-        runTest {
-            viewModel.state.test {
-                assertEquals(
-                    SelectDrivingLicenseState(
-                        displayReadMoreButton = false,
-                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
-                    ),
-                    awaitItem(),
-                )
-            }
+    fun `it emits the initial state`() = runTest {
+        viewModel.state.test {
+            assertEquals(
+                SelectDrivingLicenseState(
+                    displayReadMoreButton = false,
+                    earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                ),
+                awaitItem(),
+            )
         }
+    }
 
     @Test
     fun `when screen starts, it sends analytics`() {

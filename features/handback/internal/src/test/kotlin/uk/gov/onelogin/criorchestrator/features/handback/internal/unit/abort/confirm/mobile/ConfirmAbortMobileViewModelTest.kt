@@ -82,18 +82,17 @@ class ConfirmAbortMobileViewModelTest {
     }
 
     @Test
-    fun `given session store is empty, when continue is clicked, it navigates to unrecoverable error`() =
-        runTest {
-            sessionStore.clear()
-            viewModel.actions.test {
-                viewModel.onContinueToGovUk()
-                assertEquals(
-                    ConfirmAbortMobileAction.NavigateToUnrecoverableError,
-                    awaitItem(),
-                )
-                assertTrue(logger.contains("Can't continue to GOV.UK - no redirect URI"))
-            }
+    fun `given session store is empty, when continue is clicked, it navigates to unrecoverable error`() = runTest {
+        sessionStore.clear()
+        viewModel.actions.test {
+            viewModel.onContinueToGovUk()
+            assertEquals(
+                ConfirmAbortMobileAction.NavigateToUnrecoverableError,
+                awaitItem(),
+            )
+            assertTrue(logger.contains("Can't continue to GOV.UK - no redirect URI"))
         }
+    }
 
     @Test
     fun `given DAD session (no redirect uri), when continue is clicked, it navigates to unrecoverable error`() =
@@ -110,16 +109,15 @@ class ConfirmAbortMobileViewModelTest {
         }
 
     @Test
-    fun `given abort session will succeed, when continue is clicked, it navigates to govuk`() =
-        runTest {
-            viewModel.actions.test {
-                viewModel.onContinueToGovUk()
-                assertEquals(
-                    ConfirmAbortMobileAction.ContinueGovUk(redirectUri = redirectUri),
-                    awaitItem(),
-                )
-            }
+    fun `given abort session will succeed, when continue is clicked, it navigates to govuk`() = runTest {
+        viewModel.actions.test {
+            viewModel.onContinueToGovUk()
+            assertEquals(
+                ConfirmAbortMobileAction.ContinueGovUk(redirectUri = redirectUri),
+                awaitItem(),
+            )
         }
+    }
 
     @Test
     fun `given abort session fails with offline error, when continue is clicked, it navigates to offline error`() =

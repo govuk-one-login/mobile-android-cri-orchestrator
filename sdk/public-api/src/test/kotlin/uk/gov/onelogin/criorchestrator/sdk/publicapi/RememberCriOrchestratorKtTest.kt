@@ -45,36 +45,34 @@ class RememberCriOrchestratorKtTest {
         )
 
     @Test
-    fun `it returns a value`() =
-        runTest {
-            moleculeFlow(RecompositionMode.Immediate) {
-                withContext {
-                    rememberCriOrchestrator(
-                        criOrchestratorSdk = criOrchestratorSdk,
-                    )
-                }
-            }.test {
-                assertInstanceOf<CriOrchestratorGraph>(awaitItem())
-                cancel()
+    fun `it returns a value`() = runTest {
+        moleculeFlow(RecompositionMode.Immediate) {
+            withContext {
+                rememberCriOrchestrator(
+                    criOrchestratorSdk = criOrchestratorSdk,
+                )
             }
+        }.test {
+            assertInstanceOf<CriOrchestratorGraph>(awaitItem())
+            cancel()
         }
+    }
 
     @Test
-    fun `given activity is null, it throws`() =
-        runTest {
-            moleculeFlow(RecompositionMode.Immediate) {
-                withContext(
-                    activity = null,
-                ) {
-                    rememberCriOrchestrator(
-                        criOrchestratorSdk = criOrchestratorSdk,
-                    )
-                }
-            }.test {
-                assertExceptionEquals(IllegalStateException("No activity found"), awaitError())
-                cancel()
+    fun `given activity is null, it throws`() = runTest {
+        moleculeFlow(RecompositionMode.Immediate) {
+            withContext(
+                activity = null,
+            ) {
+                rememberCriOrchestrator(
+                    criOrchestratorSdk = criOrchestratorSdk,
+                )
             }
+        }.test {
+            assertExceptionEquals(IllegalStateException("No activity found"), awaitError())
+            cancel()
         }
+    }
 
     @Composable
     fun <T> withContext(

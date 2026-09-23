@@ -1,9 +1,9 @@
 package uk.gov.onelogin.criorchestrator.features.config.publicapi
 
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class ConfigEntryTest {
     @Test

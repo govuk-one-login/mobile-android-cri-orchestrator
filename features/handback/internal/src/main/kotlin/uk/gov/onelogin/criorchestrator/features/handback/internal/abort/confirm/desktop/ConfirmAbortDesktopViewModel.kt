@@ -18,10 +18,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmAbortDesktopViewModel::class)
-class ConfirmAbortDesktopViewModel(
-    private val analytics: HandbackAnalytics,
-    private val abortSession: AbortSession,
-) : ViewModel() {
+class ConfirmAbortDesktopViewModel(private val analytics: HandbackAnalytics, private val abortSession: AbortSession) :
+    ViewModel() {
     private val _state = MutableStateFlow<ConfirmAbortState>(ConfirmAbortState.Display)
     val state = _state.asStateFlow()
     private val _actions = MutableSharedFlow<ConfirmAbortDesktopActions>()
@@ -43,8 +41,10 @@ class ConfirmAbortDesktopViewModel(
             when (abortSession()) {
                 AbortSession.Result.Error.Offline ->
                     _actions.emit(ConfirmAbortDesktopActions.NavigateToOfflineError)
+
                 is AbortSession.Result.Error.Unrecoverable ->
                     _actions.emit(ConfirmAbortDesktopActions.NavigateToUnrecoverableError)
+
                 AbortSession.Result.Success -> {
                     _actions.emit(ConfirmAbortDesktopActions.NavigateToReturnToDesktop)
                 }

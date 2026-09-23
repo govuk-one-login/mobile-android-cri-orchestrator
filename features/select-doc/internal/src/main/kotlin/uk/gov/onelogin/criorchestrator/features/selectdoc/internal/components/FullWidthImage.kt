@@ -8,11 +8,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 
 @Composable
-internal fun FullWidthImage(
-    painter: Painter,
-    contentDescription: String,
-    modifier: Modifier = Modifier,
-) {
+internal fun FullWidthImage(painter: Painter, contentDescription: String, modifier: Modifier = Modifier) {
     Image(
         painter = painter,
         contentDescription = contentDescription,

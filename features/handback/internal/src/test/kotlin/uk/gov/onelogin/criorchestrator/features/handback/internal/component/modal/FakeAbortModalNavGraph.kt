@@ -8,10 +8,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortNa
 
 object FakeAbortModalNavGraph {
     class Provider : AbortNavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(
-            navController: NavController,
-            onFinish: () -> Unit,
-        ) {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
             composable<AbortDestinations.ConfirmAbortMobile> {}
             composable<AbortDestinations.ConfirmAbortDesktop> {}
             composable<AbortDestinations.AbortedReturnToDesktopWeb> {}

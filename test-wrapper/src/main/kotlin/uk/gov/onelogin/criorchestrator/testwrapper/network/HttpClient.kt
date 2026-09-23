@@ -1,8 +1,10 @@
 package uk.gov.onelogin.criorchestrator.testwrapper.network
 
 import android.content.res.Resources
+import javax.inject.Provider
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.v2.ApiRequest
+import uk.gov.android.network.api.v3.ApiResponse as ApiResponseV2
 import uk.gov.android.network.auth.AuthenticationProvider
 import uk.gov.android.network.auth.AuthenticationResponse
 import uk.gov.android.network.client.KtorHttpClient
@@ -11,13 +13,8 @@ import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 import uk.gov.onelogin.criorchestrator.testwrapper.SubjectTokenRepository
-import javax.inject.Provider
-import uk.gov.android.network.api.v3.ApiResponse as ApiResponseV2
 
-internal fun createHttpClient(
-    subjectTokenRepository: SubjectTokenRepository,
-    resources: Resources,
-): NetworkService =
+internal fun createHttpClient(subjectTokenRepository: SubjectTokenRepository, resources: Resources): NetworkService =
     DefaultNetworkService(
         KtorHttpClient(
             userAgentGenerator = UserAgentGeneratorStub("userAgent"),
@@ -36,16 +33,15 @@ internal fun createHttpClient(
         )
     }
 
-internal fun createStubHttpClient(): NetworkService =
-    DefaultNetworkService(
-        KtorHttpClient(
-            userAgentGenerator = UserAgentGeneratorStub("userAgent"),
-        ),
-    ).apply {
-        setAuthenticationProvider(
-            StubAuthenticationProvider(),
-        )
-    }
+internal fun createStubHttpClient(): NetworkService = DefaultNetworkService(
+    KtorHttpClient(
+        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+    ),
+).apply {
+    setAuthenticationProvider(
+        StubAuthenticationProvider(),
+    )
+}
 
 internal class TestWrapperAuthenticationProvider(
     private val mockStsAuthenticationProvider: MockStsAuthenticationProvider,
@@ -62,14 +58,8 @@ internal class TestWrapperAuthenticationProvider(
     }
 }
 
-internal class MockStsAuthenticationProvider(
-    val client: Provider<NetworkService>,
-    val resources: Resources,
-) {
-    suspend fun fetchBearerToken(
-        scope: String,
-        subjectToken: String,
-    ): AuthenticationResponse {
+internal class MockStsAuthenticationProvider(val client: Provider<NetworkService>, val resources: Resources) {
+    suspend fun fetchBearerToken(scope: String, subjectToken: String): AuthenticationResponse {
         val tokenEndpoint = resources.getString(R.string.stsUrl) + "/token"
 
         val request =
@@ -101,7 +91,6 @@ internal class MockStsAuthenticationProvider(
 }
 
 internal class StubAuthenticationProvider : AuthenticationProvider {
-    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse =
-        AuthenticationResponse
-            .Success("token")
+    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse = AuthenticationResponse
+        .Success("token")
 }

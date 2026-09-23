@@ -30,10 +30,7 @@ object FakeNavGraph {
     }
 
     class Provider : NavGraphProvider {
-        override fun NavGraphBuilder.contributeToGraph(
-            navController: NavController,
-            onFinish: () -> Unit,
-        ) {
+        override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
             composable<Destination.First> {
                 Button(
                     onClick = {

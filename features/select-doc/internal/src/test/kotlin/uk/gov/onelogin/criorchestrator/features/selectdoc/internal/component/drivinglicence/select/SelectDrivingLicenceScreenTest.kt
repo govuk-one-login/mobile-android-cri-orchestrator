@@ -73,44 +73,41 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when screen is started, no item is selected`() =
-        runTest {
-            composeTestRule.setSelectDrivingLicenceContent()
+    fun `when screen is started, no item is selected`() = runTest {
+        composeTestRule.setSelectDrivingLicenceContent()
 
-            composeTestRule
-                .onNode(yesOption, useUnmergedTree = true)
-                .onSibling()
-                .assertIsNotSelected()
+        composeTestRule
+            .onNode(yesOption, useUnmergedTree = true)
+            .onSibling()
+            .assertIsNotSelected()
 
-            composeTestRule
-                .onNode(noOption, useUnmergedTree = true)
-                .onSibling()
-                .assertIsNotSelected()
-        }
-
-    @Test
-    fun `when screen is started and nfc is not enabled, the read more button is not displayed`() =
-        runTest {
-            composeTestRule.setSelectDrivingLicenceContent()
-
-            composeTestRule
-                .onNode(readMoreButton)
-                .assertDoesNotExist()
-        }
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .onSibling()
+            .assertIsNotSelected()
+    }
 
     @Test
-    fun `when nfc is enabled and read more is selected, it navigates to types of ID`() =
-        runTest {
-            given(nfcChecker.hasNfc()).willReturn(true)
+    fun `when screen is started and nfc is not enabled, the read more button is not displayed`() = runTest {
+        composeTestRule.setSelectDrivingLicenceContent()
 
-            composeTestRule.setSelectDrivingLicenceContent()
+        composeTestRule
+            .onNode(readMoreButton)
+            .assertDoesNotExist()
+    }
 
-            composeTestRule
-                .onNode(readMoreButton)
-                .performClick()
+    @Test
+    fun `when nfc is enabled and read more is selected, it navigates to types of ID`() = runTest {
+        given(nfcChecker.hasNfc()).willReturn(true)
 
-            verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
-        }
+        composeTestRule.setSelectDrivingLicenceContent()
+
+        composeTestRule
+            .onNode(readMoreButton)
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.TypesOfPhotoID)
+    }
 
     @Test
     fun `when yes is tapped, it is selected`() {
@@ -152,61 +149,58 @@ class SelectDrivingLicenceScreenTest {
     }
 
     @Test
-    fun `when yes is selected and confirm is tapped, it navigates to confirm driving licence`() =
-        runTest {
-            composeTestRule.setSelectDrivingLicenceContent()
+    fun `when yes is selected and confirm is tapped, it navigates to confirm driving licence`() = runTest {
+        composeTestRule.setSelectDrivingLicenceContent()
 
-            composeTestRule
-                .onNode(yesOption, useUnmergedTree = true)
-                .performClick()
+        composeTestRule
+            .onNode(yesOption, useUnmergedTree = true)
+            .performClick()
 
-            composeTestRule
-                .onNode(continueButton)
-                .assertIsEnabled()
-                .performClick()
+        composeTestRule
+            .onNode(continueButton)
+            .assertIsEnabled()
+            .performClick()
 
-            verify(navController).navigate(SelectDocDestinations.ConfirmDrivingLicence)
-        }
-
-    @Test
-    fun `when no is selected and nfc is enabled, it navigates to confirm no chipped ID`() =
-        runTest {
-            composeTestRule.setSelectDrivingLicenceContent()
-
-            given(nfcChecker.hasNfc()).willReturn(true)
-
-            composeTestRule
-                .onNode(noOption, useUnmergedTree = true)
-                .performScrollTo()
-                .assertIsEnabled()
-                .performClick()
-
-            composeTestRule
-                .onNode(continueButton)
-                .assertIsEnabled()
-                .performClick()
-
-            verify(navController).navigate(SelectDocDestinations.ConfirmNoChippedID)
-        }
+        verify(navController).navigate(SelectDocDestinations.ConfirmDrivingLicence)
+    }
 
     @Test
-    fun `when no is selected and nfc is not enabled, it navigates to confirm no non chipped ID`() =
-        runTest {
-            composeTestRule.setSelectDrivingLicenceContent()
+    fun `when no is selected and nfc is enabled, it navigates to confirm no chipped ID`() = runTest {
+        composeTestRule.setSelectDrivingLicenceContent()
 
-            composeTestRule
-                .onNode(noOption, useUnmergedTree = true)
-                .performScrollTo()
-                .assertIsEnabled()
-                .performClick()
+        given(nfcChecker.hasNfc()).willReturn(true)
 
-            composeTestRule
-                .onNode(continueButton)
-                .assertIsEnabled()
-                .performClick()
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .performScrollTo()
+            .assertIsEnabled()
+            .performClick()
 
-            verify(navController).navigate(SelectDocDestinations.ConfirmNoNonChippedID)
-        }
+        composeTestRule
+            .onNode(continueButton)
+            .assertIsEnabled()
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.ConfirmNoChippedID)
+    }
+
+    @Test
+    fun `when no is selected and nfc is not enabled, it navigates to confirm no non chipped ID`() = runTest {
+        composeTestRule.setSelectDrivingLicenceContent()
+
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .performScrollTo()
+            .assertIsEnabled()
+            .performClick()
+
+        composeTestRule
+            .onNode(continueButton)
+            .assertIsEnabled()
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.ConfirmNoNonChippedID)
+    }
 
     private fun ComposeContentTestRule.setSelectDrivingLicenceContent() {
         setContent {

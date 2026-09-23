@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometr
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.serialization.json.Json
 import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
@@ -13,15 +14,12 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometrictoken.data.ConfigurableBiometricApi
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
-import kotlin.coroutines.cancellation.CancellationException
 
 @SingleIn(CriOrchestratorScope::class)
 @ContributesBinding(CriOrchestratorScope::class, binding = binding<BiometricTokenReader>())
 @Suppress("TooGenericExceptionCaught")
-class RemoteBiometricTokenReader(
-    private val biometricApi: ConfigurableBiometricApi,
-    private val logger: Logger,
-) : BiometricTokenReader,
+class RemoteBiometricTokenReader(private val biometricApi: ConfigurableBiometricApi, private val logger: Logger) :
+    BiometricTokenReader,
     LogTagProvider {
     private val json: Json by lazy {
         Json {
@@ -29,10 +27,7 @@ class RemoteBiometricTokenReader(
         }
     }
 
-    override suspend fun getBiometricToken(
-        sessionId: String,
-        documentVariety: DocumentVariety,
-    ): BiometricTokenResult {
+    override suspend fun getBiometricToken(sessionId: String, documentVariety: DocumentVariety): BiometricTokenResult {
         val response =
             try {
                 biometricApi.getBiometricToken(sessionId, documentVariety)

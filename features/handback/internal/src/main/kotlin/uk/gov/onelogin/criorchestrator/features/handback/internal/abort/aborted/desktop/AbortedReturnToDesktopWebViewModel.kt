@@ -9,9 +9,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(AbortedReturnToDesktopWebViewModel::class)
-class AbortedReturnToDesktopWebViewModel(
-    private val analytics: HandbackAnalytics,
-) : ViewModel() {
+class AbortedReturnToDesktopWebViewModel(private val analytics: HandbackAnalytics) : ViewModel() {
     fun onScreenStart() {
         analytics.trackScreen(
             id = HandbackScreenId.AbortedReturnToDesktopWeb,

@@ -12,9 +12,7 @@ private const val MAX_DRIVING_LICENCE_EXPIRY_DAYS_AGO = 90L
  * Returns the earliest acceptable driving licence expiry date.
  */
 @Inject
-class EarliestAcceptableDrivingLicenceExpiryDate(
-    private val clock: Clock,
-) {
+class EarliestAcceptableDrivingLicenceExpiryDate(private val clock: Clock) {
     private fun today() = LocalDate.now(clock)
 
     operator fun invoke(): LocalDate = today().minusDays(MAX_DRIVING_LICENCE_EXPIRY_DAYS_AGO)

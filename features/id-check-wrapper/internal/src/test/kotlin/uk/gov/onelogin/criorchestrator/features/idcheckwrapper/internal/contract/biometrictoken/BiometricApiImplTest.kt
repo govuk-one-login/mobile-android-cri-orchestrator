@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.contract.biometrictoken
 
+import java.util.stream.Stream
+import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,8 +25,6 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
-import java.util.stream.Stream
-import kotlin.test.assertEquals
 
 class BiometricApiImplTest {
     private lateinit var biometricApiImpl: BiometricApi
@@ -53,16 +53,15 @@ class BiometricApiImplTest {
     }
 
     @Test
-    fun `biometric API implementation returns stubbed response`() =
-        runTest {
-            val result =
-                biometricApiImpl.getBiometricToken("sessionId", DocumentVariety.NFC_PASSPORT)
-            val success = result as ApiResponse.Success
-            assertEquals(
-                "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
-                success.body,
-            )
-        }
+    fun `biometric API implementation returns stubbed response`() = runTest {
+        val result =
+            biometricApiImpl.getBiometricToken("sessionId", DocumentVariety.NFC_PASSPORT)
+        val success = result as ApiResponse.Success
+        assertEquals(
+            "{\"accessToken\":\"string\",\"opaqueId\":\"6ec96ea7-941c-4967-9fcf-94fc9b717a22\"}",
+            success.body,
+        )
+    }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("assertBackendApiUsesCorrectStringForRequest")
@@ -105,20 +104,19 @@ class BiometricApiImplTest {
 
     companion object {
         @JvmStatic
-        fun assertBackendApiUsesCorrectStringForRequest(): Stream<Arguments> =
-            Stream.of(
-                arguments(
-                    "NFC_PASSPORT",
-                    DocumentVariety.NFC_PASSPORT,
-                ),
-                arguments(
-                    "UK_DRIVING_LICENCE",
-                    DocumentVariety.DRIVING_LICENCE,
-                ),
-                arguments(
-                    "UK_NFC_BRP",
-                    DocumentVariety.BRP,
-                ),
-            )
+        fun assertBackendApiUsesCorrectStringForRequest(): Stream<Arguments> = Stream.of(
+            arguments(
+                "NFC_PASSPORT",
+                DocumentVariety.NFC_PASSPORT,
+            ),
+            arguments(
+                "UK_DRIVING_LICENCE",
+                DocumentVariety.DRIVING_LICENCE,
+            ),
+            arguments(
+                "UK_NFC_BRP",
+                DocumentVariety.BRP,
+            ),
+        )
     }
 }
