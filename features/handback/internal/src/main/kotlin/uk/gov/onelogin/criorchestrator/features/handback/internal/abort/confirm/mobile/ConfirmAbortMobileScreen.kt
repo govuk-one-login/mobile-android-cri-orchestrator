@@ -10,27 +10,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
-import uk.gov.android.ui.componentsv2.R.drawable.ic_external_site
 import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
+import uk.gov.android.ui.componentsv2.button.ButtonIcon
 import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
-import uk.gov.android.ui.componentsv2.button.GdsButtonDefaults
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
-import uk.gov.android.ui.theme.m3.Buttons
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3.Typography
-import uk.gov.android.ui.theme.m3.toMappedColors
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
@@ -133,19 +128,21 @@ internal fun ConfirmAbortMobileWebContent(onButtonClick: () -> Unit, modifier: M
                 }
             },
             primaryButton = {
-                val contentDescription = ". ${stringResource(opens_in_external_browser)}"
+                val contentDesc = ". ${stringResource(opens_in_external_browser)}"
                 GdsButton(
                     text = stringResource(ConfirmAbortMobileConstants.buttonId),
                     onClick = dropUnlessResumed { onButtonClick() },
                     buttonType =
-                        ButtonTypeV2.Icon(
-                            buttonColors = GdsButtonDefaults.defaultPrimaryColors(),
+                        ButtonTypeV2.Primary(
                             textStyle = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                            icon = ImageVector.vectorResource(ic_external_site),
-                            contentDescription = contentDescription,
-                            shadowColor = Buttons.shadow.toMappedColors(),
                         ),
-                    modifier = Modifier.fillMaxWidth(),
+                    icon = ButtonIcon.opensInWebBrowser(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .semantics {
+                                contentDescription = contentDesc
+                            },
                 )
             },
         )
