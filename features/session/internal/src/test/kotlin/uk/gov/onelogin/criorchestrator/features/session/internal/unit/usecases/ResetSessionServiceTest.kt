@@ -26,54 +26,51 @@ class ResetSessionServiceTest {
     private val resetSessionService = ResetSessionService(sessionStore, configStore)
 
     @Test
-    fun `when config isn't changed, it doesn't clear the session`() =
-        runTest {
-            val job = launchService()
+    fun `when config isn't changed, it doesn't clear the session`() = runTest {
+        val job = launchService()
 
-            sessionStore.read().test {
-                assertNotNull(awaitItem())
-                expectNoEvents()
-            }
-            job.cancel()
+        sessionStore.read().test {
+            assertNotNull(awaitItem())
+            expectNoEvents()
         }
+        job.cancel()
+    }
 
     @Test
-    fun `when base URL changes, it clears the session`() =
-        runTest {
-            val job = launchService()
+    fun `when base URL changes, it clears the session`() = runTest {
+        val job = launchService()
 
-            sessionStore.read().test {
-                assertNotNull(awaitItem())
-                configStore.write(
-                    Config.Entry(
-                        key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
-                        value = Config.Value.StringValue("something new"),
-                    ),
-                )
-                assertNull(awaitItem())
-                expectNoEvents()
-            }
-            job.cancel()
+        sessionStore.read().test {
+            assertNotNull(awaitItem())
+            configStore.write(
+                Config.Entry(
+                    key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                    value = Config.Value.StringValue("something new"),
+                ),
+            )
+            assertNull(awaitItem())
+            expectNoEvents()
         }
+        job.cancel()
+    }
 
     @Test
-    fun `when backend bypass setting changes, it clears the session`() =
-        runTest {
-            val job = launchService()
+    fun `when backend bypass setting changes, it clears the session`() = runTest {
+        val job = launchService()
 
-            sessionStore.read().test {
-                assertNotNull(awaitItem())
-                configStore.write(
-                    Config.Entry(
-                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                        value = Config.Value.BooleanValue(true),
-                    ),
-                )
-                assertNull(awaitItem())
-                expectNoEvents()
-            }
-            job.cancel()
+        sessionStore.read().test {
+            assertNotNull(awaitItem())
+            configStore.write(
+                Config.Entry(
+                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                    value = Config.Value.BooleanValue(true),
+                ),
+            )
+            assertNull(awaitItem())
+            expectNoEvents()
         }
+        job.cancel()
+    }
 
     private suspend fun CoroutineScope.launchService(): Job {
         val job =

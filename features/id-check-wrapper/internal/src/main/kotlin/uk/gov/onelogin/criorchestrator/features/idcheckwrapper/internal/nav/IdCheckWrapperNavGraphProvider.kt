@@ -13,10 +13,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
 class IdCheckWrapperNavGraphProvider : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<IdCheckWrapperDestinations.SyncIdCheckScreen> {
             val args = it.toRoute<IdCheckWrapperDestinations.SyncIdCheckScreen>()
             SyncIdCheckScreen(

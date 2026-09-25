@@ -7,6 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -24,7 +25,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.navigatetomobi
 import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextStartingWith
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherRule
-import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class FaceScanLimitReachedMobileScreenTest {
@@ -58,16 +58,15 @@ class FaceScanLimitReachedMobileScreenTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when continue to gov uk website button is clicked, it opens the session redirect uri`() =
-        runTest {
-            composeTestRule
-                .onNode(
-                    hasTextStartingWith(context.getString(FaceScanLimitReachedMobileConstants.buttonId)),
-                ).performClick()
+    fun `when continue to gov uk website button is clicked, it opens the session redirect uri`() = runTest {
+        composeTestRule
+            .onNode(
+                hasTextStartingWith(context.getString(FaceScanLimitReachedMobileConstants.buttonId)),
+            ).performClick()
 
-            testScope.advanceUntilIdle()
-            assertEquals(REDIRECT_URI, webNavigator.openUrl)
-        }
+        testScope.advanceUntilIdle()
+        assertEquals(REDIRECT_URI, webNavigator.openUrl)
+    }
 
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {

@@ -38,65 +38,62 @@ class ConfirmNoNonChippedIDViewModelTest {
     }
 
     @Test
-    fun `when confirm is pressed, it sends analytics`() =
-        runTest {
-            val viewModel =
-                ConfirmNoNonChippedIDViewModel(
-                    analytics = analyticsLogger,
-                    getJourneyType = StubGetJourneyType(),
-                )
+    fun `when confirm is pressed, it sends analytics`() = runTest {
+        val viewModel =
+            ConfirmNoNonChippedIDViewModel(
+                analytics = analyticsLogger,
+                getJourneyType = StubGetJourneyType(),
+            )
 
-            viewModel.action.test {
-                viewModel.onConfirmClick()
-                verify(analyticsLogger)
-                    .trackButtonEvent(
-                        buttonText = R.string.confirm_nononchippedid_confirmbutton,
-                    )
-                cancelAndIgnoreRemainingEvents()
-            }
+        viewModel.action.test {
+            viewModel.onConfirmClick()
+            verify(analyticsLogger)
+                .trackButtonEvent(
+                    buttonText = R.string.confirm_nononchippedid_confirmbutton,
+                )
+            cancelAndIgnoreRemainingEvents()
         }
+    }
 
     @Test
-    fun `when confirm is pressed and journey is MAM, it navigates to Confirm Abort Mobile screen`() =
-        runTest {
-            val viewModel =
-                ConfirmNoNonChippedIDViewModel(
-                    analytics = analyticsLogger,
-                    getJourneyType =
-                        StubGetJourneyType(
-                            journeyType = JourneyType.MobileAppMobile("https://example.com"),
-                        ),
-                )
+    fun `when confirm is pressed and journey is MAM, it navigates to Confirm Abort Mobile screen`() = runTest {
+        val viewModel =
+            ConfirmNoNonChippedIDViewModel(
+                analytics = analyticsLogger,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.MobileAppMobile("https://example.com"),
+                    ),
+            )
 
-            viewModel.action.test {
-                viewModel.onConfirmClick()
-                verify(analyticsLogger)
-                    .trackButtonEvent(
-                        buttonText = R.string.confirm_nononchippedid_confirmbutton,
-                    )
-                assertEquals(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortMobile, awaitItem())
-            }
+        viewModel.action.test {
+            viewModel.onConfirmClick()
+            verify(analyticsLogger)
+                .trackButtonEvent(
+                    buttonText = R.string.confirm_nononchippedid_confirmbutton,
+                )
+            assertEquals(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortMobile, awaitItem())
         }
+    }
 
     @Test
-    fun `when confirm is pressed and journey is DAD, it navigates to Confirm Abort Desktop screen`() =
-        runTest {
-            val viewModel =
-                ConfirmNoNonChippedIDViewModel(
-                    analytics = analyticsLogger,
-                    getJourneyType =
-                        StubGetJourneyType(
-                            journeyType = JourneyType.DesktopAppDesktop,
-                        ),
-                )
+    fun `when confirm is pressed and journey is DAD, it navigates to Confirm Abort Desktop screen`() = runTest {
+        val viewModel =
+            ConfirmNoNonChippedIDViewModel(
+                analytics = analyticsLogger,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.DesktopAppDesktop,
+                    ),
+            )
 
-            viewModel.action.test {
-                viewModel.onConfirmClick()
-                verify(analyticsLogger)
-                    .trackButtonEvent(
-                        buttonText = R.string.confirm_nononchippedid_confirmbutton,
-                    )
-                assertEquals(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortDesktop, awaitItem())
-            }
+        viewModel.action.test {
+            viewModel.onConfirmClick()
+            verify(analyticsLogger)
+                .trackButtonEvent(
+                    buttonText = R.string.confirm_nononchippedid_confirmbutton,
+                )
+            assertEquals(ConfirmNoNonChippedIDAction.NavigateToConfirmAbortDesktop, awaitItem())
         }
+    }
 }

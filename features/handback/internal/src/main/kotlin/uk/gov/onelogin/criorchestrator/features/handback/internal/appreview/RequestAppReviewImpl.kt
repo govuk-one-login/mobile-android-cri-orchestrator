@@ -12,9 +12,8 @@ class RequestAppReviewImpl(
     private val androidRequestAppReview: Provider<AndroidRequestAppReview>,
     private val debugRequestAppReview: Provider<DebugRequestAppReview>,
 ) : RequestAppReview {
-    override suspend fun invoke() =
-        when (configStore.readSingle(SdkConfigKey.DebugAppReviewPrompts).value) {
-            true -> debugRequestAppReview().invoke()
-            false -> androidRequestAppReview().invoke()
-        }
+    override suspend fun invoke() = when (configStore.readSingle(SdkConfigKey.DebugAppReviewPrompts).value) {
+        true -> debugRequestAppReview().invoke()
+        false -> androidRequestAppReview().invoke()
+    }
 }

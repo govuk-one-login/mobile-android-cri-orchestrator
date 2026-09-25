@@ -18,12 +18,11 @@ class AbortModalViewModelTest {
         )
 
     @Test
-    fun `view model returns correct value from is aborted check when session is updated`() =
-        runTest {
-            viewModel.isAborted.test {
-                assertFalse(awaitItem())
-                isSessionAbortedOrUnavailable.state.value = true
-                assertTrue(awaitItem())
-            }
+    fun `view model returns correct value from is aborted check when session is updated`() = runTest {
+        viewModel.isAborted.test {
+            assertFalse(awaitItem())
+            isSessionAbortedOrUnavailable.state.value = true
+            assertTrue(awaitItem())
         }
+    }
 }

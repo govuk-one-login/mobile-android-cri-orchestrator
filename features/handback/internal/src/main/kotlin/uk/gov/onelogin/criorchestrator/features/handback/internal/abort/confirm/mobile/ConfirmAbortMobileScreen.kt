@@ -87,10 +87,7 @@ internal fun ConfirmAbortMobileScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortMobileWebContent(
-    onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun ConfirmAbortMobileWebContent(onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = colorScheme.background,

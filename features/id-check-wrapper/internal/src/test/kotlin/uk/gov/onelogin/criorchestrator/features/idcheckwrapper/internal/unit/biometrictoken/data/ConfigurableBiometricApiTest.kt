@@ -34,32 +34,30 @@ class ConfigurableBiometricApiTest {
     }
 
     @Test
-    fun `given config to bypass backend is enabled, it uses fake implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(true),
-                ),
-            )
+    fun `given config to bypass backend is enabled, it uses fake implementation`() = runTest {
+        configStore.write(
+            Config.Entry(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(true),
+            ),
+        )
 
-            api.getBiometricToken(sessionId, documentVariety)
+        api.getBiometricToken(sessionId, documentVariety)
 
-            verify(fakeBiometricApi).getBiometricToken(sessionId, documentVariety)
-        }
+        verify(fakeBiometricApi).getBiometricToken(sessionId, documentVariety)
+    }
 
     @Test
-    fun `given config to bypass backend is disabled, it uses real implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(false),
-                ),
-            )
+    fun `given config to bypass backend is disabled, it uses real implementation`() = runTest {
+        configStore.write(
+            Config.Entry(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(false),
+            ),
+        )
 
-            api.getBiometricToken(sessionId, documentVariety)
+        api.getBiometricToken(sessionId, documentVariety)
 
-            verify(realBiometricApi).getBiometricToken(sessionId, documentVariety)
-        }
+        verify(realBiometricApi).getBiometricToken(sessionId, documentVariety)
+    }
 }

@@ -60,6 +60,7 @@ class SelectDrivingLicenceViewModel(
         viewModelScope.launch {
             when (selectedIndex) {
                 0 -> _actions.emit(SelectDrivingLicenceAction.NavigateToConfirmation)
+
                 1 ->
                     _actions.emit(
                         if (nfcChecker.hasNfc()) {

@@ -21,10 +21,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
  */
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesIntoSet(CriOrchestratorAppScope::class, binding = binding<CriOrchestratorService>())
-class ResetSessionService(
-    private val sessionStore: SessionStore,
-    private val configStore: ConfigStore,
-) : CriOrchestratorService {
+class ResetSessionService(private val sessionStore: SessionStore, private val configStore: ConfigStore) :
+    CriOrchestratorService {
     override suspend fun start() {
         configStore
             .readAll()

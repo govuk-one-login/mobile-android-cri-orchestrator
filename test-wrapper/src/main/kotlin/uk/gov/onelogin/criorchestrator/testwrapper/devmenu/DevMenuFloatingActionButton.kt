@@ -11,10 +11,7 @@ import androidx.compose.ui.res.painterResource
 import uk.gov.onelogin.criorchestrator.testwrapper.R
 
 @Composable
-internal fun DevMenuFloatingActionButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun DevMenuFloatingActionButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     ExtendedFloatingActionButton(
         modifier = modifier,
         onClick = onClick,

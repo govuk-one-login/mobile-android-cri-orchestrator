@@ -36,10 +36,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.components.Fu
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.previewEarliestAcceptableDrivingLicenceExpiryDateText
 
 @Composable
-internal fun TypesOfPhotoIDScreen(
-    viewModel: TypesOfPhotoIDViewModel,
-    modifier: Modifier = Modifier,
-) {
+internal fun TypesOfPhotoIDScreen(viewModel: TypesOfPhotoIDViewModel, modifier: Modifier = Modifier) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -163,10 +160,7 @@ private fun LazyListScope.nonUkPassportItems(horizontalPadding: Dp) {
     }
 }
 
-private fun LazyListScope.ukBiometricPermitOrCardItems(
-    horizontalPadding: Dp,
-    enableExpiredBRP: Boolean,
-) {
+private fun LazyListScope.ukBiometricPermitOrCardItems(horizontalPadding: Dp, enableExpiredBRP: Boolean) {
     item {
         Heading(
             stringResource(R.string.typesofphotoid_brp_title),
@@ -208,10 +202,7 @@ private fun LazyListScope.ukBiometricPermitOrCardItems(
 }
 
 @Suppress("LongMethod")
-private fun LazyListScope.ukPhotoCardDrivingLicenceItems(
-    horizontalPadding: Dp,
-    earliestExpiryDateText: String,
-) {
+private fun LazyListScope.ukPhotoCardDrivingLicenceItems(horizontalPadding: Dp, earliestExpiryDateText: String) {
     item {
         Heading(
             stringResource(R.string.typesofphotoid_drivinglicence_title),
@@ -262,21 +253,17 @@ private fun LazyListScope.ukPhotoCardDrivingLicenceItems(
 }
 
 @Composable
-private fun Heading(
-    text: String,
-    modifier: Modifier = Modifier,
-) = GdsHeading(
+private fun Heading(text: String, modifier: Modifier = Modifier) = GdsHeading(
     text = text,
     textAlign = GdsHeadingAlignment.LeftAligned,
     style = GdsHeadingStyle.Body,
     modifier = modifier.padding(top = spacingSingle),
 )
 
-private fun listTitle(title: String) =
-    ListTitle(
-        text = title,
-        titleType = TitleType.Text,
-    )
+private fun listTitle(title: String) = ListTitle(
+    text = title,
+    titleType = TitleType.Text,
+)
 
 private const val PREVIEW_HEIGHT = 1700
 

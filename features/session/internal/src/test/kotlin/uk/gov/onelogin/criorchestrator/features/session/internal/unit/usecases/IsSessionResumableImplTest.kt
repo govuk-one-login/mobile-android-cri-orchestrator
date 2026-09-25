@@ -18,36 +18,33 @@ class IsSessionResumableImplTest {
         )
 
     @Test
-    fun `given no stored session, it returns false`() =
-        runTest {
-            isSessionResumable().test {
-                assertFalse(awaitItem())
-                expectNoEvents()
-            }
+    fun `given no stored session, it returns false`() = runTest {
+        isSessionResumable().test {
+            assertFalse(awaitItem())
+            expectNoEvents()
         }
+    }
 
     @Test
-    fun `when session is created, it emits true`() =
-        runTest {
-            isSessionResumable().test {
-                skipItems(1)
+    fun `when session is created, it emits true`() = runTest {
+        isSessionResumable().test {
+            skipItems(1)
 
-                sessionStore.write(Session.createTestInstance())
-                assertTrue(awaitItem())
-            }
+            sessionStore.write(Session.createTestInstance())
+            assertTrue(awaitItem())
         }
+    }
 
     @Test
-    fun `when session becomes inactive, it emits false`() =
-        runTest {
-            isSessionResumable().test {
-                skipItems(1)
+    fun `when session becomes inactive, it emits false`() = runTest {
+        isSessionResumable().test {
+            skipItems(1)
 
-                sessionStore.write(Session.createTestInstance())
-                skipItems(1)
+            sessionStore.write(Session.createTestInstance())
+            skipItems(1)
 
-                sessionStore.updateToAborted()
-                assertFalse(awaitItem())
-            }
+            sessionStore.updateToAborted()
+            assertFalse(awaitItem())
         }
+    }
 }

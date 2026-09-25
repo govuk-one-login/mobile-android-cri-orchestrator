@@ -22,8 +22,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEffect
 import org.robolectric.annotation.Config as RobolectricConfig
+import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEffect
 
 @RunWith(AndroidJUnit4::class)
 @RobolectricConfig(application = Application::class)
@@ -189,10 +189,7 @@ class OneTimeLaunchedEffectTest {
 }
 
 @Composable
-private fun NavButton(
-    onClick: () -> Unit,
-    text: String,
-) = Button(
+private fun NavButton(onClick: () -> Unit, text: String) = Button(
     onClick = { onClick() },
 ) {
     Text(text)

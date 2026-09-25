@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertContains
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +23,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.utils.hasTextS
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.REDIRECT_URI
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
-import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
 class FaceScanLimitReachedMobileScreenAnalyticsTest {

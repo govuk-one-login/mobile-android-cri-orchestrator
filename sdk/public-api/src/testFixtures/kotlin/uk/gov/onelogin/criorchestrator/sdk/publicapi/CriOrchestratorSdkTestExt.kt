@@ -21,12 +21,11 @@ fun CriOrchestratorSdk.Companion.createTestInstance(
     logger: Logger = mock(),
     applicationContext: Context = mock(),
     testDispatcher: CoroutineDispatcher? = UnconfinedTestDispatcher(),
-): CriOrchestratorSdk =
-    CriOrchestratorSingletonImpl(
-        authenticatedHttpClient = authenticatedHttpClient,
-        analyticsLogger = analyticsLogger,
-        userConfig = initialConfig,
-        logger = logger,
-        applicationContext = applicationContext,
-        testDispatcher = testDispatcher,
-    )
+): CriOrchestratorSdk = CriOrchestratorSingletonImpl(
+    authenticatedHttpClient = authenticatedHttpClient,
+    analyticsLogger = analyticsLogger,
+    userConfig = initialConfig,
+    logger = logger,
+    applicationContext = applicationContext,
+    testDispatcher = testDispatcher,
+)

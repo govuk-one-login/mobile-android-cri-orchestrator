@@ -90,15 +90,14 @@ class ConfirmAbortDesktopViewModelTest {
         }
 
     @Test
-    fun `given continue is clicked, when user is offline, then emit navigation action to offline error`() =
-        runTest {
-            abortSession.result = AbortSession.Result.Error.Offline
-            viewModel.actions.test {
-                viewModel.onContinueClicked()
-                assertEquals(
-                    ConfirmAbortDesktopActions.NavigateToOfflineError,
-                    awaitItem(),
-                )
-            }
+    fun `given continue is clicked, when user is offline, then emit navigation action to offline error`() = runTest {
+        abortSession.result = AbortSession.Result.Error.Offline
+        viewModel.actions.test {
+            viewModel.onContinueClicked()
+            assertEquals(
+                ConfirmAbortDesktopActions.NavigateToOfflineError,
+                awaitItem(),
+            )
         }
+    }
 }

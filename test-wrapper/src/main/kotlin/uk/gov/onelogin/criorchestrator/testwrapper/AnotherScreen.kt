@@ -9,13 +9,12 @@ import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-fun AnotherScreen(modifier: Modifier = Modifier) =
-    CentreAlignedScreen(
-        modifier = modifier,
-        title = { horizontalPadding ->
-            GdsHeading(
-                text = "Another screen",
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-            )
-        },
-    )
+fun AnotherScreen(modifier: Modifier = Modifier) = CentreAlignedScreen(
+    modifier = modifier,
+    title = { horizontalPadding ->
+        GdsHeading(
+            text = "Another screen",
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+    },
+)

@@ -25,33 +25,31 @@ class RequestAppReviewImplTest {
         )
 
     @Test
-    fun `given config is debug, request app review uses debug implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry<Config.Value.BooleanValue>(
-                    SdkConfigKey.DebugAppReviewPrompts,
-                    Config.Value.BooleanValue(true),
-                ),
-            )
-            requestAppReview.invoke()
+    fun `given config is debug, request app review uses debug implementation`() = runTest {
+        configStore.write(
+            Config.Entry<Config.Value.BooleanValue>(
+                SdkConfigKey.DebugAppReviewPrompts,
+                Config.Value.BooleanValue(true),
+            ),
+        )
+        requestAppReview.invoke()
 
-            verify(debugRequestAppReview).invoke()
-            verifyNoInteractions(androidRequestAppReview)
-        }
+        verify(debugRequestAppReview).invoke()
+        verifyNoInteractions(androidRequestAppReview)
+    }
 
     @Test
-    fun `given config is not debug, request app review uses real implementation`() =
-        runTest {
-            configStore.write(
-                Config.Entry<Config.Value.BooleanValue>(
-                    SdkConfigKey.DebugAppReviewPrompts,
-                    Config.Value.BooleanValue(false),
-                ),
-            )
+    fun `given config is not debug, request app review uses real implementation`() = runTest {
+        configStore.write(
+            Config.Entry<Config.Value.BooleanValue>(
+                SdkConfigKey.DebugAppReviewPrompts,
+                Config.Value.BooleanValue(false),
+            ),
+        )
 
-            requestAppReview.invoke()
+        requestAppReview.invoke()
 
-            verify(androidRequestAppReview).invoke()
-            verifyNoInteractions(debugRequestAppReview)
-        }
+        verify(androidRequestAppReview).invoke()
+        verifyNoInteractions(debugRequestAppReview)
+    }
 }

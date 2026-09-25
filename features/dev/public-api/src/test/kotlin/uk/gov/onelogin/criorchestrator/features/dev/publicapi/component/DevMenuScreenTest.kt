@@ -35,12 +35,10 @@ class DevMenuScreenTest {
     }
 }
 
-class TestGraph(
-    private val content: String,
-) : DevMenuEntryPointsProviders,
+class TestGraph(private val content: String) :
+    DevMenuEntryPointsProviders,
     CriOrchestratorGraph {
-    override fun devMenuEntryPoints(): DevMenuEntryPoints =
-        DevMenuEntryPoints {
-            Text(content)
-        }
+    override fun devMenuEntryPoints(): DevMenuEntryPoints = DevMenuEntryPoints {
+        Text(content)
+    }
 }

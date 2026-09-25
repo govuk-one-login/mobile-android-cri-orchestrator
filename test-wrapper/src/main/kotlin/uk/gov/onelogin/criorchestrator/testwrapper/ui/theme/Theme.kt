@@ -25,6 +25,7 @@ fun TestWrapperTheme(
             }
 
             darkTheme -> darkColorScheme()
+
             else -> lightColorScheme()
         }
 

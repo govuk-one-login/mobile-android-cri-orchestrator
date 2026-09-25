@@ -9,10 +9,7 @@ import uk.gov.idcheck.ui.presentation.dialogs.confirmanotherway.ConfirmationAbor
 /**
  * The set of ID Check SDK results that can be forced for testing.
  */
-enum class ExitStateOption(
-    val exitState: IdCheckSdkExitState?,
-    val displayName: String,
-) {
+enum class ExitStateOption(val exitState: IdCheckSdkExitState?, val displayName: String) {
     None(displayName = "None"),
     HappyPath(IdCheckSdkExitState.HappyPath),
     ConfirmAnotherWay(

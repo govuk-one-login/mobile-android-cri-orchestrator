@@ -1,5 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.contract.biometrictoken
 
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,8 +19,6 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internal.biometri
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.DocumentVariety
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.Imposter
 import uk.gov.onelogin.criorchestrator.libraries.testing.networking.createTestHttpClient
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 private const val SESSION_ID = "session_id"
 

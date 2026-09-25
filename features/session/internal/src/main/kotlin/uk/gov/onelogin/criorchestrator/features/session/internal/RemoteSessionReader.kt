@@ -47,6 +47,7 @@ class RemoteSessionReader(
                     }
                 }
             }
+
             is ApiResponse.Success -> {
                 val session = parseSession(response)
                 when (session) {
@@ -57,18 +58,17 @@ class RemoteSessionReader(
         }
     }
 
-    private fun parseSession(response: ApiResponse.Success<String>): Session? =
-        try {
-            val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
-                json.decodeFromString(response.body)
-            Session(
-                sessionId = parsedResponse.sessionId,
-                redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
-            )
-        } catch (e: IllegalArgumentException) {
-            logger.error(tag, "Failed to parse active session response", e)
-            null
-        }
+    private fun parseSession(response: ApiResponse.Success<String>): Session? = try {
+        val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
+            json.decodeFromString(response.body)
+        Session(
+            sessionId = parsedResponse.sessionId,
+            redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
+        )
+    } catch (e: IllegalArgumentException) {
+        logger.error(tag, "Failed to parse active session response", e)
+        null
+    }
 
     private fun logResponse(response: NetworkServiceResponse) {
         when (response) {
@@ -90,17 +90,13 @@ class RemoteSessionReader(
     }
 
     // IPV needs the redirect URI to have the encoded state as a query parameter
-    private fun generateRedirectUri(
-        redirectUri: String?,
-        state: String,
-    ): String? =
-        if (redirectUri.isNullOrBlank()) {
-            null
-        } else {
-            uriBuilder.buildUri(
-                baseUri = redirectUri,
-                queryKey = "state",
-                queryValue = state,
-            )
-        }
+    private fun generateRedirectUri(redirectUri: String?, state: String): String? = if (redirectUri.isNullOrBlank()) {
+        null
+    } else {
+        uriBuilder.buildUri(
+            baseUri = redirectUri,
+            queryKey = "state",
+            queryValue = state,
+        )
+    }
 }

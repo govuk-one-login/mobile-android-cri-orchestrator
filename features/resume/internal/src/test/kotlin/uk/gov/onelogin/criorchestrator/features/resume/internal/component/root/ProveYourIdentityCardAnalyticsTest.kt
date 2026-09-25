@@ -16,6 +16,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import kotlin.reflect.KClass
+import kotlin.test.assertContains
 import kotlinx.collections.immutable.persistentSetOf
 import org.junit.Rule
 import org.junit.Test
@@ -34,8 +36,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueT
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
-import kotlin.reflect.KClass
-import kotlin.test.assertContains
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityCardAnalyticsTest {

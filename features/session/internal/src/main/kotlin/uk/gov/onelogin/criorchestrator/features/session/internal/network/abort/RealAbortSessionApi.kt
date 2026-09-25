@@ -12,10 +12,8 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey.Id
 private const val ABORT_SESSION_ENDPOINT = "/async/abortSession"
 
 @Inject
-class RealAbortSessionApi(
-    private val networkService: NetworkService,
-    private val configStore: ConfigStore,
-) : AbortSessionApi,
+class RealAbortSessionApi(private val networkService: NetworkService, private val configStore: ConfigStore) :
+    AbortSessionApi,
     LogTagProvider {
     override suspend fun abortSession(sessionId: String): NetworkServiceResponse {
         val baseUrl = configStore.read(IdCheckAsyncBackendBaseUrl).first().value

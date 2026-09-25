@@ -10,13 +10,12 @@ data class CoroutineDispatchers(
     val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
 ) {
     companion object {
-        fun from(dispatcher: CoroutineDispatcher) =
-            CoroutineDispatchers(
-                io = dispatcher,
-                default = dispatcher,
-                main = dispatcher,
-                unconfined = dispatcher,
-            )
+        fun from(dispatcher: CoroutineDispatcher) = CoroutineDispatchers(
+            io = dispatcher,
+            default = dispatcher,
+            main = dispatcher,
+            unconfined = dispatcher,
+        )
 
         fun defaultUnlessTest(
             testDispatcher: CoroutineDispatcher?,

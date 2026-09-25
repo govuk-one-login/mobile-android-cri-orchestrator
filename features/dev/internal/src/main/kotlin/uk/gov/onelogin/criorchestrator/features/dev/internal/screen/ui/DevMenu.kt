@@ -53,10 +53,9 @@ internal fun DevMenu(
 
 @Composable
 @PreviewLightDark
-internal fun DevMenuPreview() =
-    GdsTheme {
-        DevMenu(
-            entries = previewConfig.entries,
-            onEntryChange = {},
-        )
-    }
+internal fun DevMenuPreview() = GdsTheme {
+    DevMenu(
+        entries = previewConfig.entries,
+        onEntryChange = {},
+    )
+}

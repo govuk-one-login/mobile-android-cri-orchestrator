@@ -17,6 +17,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import kotlin.reflect.KClass
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -33,7 +34,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.root.createTestI
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityNavGraphProvider
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LocalDropUnlessResumedDisabled
-import kotlin.reflect.KClass
 
 @RunWith(AndroidJUnit4::class)
 class ProveYourIdentityRootTest {
@@ -53,24 +53,22 @@ class ProveYourIdentityRootTest {
     private val continueButton = hasText(context.getString(R.string.start_id_check_primary_button))
 
     @Test
-    fun `it displays the card`() =
-        runTest {
-            composeTestRule.displayProveYourIdentityRoot()
+    fun `it displays the card`() = runTest {
+        composeTestRule.displayProveYourIdentityRoot()
 
-            composeTestRule
-                .onNode(card)
-                .assertIsDisplayed()
-        }
+        composeTestRule
+            .onNode(card)
+            .assertIsDisplayed()
+    }
 
     @Test
-    fun `it launches the modal`() =
-        runTest {
-            composeTestRule.displayProveYourIdentityRoot()
+    fun `it launches the modal`() = runTest {
+        composeTestRule.displayProveYourIdentityRoot()
 
-            composeTestRule
-                .onNode(modal)
-                .assertIsDisplayed()
-        }
+        composeTestRule
+            .onNode(modal)
+            .assertIsDisplayed()
+    }
 
     @Test
     fun `when modal is dismissed, it hides the modal`() {

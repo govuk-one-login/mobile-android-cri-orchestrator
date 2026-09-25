@@ -29,35 +29,32 @@ class AbortSessionApiImplTest {
     }
 
     @Test
-    fun `given bypass backend config is enabled, it uses the fake api`() =
-        runTest {
-            givenBypassBackendConfig(true)
+    fun `given bypass backend config is enabled, it uses the fake api`() = runTest {
+        givenBypassBackendConfig(true)
 
-            api.abortSession(SESSION_ID)
+        api.abortSession(SESSION_ID)
 
-            verify(fakeApi).abortSession(SESSION_ID)
-            verifyNoInteractions(realApi)
-        }
+        verify(fakeApi).abortSession(SESSION_ID)
+        verifyNoInteractions(realApi)
+    }
 
     @Test
-    fun `given bypass backend config is disabled, it uses the real api`() =
-        runTest {
-            givenBypassBackendConfig(false)
+    fun `given bypass backend config is disabled, it uses the real api`() = runTest {
+        givenBypassBackendConfig(false)
 
-            api.abortSession(SESSION_ID)
+        api.abortSession(SESSION_ID)
 
-            verify(realApi).abortSession(SESSION_ID)
-            verifyNoInteractions(fakeApi)
-        }
+        verify(realApi).abortSession(SESSION_ID)
+        verifyNoInteractions(fakeApi)
+    }
 
-    private fun givenBypassBackendConfig(value: Boolean) =
-        configStore.write(
-            Config.Entry(
-                key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                value =
-                    Config.Value.BooleanValue(
-                        value = value,
-                    ),
-            ),
-        )
+    private fun givenBypassBackendConfig(value: Boolean) = configStore.write(
+        Config.Entry(
+            key = SdkConfigKey.BypassIdCheckAsyncBackend,
+            value =
+                Config.Value.BooleanValue(
+                    value = value,
+                ),
+        ),
+    )
 }

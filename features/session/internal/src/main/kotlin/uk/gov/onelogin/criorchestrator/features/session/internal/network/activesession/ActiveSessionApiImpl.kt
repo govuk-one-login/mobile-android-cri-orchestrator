@@ -12,10 +12,8 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 private const val GET_ACTIVE_SESSION_ENDPOINT = "/async/activeSession"
 
 @Inject
-class ActiveSessionApiImpl(
-    private val networkService: NetworkService,
-    private val configStore: ConfigStore,
-) : ActiveSessionApi,
+class ActiveSessionApiImpl(private val networkService: NetworkService, private val configStore: ConfigStore) :
+    ActiveSessionApi,
     LogTagProvider {
     override suspend fun getActiveSession(): NetworkServiceResponse {
         val baseUrl = configStore.read(SdkConfigKey.IdCheckAsyncBackendBaseUrl).first().value

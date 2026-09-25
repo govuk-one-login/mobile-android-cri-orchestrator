@@ -1,5 +1,8 @@
 package uk.gov.onelogin.criorchestrator.sdk.internal.config
 
+import java.util.stream.Stream
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import kotlinx.collections.immutable.toPersistentList
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -9,9 +12,6 @@ import uk.gov.onelogin.criorchestrator.features.config.publicapi.Config
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.IdCheckWrapperConfigKey
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.NfcConfigKey
-import java.util.stream.Stream
-import kotlin.test.assertContains
-import kotlin.test.assertEquals
 
 class DefaultConfigTest {
     companion object {
@@ -44,25 +44,24 @@ class DefaultConfigTest {
             )
 
         @JvmStatic
-        fun missingEntry(): Stream<Arguments> =
-            Stream.of(
-                Arguments.of(
-                    idCheckAsyncBackendBaseUrlEntry,
-                    IllegalArgumentException("IdCheckAsyncBackendBaseUrl config must be provided"),
-                ),
-                Arguments.of(
-                    bypassIdCheckAsyncBackendEntry,
-                    null,
-                ),
-                Arguments.of(
-                    nfcAvailabilityEntry,
-                    null,
-                ),
-                Arguments.of(
-                    experimentalComposeNavigationEntry,
-                    null,
-                ),
-            )
+        fun missingEntry(): Stream<Arguments> = Stream.of(
+            Arguments.of(
+                idCheckAsyncBackendBaseUrlEntry,
+                IllegalArgumentException("IdCheckAsyncBackendBaseUrl config must be provided"),
+            ),
+            Arguments.of(
+                bypassIdCheckAsyncBackendEntry,
+                null,
+            ),
+            Arguments.of(
+                nfcAvailabilityEntry,
+                null,
+            ),
+            Arguments.of(
+                experimentalComposeNavigationEntry,
+                null,
+            ),
+        )
     }
 
     @ParameterizedTest

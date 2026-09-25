@@ -45,38 +45,36 @@ class ContinueToProveYourIdentityScreenTest {
     }
 
     @Test
-    fun `given nfc is available, when click continue, navigate to passport journey`() =
-        runTest {
-            given(nfcChecker.hasNfc()).willReturn(true)
-            composeTestRule.setContent {
-                ContinueToProveYourIdentityScreen(
-                    viewModel = viewModel,
-                    navController = navController,
-                )
-            }
-
-            composeTestRule
-                .onNode(primaryButton)
-                .performClick()
-
-            verify(navController).navigate(SelectDocDestinations.Passport)
+    fun `given nfc is available, when click continue, navigate to passport journey`() = runTest {
+        given(nfcChecker.hasNfc()).willReturn(true)
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
         }
+
+        composeTestRule
+            .onNode(primaryButton)
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.Passport)
+    }
 
     @Test
-    fun `given nfc is not available, when click continue, navigate to driving licence journey`() =
-        runTest {
-            given(nfcChecker.hasNfc()).willReturn(false)
-            composeTestRule.setContent {
-                ContinueToProveYourIdentityScreen(
-                    viewModel = viewModel,
-                    navController = navController,
-                )
-            }
-
-            composeTestRule
-                .onNode(primaryButton)
-                .performClick()
-
-            verify(navController).navigate(SelectDocDestinations.DrivingLicence)
+    fun `given nfc is not available, when click continue, navigate to driving licence journey`() = runTest {
+        given(nfcChecker.hasNfc()).willReturn(false)
+        composeTestRule.setContent {
+            ContinueToProveYourIdentityScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
         }
+
+        composeTestRule
+            .onNode(primaryButton)
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.DrivingLicence)
+    }
 }

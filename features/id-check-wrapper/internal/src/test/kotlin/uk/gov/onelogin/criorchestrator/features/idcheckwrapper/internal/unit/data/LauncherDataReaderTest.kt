@@ -105,143 +105,136 @@ class LauncherDataReaderTest {
     )
 
     @Test
-    fun `read gets the launcher data`() =
-        runTest {
-            val launcherDataReader = createLauncherDataReader()
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = documentVariety,
-                )
-            assertEquals(
-                expectedLauncherDataResult,
-                launcherDataResult,
+    fun `read gets the launcher data`() = runTest {
+        val launcherDataReader = createLauncherDataReader()
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = documentVariety,
             )
-        }
+        assertEquals(
+            expectedLauncherDataResult,
+            launcherDataResult,
+        )
+    }
 
     @Test
-    fun `given different document variety, read gets the launcher data`() =
-        runTest {
-            val launcherDataReader = createLauncherDataReader()
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = DocumentVariety.BRP,
-                )
-
-            assertEquals(
-                expectedLauncherDataResult.copy(
-                    launcherData =
-                        expectedLauncherDataResult.launcherData.copy(
-                            documentType = DocumentType.BRP,
-                        ),
-                ),
-                launcherDataResult,
+    fun `given different document variety, read gets the launcher data`() = runTest {
+        val launcherDataReader = createLauncherDataReader()
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = DocumentVariety.BRP,
             )
-        }
 
-    @Test
-    fun `given bio token 401 failure, read gets the launcher data`() =
-        runTest {
-            val launcherDataReader =
-                createLauncherDataReader(
-                    biometricTokenResult = BiometricTokenResult.Error(Exception(), STATUS_UNAUTHORIZED),
-                )
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = DocumentVariety.BRP,
-                )
-            assertEquals(
-                LauncherDataReaderResult.NoValidSessionError,
-                launcherDataResult,
-            )
-        }
-
-    @Test
-    fun `given different bypass ID Check backend is enabled, read gets the correct launcher data`() =
-        runTest {
-            initialConfig =
-                initialConfig.combinedWith(
-                    Config(
-                        entries =
-                            persistentListOf(
-                                Config.Entry<Config.Value.BooleanValue>(
-                                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                                    value =
-                                        Config.Value.BooleanValue(true),
-                                ),
-                            ),
+        assertEquals(
+            expectedLauncherDataResult.copy(
+                launcherData =
+                    expectedLauncherDataResult.launcherData.copy(
+                        documentType = DocumentType.BRP,
                     ),
-                )
-            val launcherDataReader = createLauncherDataReader()
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = documentVariety,
-                )
+            ),
+            launcherDataResult,
+        )
+    }
 
-            assertEquals(
-                expectedLauncherDataResult.copy(
-                    launcherData =
-                        expectedLauncherDataResult.launcherData.copy(
-                            backendMode = BackendMode.Bypass,
+    @Test
+    fun `given bio token 401 failure, read gets the launcher data`() = runTest {
+        val launcherDataReader =
+            createLauncherDataReader(
+                biometricTokenResult = BiometricTokenResult.Error(Exception(), STATUS_UNAUTHORIZED),
+            )
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = DocumentVariety.BRP,
+            )
+        assertEquals(
+            LauncherDataReaderResult.NoValidSessionError,
+            launcherDataResult,
+        )
+    }
+
+    @Test
+    fun `given different bypass ID Check backend is enabled, read gets the correct launcher data`() = runTest {
+        initialConfig =
+            initialConfig.combinedWith(
+                Config(
+                    entries =
+                        persistentListOf(
+                            Config.Entry<Config.Value.BooleanValue>(
+                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                                value =
+                                    Config.Value.BooleanValue(true),
+                            ),
                         ),
                 ),
-                launcherDataResult,
             )
-        }
+        val launcherDataReader = createLauncherDataReader()
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = documentVariety,
+            )
+
+        assertEquals(
+            expectedLauncherDataResult.copy(
+                launcherData =
+                    expectedLauncherDataResult.launcherData.copy(
+                        backendMode = BackendMode.Bypass,
+                    ),
+            ),
+            launcherDataResult,
+        )
+    }
 
     @Test
-    fun `given mobile-app-mobile journey, read gets the launcher data`() =
-        runTest {
-            val launcherDataReader =
-                createLauncherDataReader(
-                    sessionStore =
-                        FakeSessionStore(
-                            Session.createMobileAppMobileInstance(),
-                        ),
-                )
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = documentVariety,
-                )
+    fun `given mobile-app-mobile journey, read gets the launcher data`() = runTest {
+        val launcherDataReader =
+            createLauncherDataReader(
+                sessionStore =
+                    FakeSessionStore(
+                        Session.createMobileAppMobileInstance(),
+                    ),
+            )
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = documentVariety,
+            )
 
-            val journeyType =
-                (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
-            assertEquals(JourneyType.MOBILE_APP_MOBILE, journeyType)
-        }
+        val journeyType =
+            (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
+        assertEquals(JourneyType.MOBILE_APP_MOBILE, journeyType)
+    }
 
     @Test
-    fun `given desktop-app-desktop journey, read gets the launcher data`() =
-        runTest {
-            val launcherDataReader =
-                createLauncherDataReader(
-                    sessionStore =
-                        FakeSessionStore(
-                            Session.createDesktopAppDesktopInstance(),
-                        ),
-                )
-            val launcherDataResult =
-                launcherDataReader.read(
-                    documentVariety = documentVariety,
-                )
+    fun `given desktop-app-desktop journey, read gets the launcher data`() = runTest {
+        val launcherDataReader =
+            createLauncherDataReader(
+                sessionStore =
+                    FakeSessionStore(
+                        Session.createDesktopAppDesktopInstance(),
+                    ),
+            )
+        val launcherDataResult =
+            launcherDataReader.read(
+                documentVariety = documentVariety,
+            )
 
-            val journeyType =
-                (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
-            assertEquals(JourneyType.DESKTOP_APP_DESKTOP, journeyType)
-        }
+        val journeyType =
+            (launcherDataResult as LauncherDataReaderResult.Success).launcherData.journeyType
+        assertEquals(JourneyType.DESKTOP_APP_DESKTOP, journeyType)
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `if session is null, it throws`() =
-        runTest {
-            val sessionStore = FakeSessionStore(null)
-            val launcherDataReader =
-                createLauncherDataReader(
-                    sessionStore = sessionStore,
-                )
+    fun `if session is null, it throws`() = runTest {
+        val sessionStore = FakeSessionStore(null)
+        val launcherDataReader =
+            createLauncherDataReader(
+                sessionStore = sessionStore,
+            )
 
-            assertThrows<IllegalStateException> {
-                launcherDataReader.read(documentVariety)
-            }
+        assertThrows<IllegalStateException> {
+            launcherDataReader.read(documentVariety)
         }
+    }
 
     @ParameterizedTest(name = "{0}")
     @ValueSource(booleans = [true, false])

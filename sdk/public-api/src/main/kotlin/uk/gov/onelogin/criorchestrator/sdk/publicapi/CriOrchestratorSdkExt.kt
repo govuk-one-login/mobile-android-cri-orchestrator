@@ -23,12 +23,11 @@ object CriOrchestratorSdkExt {
         initialConfig: Config,
         logger: Logger,
         applicationContext: Context,
-    ): CriOrchestratorSdk =
-        CriOrchestratorSingletonImpl(
-            authenticatedHttpClient = authenticatedHttpClient,
-            analyticsLogger = analyticsLogger,
-            userConfig = initialConfig,
-            logger = logger,
-            applicationContext = applicationContext,
-        )
+    ): CriOrchestratorSdk = CriOrchestratorSingletonImpl(
+        authenticatedHttpClient = authenticatedHttpClient,
+        analyticsLogger = analyticsLogger,
+        userConfig = initialConfig,
+        logger = logger,
+        applicationContext = applicationContext,
+    )
 }

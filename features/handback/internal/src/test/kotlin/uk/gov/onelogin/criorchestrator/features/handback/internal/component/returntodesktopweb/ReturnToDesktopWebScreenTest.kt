@@ -55,12 +55,11 @@ class ReturnToDesktopWebScreenTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when I view the return to desktop screen, I am asked to review the app`() =
-        runTest {
-            advanceUntilIdle()
+    fun `when I view the return to desktop screen, I am asked to review the app`() = runTest {
+        advanceUntilIdle()
 
-            assertTrue(requestAppReview.hasRequestedReview)
-        }
+        assertTrue(requestAppReview.hasRequestedReview)
+    }
 
     @Test
     fun `when talkback is enabled, it reads out Gov dot UK correctly`() {

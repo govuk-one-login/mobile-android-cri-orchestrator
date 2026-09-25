@@ -68,10 +68,7 @@ internal fun UnrecoverableErrorScreen(
 @Suppress("LongMethod")
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun UnrecoverableErrorScreenContent(
-    onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun UnrecoverableErrorScreenContent(onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,

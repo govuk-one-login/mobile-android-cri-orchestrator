@@ -2,6 +2,7 @@
 package uk.gov.onelogin.criorchestrator.features.resume.internal.unit.screen
 
 import app.cash.turbine.test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -23,7 +24,6 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueT
 import uk.gov.onelogin.criorchestrator.features.resume.internal.screen.ContinueToProveYourIdentityViewModel.ContinueToProveYourIdentityAction
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
-import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)
 class ContinueToProveYourIdentityViewModelTest {
@@ -75,26 +75,24 @@ class ContinueToProveYourIdentityViewModelTest {
     }
 
     @Test
-    fun `given nfc available, when continue clicked, navigate to passport`() =
-        runTest {
-            whenever(nfcChecker.hasNfc()).thenReturn(true)
+    fun `given nfc available, when continue clicked, navigate to passport`() = runTest {
+        whenever(nfcChecker.hasNfc()).thenReturn(true)
 
-            viewModel.actions.test {
-                viewModel.onContinueClick()
+        viewModel.actions.test {
+            viewModel.onContinueClick()
 
-                assertEquals(ContinueToProveYourIdentityAction.NavigateToPassport, awaitItem())
-            }
+            assertEquals(ContinueToProveYourIdentityAction.NavigateToPassport, awaitItem())
         }
+    }
 
     @Test
-    fun `given nfc not available, when continue clicked, navigate to driving license`() =
-        runTest {
-            whenever(nfcChecker.hasNfc()).thenReturn(false)
+    fun `given nfc not available, when continue clicked, navigate to driving license`() = runTest {
+        whenever(nfcChecker.hasNfc()).thenReturn(false)
 
-            viewModel.actions.test {
-                viewModel.onContinueClick()
+        viewModel.actions.test {
+            viewModel.onContinueClick()
 
-                assertEquals(ContinueToProveYourIdentityAction.NavigateToDrivingLicense, awaitItem())
-            }
+            assertEquals(ContinueToProveYourIdentityAction.NavigateToDrivingLicense, awaitItem())
         }
+    }
 }

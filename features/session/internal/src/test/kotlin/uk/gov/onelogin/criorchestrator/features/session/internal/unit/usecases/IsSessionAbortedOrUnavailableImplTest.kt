@@ -10,22 +10,20 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeS
 
 class IsSessionAbortedOrUnavailableImplTest {
     @Test
-    fun `when active session is null, IsSessionAbortedOrUnavailableImpl returns true`() =
-        runTest {
-            val sessionStore = FakeSessionStore(null)
-            val isSessionAbortedOrUnavailable = IsSessionAbortedOrUnavailableImpl(sessionStore)
-            isSessionAbortedOrUnavailable().test {
-                assertTrue(awaitItem())
-            }
+    fun `when active session is null, IsSessionAbortedOrUnavailableImpl returns true`() = runTest {
+        val sessionStore = FakeSessionStore(null)
+        val isSessionAbortedOrUnavailable = IsSessionAbortedOrUnavailableImpl(sessionStore)
+        isSessionAbortedOrUnavailable().test {
+            assertTrue(awaitItem())
         }
+    }
 
     @Test
-    fun `when active session is not null, IsSessionAbortedOrUnavailableImpl returns false`() =
-        runTest {
-            val sessionStore = FakeSessionStore()
-            val isSessionAbortedOrUnavailable = IsSessionAbortedOrUnavailableImpl(sessionStore)
-            isSessionAbortedOrUnavailable().test {
-                assertFalse(awaitItem())
-            }
+    fun `when active session is not null, IsSessionAbortedOrUnavailableImpl returns false`() = runTest {
+        val sessionStore = FakeSessionStore()
+        val isSessionAbortedOrUnavailable = IsSessionAbortedOrUnavailableImpl(sessionStore)
+        isSessionAbortedOrUnavailable().test {
+            assertFalse(awaitItem())
         }
+    }
 }

@@ -145,6 +145,7 @@ private fun SyncIdCheckActionHandler(
                 SyncIdCheckAction.NavigateToUnrecoverableError -> {
                     navController.navigate(HandbackDestinations.UnrecoverableError)
                 }
+
                 is SyncIdCheckAction.NavigateToLimitReachedReturnToMobileWeb -> {
                     navController.navigate(
                         HandbackDestinations.FaceScanLimitReachedMobile(
@@ -152,9 +153,11 @@ private fun SyncIdCheckActionHandler(
                         ),
                     )
                 }
+
                 SyncIdCheckAction.NavigateToLimitReachedReturnToDesktopWeb -> {
                     navController.navigate(HandbackDestinations.FaceScanLimitReachedDesktop)
                 }
+
                 SyncIdCheckAction.NavigateToNoValidSessionError -> {
                     navController.navigate(HandbackDestinations.NoValidSessionError)
                 }

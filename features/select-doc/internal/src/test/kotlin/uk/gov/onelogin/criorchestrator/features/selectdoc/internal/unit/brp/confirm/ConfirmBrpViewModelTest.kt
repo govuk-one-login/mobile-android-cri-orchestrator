@@ -38,24 +38,22 @@ class ConfirmBrpViewModelTest {
     }
 
     @Test
-    fun `when confirm is pressed, send analytics`() =
-        runTest {
-            viewModel.action.test {
-                viewModel.onConfirmClick()
-                verify(analyticsLogger)
-                    .trackButtonEvent(
-                        buttonText = R.string.confirmdocument_confirmbutton,
-                    )
-                cancelAndIgnoreRemainingEvents()
-            }
+    fun `when confirm is pressed, send analytics`() = runTest {
+        viewModel.action.test {
+            viewModel.onConfirmClick()
+            verify(analyticsLogger)
+                .trackButtonEvent(
+                    buttonText = R.string.confirmdocument_confirmbutton,
+                )
+            cancelAndIgnoreRemainingEvents()
         }
+    }
 
     @Test
-    fun `when confirm is pressed, navigate to SyncIdCheck screen`() =
-        runTest {
-            viewModel.action.test {
-                viewModel.onConfirmClick()
-                assertEquals(ConfirmBrpAction.NavigateToSyncIdCheck, awaitItem())
-            }
+    fun `when confirm is pressed, navigate to SyncIdCheck screen`() = runTest {
+        viewModel.action.test {
+            viewModel.onConfirmClick()
+            assertEquals(ConfirmBrpAction.NavigateToSyncIdCheck, awaitItem())
         }
+    }
 }

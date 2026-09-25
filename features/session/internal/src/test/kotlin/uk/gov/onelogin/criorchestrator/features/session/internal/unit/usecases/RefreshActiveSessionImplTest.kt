@@ -26,55 +26,52 @@ class RefreshActiveSessionImplTest {
         )
 
     @Test
-    fun `given active session, when called, it stores the session`() =
-        runTest {
-            sessionReader.result = SessionReader.Result.IsActive(session)
+    fun `given active session, when called, it stores the session`() = runTest {
+        sessionReader.result = SessionReader.Result.IsActive(session)
 
-            refreshActiveSession()
+        refreshActiveSession()
 
-            val storedSession = sessionStore.read().value
+        val storedSession = sessionStore.read().value
 
-            assertEquals(storedSession, session)
-        }
-
-    @Test
-    fun `given session changed, when called, it stores the session`() =
-        runTest {
-            val firstSession =
-                Session.createTestInstance(
-                    sessionId = "first-test-session",
-                )
-            val secondSession =
-                Session.createTestInstance(
-                    sessionId = "second-test-session",
-                )
-
-            sessionReader.result = SessionReader.Result.IsActive(firstSession)
-            refreshActiveSession()
-
-            sessionReader.result = SessionReader.Result.IsActive(secondSession)
-            refreshActiveSession()
-
-            val storedSession = sessionStore.read().value
-
-            assertEquals(secondSession, storedSession)
-        }
+        assertEquals(storedSession, session)
+    }
 
     @Test
-    fun `given session became inactive, when called, it updates the session`() =
-        runTest {
-            assertEquals(session.sessionState, Session.State.Created)
-            sessionReader.result = SessionReader.Result.IsActive(session)
-            refreshActiveSession()
+    fun `given session changed, when called, it stores the session`() = runTest {
+        val firstSession =
+            Session.createTestInstance(
+                sessionId = "first-test-session",
+            )
+        val secondSession =
+            Session.createTestInstance(
+                sessionId = "second-test-session",
+            )
 
-            sessionReader.result = SessionReader.Result.IsNotActive
-            refreshActiveSession()
+        sessionReader.result = SessionReader.Result.IsActive(firstSession)
+        refreshActiveSession()
 
-            val storedSession = sessionStore.read().value
+        sessionReader.result = SessionReader.Result.IsActive(secondSession)
+        refreshActiveSession()
 
-            assertEquals(storedSession?.sessionId, storedSession?.sessionId)
-            assertNotEquals(storedSession?.sessionState, Session.State.Created)
-        }
+        val storedSession = sessionStore.read().value
+
+        assertEquals(secondSession, storedSession)
+    }
+
+    @Test
+    fun `given session became inactive, when called, it updates the session`() = runTest {
+        assertEquals(session.sessionState, Session.State.Created)
+        sessionReader.result = SessionReader.Result.IsActive(session)
+        refreshActiveSession()
+
+        sessionReader.result = SessionReader.Result.IsNotActive
+        refreshActiveSession()
+
+        val storedSession = sessionStore.read().value
+
+        assertEquals(storedSession?.sessionId, storedSession?.sessionId)
+        assertNotEquals(storedSession?.sessionState, Session.State.Created)
+    }
 
     @Test
     fun `given cached active session but cannot determine new state, when called, existing session is not updated`() =

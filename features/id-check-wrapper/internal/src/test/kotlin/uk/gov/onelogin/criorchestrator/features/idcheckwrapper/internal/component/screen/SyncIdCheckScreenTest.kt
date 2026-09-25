@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -38,7 +39,6 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createDesktopAppDesktopInstance
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createMobileAppMobileInstance
-import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class SyncIdCheckScreenTest {
@@ -158,79 +158,72 @@ class SyncIdCheckScreenTest {
     }
 
     @Test
-    fun `when loading state is receive, loading progress indicator is displayed`() =
-        runTest {
-            readerDelay = 1000
+    fun `when loading state is receive, loading progress indicator is displayed`() = runTest {
+        readerDelay = 1000
 
-            val loadingState = viewModel.state.first()
-            assertEquals(SyncIdCheckState.Loading, loadingState)
+        val loadingState = viewModel.state.first()
+        assertEquals(SyncIdCheckState.Loading, loadingState)
 
-            composeTestRule.setScreenContent(viewModel)
+        composeTestRule.setScreenContent(viewModel)
 
-            composeTestRule.waitForIdle()
+        composeTestRule.waitForIdle()
 
-            composeTestRule
-                .onNode(hasText("Loading"))
-                .assertIsDisplayed()
-        }
-
-    @Test
-    fun `when data launcher returns recoverable error, navigate to recoverable error screen`() =
-        runTest {
-            biometricTokenResult = BiometricTokenResult.Offline
-
-            composeTestRule.setScreenContent(viewModel)
-
-            composeTestRule.waitForIdle()
-
-            verify(navController).navigate(ErrorDestinations.RecoverableError)
-        }
+        composeTestRule
+            .onNode(hasText("Loading"))
+            .assertIsDisplayed()
+    }
 
     @Test
-    fun `when data launcher returns unrecoverable error, navigate to unrecoverable error screen`() =
-        runTest {
-            biometricTokenResult = BiometricTokenResult.Error(Exception("Test error"))
+    fun `when data launcher returns recoverable error, navigate to recoverable error screen`() = runTest {
+        biometricTokenResult = BiometricTokenResult.Offline
 
-            composeTestRule.setScreenContent(viewModel)
+        composeTestRule.setScreenContent(viewModel)
 
-            composeTestRule.waitForIdle()
+        composeTestRule.waitForIdle()
 
-            verify(navController).navigate(HandbackDestinations.UnrecoverableError)
-        }
+        verify(navController).navigate(ErrorDestinations.RecoverableError)
+    }
 
     @Test
-    fun `when data launcher returns 401 error, navigate to no valid session error screen`() =
-        runTest {
-            biometricTokenResult =
-                BiometricTokenResult.Error(
-                    Exception("Test error"),
-                    statusCode = STATUS_UNAUTHORIZED,
-                )
+    fun `when data launcher returns unrecoverable error, navigate to unrecoverable error screen`() = runTest {
+        biometricTokenResult = BiometricTokenResult.Error(Exception("Test error"))
 
-            composeTestRule.setScreenContent(viewModel)
+        composeTestRule.setScreenContent(viewModel)
 
-            composeTestRule.waitForIdle()
+        composeTestRule.waitForIdle()
 
-            verify(navController).navigate(HandbackDestinations.NoValidSessionError)
-        }
+        verify(navController).navigate(HandbackDestinations.UnrecoverableError)
+    }
 
-    private fun ComposeContentTestRule.selectOption(text: String) =
-        onNodeWithText(text, useUnmergedTree = true)
-            .performScrollTo()
-            .performClick()
-
-    private fun ComposeContentTestRule.clickLaunchButton() =
-        onNodeWithText(launchButton)
-            .performClick()
-
-    private fun ComposeContentTestRule.setScreenContent(viewModel: SyncIdCheckViewModel) =
-        setContent {
-            SyncIdCheckScreen(
-                documentVariety = DocumentVariety.NFC_PASSPORT,
-                viewModel = viewModel,
-                navController = navController,
+    @Test
+    fun `when data launcher returns 401 error, navigate to no valid session error screen`() = runTest {
+        biometricTokenResult =
+            BiometricTokenResult.Error(
+                Exception("Test error"),
+                statusCode = STATUS_UNAUTHORIZED,
             )
-        }
+
+        composeTestRule.setScreenContent(viewModel)
+
+        composeTestRule.waitForIdle()
+
+        verify(navController).navigate(HandbackDestinations.NoValidSessionError)
+    }
+
+    private fun ComposeContentTestRule.selectOption(text: String) = onNodeWithText(text, useUnmergedTree = true)
+        .performScrollTo()
+        .performClick()
+
+    private fun ComposeContentTestRule.clickLaunchButton() = onNodeWithText(launchButton)
+        .performClick()
+
+    private fun ComposeContentTestRule.setScreenContent(viewModel: SyncIdCheckViewModel) = setContent {
+        SyncIdCheckScreen(
+            documentVariety = DocumentVariety.NFC_PASSPORT,
+            viewModel = viewModel,
+            navController = navController,
+        )
+    }
 }
 
 private const val STATUS_UNAUTHORIZED = 401

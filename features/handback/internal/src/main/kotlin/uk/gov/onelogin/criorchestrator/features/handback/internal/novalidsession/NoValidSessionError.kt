@@ -15,8 +15,8 @@ import kotlinx.collections.immutable.persistentListOf
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.images.GdsIcon
-import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 import uk.gov.android.ui.patterns.R as patternsR
+import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("LongMethod")

@@ -8,12 +8,7 @@ import java.time.ZoneOffset
 /**
  * Create a fixed clock for testing.
  */
-fun testClock(
-    year: Int = 2026,
-    month: Int = 3,
-    dayOfMonth: Int = 26,
-    zoneId: ZoneId = ZoneOffset.UTC,
-): Clock =
+fun testClock(year: Int = 2026, month: Int = 3, dayOfMonth: Int = 26, zoneId: ZoneId = ZoneOffset.UTC): Clock =
     Clock.fixed(
         LocalDate
             .of(year, month, dayOfMonth)

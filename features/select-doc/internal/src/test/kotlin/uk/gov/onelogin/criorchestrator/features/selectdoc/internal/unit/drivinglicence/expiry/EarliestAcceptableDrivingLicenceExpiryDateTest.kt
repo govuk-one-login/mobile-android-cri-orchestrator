@@ -1,10 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.unit.drivinglicence.expiry
 
+import java.time.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
-import java.time.LocalDate
 
 class EarliestAcceptableDrivingLicenceExpiryDateTest {
     private val clock =

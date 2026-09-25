@@ -13,9 +13,8 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @SingleIn(CriOrchestratorAppScope::class)
 @ContributesBinding(CriOrchestratorAppScope::class, binding = binding<IdCheckSdkActiveStateStore>())
-class InMemoryIdCheckSdkActiveStateStore(
-    private val logger: Logger,
-) : IdCheckSdkActiveStateStore,
+class InMemoryIdCheckSdkActiveStateStore(private val logger: Logger) :
+    IdCheckSdkActiveStateStore,
     LogTagProvider {
     private val idCheckSdkActiveState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 

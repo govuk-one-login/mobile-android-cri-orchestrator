@@ -8,10 +8,8 @@ import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 
 @Inject
-class AndroidRequestAppReview(
-    private val activity: Activity,
-    private val logger: Logger,
-) : RequestAppReview,
+class AndroidRequestAppReview(private val activity: Activity, private val logger: Logger) :
+    RequestAppReview,
     LogTagProvider {
     override suspend fun invoke() {
         val reviewManager = ReviewManagerFactory.create(activity)

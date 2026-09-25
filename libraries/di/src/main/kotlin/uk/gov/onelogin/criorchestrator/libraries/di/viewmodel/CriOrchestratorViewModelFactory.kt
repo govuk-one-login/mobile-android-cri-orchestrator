@@ -8,14 +8,14 @@ import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.viewmodel.ManualViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
-import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 import kotlin.reflect.KClass
+import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 class CriOrchestratorViewModelFactory(
     override val viewModelProviders: Map<KClass<out ViewModel>, Provider<ViewModel>>,
     override val assistedFactoryProviders: Map<KClass<out ViewModel>, Provider<ViewModelAssistedFactory>>,
     override val manualAssistedFactoryProviders:
-        Map<KClass<out ManualViewModelAssistedFactory>, Provider<ManualViewModelAssistedFactory>>,
+    Map<KClass<out ManualViewModelAssistedFactory>, Provider<ManualViewModelAssistedFactory>>,
 ) : MetroViewModelFactory()
 
 @BindingContainer
@@ -26,11 +26,10 @@ object ViewModelFactoryBindings {
         viewModelProviders: Map<KClass<out ViewModel>, Provider<ViewModel>>,
         assistedFactoryProviders: Map<KClass<out ViewModel>, Provider<ViewModelAssistedFactory>>,
         manualAssistedFactoryProviders:
-            Map<KClass<out ManualViewModelAssistedFactory>, Provider<ManualViewModelAssistedFactory>>,
-    ): MetroViewModelFactory =
-        CriOrchestratorViewModelFactory(
-            viewModelProviders,
-            assistedFactoryProviders,
-            manualAssistedFactoryProviders,
-        )
+        Map<KClass<out ManualViewModelAssistedFactory>, Provider<ManualViewModelAssistedFactory>>,
+    ): MetroViewModelFactory = CriOrchestratorViewModelFactory(
+        viewModelProviders,
+        assistedFactoryProviders,
+        manualAssistedFactoryProviders,
+    )
 }

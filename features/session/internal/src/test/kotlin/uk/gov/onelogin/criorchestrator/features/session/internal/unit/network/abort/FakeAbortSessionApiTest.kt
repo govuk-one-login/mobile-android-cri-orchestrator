@@ -27,57 +27,54 @@ class FakeAbortSessionApiTest {
         )
 
     @Test
-    fun `given config is success, it returns success`() =
-        testScope.runTest {
-            configStore.write(
-                entry =
-                    Config.Entry<Config.Value.StringValue>(
-                        key = SdkConfigKey.BypassAbortSessionApiCall,
-                        value =
-                            Config.Value.StringValue(
-                                SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS,
-                            ),
-                    ),
-            )
-            val result = fakeApi.abortSession("sessionId")
-            assertEquals(ApiResponse.Success(body = "", status = 200), result)
-        }
+    fun `given config is success, it returns success`() = testScope.runTest {
+        configStore.write(
+            entry =
+                Config.Entry<Config.Value.StringValue>(
+                    key = SdkConfigKey.BypassAbortSessionApiCall,
+                    value =
+                        Config.Value.StringValue(
+                            SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS,
+                        ),
+                ),
+        )
+        val result = fakeApi.abortSession("sessionId")
+        assertEquals(ApiResponse.Success(body = "", status = 200), result)
+    }
 
     @Test
-    fun `given config is offline, it returns offline`() =
-        testScope.runTest {
-            configStore.write(
-                entry =
-                    Config.Entry<Config.Value.StringValue>(
-                        key = SdkConfigKey.BypassAbortSessionApiCall,
-                        value =
-                            Config.Value.StringValue(
-                                SdkConfigKey.BypassAbortSessionApiCall.OPTION_OFFLINE,
-                            ),
-                    ),
-            )
-            val result = fakeApi.abortSession("sessionId")
-            assertTrue(result is ApiResponse.Failure)
-            assertTrue((result as ApiResponse.Failure).error is TransportException)
-        }
+    fun `given config is offline, it returns offline`() = testScope.runTest {
+        configStore.write(
+            entry =
+                Config.Entry<Config.Value.StringValue>(
+                    key = SdkConfigKey.BypassAbortSessionApiCall,
+                    value =
+                        Config.Value.StringValue(
+                            SdkConfigKey.BypassAbortSessionApiCall.OPTION_OFFLINE,
+                        ),
+                ),
+        )
+        val result = fakeApi.abortSession("sessionId")
+        assertTrue(result is ApiResponse.Failure)
+        assertTrue((result as ApiResponse.Failure).error is TransportException)
+    }
 
     @Test
-    fun `given config is unrecoverable error, it returns unrecoverable error`() =
-        testScope.runTest {
-            configStore.write(
-                entry =
-                    Config.Entry<Config.Value.StringValue>(
-                        key = SdkConfigKey.BypassAbortSessionApiCall,
-                        value =
-                            Config.Value.StringValue(
-                                SdkConfigKey.BypassAbortSessionApiCall.OPTION_UNRECOVERABLE_ERROR,
-                            ),
-                    ),
-            )
-            val result = fakeApi.abortSession("sessionId")
-            assertEquals(
-                "Simulated exception",
-                (result as ApiResponse.Failure).error.message,
-            )
-        }
+    fun `given config is unrecoverable error, it returns unrecoverable error`() = testScope.runTest {
+        configStore.write(
+            entry =
+                Config.Entry<Config.Value.StringValue>(
+                    key = SdkConfigKey.BypassAbortSessionApiCall,
+                    value =
+                        Config.Value.StringValue(
+                            SdkConfigKey.BypassAbortSessionApiCall.OPTION_UNRECOVERABLE_ERROR,
+                        ),
+                ),
+        )
+        val result = fakeApi.abortSession("sessionId")
+        assertEquals(
+            "Simulated exception",
+            (result as ApiResponse.Failure).error.message,
+        )
+    }
 }

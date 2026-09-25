@@ -13,12 +13,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config as RobolectricConfig
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.config.publicapi.SdkConfigKey
 import uk.gov.onelogin.criorchestrator.sdk.publicapi.createTestInstance
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorSdk
 import uk.gov.onelogin.criorchestrator.testwrapper.MainContent
-import org.robolectric.annotation.Config as RobolectricConfig
 
 @RunWith(AndroidJUnit4::class)
 @RobolectricConfig(application = Application::class)
@@ -48,13 +48,12 @@ class MainContentTest {
             .assertIsDisplayed()
     }
 
-    private fun ComposeContentTestRule.setMainContent() =
-        setContent {
-            GdsTheme {
-                MainContent(
-                    criOrchestratorSdk = criOrchestratorSdk,
-                    onSubUpdateRequest = {},
-                )
-            }
+    private fun ComposeContentTestRule.setMainContent() = setContent {
+        GdsTheme {
+            MainContent(
+                criOrchestratorSdk = criOrchestratorSdk,
+                onSubUpdateRequest = {},
+            )
         }
+    }
 }

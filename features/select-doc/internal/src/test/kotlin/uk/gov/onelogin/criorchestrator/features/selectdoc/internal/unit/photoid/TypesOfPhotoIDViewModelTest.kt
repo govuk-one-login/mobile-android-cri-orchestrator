@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.unit.photoid
 
 import app.cash.turbine.test
+import java.time.LocalDate
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -13,7 +14,6 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.Types
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModel
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 import uk.gov.onelogin.criorchestrator.libraries.testing.time.testClock
-import java.time.LocalDate
 
 @ExtendWith(MainDispatcherExtension::class)
 class TypesOfPhotoIDViewModelTest {
@@ -30,16 +30,15 @@ class TypesOfPhotoIDViewModelTest {
     }
 
     @Test
-    fun `it emits the initial state`() =
-        runTest {
-            viewModel.state.test {
-                assertEquals(
-                    TypesOfPhotoIDState(
-                        earliestExpiryDate = LocalDate.of(2025, 12, 26),
-                        enableExpiredBrp = true,
-                    ),
-                    awaitItem(),
-                )
-            }
+    fun `it emits the initial state`() = runTest {
+        viewModel.state.test {
+            assertEquals(
+                TypesOfPhotoIDState(
+                    earliestExpiryDate = LocalDate.of(2025, 12, 26),
+                    enableExpiredBrp = true,
+                ),
+                awaitItem(),
+            )
         }
+    }
 }
