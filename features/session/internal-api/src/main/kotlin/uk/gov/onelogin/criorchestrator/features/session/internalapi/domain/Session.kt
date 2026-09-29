@@ -8,11 +8,7 @@ package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
  *   This is distinct from the [redirectUri]'s 'state' query parameter.
  * redirect URI and the response state as a query parameter.
  */
-data class Session(
-    val sessionId: String,
-    val redirectUri: String? = null,
-    val sessionState: State = State.Created,
-) {
+data class Session(val sessionId: String, val redirectUri: String? = null, val sessionState: State = State.Created) {
     companion object;
 
     fun copyUpdateState(advance: State.() -> State) = copy(sessionState = sessionState.advance())
@@ -42,18 +38,18 @@ data class Session(
 
         ;
 
-        fun advanceAtLeastDocumentSelected(): State =
-            when (this) {
-                Created -> {
-                    DocumentSelected
-                }
-                DocumentSelected,
-                Aborted,
-                -> {
-                    // State is already at the minimum state
-                    this
-                }
+        fun advanceAtLeastDocumentSelected(): State = when (this) {
+            Created -> {
+                DocumentSelected
             }
+
+            DocumentSelected,
+            Aborted,
+            -> {
+                // State is already at the minimum state
+                this
+            }
+        }
 
         fun advanceAtLeastAborted(): State = Aborted
     }

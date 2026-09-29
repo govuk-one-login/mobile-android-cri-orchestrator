@@ -18,10 +18,7 @@ import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
-internal fun SyncIdCheckManualBiometricTokenContent(
-    onItemSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun SyncIdCheckManualBiometricTokenContent(onItemSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
     Surface(modifier = modifier) {
         GdsRadios(

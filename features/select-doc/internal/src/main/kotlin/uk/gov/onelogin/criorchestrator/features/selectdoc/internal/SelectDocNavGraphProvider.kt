@@ -21,10 +21,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 @ContributesIntoSet(CriOrchestratorScope::class)
 @Suppress("LongParameterList")
 class SelectDocNavGraphProvider : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<SelectDocDestinations.Passport> {
             SelectPassportScreen(
                 navController = navController,

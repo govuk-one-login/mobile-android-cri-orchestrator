@@ -8,9 +8,8 @@ data class IdCheckSdkActivityResultContractParameters(
     private val logger: Logger,
     private val stubExitState: ExitStateOption,
 ) {
-    fun toActivityResultContract() =
-        IdCheckSdkActivityResultContract(
-            stubExitState = stubExitState.exitState,
-            logger = logger,
-        )
+    fun toActivityResultContract() = IdCheckSdkActivityResultContract(
+        stubExitState = stubExitState.exitState,
+        logger = logger,
+    )
 }

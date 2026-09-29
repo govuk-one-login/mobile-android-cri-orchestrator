@@ -9,10 +9,8 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 
 @Inject
-class IdCheckWrapperAnalytics(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
+class IdCheckWrapperAnalytics(resourceProvider: ResourceProvider, analyticsLogger: AnalyticsLogger) :
+    Analytics(
         resourceProvider,
         analyticsLogger,
         requiredParameters = requiredParameters,

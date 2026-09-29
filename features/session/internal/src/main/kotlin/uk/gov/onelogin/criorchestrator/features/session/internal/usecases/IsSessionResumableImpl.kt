@@ -9,11 +9,8 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Sessi
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class)
-class IsSessionResumableImpl(
-    private val sessionStore: SessionStore,
-) : IsSessionResumable {
-    override fun invoke(): Flow<Boolean> =
-        sessionStore.read().map {
-            it != null && it.sessionState == Session.State.Created
-        }
+class IsSessionResumableImpl(private val sessionStore: SessionStore) : IsSessionResumable {
+    override fun invoke(): Flow<Boolean> = sessionStore.read().map {
+        it != null && it.sessionState == Session.State.Created
+    }
 }

@@ -19,9 +19,8 @@ import org.junit.jupiter.api.extension.ExtensionContext
  * https://developer.android.com/kotlin/coroutines/test#setting-main-dispatcher
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainDispatcherExtension(
-    val mainDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
-) : BeforeEachCallback,
+class MainDispatcherExtension(val mainDispatcher: TestDispatcher = UnconfinedTestDispatcher()) :
+    BeforeEachCallback,
     AfterEachCallback {
     override fun beforeEach(context: ExtensionContext) {
         Dispatchers.setMain(mainDispatcher)

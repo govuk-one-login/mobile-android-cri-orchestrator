@@ -3,21 +3,19 @@ package uk.gov.onelogin.criorchestrator.libraries.testing.networking
 import uk.gov.android.network.auth.AuthenticationProvider
 import uk.gov.android.network.auth.AuthenticationResponse
 import uk.gov.android.network.client.KtorHttpClient
-import uk.gov.android.network.service.DefaultNetworkService
-import uk.gov.android.network.service.NetworkService
+import uk.gov.android.network.service.v2.DefaultNetworkService
+import uk.gov.android.network.service.v2.NetworkService
 import uk.gov.android.network.useragent.UserAgentGeneratorStub
 
-fun createTestHttpClient(): NetworkService =
-    DefaultNetworkService(
-        KtorHttpClient(
-            userAgentGenerator = UserAgentGeneratorStub("userAgent"),
-        ),
-    ).apply {
-        setAuthenticationProvider(StubAuthenticationProvider())
-    }
+fun createTestHttpClient(): NetworkService = DefaultNetworkService(
+    KtorHttpClient(
+        userAgentGenerator = UserAgentGeneratorStub("userAgent"),
+    ),
+).apply {
+    setAuthenticationProvider(StubAuthenticationProvider())
+}
 
 private class StubAuthenticationProvider : AuthenticationProvider {
-    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse =
-        AuthenticationResponse
-            .Success("token")
+    override suspend fun fetchBearerToken(scope: String): AuthenticationResponse = AuthenticationResponse
+        .Success("token")
 }

@@ -13,9 +13,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(SelectPassportViewModel::class)
-class SelectPassportViewModel(
-    private val analytics: SelectDocAnalytics,
-) : ViewModel() {
+class SelectPassportViewModel(private val analytics: SelectDocAnalytics) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectPassportAction>()
     val actions: Flow<SelectPassportAction> = _actions
 

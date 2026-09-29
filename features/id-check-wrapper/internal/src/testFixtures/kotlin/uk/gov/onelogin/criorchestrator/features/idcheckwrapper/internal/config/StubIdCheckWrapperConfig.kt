@@ -10,29 +10,28 @@ fun Config.Companion.createTestInstance(
     enableManualLauncher: Boolean = false,
     bypassIdCheckAsyncBackend: Boolean = false,
     experimentalComposeNavigation: Boolean = false,
-): Config =
-    Config(
-        entries =
-            persistentListOf(
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
-                    value = Config.Value.BooleanValue(enableManualLauncher),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                    value = Config.Value.BooleanValue(experimentalComposeNavigation),
-                ),
-                Config.Entry<Config.Value.StringValue>(
-                    key = NfcConfigKey.NfcAvailability,
-                    value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = SdkConfigKey.EnableExpiredBRP,
-                    value = Config.Value.BooleanValue(true),
-                ),
+): Config = Config(
+    entries =
+        persistentListOf(
+            Config.Entry<Config.Value.BooleanValue>(
+                key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                value = Config.Value.BooleanValue(enableManualLauncher),
             ),
-    )
+            Config.Entry<Config.Value.BooleanValue>(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
+            ),
+            Config.Entry<Config.Value.BooleanValue>(
+                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                value = Config.Value.BooleanValue(experimentalComposeNavigation),
+            ),
+            Config.Entry<Config.Value.StringValue>(
+                key = NfcConfigKey.NfcAvailability,
+                value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
+            ),
+            Config.Entry<Config.Value.BooleanValue>(
+                key = SdkConfigKey.EnableExpiredBRP,
+                value = Config.Value.BooleanValue(true),
+            ),
+        ),
+)

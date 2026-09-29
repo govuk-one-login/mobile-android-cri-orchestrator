@@ -18,13 +18,8 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.Handbac
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoSet(CriOrchestratorScope::class)
-class AbortModalNavGraphProvider(
-    private val webNavigator: WebNavigator,
-) : AbortNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+class AbortModalNavGraphProvider(private val webNavigator: WebNavigator) : AbortNavGraphProvider {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<AbortDestinations.ConfirmAbortMobile> {
             ConfirmAbortMobileScreen(
                 viewModel = metroViewModel(),

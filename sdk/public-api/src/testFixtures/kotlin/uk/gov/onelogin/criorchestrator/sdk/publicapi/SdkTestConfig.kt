@@ -17,39 +17,38 @@ fun Config.Companion.createTestInstance(
     bypassJourneyType: String = SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE,
     enableManualIdCheckSdkLauncher: Boolean = true,
     experimentalComposeNavigation: Boolean = false,
-): Config =
-    Config(
-        entries =
-            persistentListOf(
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                    value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
-                ),
-                Config.Entry<Config.Value.StringValue>(
-                    key = SdkConfigKey.BypassJourneyType,
-                    value = Config.Value.StringValue(bypassJourneyType),
-                ),
-                Config.Entry<Config.Value.StringValue>(
-                    key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
-                    value = Config.Value.StringValue("http://localhost"),
-                ),
-                Config.Entry<Config.Value.StringValue>(
-                    key = NfcConfigKey.NfcAvailability,
-                    value =
-                        Config.Value.StringValue(
-                            when (isNfcAvailable) {
-                                true -> NfcConfigKey.NfcAvailability.OPTION_AVAILABLE
-                                false -> NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE
-                            },
-                        ),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
-                    value = Config.Value.BooleanValue(enableManualIdCheckSdkLauncher),
-                ),
-                Config.Entry<Config.Value.BooleanValue>(
-                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                    value = Config.Value.BooleanValue(experimentalComposeNavigation),
-                ),
+): Config = Config(
+    entries =
+        persistentListOf(
+            Config.Entry<Config.Value.BooleanValue>(
+                key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                value = Config.Value.BooleanValue(bypassIdCheckAsyncBackend),
             ),
-    )
+            Config.Entry<Config.Value.StringValue>(
+                key = SdkConfigKey.BypassJourneyType,
+                value = Config.Value.StringValue(bypassJourneyType),
+            ),
+            Config.Entry<Config.Value.StringValue>(
+                key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                value = Config.Value.StringValue("http://localhost"),
+            ),
+            Config.Entry<Config.Value.StringValue>(
+                key = NfcConfigKey.NfcAvailability,
+                value =
+                    Config.Value.StringValue(
+                        when (isNfcAvailable) {
+                            true -> NfcConfigKey.NfcAvailability.OPTION_AVAILABLE
+                            false -> NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE
+                        },
+                    ),
+            ),
+            Config.Entry<Config.Value.BooleanValue>(
+                key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                value = Config.Value.BooleanValue(enableManualIdCheckSdkLauncher),
+            ),
+            Config.Entry<Config.Value.BooleanValue>(
+                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                value = Config.Value.BooleanValue(experimentalComposeNavigation),
+            ),
+        ),
+)

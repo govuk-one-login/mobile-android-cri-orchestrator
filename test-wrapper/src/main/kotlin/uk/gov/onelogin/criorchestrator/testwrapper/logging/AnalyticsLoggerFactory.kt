@@ -11,10 +11,7 @@ object AnalyticsLoggerFactory {
     @VisibleForTesting
     internal var testAnalyticsLogger: AnalyticsLogger? = null
 
-    fun createAnalyticsLogger(
-        context: Context,
-        logger: Logger,
-    ): AnalyticsLogger =
+    fun createAnalyticsLogger(context: Context, logger: Logger): AnalyticsLogger =
         testAnalyticsLogger ?: FirebaseAnalyticsLogger(
             analytics = FirebaseAnalytics.getInstance(context),
             logger = logger,

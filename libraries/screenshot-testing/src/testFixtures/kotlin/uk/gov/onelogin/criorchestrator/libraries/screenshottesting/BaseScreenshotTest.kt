@@ -6,13 +6,13 @@ import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.TestName
 import com.android.resources.Density
 import com.android.resources.NightMode
+import kotlin.math.ceil
 import org.junit.Rule
 import org.junit.Test
 import sergio.sastre.composable.preview.scanner.android.AndroidPreviewInfo
 import sergio.sastre.composable.preview.scanner.android.device.DevicePreviewInfoParser
 import sergio.sastre.composable.preview.scanner.android.screenshotid.AndroidPreviewScreenshotIdBuilder
 import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
-import kotlin.math.ceil
 
 private const val BASELINE_DPI = 160f
 
@@ -37,9 +37,7 @@ private const val BASELINE_DPI = 160f
  * ```
  *
  */
-abstract class BaseScreenshotTest(
-    val preview: ComposablePreview<AndroidPreviewInfo>,
-) {
+abstract class BaseScreenshotTest(val preview: ComposablePreview<AndroidPreviewInfo>) {
     @get:Rule
     val paparazzi: Paparazzi = createPaparazziRule(preview)
 
@@ -89,12 +87,11 @@ abstract class BaseScreenshotTest(
         )
     }
 
-    private fun ComposablePreview<AndroidPreviewInfo>.screenshotId() =
-        AndroidPreviewScreenshotIdBuilder(this)
-            // Paparazzi screenshot names already include className and methodName
-            .ignoreClassName()
-            .ignoreMethodName()
-            .build()
+    private fun ComposablePreview<AndroidPreviewInfo>.screenshotId() = AndroidPreviewScreenshotIdBuilder(this)
+        // Paparazzi screenshot names already include className and methodName
+        .ignoreClassName()
+        .ignoreMethodName()
+        .build()
 
     /**
      * Set the screenshot name based on the preview under test rather than the test class.
@@ -103,10 +100,7 @@ abstract class BaseScreenshotTest(
      * name is unnecessary noise in the screenshot names. It also ensures that when new screenshots
      * are added, screenshots from different packages do not need their names updating.
      */
-    private fun updateScreenshotName(
-        paparazzi: Paparazzi,
-        preview: ComposablePreview<AndroidPreviewInfo>,
-    ) {
+    private fun updateScreenshotName(paparazzi: Paparazzi, preview: ComposablePreview<AndroidPreviewInfo>) {
         val packageName =
             preview.declaringClass
                 .replace("uk.gov.onelogin.criorchestrator.", "")

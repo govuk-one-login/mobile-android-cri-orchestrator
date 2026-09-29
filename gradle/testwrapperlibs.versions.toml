@@ -2,12 +2,14 @@
 # find their way into production CRI Orchestrator SDK builds.
 
 [versions]
+agp = "9.3.1"
 dagger = "2.60.1" # https://github.com/google/dagger/releases
 firebase-bom = "34.3.0" # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics-gradle = "3.0.6" # https://firebase.google.com/support/release-notes/android
 google-services = "4.4.3" # https://developers.google.com/android/guides/releases
 
 [libraries]
+android-build-tool = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }

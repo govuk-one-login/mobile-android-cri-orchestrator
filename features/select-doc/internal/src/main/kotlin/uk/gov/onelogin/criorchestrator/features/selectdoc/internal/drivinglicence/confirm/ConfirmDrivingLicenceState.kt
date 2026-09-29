@@ -2,6 +2,4 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicen
 
 import java.time.LocalDate
 
-data class ConfirmDrivingLicenceState(
-    val earliestExpiryDate: LocalDate,
-)
+data class ConfirmDrivingLicenceState(val earliestExpiryDate: LocalDate)

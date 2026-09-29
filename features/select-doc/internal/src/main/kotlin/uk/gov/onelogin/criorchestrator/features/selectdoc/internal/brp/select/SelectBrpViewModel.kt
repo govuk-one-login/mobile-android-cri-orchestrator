@@ -15,10 +15,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(SelectBrpViewModel::class)
-class SelectBrpViewModel(
-    private val analytics: SelectDocAnalytics,
-    configStore: ConfigStore,
-) : ViewModel() {
+class SelectBrpViewModel(private val analytics: SelectDocAnalytics, configStore: ConfigStore) : ViewModel() {
     private val _actions = MutableSharedFlow<SelectBrpAction>()
     val actions: Flow<SelectBrpAction> = _actions
 

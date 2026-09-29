@@ -1,8 +1,8 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry
 
 import androidx.compose.runtime.Composable
-import uk.gov.android.ui.componentsv2.date.formatFullDate
 import java.time.LocalDate
+import uk.gov.android.ui.componentsv2.date.formatFullDate
 
 private object PreviewConstants {
     const val YEAR = 2026
@@ -11,9 +11,8 @@ private object PreviewConstants {
 }
 
 @Composable
-internal fun previewEarliestAcceptableDrivingLicenceExpiryDateText(): String =
-    with(PreviewConstants) {
-        LocalDate
-            .of(YEAR, MONTH, DAY_OF_MONTH)
-            .formatFullDate()
-    }
+internal fun previewEarliestAcceptableDrivingLicenceExpiryDateText(): String = with(PreviewConstants) {
+    LocalDate
+        .of(YEAR, MONTH, DAY_OF_MONTH)
+        .formatFullDate()
+}

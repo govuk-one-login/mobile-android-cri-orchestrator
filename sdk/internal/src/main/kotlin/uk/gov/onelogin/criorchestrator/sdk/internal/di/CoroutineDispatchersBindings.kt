@@ -15,10 +15,9 @@ class CoroutineDispatchersBindings {
     fun provideCoroutineDispatchers(
         @Named(TEST_DISPATCHER_NAME)
         testDispatcher: CoroutineDispatcher?,
-    ): CoroutineDispatchers =
-        CoroutineDispatchers.defaultUnlessTest(
-            testDispatcher = testDispatcher,
-        )
+    ): CoroutineDispatchers = CoroutineDispatchers.defaultUnlessTest(
+        testDispatcher = testDispatcher,
+    )
 
     companion object {
         const val TEST_DISPATCHER_NAME = "testDispatcher"

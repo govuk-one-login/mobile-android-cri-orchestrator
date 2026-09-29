@@ -7,9 +7,7 @@ fun interface AbortSession {
         data object Success : Result
 
         sealed interface Error : Result {
-            data class Unrecoverable(
-                val exception: Exception,
-            ) : Error
+            data class Unrecoverable(val exception: Exception) : Error
 
             data object Offline : Error
         }

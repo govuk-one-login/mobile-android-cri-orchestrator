@@ -6,6 +6,5 @@ import kotlinx.coroutines.test.TestDispatcher
 import org.junit.rules.TestRule
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainStandardDispatcherRule(
-    private val testDispatcher: TestDispatcher = StandardTestDispatcher(),
-) : TestRule by MainDispatcherRule(testDispatcher)
+class MainStandardDispatcherRule(private val testDispatcher: TestDispatcher = StandardTestDispatcher()) :
+    TestRule by MainDispatcherRule(testDispatcher)

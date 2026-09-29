@@ -8,14 +8,10 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.Nfc
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class)
-class NfcCheckerImpl(
-    private val configStore: ConfigStore,
-    private val nfcManager: NfcManager,
-) : NfcChecker {
-    override fun hasNfc(): Boolean =
-        when (configStore.readSingle(NfcConfigKey.NfcAvailability).value) {
-            NfcConfigKey.NfcAvailability.OPTION_AVAILABLE -> true
-            NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE -> false
-            else -> nfcManager.defaultAdapter != null
-        }
+class NfcCheckerImpl(private val configStore: ConfigStore, private val nfcManager: NfcManager) : NfcChecker {
+    override fun hasNfc(): Boolean = when (configStore.readSingle(NfcConfigKey.NfcAvailability).value) {
+        NfcConfigKey.NfcAvailability.OPTION_AVAILABLE -> true
+        NfcConfigKey.NfcAvailability.OPTION_NOT_AVAILABLE -> false
+        else -> nfcManager.defaultAdapter != null
+    }
 }

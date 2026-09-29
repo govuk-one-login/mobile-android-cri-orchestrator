@@ -30,10 +30,7 @@ class HandbackNavGraphProvider(
     private val webNavigator: WebNavigator,
     private val abortNavGraphProviders: Set<AbortNavGraphProvider>,
 ) : ProveYourIdentityNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<HandbackDestinations.UnrecoverableError> {
             UnrecoverableErrorScreen(
                 navController = navController,

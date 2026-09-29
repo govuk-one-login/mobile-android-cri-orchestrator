@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import kotlin.time.Duration
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
@@ -29,7 +30,6 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.SELECT_BIOMETRIC
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.START
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.SUCCESS
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.YES
-import kotlin.time.Duration
 
 fun ComposeTestRule.continueToSelectDocument() {
     onNodeWithText(START)
@@ -84,10 +84,7 @@ fun ComposeTestRule.selectBiometricTokenResult() {
         .performClick()
 }
 
-fun ComposeTestRule.seeLoading(
-    testScope: TestScope,
-    duration: Duration,
-) {
+fun ComposeTestRule.seeLoading(testScope: TestScope, duration: Duration) {
     onNodeWithText(LOADING)
         .assertIsDisplayed()
 

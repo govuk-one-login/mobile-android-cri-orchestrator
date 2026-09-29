@@ -20,10 +20,8 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidReso
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.testFixtures.R
 
-class TestAnalytics(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
+class TestAnalytics(resourceProvider: ResourceProvider, analyticsLogger: AnalyticsLogger) :
+    Analytics(
         resourceProvider,
         analyticsLogger,
         requiredParameters =
@@ -33,9 +31,7 @@ class TestAnalytics(
             ),
     )
 
-enum class TestScreenId(
-    override val rawId: String,
-) : ScreenId {
+enum class TestScreenId(override val rawId: String) : ScreenId {
     ExampleScreen(rawId = "example-id"),
 }
 

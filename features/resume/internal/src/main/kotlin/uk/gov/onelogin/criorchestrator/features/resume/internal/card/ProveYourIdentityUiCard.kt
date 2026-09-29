@@ -11,10 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.resume.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.dropUnlessResumedUnlessDisabledForTesting
 
 @Composable
-internal fun ProveYourIdentityUiCard(
-    onStartClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun ProveYourIdentityUiCard(onStartClick: () -> Unit, modifier: Modifier = Modifier) {
     GdsCard(
         title = stringResource(R.string.start_id_check_title),
         body = stringResource(R.string.start_id_check_content),

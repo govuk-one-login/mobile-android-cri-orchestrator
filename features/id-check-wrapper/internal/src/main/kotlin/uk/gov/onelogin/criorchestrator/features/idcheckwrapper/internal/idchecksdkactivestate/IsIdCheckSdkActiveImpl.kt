@@ -6,8 +6,6 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.idcheck
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorAppScope
 
 @ContributesBinding(CriOrchestratorAppScope::class)
-class IsIdCheckSdkActiveImpl(
-    private val idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore,
-) : IsIdCheckSdkActive {
+class IsIdCheckSdkActiveImpl(private val idCheckSdkActiveStateStore: IdCheckSdkActiveStateStore) : IsIdCheckSdkActive {
     override fun invoke(): Boolean = idCheckSdkActiveStateStore.read().value
 }

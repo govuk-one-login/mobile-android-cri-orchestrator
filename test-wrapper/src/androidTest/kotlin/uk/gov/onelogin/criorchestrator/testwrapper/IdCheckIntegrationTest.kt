@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -39,7 +40,6 @@ import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continue
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.continueToSelectDocument
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.seeLoading
 import uk.gov.onelogin.criorchestrator.testwrapper.testfixtures.ruleext.selectBiometricTokenResult
-import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
@@ -73,39 +73,38 @@ class IdCheckIntegrationTest {
         )
 
     @Test
-    fun testDrivingLicenceMamHappyPath() =
-        testScope.runTest {
-            stateRestorationTester.setContent {
-                GdsTheme {
-                    MainContent(
-                        criOrchestratorSdk = criOrchestratorSdk,
-                        onSubUpdateRequest = {},
-                    )
-                }
+    fun testDrivingLicenceMamHappyPath() = testScope.runTest {
+        stateRestorationTester.setContent {
+            GdsTheme {
+                MainContent(
+                    criOrchestratorSdk = criOrchestratorSdk,
+                    onSubUpdateRequest = {},
+                )
             }
-
-            composeTestRule.continueToSelectDocument()
-            composeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence = true)
-            composeTestRule.confirmContinueWithDrivingLicence()
-            composeTestRule.seeLoading(testScope, 3.seconds)
-            composeTestRule.selectBiometricTokenResult()
-
-            // ID Check SDK launches
-
-            onView(withText(TAKE_PHOTO_OF_FRONT_OF_DRIVING_LICENCE)).check(matches(isDisplayed()))
-            onView(withText(START)).perform(click())
-            onView(withText(THIS_IS_THE_PHOTO_YOU_HAVE_TAKEN)).check(matches(isDisplayed()))
-            onView(withText(SUBMIT_PHOTO)).perform(click())
-            onView(withText(TAKE_PHOTO_OF_BACK_OF_DRIVING_LICENCE)).check(matches(isDisplayed()))
-            onView(withText(START)).perform(click())
-            onView(withText(THIS_IS_THE_PHOTO_YOU_HAVE_TAKEN)).check(matches(isDisplayed()))
-            onView(withText(SUBMIT_PHOTO)).perform(click())
-            onView(withText(PHOTO_SUBMITTED)).check(matches(isDisplayed()))
-            onView(withText(SCAN_FACE_WITH_SELFIE_CAMERA)).check(matches(isDisplayed()))
-            onView(withText(START)).perform(click())
-
-            // ID Check SDK finishes
-
-            composeTestRule.continueToGovUkWebsite()
         }
+
+        composeTestRule.continueToSelectDocument()
+        composeTestRule.confirmDoYouHaveADrivingLicence(hasDrivingLicence = true)
+        composeTestRule.confirmContinueWithDrivingLicence()
+        composeTestRule.seeLoading(testScope, 3.seconds)
+        composeTestRule.selectBiometricTokenResult()
+
+        // ID Check SDK launches
+
+        onView(withText(TAKE_PHOTO_OF_FRONT_OF_DRIVING_LICENCE)).check(matches(isDisplayed()))
+        onView(withText(START)).perform(click())
+        onView(withText(THIS_IS_THE_PHOTO_YOU_HAVE_TAKEN)).check(matches(isDisplayed()))
+        onView(withText(SUBMIT_PHOTO)).perform(click())
+        onView(withText(TAKE_PHOTO_OF_BACK_OF_DRIVING_LICENCE)).check(matches(isDisplayed()))
+        onView(withText(START)).perform(click())
+        onView(withText(THIS_IS_THE_PHOTO_YOU_HAVE_TAKEN)).check(matches(isDisplayed()))
+        onView(withText(SUBMIT_PHOTO)).perform(click())
+        onView(withText(PHOTO_SUBMITTED)).check(matches(isDisplayed()))
+        onView(withText(SCAN_FACE_WITH_SELFIE_CAMERA)).check(matches(isDisplayed()))
+        onView(withText(START)).perform(click())
+
+        // ID Check SDK finishes
+
+        composeTestRule.continueToGovUkWebsite()
+    }
 }

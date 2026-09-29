@@ -7,9 +7,7 @@ import dev.zacsweers.metro.ContributesBinding
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class)
-class WebNavigatorImpl(
-    private val context: Context,
-) : WebNavigator {
+class WebNavigatorImpl(private val context: Context) : WebNavigator {
     override fun openWebPage(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         context.startActivity(intent)

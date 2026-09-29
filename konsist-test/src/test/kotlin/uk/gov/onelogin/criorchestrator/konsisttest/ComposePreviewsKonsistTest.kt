@@ -35,13 +35,12 @@ class ComposePreviewsKonsistTest {
     }
 }
 
-private fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations() =
+private fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations() = hasAnnotation {
+    it.name == "Preview" && it.hasArgument { it.hasUiModeNightEnabled() }
+} &&
     hasAnnotation {
-        it.name == "Preview" && it.hasArgument { it.hasUiModeNightEnabled() }
-    } &&
-        hasAnnotation {
-            it.name == "Preview" && it.hasArgument { !it.hasUiModeNightEnabled() }
-        }
+        it.name == "Preview" && it.hasArgument { !it.hasUiModeNightEnabled() }
+    }
 
 @Suppress("ktlint:standard:function-expression-body")
 private fun KoArgumentDeclaration.hasUiModeNightEnabled(): Boolean {

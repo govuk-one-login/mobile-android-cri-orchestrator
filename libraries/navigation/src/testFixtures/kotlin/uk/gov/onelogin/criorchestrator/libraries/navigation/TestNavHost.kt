@@ -9,11 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun TestNavHost(
-    originText: String,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
+fun TestNavHost(originText: String, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val navController = rememberNavController()
     val startDestination = "origin"
 

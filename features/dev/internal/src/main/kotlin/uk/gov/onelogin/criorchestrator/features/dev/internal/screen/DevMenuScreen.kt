@@ -13,10 +13,7 @@ import uk.gov.onelogin.criorchestrator.features.dev.internal.screen.ui.DevMenu
  * @param modifier
  */
 @Composable
-internal fun DevMenuScreen(
-    viewModel: DevMenuViewModel,
-    modifier: Modifier = Modifier,
-) {
+internal fun DevMenuScreen(viewModel: DevMenuViewModel, modifier: Modifier = Modifier) {
     val state by viewModel.state.collectAsState()
 
     DevMenu(

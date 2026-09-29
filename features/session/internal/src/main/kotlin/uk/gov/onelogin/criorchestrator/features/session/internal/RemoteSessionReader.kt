@@ -5,9 +5,9 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.binding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.json.Json
-import uk.gov.android.network.api.v2.ApiResponse
-import uk.gov.android.network.service.NetworkingException
+import uk.gov.android.network.api.v3.ApiResponse
 import uk.gov.android.network.service.TransportException
+import uk.gov.android.network.service.v2.NetworkServiceResponse
 import uk.gov.logging.api.LogTagProvider
 import uk.gov.logging.api.Logger
 import uk.gov.onelogin.criorchestrator.features.session.internal.network.activesession.ActiveSessionApi
@@ -47,6 +47,7 @@ class RemoteSessionReader(
                     }
                 }
             }
+
             is ApiResponse.Success -> {
                 val session = parseSession(response)
                 when (session) {
@@ -57,20 +58,19 @@ class RemoteSessionReader(
         }
     }
 
-    private fun parseSession(response: ApiResponse.Success<String>): Session? =
-        try {
-            val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
-                json.decodeFromString(response.response)
-            Session(
-                sessionId = parsedResponse.sessionId,
-                redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
-            )
-        } catch (e: IllegalArgumentException) {
-            logger.error(tag, "Failed to parse active session response", e)
-            null
-        }
+    private fun parseSession(response: ApiResponse.Success<String>): Session? = try {
+        val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
+            json.decodeFromString(response.body)
+        Session(
+            sessionId = parsedResponse.sessionId,
+            redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
+        )
+    } catch (e: IllegalArgumentException) {
+        logger.error(tag, "Failed to parse active session response", e)
+        null
+    }
 
-    private fun logResponse(response: ApiResponse<String, NetworkingException>) {
+    private fun logResponse(response: NetworkServiceResponse) {
         when (response) {
             is ApiResponse.Success ->
                 logger.debug(tag, "Got active session")
@@ -90,17 +90,13 @@ class RemoteSessionReader(
     }
 
     // IPV needs the redirect URI to have the encoded state as a query parameter
-    private fun generateRedirectUri(
-        redirectUri: String?,
-        state: String,
-    ): String? =
-        if (redirectUri.isNullOrBlank()) {
-            null
-        } else {
-            uriBuilder.buildUri(
-                baseUri = redirectUri,
-                queryKey = "state",
-                queryValue = state,
-            )
-        }
+    private fun generateRedirectUri(redirectUri: String?, state: String): String? = if (redirectUri.isNullOrBlank()) {
+        null
+    } else {
+        uriBuilder.buildUri(
+            baseUri = redirectUri,
+            queryKey = "state",
+            queryValue = state,
+        )
+    }
 }

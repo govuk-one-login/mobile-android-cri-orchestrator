@@ -17,9 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @SingleIn(CriOrchestratorScope::class)
 @ContributesBinding(CriOrchestratorScope::class)
-class DevMenuEntryPointsImpl(
-    private val metroVmf: MetroViewModelFactory,
-) : DevMenuEntryPoints {
+class DevMenuEntryPointsImpl(private val metroVmf: MetroViewModelFactory) : DevMenuEntryPoints {
     @Composable
     override fun DevMenuScreen(modifier: Modifier) {
         CompositionLocalProvider(LocalMetroViewModelFactory provides metroVmf) {

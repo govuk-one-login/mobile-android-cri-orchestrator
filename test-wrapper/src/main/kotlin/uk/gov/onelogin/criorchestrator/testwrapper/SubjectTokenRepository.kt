@@ -5,7 +5,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SubjectTokenRepository
-    @Inject
-    constructor() {
-        var subjectToken: String? = null
-    }
+@Inject
+constructor() {
+    var subjectToken: String? = null
+}

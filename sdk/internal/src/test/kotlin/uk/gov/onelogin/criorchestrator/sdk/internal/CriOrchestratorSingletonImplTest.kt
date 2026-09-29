@@ -15,76 +15,75 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.Nfc
 @Suppress("LongMethod")
 class CriOrchestratorSingletonImplTest {
     @Test
-    fun `it applies the default config`() =
-        runTest {
-            val customEntry =
-                Config.Entry(
-                    key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
-                    Config.Value.StringValue("my custom base url"),
-                )
-            val singleton =
-                CriOrchestratorSingletonImpl(
-                    authenticatedHttpClient = mock(),
-                    analyticsLogger = mock(),
-                    userConfig =
-                        Config(
-                            entries =
-                                persistentListOf(
-                                    customEntry,
-                                ),
-                        ),
-                    logger = mock(),
-                    applicationContext = mock(),
-                )
-
-            val config =
-                (singleton.appGraph as ConfigProviders)
-                    .configStore()
-                    .readAll()
-                    .first()
-
-            assertEquals(
-                config,
-                Config(
-                    entries =
-                        persistentListOf(
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                                Config.Value.BooleanValue(false),
-                            ),
-                            Config.Entry<Config.Value.StringValue>(
-                                key = SdkConfigKey.BypassJourneyType,
-                                Config.Value.StringValue(SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE),
-                            ),
-                            Config.Entry<Config.Value.StringValue>(
-                                key = SdkConfigKey.BypassAbortSessionApiCall,
-                                Config.Value.StringValue(SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS),
-                            ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.DebugAppReviewPrompts,
-                                Config.Value.BooleanValue(false),
-                            ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = IdCheckWrapperConfigKey.EnableManualLauncher,
-                                Config.Value.BooleanValue(false),
-                            ),
-                            Config.Entry(
-                                key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                                Config.Value.BooleanValue(
-                                    value = false,
-                                ),
-                            ),
-                            Config.Entry<Config.Value.StringValue>(
-                                key = NfcConfigKey.NfcAvailability,
-                                Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-                            ),
-                            Config.Entry<Config.Value.BooleanValue>(
-                                key = SdkConfigKey.EnableExpiredBRP,
-                                Config.Value.BooleanValue(true),
-                            ),
-                            customEntry,
-                        ),
-                ),
+    fun `it applies the default config`() = runTest {
+        val customEntry =
+            Config.Entry(
+                key = SdkConfigKey.IdCheckAsyncBackendBaseUrl,
+                Config.Value.StringValue("my custom base url"),
             )
-        }
+        val singleton =
+            CriOrchestratorSingletonImpl(
+                authenticatedHttpClient = mock(),
+                analyticsLogger = mock(),
+                userConfig =
+                    Config(
+                        entries =
+                            persistentListOf(
+                                customEntry,
+                            ),
+                    ),
+                logger = mock(),
+                applicationContext = mock(),
+            )
+
+        val config =
+            (singleton.appGraph as ConfigProviders)
+                .configStore()
+                .readAll()
+                .first()
+
+        assertEquals(
+            config,
+            Config(
+                entries =
+                    persistentListOf(
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                            Config.Value.BooleanValue(false),
+                        ),
+                        Config.Entry<Config.Value.StringValue>(
+                            key = SdkConfigKey.BypassJourneyType,
+                            Config.Value.StringValue(SdkConfigKey.BypassJourneyType.OPTION_MOBILE_APP_MOBILE),
+                        ),
+                        Config.Entry<Config.Value.StringValue>(
+                            key = SdkConfigKey.BypassAbortSessionApiCall,
+                            Config.Value.StringValue(SdkConfigKey.BypassAbortSessionApiCall.OPTION_SUCCESS),
+                        ),
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = SdkConfigKey.DebugAppReviewPrompts,
+                            Config.Value.BooleanValue(false),
+                        ),
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                            Config.Value.BooleanValue(false),
+                        ),
+                        Config.Entry(
+                            key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                            Config.Value.BooleanValue(
+                                value = false,
+                            ),
+                        ),
+                        Config.Entry<Config.Value.StringValue>(
+                            key = NfcConfigKey.NfcAvailability,
+                            Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
+                        ),
+                        Config.Entry<Config.Value.BooleanValue>(
+                            key = SdkConfigKey.EnableExpiredBRP,
+                            Config.Value.BooleanValue(true),
+                        ),
+                        customEntry,
+                    ),
+            ),
+        )
+    }
 }

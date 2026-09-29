@@ -13,14 +13,13 @@ import uk.gov.onelogin.criorchestrator.testwrapper.TestWrapperConfig
 import uk.gov.onelogin.criorchestrator.testwrapper.network.createStubHttpClient
 
 @Composable
-internal fun rememberPreviewCriOrchestratorGraph(): CriOrchestratorGraph =
-    rememberCriOrchestrator(
-        criOrchestratorSdk =
-            CriOrchestratorSdk.create(
-                authenticatedHttpClient = createStubHttpClient(),
-                analyticsLogger = FakeAnalyticsLogger(),
-                initialConfig = TestWrapperConfig.provideConfig(LocalResources.current),
-                logger = SystemLogger(),
-                applicationContext = LocalContext.current.applicationContext,
-            ),
-    )
+internal fun rememberPreviewCriOrchestratorGraph(): CriOrchestratorGraph = rememberCriOrchestrator(
+    criOrchestratorSdk =
+        CriOrchestratorSdk.create(
+            authenticatedHttpClient = createStubHttpClient(),
+            analyticsLogger = FakeAnalyticsLogger(),
+            initialConfig = TestWrapperConfig.provideConfig(LocalResources.current),
+            logger = SystemLogger(),
+            applicationContext = LocalContext.current.applicationContext,
+        ),
+)

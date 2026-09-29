@@ -15,10 +15,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(ConfirmBrpViewModel::class)
-class ConfirmBrpViewModel(
-    private val analytics: SelectDocAnalytics,
-    configStore: ConfigStore,
-) : ViewModel() {
+class ConfirmBrpViewModel(private val analytics: SelectDocAnalytics, configStore: ConfigStore) : ViewModel() {
     val enableExpiredBRP: Boolean =
         configStore.readSingle(SdkConfigKey.EnableExpiredBRP).value
 

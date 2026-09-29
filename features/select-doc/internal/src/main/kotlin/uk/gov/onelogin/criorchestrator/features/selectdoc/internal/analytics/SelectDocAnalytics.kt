@@ -9,10 +9,8 @@ import uk.gov.onelogin.criorchestrator.libraries.analytics.Analytics
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
 
 @Inject
-class SelectDocAnalytics(
-    resourceProvider: ResourceProvider,
-    analyticsLogger: AnalyticsLogger,
-) : Analytics(
+class SelectDocAnalytics(resourceProvider: ResourceProvider, analyticsLogger: AnalyticsLogger) :
+    Analytics(
         resourceProvider,
         analyticsLogger,
         requiredParameters = requiredParameters,

@@ -70,10 +70,7 @@ fun ConfirmAbortDesktopWebScreen(
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmAbortDesktopWebContent(
-    onContinueClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun ConfirmAbortDesktopWebContent(onContinueClicked: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = colorScheme.background,

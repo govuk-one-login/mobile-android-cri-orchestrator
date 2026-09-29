@@ -8,38 +8,37 @@ import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.publicapi.nfc.Nfc
 object FakeConfig {
     const val ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE = "https://test.backend.url"
 
-    fun create(): Config =
-        Config(
-            entries =
-                persistentListOf(
-                    Config.Entry<Config.Value.StringValue>(
-                        key = IdCheckAsyncBackendBaseUrl,
-                        value =
-                            Config.Value.StringValue(
-                                ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
-                            ),
-                    ),
-                    Config.Entry<Config.Value.BooleanValue>(
-                        key = SdkConfigKey.BypassIdCheckAsyncBackend,
-                        value =
-                            Config.Value.BooleanValue(false),
-                    ),
-                    Config.Entry<Config.Value.BooleanValue>(
-                        key = IdCheckWrapperConfigKey.EnableManualLauncher,
-                        value = Config.Value.BooleanValue(false),
-                    ),
-                    Config.Entry<Config.Value.BooleanValue>(
-                        key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
-                        value = Config.Value.BooleanValue(false),
-                    ),
-                    Config.Entry<Config.Value.StringValue>(
-                        key = NfcConfigKey.NfcAvailability,
-                        value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
-                    ),
-                    Config.Entry<Config.Value.BooleanValue>(
-                        key = SdkConfigKey.EnableExpiredBRP,
-                        value = Config.Value.BooleanValue(true),
-                    ),
+    fun create(): Config = Config(
+        entries =
+            persistentListOf(
+                Config.Entry<Config.Value.StringValue>(
+                    key = IdCheckAsyncBackendBaseUrl,
+                    value =
+                        Config.Value.StringValue(
+                            ID_CHECK_BACKEND_ASYNC_URL_TEST_VALUE,
+                        ),
                 ),
-        )
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.BypassIdCheckAsyncBackend,
+                    value =
+                        Config.Value.BooleanValue(false),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.EnableManualLauncher,
+                    value = Config.Value.BooleanValue(false),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = IdCheckWrapperConfigKey.ExperimentalComposeNavigation,
+                    value = Config.Value.BooleanValue(false),
+                ),
+                Config.Entry<Config.Value.StringValue>(
+                    key = NfcConfigKey.NfcAvailability,
+                    value = Config.Value.StringValue(NfcConfigKey.NfcAvailability.OPTION_DEVICE),
+                ),
+                Config.Entry<Config.Value.BooleanValue>(
+                    key = SdkConfigKey.EnableExpiredBRP,
+                    value = Config.Value.BooleanValue(true),
+                ),
+            ),
+    )
 }

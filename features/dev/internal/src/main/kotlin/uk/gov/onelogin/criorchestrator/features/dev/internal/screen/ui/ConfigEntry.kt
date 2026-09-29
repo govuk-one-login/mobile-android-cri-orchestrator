@@ -143,12 +143,7 @@ private fun ConfigStrEntry(
 }
 
 @Composable
-private fun ConfigStrEntryRow(
-    name: String,
-    value: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun ConfigStrEntryRow(name: String, value: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
         modifier =
             modifier
@@ -247,43 +242,40 @@ private fun ConfigOptionsEntryDialog(
 
 @Composable
 @PreviewLightDark
-internal fun ConfigEntryPreview() =
-    GdsTheme {
-        Surface {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                previewConfig.entries.forEach {
-                    ConfigEntry(
-                        entry = it,
-                        onEntryChange = {},
-                    )
-                }
+internal fun ConfigEntryPreview() = GdsTheme {
+    Surface {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            previewConfig.entries.forEach {
+                ConfigEntry(
+                    entry = it,
+                    onEntryChange = {},
+                )
             }
         }
     }
+}
 
 @Composable
 @PreviewLightDark
-internal fun ConfigStrEntryDialogPreview() =
-    GdsTheme {
-        ConfigStrEntryDialog(
-            name = "name",
-            value = "value",
-            onValueChange = {},
-            onDismissRequest = {},
-        )
-    }
+internal fun ConfigStrEntryDialogPreview() = GdsTheme {
+    ConfigStrEntryDialog(
+        name = "name",
+        value = "value",
+        onValueChange = {},
+        onDismissRequest = {},
+    )
+}
 
 @Composable
 @PreviewLightDark
-internal fun ConfigOptionsEntryDialogPreview() =
-    GdsTheme {
-        ConfigOptionsEntryDialog(
-            name = "Name",
-            value = "value",
-            options = PreviewOptionConfigKey.options,
-            onValueChange = {},
-            onDismissRequest = {},
-        )
-    }
+internal fun ConfigOptionsEntryDialogPreview() = GdsTheme {
+    ConfigOptionsEntryDialog(
+        name = "Name",
+        value = "value",
+        options = PreviewOptionConfigKey.options,
+        onValueChange = {},
+        onDismissRequest = {},
+    )
+}

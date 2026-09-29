@@ -5,9 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 sealed interface JourneyType {
     @Parcelize
-    data class MobileAppMobile(
-        val redirectUri: String,
-    ) : JourneyType,
+    data class MobileAppMobile(val redirectUri: String) :
+        JourneyType,
         Parcelable
 
     @Parcelize

@@ -17,19 +17,14 @@ abstract class Analytics(
     private val analyticsLogger: AnalyticsLogger,
     private val requiredParameters: RequiredParameters,
 ) {
-    fun trackButtonEvent(
-        @StringRes buttonText: Int,
-    ) = analyticsLogger.logEventV3Dot1(
+    fun trackButtonEvent(@StringRes buttonText: Int) = analyticsLogger.logEventV3Dot1(
         TrackEvent.Button(
             text = resourceProvider.getEnglishString(buttonText),
             params = requiredParameters,
         ),
     )
 
-    fun trackFormSubmission(
-        @StringRes buttonText: Int,
-        @StringRes response: Int,
-    ) = analyticsLogger.logEventV3Dot1(
+    fun trackFormSubmission(@StringRes buttonText: Int, @StringRes response: Int) = analyticsLogger.logEventV3Dot1(
         TrackEvent.Form(
             text = resourceProvider.getEnglishString(buttonText),
             response = resourceProvider.getEnglishString(response),
@@ -37,10 +32,7 @@ abstract class Analytics(
         ),
     )
 
-    fun trackScreen(
-        id: ScreenId,
-        @StringRes title: Int,
-    ) = analyticsLogger.logEventV3Dot1(
+    fun trackScreen(id: ScreenId, @StringRes title: Int) = analyticsLogger.logEventV3Dot1(
         ViewEvent.Screen(
             id = id.rawId,
             name = resourceProvider.getEnglishString(title),

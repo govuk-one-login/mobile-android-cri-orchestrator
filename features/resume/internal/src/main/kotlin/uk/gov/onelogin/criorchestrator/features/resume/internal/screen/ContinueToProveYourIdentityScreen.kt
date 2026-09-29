@@ -49,31 +49,28 @@ internal fun ContinueToProveYourIdentityScreen(
 }
 
 @Composable
-internal fun ContinueToProveYourIdentityContent(
-    onContinueClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) = CentreAlignedScreen(
-    title = stringResource(R.string.continue_to_prove_your_identity_screen_title),
-    body =
-        persistentListOf(
-            CentreAlignedScreenBodyContent.Text(
-                stringResource(R.string.continue_to_prove_your_identity_screen_body),
+internal fun ContinueToProveYourIdentityContent(onContinueClick: () -> Unit, modifier: Modifier = Modifier) =
+    CentreAlignedScreen(
+        title = stringResource(R.string.continue_to_prove_your_identity_screen_title),
+        body =
+            persistentListOf(
+                CentreAlignedScreenBodyContent.Text(
+                    stringResource(R.string.continue_to_prove_your_identity_screen_body),
+                ),
             ),
-        ),
-    modifier = modifier.fillMaxSize(),
-    primaryButton =
-        CentreAlignedScreenButton(
-            text = stringResource(R.string.continue_to_prove_your_identity_screen_button),
-            onClick = dropUnlessResumed { onContinueClick() },
-        ),
-)
+        modifier = modifier.fillMaxSize(),
+        primaryButton =
+            CentreAlignedScreenButton(
+                text = stringResource(R.string.continue_to_prove_your_identity_screen_button),
+                onClick = dropUnlessResumed { onContinueClick() },
+            ),
+    )
 
 @PreviewLightDark
 @Preview(locale = "cy")
 @Composable
-internal fun ContinueToProveYourIdentityContentPreview() =
-    GdsTheme {
-        ContinueToProveYourIdentityContent(
-            onContinueClick = {},
-        )
-    }
+internal fun ContinueToProveYourIdentityContentPreview() = GdsTheme {
+    ContinueToProveYourIdentityContent(
+        onContinueClick = {},
+    )
+}

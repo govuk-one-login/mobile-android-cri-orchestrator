@@ -6,7 +6,5 @@ import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYour
 
 sealed interface IdCheckWrapperDestinations : ProveYourIdentityDestinations {
     @Serializable
-    data class SyncIdCheckScreen(
-        val documentVariety: DocumentVariety,
-    ) : IdCheckWrapperDestinations
+    data class SyncIdCheckScreen(val documentVariety: DocumentVariety) : IdCheckWrapperDestinations
 }

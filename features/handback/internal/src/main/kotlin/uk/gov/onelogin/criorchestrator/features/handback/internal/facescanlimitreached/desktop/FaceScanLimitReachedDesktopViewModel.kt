@@ -9,9 +9,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(FaceScanLimitReachedDesktopViewModel::class)
-class FaceScanLimitReachedDesktopViewModel(
-    private val analytics: HandbackAnalytics,
-) : ViewModel() {
+class FaceScanLimitReachedDesktopViewModel(private val analytics: HandbackAnalytics) : ViewModel() {
     fun onScreenStart() {
         analytics.trackScreen(
             id = HandbackScreenId.FaceScanLimitReachedDesktop,

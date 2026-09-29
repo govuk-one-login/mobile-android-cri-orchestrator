@@ -1,7 +1,7 @@
 <!-- vale Google.We = NO -->
 <!-- vale Vale.Spelling["KDDs", "KDD"] = NO -->
 
-# Storing Key Design Decisions (KDDs)
+# Storing Key Design Decisions
 
 ## Summary
 

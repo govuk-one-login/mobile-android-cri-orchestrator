@@ -11,9 +11,7 @@ import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.journ
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesBinding(CriOrchestratorScope::class, binding = binding<GetJourneyType>())
-class GetJourneyTypeImpl(
-    private val sessionStore: SessionStore,
-) : GetJourneyType {
+class GetJourneyTypeImpl(private val sessionStore: SessionStore) : GetJourneyType {
     @OptIn(FlowPreview::class)
     override suspend operator fun invoke(): JourneyType {
         val session =

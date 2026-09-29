@@ -17,9 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(DevMenuViewModel::class)
-class DevMenuViewModel(
-    private val configStore: ConfigStore,
-) : ViewModel() {
+class DevMenuViewModel(private val configStore: ConfigStore) : ViewModel() {
     private val _state =
         MutableStateFlow<DevMenuUiState>(
             DevMenuUiState(
@@ -38,23 +36,19 @@ class DevMenuViewModel(
 
     fun onEntryChange(entry: Config.Entry<Config.Value>) = configStore.write(entry)
 
-    private fun Config.toUiEntries(): ImmutableList<Config.Entry<*>> =
-        entries
-            .filterNot {
-                // Hide entries where the dependent configuration is not enabled
-                it.key.dependsOn?.let { this[it].value } == false
-            }.sortedWith { a, b ->
-                compareConfigKeys(a.key, b.key)
-            }.toPersistentList()
+    private fun Config.toUiEntries(): ImmutableList<Config.Entry<*>> = entries
+        .filterNot {
+            // Hide entries where the dependent configuration is not enabled
+            it.key.dependsOn?.let { this[it].value } == false
+        }.sortedWith { a, b ->
+            compareConfigKeys(a.key, b.key)
+        }.toPersistentList()
 }
 
 /**
  * Sorts entries by their dependency hierarchy and then alphabetically.
  */
-fun compareConfigKeys(
-    a: ConfigKey<*>,
-    b: ConfigKey<*>,
-): Int {
+fun compareConfigKeys(a: ConfigKey<*>, b: ConfigKey<*>): Int {
     val aDepth = a.depth()
     val bDepth = b.depth()
     return when {
@@ -63,11 +57,14 @@ fun compareConfigKeys(
 
         // Are these directly dependent on each other?
         a.dependsOn == b -> 1
+
         b.dependsOn == a -> -1
 
         // Search for a common parent key or direct dependency
         aDepth > bDepth -> compareConfigKeys(a.dependsOn!!, b)
+
         aDepth < bDepth -> compareConfigKeys(a, b.dependsOn!!)
+
         else -> compareConfigKeys(a.dependsOn!!, b.dependsOn!!)
     }
 }

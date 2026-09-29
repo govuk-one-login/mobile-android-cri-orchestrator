@@ -116,9 +116,7 @@ internal fun ProveYourIdentityRootNavHost(
         }
     }
 
-internal data class PreviewParams(
-    val state: ProveYourIdentityRootUiState,
-)
+internal data class PreviewParams(val state: ProveYourIdentityRootUiState)
 
 @Suppress("MaxLineLength") // Conflict between Ktlint formatting and Detekt rule
 internal class ProveYourIdentityRootNavHostPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {

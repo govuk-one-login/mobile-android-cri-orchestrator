@@ -17,10 +17,7 @@ import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 class ErrorNavGraphProvider :
     ProveYourIdentityNavGraphProvider,
     AbortNavGraphProvider {
-    override fun NavGraphBuilder.contributeToGraph(
-        navController: NavController,
-        onFinish: () -> Unit,
-    ) {
+    override fun NavGraphBuilder.contributeToGraph(navController: NavController, onFinish: () -> Unit) {
         composable<ErrorDestinations.RecoverableError> {
             RecoverableErrorScreen(
                 navController = navController,

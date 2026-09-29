@@ -38,11 +38,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.Select
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
-fun SelectBrpScreen(
-    viewModel: SelectBrpViewModel,
-    navController: NavController,
-    modifier: Modifier = Modifier,
-) {
+fun SelectBrpScreen(viewModel: SelectBrpViewModel, navController: NavController, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 

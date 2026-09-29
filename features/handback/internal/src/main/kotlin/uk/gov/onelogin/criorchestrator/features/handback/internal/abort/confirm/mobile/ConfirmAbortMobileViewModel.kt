@@ -57,8 +57,10 @@ class ConfirmAbortMobileViewModel(
             when (abortSession()) {
                 AbortSession.Result.Error.Offline ->
                     _actions.emit(ConfirmAbortMobileAction.NavigateToOfflineError)
+
                 is AbortSession.Result.Error.Unrecoverable ->
                     _actions.emit(ConfirmAbortMobileAction.NavigateToUnrecoverableError)
+
                 AbortSession.Result.Success -> {
                     if (redirectUri == null) {
                         logger.error(tag, "Can't continue to GOV.UK - no redirect URI")

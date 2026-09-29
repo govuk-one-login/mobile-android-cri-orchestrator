@@ -14,9 +14,7 @@ fun interface SessionReader {
         /**
          * The session is 'active', that is, no document has been selected and the session hasn't been aborted.
          */
-        data class IsActive(
-            val session: Session,
-        ) : Result
+        data class IsActive(val session: Session) : Result
 
         /**
          * The session isn't 'active'. It may still be a valid session; the user might have selected a document type.

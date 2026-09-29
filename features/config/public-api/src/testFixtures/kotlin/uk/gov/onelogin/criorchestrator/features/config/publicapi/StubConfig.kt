@@ -37,13 +37,11 @@ fun stubStringConfigEntry(
     value = Config.Value.StringValue(value = value),
 )
 
-fun stubOptionConfigEntry(
-    key: OptionConfigKey = StubOptionConfigKey,
-    value: String = StubOptionConfigKey.OPTION_1,
-) = Config.Entry<Config.Value.StringValue>(
-    key = key,
-    value = Config.Value.StringValue(value = value),
-)
+fun stubOptionConfigEntry(key: OptionConfigKey = StubOptionConfigKey, value: String = StubOptionConfigKey.OPTION_1) =
+    Config.Entry<Config.Value.StringValue>(
+        key = key,
+        value = Config.Value.StringValue(value = value),
+    )
 
 fun stubBooleanConfigEntry(
     key: ConfigKey<Config.Value.BooleanValue> = StubBooleanConfigKey,

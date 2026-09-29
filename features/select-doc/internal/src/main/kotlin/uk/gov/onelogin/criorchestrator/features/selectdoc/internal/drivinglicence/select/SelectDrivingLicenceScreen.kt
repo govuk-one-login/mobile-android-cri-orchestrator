@@ -174,9 +174,7 @@ internal fun SelectDrivingLicenceScreenContent(
     }
 }
 
-internal data class PreviewParams(
-    val displayReadMoreButton: Boolean,
-)
+internal data class PreviewParams(val displayReadMoreButton: Boolean)
 
 internal class SelectDrivingLicenceScreenPreviewParameterProvider : PreviewParameterProvider<PreviewParams> {
     override val values =

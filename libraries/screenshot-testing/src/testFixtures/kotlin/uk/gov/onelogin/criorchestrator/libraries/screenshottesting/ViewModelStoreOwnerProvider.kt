@@ -13,6 +13,5 @@ internal fun ProvidesContentWithFakeViewModelStoreOwner(content: @Composable () 
     }
 }
 
-private class FakeViewModelStoreOwner(
-    override val viewModelStore: ViewModelStore = ViewModelStore(),
-) : ViewModelStoreOwner
+private class FakeViewModelStoreOwner(override val viewModelStore: ViewModelStore = ViewModelStore()) :
+    ViewModelStoreOwner

@@ -22,10 +22,7 @@ import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
 @Composable
-fun ReturnToDesktopWebScreen(
-    viewModel: ReturnToDesktopWebViewModel,
-    modifier: Modifier = Modifier,
-) {
+fun ReturnToDesktopWebScreen(viewModel: ReturnToDesktopWebViewModel, modifier: Modifier = Modifier) {
     BackHandler(enabled = true) {
         // Back button should be disabled from this screen
         // as the user must return to their desktop browser

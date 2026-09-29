@@ -6,10 +6,6 @@ import dev.zacsweers.metro.Inject
 import uk.gov.logging.api.analytics.extensions.getEnglishString
 
 @Inject
-class AndroidResourceProvider(
-    private val context: Context,
-) : ResourceProvider {
-    override fun getEnglishString(
-        @StringRes resId: Int,
-    ): String = context.getEnglishString(resId)
+class AndroidResourceProvider(private val context: Context) : ResourceProvider {
+    override fun getEnglishString(@StringRes resId: Int): String = context.getEnglishString(resId)
 }
