@@ -2,7 +2,6 @@ package uk.gov.onelogin.criorchestrator
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import uk.gov.onelogin.criorchestrator.extensions.kotlinTestDependencies
 import uk.gov.onelogin.criorchestrator.extensions.testImplementation
