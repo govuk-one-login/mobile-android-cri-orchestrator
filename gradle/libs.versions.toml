@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.13.0"
-agp = "9.3.1"
+agp = "9.4.1"
 androidXCoreKtx = "1.18.0"
 androidXTest = "1.6.0"
 androidXTestJUnit = "1.3.0"
@@ -8,7 +8,7 @@ androidXTestOrchestrator = "1.6.1"
 androidXTestRunner = "1.7.0"
 androidXTestRules = "1.7.0"
 appcompat = "1.8.0"
-composeBom = "2026.06.01"
+composeBom = "2026.09.00"
 composable-preview-scanner = "0.9.3"
 compose-lint-checks = "1.6.0"
 espressoCore = "3.7.0"
@@ -24,18 +24,18 @@ kotlinx-serialization-json = "1.11.0"
 ksp = "2.3.12"
 lifecycle = "2.10.0"
 metro = "1.4.2"
-mockito-android = "5.23.0"
+mockito-android = "5.24.0"
 mockito-kotlin = "6.3.0"
 molecule = "2.2.0"
 navigation = "2.9.7"
 paparazzi = "2.0.0-alpha05"
-robolectric = "4.16.1"
+robolectric = "4.17"
 testparameterinjector = "1.22"
 turbine = "1.2.1"
-uk-gov-logging = "0.40.12" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
+uk-gov-logging = "0.41.10" # https://github.com/orgs/govuk-one-login/packages?repo_name=mobile-android-logging
 uk-gov-networking = "0.20.0"
 uk-gov-ui = "17.3.2"
-gov-uk-idcheck = "0.52.0" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
+gov-uk-idcheck = "0.52.7" # https://github.com/govuk-one-login/mobile-id-check-android-sdk/releases
 
 
 [libraries]

@@ -40,4 +40,3 @@ private fun Test.configureTestTask() {
         )
     }
 }
-
