@@ -26,7 +26,7 @@ updates:
           - "patch"
   - package-ecosystem: "gradle"
     directory: "/"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     schedule:
       interval: "daily"
     registries:
