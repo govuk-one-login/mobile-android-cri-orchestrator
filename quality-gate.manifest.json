@@ -1,122 +1,146 @@
 {
-  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.1.0/schemas/schema.json",
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.19.0/schemas/schema.json",
   "services": [
     {
-      "service-tag": "id-check",
-      "quality-gates": [
+      "product": "ID Check",
+      "component": "mobile-android-cri-orchestrator",
+      "promotionType": "library",
+      "automated": [
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/lint.yml",
-            "name": "Lint",
-            "path": "jobs.lint"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/lint.yml",
+          "path": "$.jobs.lint"
         },
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/lint.yml",
-            "name": "Lint Kotlin structure",
-            "path": "jobs.lint-structure"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/lint.yml",
+          "path": "$.jobs.lint-structure"
         },
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/lint.yml",
-            "name": "Lint Github Actions",
-            "path": "jobs.lint-github-actions"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/lint.yml",
+          "path": "$.jobs.lint-github-actions"
         },
         {
-          "check-types": [
-            "unit",
-            "integration",
-            "regression"
-          ],
-          "config": {
-            "file": ".github/workflows/test.yml",
-            "name": "Unit test",
-            "path": "jobs.unit-test"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "unit",
+              "purpose": [
+                "regression"
+              ]
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.unit-test.steps[?@.id=='unit-tests']"
         },
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/test.yml",
-            "name": "Assemble instrumentation tests",
-            "path": "jobs.assemble-instrumentation-tests"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "visual regression"
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.unit-test.steps[?@.name=='Verify screenshots']"
         },
         {
-          "check-types": [
-            "integration",
-            "regression"
-          ],
-          "config": {
-            "file": ".github/workflows/test.yml",
-            "name": "Run test wrapper instrumentation tests",
-            "path": "jobs.test-wrapper-instrumentation-test"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code quality"
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.unit-test.steps[?@.name=='Upload jars']"
         },
         {
-          "check-types": [
-            "code style and linting",
-            "secret scanning",
-            "unit test coverage",
-            "vulnerability detection"
-          ],
-          "config": {
-            "file": ".github/workflows/test.yml",
-            "name": "Scan with Sonar",
-            "path": "jobs.sonar-scan"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.assemble-instrumentation-tests"
         },
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/pr_metadata.yml",
-            "name": "Check PR title",
-            "path": "jobs.check-pr-title"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "integration",
+              "purpose": [
+                "regression"
+              ]
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.test-wrapper-instrumentation-test"
         },
         {
-          "check-types": [
-            "code style and linting"
-          ],
-          "config": {
-            "file": ".github/workflows/pr_metadata.yml",
-            "name": "Check commit messages",
-            "path": "jobs.check-commit-messages"
-          },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "secret scanning"
+            },
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "vulnerability detection"
+            }
+          ],
+          "file": ".github/workflows/test.yml",
+          "path": "$.jobs.sonar-scan"
+        },
+        {
+          "phase": "pre-merge",
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/pr_metadata.yml",
+          "path": "$.jobs.check-pr-title"
+        },
+        {
+          "phase": "pre-merge",
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "code style and linting"
+            }
+          ],
+          "file": ".github/workflows/pr_metadata.yml",
+          "path": "$.jobs.check-commit-messages"
         }
       ]
     }
