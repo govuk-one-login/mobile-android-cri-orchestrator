@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-echo "Checking title '${pr_title}' conforms to conventional commit standards"
-
 FILE_CONTENT=$1
 REGEX="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([[:alnum:]._-]+\))?(!)?: ([[:alnum:]])+([[:space:][:print:]]*)"
+
+echo "Checking title '$FILE_CONTENT' conforms to conventional commit standards"
+
 if [[ $FILE_CONTENT =~ $REGEX ]]; then
  echo "Valid commit '$FILE_CONTENT'"
 else
-  echo "Error: '${pr_title}' doesn't conform to conventional commit standards"
+  echo "Error: '$FILE_CONTENT' doesn't conform to conventional commit standards"
  exit 1
 fi
