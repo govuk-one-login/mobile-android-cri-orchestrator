@@ -1,0 +1,11 @@
+name: Check PR Title
+description: Ensure PR title conforms to conventional commit standards
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check PR Title
+      env:
+        PR_TITLE: ${{ github.event.pull_request.title }}
+      run: check_pr_title.bash "PR_TITLE"
+      shell: bash
