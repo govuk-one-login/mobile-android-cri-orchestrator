@@ -28,7 +28,7 @@ jobs:
       packages: read
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -57,7 +57,7 @@ jobs:
 
       - name: Upload test report
         if: ${{ failure() && steps.component-tests.outcome == 'failure' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: component-test-reports
           path: "**/build/reports/tests/**/*"
@@ -82,7 +82,7 @@ jobs:
       packages: read
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -111,7 +111,7 @@ jobs:
 
       - name: Upload test report
         if: ${{ failure() && steps.contract-tests.outcome == 'failure' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: contract-test-reports
           path: "**/build/reports/tests/**/*"
@@ -139,7 +139,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -171,7 +171,7 @@ jobs:
 
       - name: Upload test report
         if: ${{ failure() && steps.unit-tests.outcome == 'failure' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: unit-test-reports
           path: "**/build/reports/tests/**/*"
@@ -179,7 +179,7 @@ jobs:
       # Sonar analyzers must have access to the bytecode to perform an accurate analysis.
       # https://community.sonarsource.com/t/sonarscanner-for-gradle-you-can-now-decide-when-to-compile/102069
       - name: Upload jars
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: jars
           path: "**/build/**/*.jar"
@@ -209,7 +209,7 @@ jobs:
       packages: read
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -250,7 +250,7 @@ jobs:
       packages: read
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -281,7 +281,7 @@ jobs:
       packages: read
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -320,7 +320,7 @@ jobs:
       - test-wrapper-instrumentation-test
     steps:
       - name: Run checkout github action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
@@ -333,27 +333,27 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Download jars
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 #v8.0.2
         with:
           name: jars
 
       - name: Download unit test coverage reports
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 #v8.0.2
         with:
           name: unit-test-coverage
 
       - name: Download component test coverage reports
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 #v8.0.2
         with:
           name: component-test-coverage
 
       - name: Download contract test coverage reports
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 #v8.0.2
         with:
           name: contract-test-coverage
 
       - name: Download test wrapper instrumentation test coverage reports
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 #v8.0.2
         with:
           name: test-wrapper-instrumentation-test-coverage
 
