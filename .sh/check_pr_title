@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-# Check the number of arguments
-[[ $# -eq 1 ]] || {
-  echo "Usage: check_pr_title [PR_TITLE]"
-  exit 1
-}
-
 pr_title=$1
 conventional_commit_regex="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*)"
 
