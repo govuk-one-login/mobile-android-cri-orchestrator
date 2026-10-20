@@ -16,17 +16,22 @@ jobs:
     name: Check PR title
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR title against conventional commit standards
-        uses: Oliver-Binns/Versioning@34801d858f89c7147ef277c73645bd23da9db9b7 # 1.4.5
+      - name: Run checkout github action
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ACTION_TYPE: 'Validate'
+          lfs: 'true'
+          submodules: 'true'
+          fetch-depth: 0
+
+      - name: Check PR title against conventional commit standards
+        uses: ./actions/pr-title-check
 
   check-commit-messages:
     name: Check commit messages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: 'true'
           submodules: 'true'
