@@ -20,7 +20,7 @@ import uk.gov.android.ui.componentsv2.list.GdsBulletedList
 import uk.gov.android.ui.componentsv2.list.ListItem
 import uk.gov.android.ui.componentsv2.list.ListTitle
 import uk.gov.android.ui.componentsv2.list.TitleType
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDestinations
@@ -60,7 +60,7 @@ internal fun ConfirmNoNonChippedIDContent(onConfirmClick: () -> Unit, modifier: 
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
     ) {
-        LeftAlignedScreen(
+        LeftAlignedScreenV3(
             title = { horizontalPadding ->
                 GdsHeading(
                     stringResource(ConfirmNoNonChippedIDConstants.titleId),

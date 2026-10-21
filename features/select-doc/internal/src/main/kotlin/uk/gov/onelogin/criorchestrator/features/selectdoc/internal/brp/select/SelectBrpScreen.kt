@@ -30,7 +30,7 @@ import uk.gov.android.ui.componentsv2.list.ListItem
 import uk.gov.android.ui.componentsv2.list.ListTitle
 import uk.gov.android.ui.componentsv2.list.TitleType
 import uk.gov.android.ui.componentsv2.warning.GdsWarningText
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
@@ -85,7 +85,7 @@ internal fun SelectBrpScreenContent(
     var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Surface {
-        LeftAlignedScreen(
+        LeftAlignedScreenV3(
             modifier = modifier,
             title = { horizontalPadding ->
                 GdsHeading(

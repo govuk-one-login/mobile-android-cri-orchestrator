@@ -19,7 +19,7 @@ import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingStyle
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadios
 import uk.gov.android.ui.componentsv2.inputs.radio.GdsRadiosTitle
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.repositories.api.config.BackendMode
@@ -45,7 +45,7 @@ internal fun SyncIdCheckScreenManualLauncherContent(
 ) = Surface(
     color = MaterialTheme.colorScheme.background,
 ) {
-    LeftAlignedScreen(
+    LeftAlignedScreenV3(
         modifier = modifier,
         title = { horizontalPadding ->
             GdsHeading(

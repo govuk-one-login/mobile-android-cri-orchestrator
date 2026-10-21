@@ -22,7 +22,7 @@ import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
 import uk.gov.android.ui.componentsv2.warning.GdsWarningText
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nav.IdCheckWrapperDestinations
@@ -68,7 +68,7 @@ internal fun ConfirmBrpScreenContent(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
     ) {
-        LeftAlignedScreen(
+        LeftAlignedScreenV3(
             title = { horizontalPadding ->
                 GdsHeading(
                     text = title,

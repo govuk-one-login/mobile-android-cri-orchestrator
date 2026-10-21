@@ -7,7 +7,7 @@ import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.edgetoedgescreen.EdgeToEdgeWrapperScreen
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.resume.publicapi.ProveYourIdentityCard
 import uk.gov.onelogin.criorchestrator.sdk.sharedapi.CriOrchestratorGraph
@@ -19,7 +19,7 @@ fun HomeScreen(
     onRefreshActiveSessionClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) = EdgeToEdgeWrapperScreen { paddingValues ->
-    LeftAlignedScreen(
+    LeftAlignedScreenV3(
         modifier = modifier.padding(paddingValues),
         title = { horizontalPadding ->
             GdsHeading(

@@ -1,7 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.MaterialTheme
@@ -26,9 +25,8 @@ import uk.gov.android.ui.componentsv2.list.GdsBulletedList
 import uk.gov.android.ui.componentsv2.list.ListItem
 import uk.gov.android.ui.componentsv2.list.ListTitle
 import uk.gov.android.ui.componentsv2.list.TitleType
-import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
+import uk.gov.android.ui.patterns.leftalignedscreen.v3.LeftAlignedScreenV3
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.android.ui.theme.spacingDouble
 import uk.gov.android.ui.theme.spacingSingle
 import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
@@ -62,7 +60,7 @@ internal fun TypesOfPhotoIDScreenContent(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
     ) {
-        LeftAlignedScreen(
+        LeftAlignedScreenV3(
             title = { horizontalPadding ->
                 GdsHeading(
                     text = stringResource(TypesOfPhotoIDConstants.titleId),
@@ -73,7 +71,6 @@ internal fun TypesOfPhotoIDScreenContent(
                         ),
                 )
             },
-            arrangement = Arrangement.spacedBy(spacingDouble),
             body = { horizontalPadding ->
                 item {
                     Text(
