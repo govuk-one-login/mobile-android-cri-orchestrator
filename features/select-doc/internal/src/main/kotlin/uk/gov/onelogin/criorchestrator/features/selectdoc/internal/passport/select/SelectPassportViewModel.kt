@@ -9,11 +9,13 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.libraries.di.CriOrchestratorScope
 
 @ContributesIntoMap(CriOrchestratorScope::class)
 @ViewModelKey(SelectPassportViewModel::class)
-class SelectPassportViewModel(private val analytics: SelectDocAnalytics) : ViewModel() {
+class SelectPassportViewModel(private val analytics: SelectDocAnalytics, private val sessionStore: SessionStore) :
+    ViewModel() {
     private val _actions = MutableSharedFlow<SelectPassportAction>()
     val actions: Flow<SelectPassportAction> = _actions
 
@@ -40,7 +42,14 @@ class SelectPassportViewModel(private val analytics: SelectDocAnalytics) : ViewM
         viewModelScope.launch {
             when (selectedIndex) {
                 0 -> _actions.emit(SelectPassportAction.NavigateToConfirmation)
-                1 -> _actions.emit(SelectPassportAction.NavigateToBrp)
+
+                1 -> _actions.emit(
+                    if (sessionStore.read().value?.disableBrpJourney == false) {
+                        SelectPassportAction.NavigateToBrp
+                    } else {
+                        SelectPassportAction.NavigateToDrivingLicence
+                    },
+                )
             }
         }
     }

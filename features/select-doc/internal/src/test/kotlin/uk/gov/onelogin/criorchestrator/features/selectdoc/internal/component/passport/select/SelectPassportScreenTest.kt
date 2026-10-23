@@ -31,6 +31,9 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 
 @RunWith(AndroidJUnit4::class)
 class SelectPassportScreenTest {
@@ -44,11 +47,14 @@ class SelectPassportScreenTest {
     private lateinit var confirmButton: SemanticsMatcher
 
     private val navController: NavController = mock()
+    private val session = Session.createTestInstance()
+    private var fakeSessionStore: FakeSessionStore = FakeSessionStore(session)
 
     private val viewModel =
         spy(
             SelectPassportViewModel(
                 analytics = mock(),
+                sessionStore = fakeSessionStore,
             ),
         )
 
@@ -170,6 +176,23 @@ class SelectPassportScreenTest {
             .performClick()
 
         verify(navController).navigate(SelectDocDestinations.Brp)
+    }
+
+    @Test
+    fun `when no is selected and confirm is tapped, it navigates to Driving Licence`() {
+        fakeSessionStore.write(session.copy(disableBrpJourney = true))
+        swipeToAdditionalContent()
+
+        composeTestRule
+            .onNode(noOption, useUnmergedTree = true)
+            .performClick()
+
+        composeTestRule
+            .onNode(confirmButton)
+            .assertIsEnabled()
+            .performClick()
+
+        verify(navController).navigate(SelectDocDestinations.DrivingLicence)
     }
 
     private fun swipeToAdditionalContent() {

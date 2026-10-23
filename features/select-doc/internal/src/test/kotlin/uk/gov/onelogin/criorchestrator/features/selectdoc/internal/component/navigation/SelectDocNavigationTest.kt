@@ -43,6 +43,7 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.SelectDocNavG
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internalapi.nav.SelectDocDestinations
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.GetJourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.FakeResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.ResourceProvider
@@ -302,6 +303,8 @@ interface TestGraph : ViewModelGraph {
             clock: Clock = testClock(),
             @Provides
             configStore: ConfigStore = FakeConfigStore(),
+            @Provides
+            sessionStore: SessionStore = mock(),
         ): TestGraph
     }
 }

@@ -14,16 +14,20 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportAction
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.passport.select.SelectPassportViewModel
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class SelectPassportViewModelTest {
     private val analyticsLogger = mock<SelectDocAnalytics>()
+    private var fakeSessionStore: FakeSessionStore = FakeSessionStore(Session.createTestInstance())
 
     private val viewModel by lazy {
         SelectPassportViewModel(
-            analytics =
-            analyticsLogger,
+            analytics = analyticsLogger,
+            sessionStore = fakeSessionStore,
         )
     }
 
@@ -77,6 +81,19 @@ class SelectPassportViewModelTest {
                 viewModel.onConfirmSelection(1)
 
                 assertEquals(SelectPassportAction.NavigateToBrp, awaitItem())
+            }
+        }
+    }
+
+    @Test
+    fun `when passport is not selected and session contains disableBrpJourney flag, navigate to DL`() {
+        runTest {
+            val session = Session(sessionId = "abc1234", disableBrpJourney = true)
+            fakeSessionStore = FakeSessionStore(session)
+            viewModel.actions.test {
+                viewModel.onConfirmSelection(1)
+
+                assertEquals(SelectPassportAction.NavigateToDrivingLicence, awaitItem())
             }
         }
     }

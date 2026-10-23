@@ -1,5 +1,6 @@
 package uk.gov.onelogin.criorchestrator.features.session.internalapi.domain
 
+import kotlin.test.assertFalse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -15,6 +16,14 @@ class SessionTest {
         assertEquals(
             Session.State.Created,
             defaultSession.sessionState,
+        )
+    }
+
+    @Test
+    fun `default session disableBrpJourney flag`() {
+        assertFalse(
+            defaultSession.disableBrpJourney,
+            "Expected disableBrpJourney to be false",
         )
     }
 
