@@ -6,10 +6,12 @@ fun Session.Companion.createTestInstance(
     sessionId: String = "test-session-id",
     redirectUri: String? = null,
     sessionState: Session.State = Session.State.Created,
+    disableBrpJourney: Boolean = false,
 ): Session = Session(
     sessionId = sessionId,
     redirectUri = redirectUri,
     sessionState = sessionState,
+    disableBrpJourney = disableBrpJourney,
 )
 
 fun Session.Companion.createDesktopAppDesktopInstance(): Session = Session.createTestInstance(

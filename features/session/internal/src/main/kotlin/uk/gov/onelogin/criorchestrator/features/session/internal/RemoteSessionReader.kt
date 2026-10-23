@@ -61,6 +61,8 @@ class RemoteSessionReader(
     private fun parseSession(response: ApiResponse.Success<String>): Session? = try {
         val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
             json.decodeFromString(response.body)
+        logger.debug(tag, "Response: ${response.body}")
+        logger.debug(tag, "parsedResponse: $parsedResponse")
         parsedResponse.flags?.disableBrpJourney?.let { disableBrpJourney ->
             Session(
                 sessionId = parsedResponse.sessionId,
