@@ -163,7 +163,7 @@ class SelectPassportScreenTest {
     }
 
     @Test
-    fun `when no is selected and confirm is tapped, it navigates to BRP`() {
+    fun `given disableBrpJourney is false, when no is selected and confirm is tapped, it navigates to BRP`() {
         swipeToAdditionalContent()
 
         composeTestRule
@@ -179,7 +179,7 @@ class SelectPassportScreenTest {
     }
 
     @Test
-    fun `when no is selected and confirm is tapped, it navigates to Driving Licence`() {
+    fun `given disableBrpJourney is true, when no is selected and confirm is tapped, it navigates to Driving Licence`() {
         fakeSessionStore.write(session.copy(disableBrpJourney = true))
         swipeToAdditionalContent()
 

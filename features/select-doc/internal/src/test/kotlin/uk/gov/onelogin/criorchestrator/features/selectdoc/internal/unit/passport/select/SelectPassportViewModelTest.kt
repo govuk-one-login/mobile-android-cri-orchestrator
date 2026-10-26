@@ -75,7 +75,7 @@ class SelectPassportViewModelTest {
     }
 
     @Test
-    fun `when passport is not selected, navigate to BRP`() {
+    fun `when passport is not selected and session disableBrpJourney flag is false, navigate to BRP`() {
         runTest {
             viewModel.actions.test {
                 viewModel.onConfirmSelection(1)
@@ -86,7 +86,7 @@ class SelectPassportViewModelTest {
     }
 
     @Test
-    fun `when passport is not selected and session contains disableBrpJourney flag, navigate to DL`() {
+    fun `when passport is not selected and session disableBrpJourney flag is true, navigate to DL`() {
         runTest {
             val session = Session(sessionId = "abc1234", disableBrpJourney = true)
             fakeSessionStore = FakeSessionStore(session)
