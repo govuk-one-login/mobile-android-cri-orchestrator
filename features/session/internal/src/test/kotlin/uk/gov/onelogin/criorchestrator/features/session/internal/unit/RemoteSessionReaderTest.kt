@@ -121,6 +121,9 @@ class RemoteSessionReaderTest {
                                 {
                                     "sessionId": "test session ID",
                                     "redirectUri": "https://example/redirect",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
                                     "state": "11112222333344445555666677778888"
                                 }
                             """.trimIndent(),
@@ -145,6 +148,9 @@ class RemoteSessionReaderTest {
                                 {
                                     "sessionId": "test session ID",
                                     "redirectUri": "https://example/redirect",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
                                     "additionalParameter": true,
                                     "state": "11112222333344445555666677778888"
                                 }
@@ -170,6 +176,9 @@ class RemoteSessionReaderTest {
                                 {
                                     "sessionId": "test session ID",
                                     "redirectUri": "https://example/redirect?test=test",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
                                     "state": "11112222333344445555666677778888"
                                 }
                             """.trimIndent(),
@@ -194,6 +203,9 @@ class RemoteSessionReaderTest {
                                 {
                                     "sessionId": "test session ID",
                                     "redirectUri": "https://example/redirect",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
                                     "state": "&?%:/"
                                 }
                             """.trimIndent(),
@@ -217,6 +229,9 @@ class RemoteSessionReaderTest {
                             """
                                 {
                                     "sessionId": "test session ID",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
                                     "state": "11112222333344445555666677778888"
                                 }
                             """.trimIndent(),
@@ -241,13 +256,111 @@ class RemoteSessionReaderTest {
                                 {
                                     "sessionId_WRONG": "test session ID",
                                     "redirectUri": "https://example/redirect",
-                                    "state": "11112222333344445555666677778888"
+                                    "state": "11112222333344445555666677778888",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    }
                                 }
                             """.trimIndent(),
                         status = 200,
                     ),
                 ),
                 "Failed to parse active session response",
+                SessionReader.Result.Unknown,
+            ),
+            arguments(
+                named(
+                    "true with expected log entry when API response is Success with correct " +
+                        "response format - with disableBrpJourney true",
+                    ApiResponse.Success(
+                        body =
+                            """
+                                {
+                                    "sessionId": "test session ID",
+                                    "redirectUri": "https://example/redirect",
+                                    "flags": {
+                                        "disableBrpJourney": true
+                                    },
+                                    "state": "11112222333344445555666677778888"
+                                }
+                            """.trimIndent(),
+                        status = 200,
+                    ),
+                ),
+                "Got active session",
+                SessionReader.Result.IsActive(
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                        disableBrpJourney = true,
+                    ),
+                ),
+            ),
+            arguments(
+                named(
+                    "true with expected log entry when API response is Success with correct " +
+                        "response format - with disableBrpJourney false",
+                    ApiResponse.Success(
+                        body =
+                            """
+                                {
+                                    "sessionId": "test session ID",
+                                    "redirectUri": "https://example/redirect",
+                                    "flags": {
+                                        "disableBrpJourney": false
+                                    },
+                                    "state": "11112222333344445555666677778888"
+                                }
+                            """.trimIndent(),
+                        status = 200,
+                    ),
+                ),
+                "Got active session",
+                SessionReader.Result.IsActive(
+                    Session(
+                        sessionId = "test session ID",
+                        redirectUri = "https://example/redirect?state=11112222333344445555666677778888",
+                        disableBrpJourney = false,
+                    ),
+                ),
+            ),
+            arguments(
+                named(
+                    "true with expected log entry when API response is Success with correct " +
+                        "response format - with flags element empty",
+                    ApiResponse.Success(
+                        body =
+                            """
+                                {
+                                    "sessionId": "test session ID",
+                                    "redirectUri": "https://example/redirect",
+                                    "flags": {},
+                                    "state": "11112222333344445555666677778888"
+                                }
+                            """.trimIndent(),
+                        status = 200,
+                    ),
+                ),
+                "Failed to parse active session response - disableBrpJourney flag missing",
+                SessionReader.Result.Unknown,
+            ),
+            arguments(
+                named(
+                    "true with expected log entry when API response is Success with correct " +
+                        "response format - with flags element missing",
+                    ApiResponse.Success(
+                        body =
+                            """
+                                {
+                                    "sessionId": "test session ID",
+                                    "redirectUri": "https://example/redirect",
+                                    "state": "11112222333344445555666677778888"
+                                }
+                            """.trimIndent(),
+                        status = 200,
+                    ),
+                ),
+                "Failed to parse active session response - disableBrpJourney flag missing",
                 SessionReader.Result.Unknown,
             ),
         )
