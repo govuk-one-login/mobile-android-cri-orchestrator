@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
