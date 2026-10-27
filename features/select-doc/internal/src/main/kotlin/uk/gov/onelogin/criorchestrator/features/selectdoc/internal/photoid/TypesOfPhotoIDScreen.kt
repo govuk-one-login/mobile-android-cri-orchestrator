@@ -46,6 +46,7 @@ internal fun TypesOfPhotoIDScreen(viewModel: TypesOfPhotoIDViewModel, modifier: 
     TypesOfPhotoIDScreenContent(
         drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
         enableExpiredBRP = state.enableExpiredBrp,
+        disableBrpJourney = state.disableBrpJourney,
         modifier = modifier,
     )
 }
@@ -56,6 +57,7 @@ internal fun TypesOfPhotoIDScreen(viewModel: TypesOfPhotoIDViewModel, modifier: 
 internal fun TypesOfPhotoIDScreenContent(
     drivingLicenceExpiryDateText: String,
     enableExpiredBRP: Boolean,
+    disableBrpJourney: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -86,10 +88,12 @@ internal fun TypesOfPhotoIDScreenContent(
 
                 nonUkPassportItems(horizontalPadding = horizontalPadding)
 
-                ukBiometricPermitOrCardItems(
-                    horizontalPadding = horizontalPadding,
-                    enableExpiredBRP = enableExpiredBRP,
-                )
+                if (!disableBrpJourney) {
+                    ukBiometricPermitOrCardItems(
+                        horizontalPadding = horizontalPadding,
+                        enableExpiredBRP = enableExpiredBRP,
+                    )
+                }
 
                 ukPhotoCardDrivingLicenceItems(
                     horizontalPadding = horizontalPadding,
@@ -276,6 +280,7 @@ internal fun PreviewTypesOfPhotoIDScreen() {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
             enableExpiredBRP = true,
+            disableBrpJourney = false,
         )
     }
 }
@@ -289,6 +294,21 @@ internal fun PreviewTypesOfPhotoIDScreenNoExpired() {
         TypesOfPhotoIDScreenContent(
             drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
             enableExpiredBRP = false,
+            disableBrpJourney = false,
+        )
+    }
+}
+
+@Preview(heightDp = PREVIEW_HEIGHT, uiMode = UI_MODE_NIGHT_YES)
+@Preview(heightDp = PREVIEW_HEIGHT)
+@Preview(heightDp = PREVIEW_HEIGHT, locale = "cy")
+@Composable
+internal fun PreviewTypesOfPhotoIDScreenDisableBrpJourney() {
+    GdsTheme {
+        TypesOfPhotoIDScreenContent(
+            drivingLicenceExpiryDateText = previewEarliestAcceptableDrivingLicenceExpiryDateText(),
+            enableExpiredBRP = false,
+            disableBrpJourney = true,
         )
     }
 }

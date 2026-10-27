@@ -11,14 +11,20 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocScreenId
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDAction
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDState
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nochippedid.ConfirmNoChippedIDViewModel
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.StubGetJourneyType
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainDispatcherExtension
 
 @ExtendWith(MainDispatcherExtension::class)
 class ConfirmNoChippedIDViewModelTest {
     private val analyticsLogger = mock<SelectDocAnalytics>()
+    private val fakeSessionStoreDisableBrp = FakeSessionStore(Session.createTestInstance(disableBrpJourney = true))
+    private val fakeSessionStoreDefault = FakeSessionStore(Session.createTestInstance())
 
     @Test
     fun `when screen starts, it sends analytics`() {
@@ -26,6 +32,7 @@ class ConfirmNoChippedIDViewModelTest {
             ConfirmNoChippedIDViewModel(
                 analytics = analyticsLogger,
                 getJourneyType = StubGetJourneyType(),
+                sessionStore = fakeSessionStoreDefault,
             )
 
         viewModel.onScreenStart()
@@ -43,6 +50,7 @@ class ConfirmNoChippedIDViewModelTest {
             ConfirmNoChippedIDViewModel(
                 analytics = analyticsLogger,
                 getJourneyType = StubGetJourneyType(),
+                sessionStore = fakeSessionStoreDefault,
             )
 
         viewModel.action.test {
@@ -64,6 +72,7 @@ class ConfirmNoChippedIDViewModelTest {
                     StubGetJourneyType(
                         journeyType = JourneyType.MobileAppMobile("https://example.com"),
                     ),
+                sessionStore = fakeSessionStoreDefault,
             )
 
         viewModel.action.test {
@@ -85,6 +94,7 @@ class ConfirmNoChippedIDViewModelTest {
                     StubGetJourneyType(
                         journeyType = JourneyType.DesktopAppDesktop,
                     ),
+                sessionStore = fakeSessionStoreDefault,
             )
 
         viewModel.action.test {
@@ -94,6 +104,40 @@ class ConfirmNoChippedIDViewModelTest {
                     buttonText = R.string.confirm_nochippedid_confirmbutton,
                 )
             assertEquals(ConfirmNoChippedIDAction.NavigateToConfirmAbortDesktop, awaitItem())
+        }
+    }
+
+    @Test
+    fun `when stored session does not contain disableBrpJourney flag it is not set in state`() = runTest {
+        val viewModel =
+            ConfirmNoChippedIDViewModel(
+                analytics = analyticsLogger,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.DesktopAppDesktop,
+                    ),
+                sessionStore = fakeSessionStoreDefault,
+            )
+
+        viewModel.state.test {
+            assertEquals(ConfirmNoChippedIDState(disableBrpJourney = false), awaitItem())
+        }
+    }
+
+    @Test
+    fun `when stored session does contains disableBrpJourney flag it is set in state`() = runTest {
+        val viewModel =
+            ConfirmNoChippedIDViewModel(
+                analytics = analyticsLogger,
+                getJourneyType =
+                    StubGetJourneyType(
+                        journeyType = JourneyType.DesktopAppDesktop,
+                    ),
+                sessionStore = fakeSessionStoreDisableBrp,
+            )
+
+        viewModel.state.test {
+            assertEquals(ConfirmNoChippedIDState(disableBrpJourney = true), awaitItem())
         }
     }
 }
