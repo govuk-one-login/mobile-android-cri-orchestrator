@@ -15,6 +15,9 @@ import org.mockito.Mockito.mock
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.PreviewTypesOfPhotoIDScreen
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.PreviewTypesOfPhotoIDScreenDisableBrpJourney
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.PreviewTypesOfPhotoIDScreenNoExpired
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModel
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
@@ -35,16 +38,26 @@ class TypesOfPhotoIDScreenTest {
 
     private val earliestAcceptableDrivingLicenceExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val viewModel by
-        lazy {
-            TypesOfPhotoIDViewModel(
-                analytics = mock(),
-                earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
-                configStore = FakeConfigStore(),
-                sessionStore = fakeSessionStore,
-            )
-        }
+    lazy {
+        TypesOfPhotoIDViewModel(
+            analytics = mock(),
+            earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
+            configStore = FakeConfigStore(),
+            sessionStore = fakeSessionStore,
+        )
+    }
 
     fun setUp(disableBrpJourney: Boolean) {
+        initialiseMatchers(disableBrpJourney)
+
+        composeTestRule.setContent {
+            TypesOfPhotoIDScreen(
+                viewModel = viewModel,
+            )
+        }
+    }
+
+    private fun initialiseMatchers(disableBrpJourney: Boolean) {
         val context: Context = ApplicationProvider.getApplicationContext()
 
         ukPassportImage =
@@ -60,12 +73,6 @@ class TypesOfPhotoIDScreenTest {
             hasContentDescription(context.getString(R.string.typesofphotoid_drivinglicence_imagedescription))
 
         fakeSessionStore = FakeSessionStore(Session.createTestInstance(disableBrpJourney = disableBrpJourney))
-
-        composeTestRule.setContent {
-            TypesOfPhotoIDScreen(
-                viewModel = viewModel,
-            )
-        }
     }
 
     @Test
@@ -90,6 +97,37 @@ class TypesOfPhotoIDScreenTest {
             .performScrollToNode(nonUKPassportImage)
             .performScrollToNode(drivingLicenceImage)
 
+        composeTestRule.onNode(brpImage).assertDoesNotExist()
+    }
+
+    @Test
+    fun `test preview where enableExpiredBRP flag set and disableBrpJourney not set`() {
+        initialiseMatchers(disableBrpJourney = false)
+        composeTestRule.setContent {
+            PreviewTypesOfPhotoIDScreen()
+        }
+        composeTestRule
+            .onNode(hasScrollToNodeAction())
+            .performScrollToNode(brpImage)
+    }
+
+    @Test
+    fun `test preview where enableExpiredBRP flag not set and disableBrpJourney not set`() {
+        initialiseMatchers(disableBrpJourney = false)
+        composeTestRule.setContent {
+            PreviewTypesOfPhotoIDScreenNoExpired()
+        }
+        composeTestRule
+            .onNode(hasScrollToNodeAction())
+            .performScrollToNode(brpImage)
+    }
+
+    @Test
+    fun `test preview where enableExpiredBRP flag not set and disableBrpJourney set`() {
+        initialiseMatchers(disableBrpJourney = true)
+        composeTestRule.setContent {
+            PreviewTypesOfPhotoIDScreenDisableBrpJourney()
+        }
         composeTestRule.onNode(brpImage).assertDoesNotExist()
     }
 }
