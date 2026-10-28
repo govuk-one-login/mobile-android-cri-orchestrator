@@ -20,6 +20,8 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.SelectDocAnalytics
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.ConfirmNoNonChippedIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.ConfirmNoNonChippedIDViewModel
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.PreviewConfirmNoNonChippedIDScreenBrp
+import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.confirmnoid.nononchippedid.PreviewConfirmNoNonChippedIDScreenNoBrp
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.JourneyType
 import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
@@ -96,6 +98,26 @@ class ConfirmNoNonChippedIDScreenTest {
 
         composeTestRule
             .onNode(noBrpBulletItem)
+            .assertExists()
+    }
+
+    @Test
+    fun `test preview when disableBrpJourney flag is set to true`() = runTest {
+        composeTestRule.setContent {
+            PreviewConfirmNoNonChippedIDScreenNoBrp()
+        }
+        composeTestRule
+            .onNode(noBrpBulletItem)
+            .assertExists()
+    }
+
+    @Test
+    fun `test preview when disableBrpJourney flag is set to false`() = runTest {
+        composeTestRule.setContent {
+            PreviewConfirmNoNonChippedIDScreenBrp()
+        }
+        composeTestRule
+            .onNode(brpBulletItem)
             .assertExists()
     }
 
