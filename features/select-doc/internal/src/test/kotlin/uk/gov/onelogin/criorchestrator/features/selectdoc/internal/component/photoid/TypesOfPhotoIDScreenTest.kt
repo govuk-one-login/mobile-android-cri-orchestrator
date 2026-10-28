@@ -38,14 +38,14 @@ class TypesOfPhotoIDScreenTest {
 
     private val earliestAcceptableDrivingLicenceExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val viewModel by
-    lazy {
-        TypesOfPhotoIDViewModel(
-            analytics = mock(),
-            earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
-            configStore = FakeConfigStore(),
-            sessionStore = fakeSessionStore,
-        )
-    }
+        lazy {
+            TypesOfPhotoIDViewModel(
+                analytics = mock(),
+                earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
+                configStore = FakeConfigStore(),
+                sessionStore = fakeSessionStore,
+            )
+        }
 
     fun setUp(disableBrpJourney: Boolean) {
         initialiseMatchers(disableBrpJourney)
