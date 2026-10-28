@@ -10,6 +10,14 @@ plugins {
     alias(libs.plugins.ksp)
     alias(testwrapperlibs.plugins.hilt.gradle)
     id("uk.gov.onelogin.criorchestrator.id-check-sdk-compat-config")
+    id("uk.gov.onelogin.criorchestrator.app-test-config")
+}
+
+testTypeConfig {
+    testTypes(
+        "component",
+        "unit",
+    )
 }
 
 configure<ApplicationExtension> {
