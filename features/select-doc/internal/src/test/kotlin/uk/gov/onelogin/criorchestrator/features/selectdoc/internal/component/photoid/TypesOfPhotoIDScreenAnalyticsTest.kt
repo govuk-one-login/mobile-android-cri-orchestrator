@@ -18,6 +18,10 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.analytics.Sel
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDScreen
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid.TypesOfPhotoIDViewModel
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.FakeSessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.Session
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.SessionStore
+import uk.gov.onelogin.criorchestrator.features.session.internalapi.domain.createTestInstance
 import uk.gov.onelogin.criorchestrator.libraries.analytics.resources.AndroidResourceProvider
 import uk.gov.onelogin.criorchestrator.libraries.testing.MainStandardDispatcherRule
 import uk.gov.onelogin.criorchestrator.libraries.testing.ReportingAnalyticsLoggerRule
@@ -36,6 +40,7 @@ class TypesOfPhotoIDScreenAnalyticsTest {
     private val analyticsLogger = reportingAnalyticsLoggerRule.analyticsLogger
     private val earliestAcceptableDrivingLicenceExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val context: Context = ApplicationProvider.getApplicationContext()
+    private val sessionStore: FakeSessionStore = FakeSessionStore(Session.createTestInstance())
 
     private val analytics =
         SelectDocAnalytics(
@@ -51,6 +56,7 @@ class TypesOfPhotoIDScreenAnalyticsTest {
             analytics = analytics,
             earliestAcceptableDrivingLicenceExpiryDate = earliestAcceptableDrivingLicenceExpiryDate,
             configStore = FakeConfigStore(),
+            sessionStore = sessionStore,
         )
 
     @Before
