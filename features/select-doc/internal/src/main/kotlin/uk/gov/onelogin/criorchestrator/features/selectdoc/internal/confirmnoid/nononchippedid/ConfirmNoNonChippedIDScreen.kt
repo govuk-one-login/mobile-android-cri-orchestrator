@@ -7,6 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.dropUnlessResumed
@@ -33,6 +34,8 @@ internal fun ConfirmNoNonChippedIDScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val state = viewModel.state.collectAsState().value
+
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
 
@@ -50,12 +53,17 @@ internal fun ConfirmNoNonChippedIDScreen(
     ConfirmNoNonChippedIDContent(
         onConfirmClick = viewModel::onConfirmClick,
         modifier = modifier,
+        disableBrpJourney = state.disableBrpJourney,
     )
 }
 
 @OptIn(UnstableDesignSystemAPI::class)
 @Composable
-internal fun ConfirmNoNonChippedIDContent(onConfirmClick: () -> Unit, modifier: Modifier = Modifier) {
+internal fun ConfirmNoNonChippedIDContent(
+    onConfirmClick: () -> Unit,
+    disableBrpJourney: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background,
@@ -79,7 +87,13 @@ internal fun ConfirmNoNonChippedIDContent(onConfirmClick: () -> Unit, modifier: 
                     GdsBulletedList(
                         persistentListOf(
                             ListItem(
-                                stringResource(R.string.confirm_nononchippedid_bullet_1),
+                                stringResource(
+                                    if (disableBrpJourney) {
+                                        R.string.confirm_nononchippedid_bullet_1
+                                    } else {
+                                        R.string.confirm_nononchippedid_bullet_1_brp
+                                    },
+                                ),
                             ),
                             ListItem(
                                 stringResource(R.string.confirm_nononchippedid_bullet_2),
@@ -108,10 +122,22 @@ internal fun ConfirmNoNonChippedIDContent(onConfirmClick: () -> Unit, modifier: 
 
 @LightDarkBothLocalesPreviews
 @Composable
-internal fun PreviewConfirmNoNonChippedIDScreen() {
+internal fun PreviewConfirmNoNonChippedIDScreenBrp() {
     GdsTheme {
         ConfirmNoNonChippedIDContent(
             onConfirmClick = {},
+            disableBrpJourney = false,
+        )
+    }
+}
+
+@LightDarkBothLocalesPreviews
+@Composable
+internal fun PreviewConfirmNoNonChippedIDScreenNoBrp() {
+    GdsTheme {
+        ConfirmNoNonChippedIDContent(
+            onConfirmClick = {},
+            disableBrpJourney = true,
         )
     }
 }

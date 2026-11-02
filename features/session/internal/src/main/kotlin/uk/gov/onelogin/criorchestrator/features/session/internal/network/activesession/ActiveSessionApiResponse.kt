@@ -14,5 +14,7 @@ sealed class ActiveSessionApiResponse {
         val redirectUri: String? = null,
         @JsonNames("state")
         val state: String,
+        @JsonNames("flags")
+        val flags: Flags? = null,
     ) : ActiveSessionApiResponse()
 }

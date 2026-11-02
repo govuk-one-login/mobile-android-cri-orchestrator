@@ -31,7 +31,8 @@
     <string name="confirm_nononchippedid_title">Cadarnhau nad oes gennych drwydded yrru cerdyn-llun y DU</string>
     <string name="confirm_nononchippedid_body_1">Rydych chi wedi dweud nad oes gennych drwydded yrru cerdyn-llun y DU.</string>
     <string name="confirm_nononchippedid_body_2">Mae hyn yn golygu na fyddwch yn gallu profi eich hunaniaeth gyda’r ap hwn oherwydd:</string>
-    <string name="confirm_nononchippedid_bullet_1">nid oes gan eich ffôn ddarllenydd NFC - felly ni all sganio pasbort neu gerdyn biometrig</string>
+    <string name="confirm_nononchippedid_bullet_1_brp">nid oes gan eich ffôn ddarllenydd NFC - felly ni all sganio pasbort neu gerdyn biometrig</string>
+    <string name="confirm_nononchippedid_bullet_1">nid oes gan eich ffôn ddarllenydd NFC - felly ni all sganio pasbort</string>
     <string name="confirm_nononchippedid_bullet_2">yr unig fath o ID gyda llun gallech ei ddefnyddio heb darllenydd NFC yw trwydded yrru cerdyn-llun y DU</string>
     <string name="confirm_nononchippedid_confirmbutton">Cadarnhau</string>
 
