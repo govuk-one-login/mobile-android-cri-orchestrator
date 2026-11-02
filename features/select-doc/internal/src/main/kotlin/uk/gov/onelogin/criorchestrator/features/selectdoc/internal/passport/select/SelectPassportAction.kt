@@ -6,4 +6,6 @@ sealed class SelectPassportAction {
     data object NavigateToConfirmation : SelectPassportAction()
 
     data object NavigateToTypesOfPhotoID : SelectPassportAction()
+
+    data object NavigateToDrivingLicence : SelectPassportAction()
 }

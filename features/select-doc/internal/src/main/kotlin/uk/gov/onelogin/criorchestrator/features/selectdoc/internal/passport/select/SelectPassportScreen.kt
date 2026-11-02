@@ -61,6 +61,11 @@ internal fun SelectPassportScreen(
                     navController.navigate(
                         SelectDocDestinations.Brp,
                     )
+
+                SelectPassportAction.NavigateToDrivingLicence ->
+                    navController.navigate(
+                        SelectDocDestinations.DrivingLicence,
+                    )
             }
         }
     }

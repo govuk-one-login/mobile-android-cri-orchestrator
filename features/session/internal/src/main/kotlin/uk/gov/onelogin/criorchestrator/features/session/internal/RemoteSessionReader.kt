@@ -61,10 +61,18 @@ class RemoteSessionReader(
     private fun parseSession(response: ApiResponse.Success<String>): Session? = try {
         val parsedResponse: ActiveSessionApiResponse.ActiveSessionSuccess =
             json.decodeFromString(response.body)
-        Session(
-            sessionId = parsedResponse.sessionId,
-            redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
-        )
+        logger.debug(tag, "Response: ${response.body}")
+        logger.debug(tag, "parsedResponse: $parsedResponse")
+        parsedResponse.flags?.disableBrpJourney?.let { disableBrpJourney ->
+            Session(
+                sessionId = parsedResponse.sessionId,
+                redirectUri = generateRedirectUri(parsedResponse.redirectUri, parsedResponse.state),
+                disableBrpJourney = disableBrpJourney,
+            )
+        } ?: run {
+            logger.error(tag, "Failed to parse active session response - disableBrpJourney flag missing")
+            null
+        }
     } catch (e: IllegalArgumentException) {
         logger.error(tag, "Failed to parse active session response", e)
         null
