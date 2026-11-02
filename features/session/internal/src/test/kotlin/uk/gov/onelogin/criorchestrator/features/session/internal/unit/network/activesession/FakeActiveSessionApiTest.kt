@@ -32,7 +32,10 @@ class FakeActiveSessionApiTest {
                     {
                         "sessionId": "test-session-id",
                         "redirectUri": "https://example/redirect",
-                        "state": "11112222333344445555666677778888"
+                        "state": "11112222333344445555666677778888",
+                        "flags": {
+                            "disableBrpJourney": false
+                        }
                     }
                     """.replace("\\s".toRegex(), ""),
             result.body,
@@ -54,7 +57,10 @@ class FakeActiveSessionApiTest {
             """
                     {
                         "sessionId": "test-session-id",
-                        "state": "11112222333344445555666677778888"
+                        "state": "11112222333344445555666677778888",
+                        "flags": {
+                            "disableBrpJourney": false
+                        }
                     }
                     """.replace("\\s".toRegex(), ""),
             result.body,

@@ -21,6 +21,7 @@ class FakeActiveSessionApi(private val configStore: ConfigStore) : ActiveSession
                 sessionId = "test-session-id",
                 redirectUri = redirectUri,
                 state = "11112222333344445555666677778888",
+                flags = Flags(disableBrpJourney = false),
             )
         return ApiResponse.Success(body = Json.encodeToString(response), status = 200)
     }
