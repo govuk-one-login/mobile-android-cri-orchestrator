@@ -20,13 +20,13 @@ import androidx.navigation.NavController
 import uk.gov.android.ui.componentsv2.R.string.opens_in_external_browser
 import uk.gov.android.ui.componentsv2.button.ButtonIcon
 import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
+import uk.gov.android.ui.componentsv2.button.ExternalDestination
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
-import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
+import uk.gov.android.ui.patterns.loadingscreen.v2.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.m3.Typography
-import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
@@ -34,7 +34,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDe
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
-@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortMobileScreen(
     viewModel: ConfirmAbortMobileViewModel,
@@ -85,7 +84,6 @@ internal fun ConfirmAbortMobileScreen(
 }
 
 @Suppress("LongMethod")
-@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortMobileWebContent(onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
@@ -136,7 +134,7 @@ internal fun ConfirmAbortMobileWebContent(onButtonClick: () -> Unit, modifier: M
                         ButtonTypeV2.Primary(
                             textStyle = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                         ),
-                    icon = ButtonIcon.opensInWebBrowser(),
+                    icon = ButtonIcon.opensExternalDestination(ExternalDestination.WebBrowser),
                     modifier =
                         Modifier
                             .fillMaxWidth()

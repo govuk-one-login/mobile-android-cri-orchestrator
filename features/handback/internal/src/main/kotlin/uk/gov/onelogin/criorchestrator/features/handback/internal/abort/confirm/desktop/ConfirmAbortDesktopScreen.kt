@@ -20,9 +20,8 @@ import uk.gov.android.ui.componentsv2.button.ButtonTypeV2
 import uk.gov.android.ui.componentsv2.button.GdsButton
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.patterns.centrealignedscreen.CentreAlignedScreen
-import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
+import uk.gov.android.ui.patterns.loadingscreen.v2.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 import uk.gov.onelogin.criorchestrator.features.handback.internal.abort.confirm.ConfirmAbortState
@@ -30,7 +29,6 @@ import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.AbortDe
 import uk.gov.onelogin.criorchestrator.features.handback.internalapi.nav.HandbackDestinations
 import uk.gov.onelogin.criorchestrator.libraries.composeutils.LightDarkBothLocalesPreviews
 
-@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 fun ConfirmAbortDesktopWebScreen(
     viewModel: ConfirmAbortDesktopViewModel,
@@ -68,7 +66,6 @@ fun ConfirmAbortDesktopWebScreen(
     }
 }
 
-@OptIn(UnstableDesignSystemAPI::class)
 @Composable
 internal fun ConfirmAbortDesktopWebContent(onContinueClicked: () -> Unit, modifier: Modifier = Modifier) {
     Surface(

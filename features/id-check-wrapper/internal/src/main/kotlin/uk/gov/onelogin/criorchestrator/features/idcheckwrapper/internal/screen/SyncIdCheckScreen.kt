@@ -12,9 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.Flow
-import uk.gov.android.ui.patterns.loadingscreen.LoadingScreen
+import uk.gov.android.ui.patterns.loadingscreen.v2.LoadingScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
-import uk.gov.android.ui.theme.util.UnstableDesignSystemAPI
 import uk.gov.idcheck.sdk.IdCheckSdkExitState
 import uk.gov.idcheck.sdk.IdCheckSdkParameters
 import uk.gov.onelogin.criorchestrator.features.error.internalapi.nav.ErrorDestinations
@@ -29,7 +28,6 @@ import uk.gov.onelogin.criorchestrator.libraries.composeutils.OneTimeLaunchedEff
  * This screen handles launching of the ID Check SDK journey of the desired journey/document type,
  * and handling of the SDK exit states once the ID Check SDK journey has been completed.
  */
-@OptIn(UnstableDesignSystemAPI::class)
 @Suppress("LongMethod")
 @Composable
 internal fun SyncIdCheckScreen(
