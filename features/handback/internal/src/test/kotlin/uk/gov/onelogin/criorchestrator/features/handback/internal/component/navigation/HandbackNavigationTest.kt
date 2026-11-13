@@ -325,6 +325,21 @@ class HandbackNavigationTest {
         assertEquals(redirectUri, webNavigator.openUrl)
     }
 
+    @Test
+    fun `no valid session screen - back navigation disabled`() {
+        givenDesktopJourney()
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = HandbackDestinations.NoValidSessionError,
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertNoValidSessionIsDisplayed()
+
+        // Back navigation is disabled
+        composeTestRule.goBack()
+        composeTestRule.assertNoValidSessionIsDisplayed()
+    }
+
     private fun ComposeTestRule.assertStartIsDisplayed() = composeTestRule
         .onNodeWithText(START_BUTTON)
         .assertIsDisplayed()
@@ -412,6 +427,21 @@ class HandbackNavigationTest {
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(context.getString(R.string.handback_facescanlimitreachedmobile_body2))
+            .assertIsDisplayed()
+    }
+
+    private fun ComposeTestRule.assertNoValidSessionIsDisplayed() {
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_no_valid_session_title))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_no_valid_session_para_1))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_no_valid_session_para_2))
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(context.getString(R.string.handback_no_valid_session_para_3))
             .assertIsDisplayed()
     }
 

@@ -2,6 +2,7 @@ package uk.gov.onelogin.criorchestrator.features.handback.internal.component.nov
 
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -16,6 +17,7 @@ class NoValidSessionScreenTest {
     val composeTestRule = createComposeRule()
 
     private var onScreenStartCalled = false
+    private var onBackPressed = false
     private val title = hasText("We were not able to confirm your identity")
     private val para1 = hasText("This could be because you started proving your identity more than an hour ago.")
     private val para2 = hasText("You need to start again.")
@@ -28,9 +30,14 @@ class NoValidSessionScreenTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            NoValidSessionScreen {
-                onScreenStartCalled = true
-            }
+            NoValidSessionScreen(
+                onScreenStart = {
+                    onScreenStartCalled = true
+                },
+                onBackPressed = {
+                    onBackPressed = true
+                },
+            )
         }
     }
 
@@ -47,5 +54,12 @@ class NoValidSessionScreenTest {
             onNode(para2).assertExists()
             onNode(para3).assertExists()
         }
+    }
+
+    @Test
+    fun verifyBackPressed() {
+        Espresso.pressBack()
+
+        assertTrue(onBackPressed)
     }
 }
