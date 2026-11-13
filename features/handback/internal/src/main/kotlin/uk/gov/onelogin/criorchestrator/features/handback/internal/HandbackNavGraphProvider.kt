@@ -128,9 +128,11 @@ class HandbackNavGraphProvider(
 
         composable<HandbackDestinations.NoValidSessionError> {
             val viewModel: NoValidSessionViewModel = metroViewModel()
-            NoValidSessionScreen {
-                viewModel.onScreenStart()
-            }
+            NoValidSessionScreen(
+                onScreenStart = {
+                    viewModel.onScreenStart()
+                },
+            )
         }
     }
 }
