@@ -9,6 +9,7 @@ import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.onSibling
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -78,12 +79,12 @@ class SelectDrivingLicenceScreenTest {
 
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
-            .onSibling()
+            .onParent()
             .assertIsNotSelected()
 
         composeTestRule
             .onNode(noOption, useUnmergedTree = true)
-            .onSibling()
+            .onParent()
             .assertIsNotSelected()
     }
 
@@ -116,7 +117,7 @@ class SelectDrivingLicenceScreenTest {
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
             .performClick()
-            .onSibling()
+            .onParent()
             .assertIsSelected()
     }
 
@@ -128,7 +129,7 @@ class SelectDrivingLicenceScreenTest {
             .onNode(noOption, useUnmergedTree = true)
             .performScrollTo()
             .performClick()
-            .onSibling()
+            .onParent()
             .assertIsSelected()
     }
 
