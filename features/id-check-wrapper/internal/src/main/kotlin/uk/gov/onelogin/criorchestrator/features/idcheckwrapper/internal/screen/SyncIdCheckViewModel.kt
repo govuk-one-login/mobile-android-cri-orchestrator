@@ -215,8 +215,7 @@ class SyncIdCheckViewModel(
                     SyncIdCheckAction.NavigateToRecoverableError,
                 )
 
-            is LauncherDataReaderResult.UnrecoverableError,
-            ->
+            is LauncherDataReaderResult.UnrecoverableError ->
                 _actions.emit(
                     SyncIdCheckAction.NavigateToUnrecoverableError,
                 )

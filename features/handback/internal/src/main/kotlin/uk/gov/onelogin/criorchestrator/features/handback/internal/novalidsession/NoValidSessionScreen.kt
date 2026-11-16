@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.features.handback.internal.novalidsession
 
 import android.content.res.Configuration
+import androidx.activity.compose.BackHandler
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,9 +12,13 @@ import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.onelogin.criorchestrator.features.handback.internal.R
 
 @Composable
-fun NoValidSessionScreen(onScreenStart: () -> Unit) {
+fun NoValidSessionScreen(onScreenStart: () -> Unit, onBackPressed: () -> Unit = {}) {
     LaunchedEffect(Unit) {
         onScreenStart()
+    }
+
+    BackHandler(true) {
+        onBackPressed()
     }
 
     NoValidSessionError(generateParameters())
