@@ -5,14 +5,13 @@ import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
-import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isHeading
-import androidx.compose.ui.test.isSelectable
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
@@ -103,7 +102,8 @@ class RestoreProveYourIdentityNavigationStateTest {
             .assertExists()
 
         composeTestRule
-            .onNode(hasAnySibling(hasText(NO)) and isSelectable(), useUnmergedTree = true)
+            .onNodeWithText(NO, useUnmergedTree = true)
+            .onParent()
             .assertIsSelected()
     }
 
