@@ -90,12 +90,12 @@ class SelectPassportScreenTest {
 
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
-            .onParent()
+            .onSibling()
             .assertIsNotSelected()
 
         composeTestRule
             .onNode(noOption, useUnmergedTree = true)
-            .onParent()
+            .onSibling()
             .assertIsNotSelected()
     }
 
@@ -116,7 +116,7 @@ class SelectPassportScreenTest {
         composeTestRule
             .onNode(yesOption, useUnmergedTree = true)
             .performClick()
-            .onParent()
+            .onSibling()
             .assertIsSelected()
     }
 
@@ -127,7 +127,7 @@ class SelectPassportScreenTest {
         composeTestRule
             .onNode(noOption, useUnmergedTree = true)
             .performClick()
-            .onParent()
+            .onSibling()
             .assertIsSelected()
     }
 
