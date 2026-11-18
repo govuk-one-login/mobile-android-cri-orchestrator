@@ -350,6 +350,13 @@ jobs:
         with:
           dry-run: true
 
+      # temporary refresh dependency cache before scan with sonar runs step - revert before merging
+      - name: Refresh dependencies (debug)
+        run: ./gradlew :konsist-test:compileDebugTestFixturesKotlin --refresh-dependencies
+        env:
+          GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
+
       - name: Scan with Sonar
         uses: ./mobile-android-pipelines/actions/sonar-scan
         with:
