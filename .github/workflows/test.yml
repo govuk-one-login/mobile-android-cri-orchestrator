@@ -271,7 +271,8 @@ jobs:
         uses: ./actions/cache-pipelines-build
 
       - name: Assemble instrumentation tests
-        run: ./gradlew assembleDebugAndroidTest
+        # try --refresh-dependencies - revert before merging.
+        run: ./gradlew assembleDebugAndroidTest --refresh-dependencies
         env:
           GITHUB_ACTOR: ${{ secrets.MODULE_FETCH_TOKEN_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.MODULE_FETCH_TOKEN }}
