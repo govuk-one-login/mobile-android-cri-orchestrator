@@ -5,13 +5,16 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlin.test.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
+import uk.gov.android.ui.componentsv2.R as componentsR
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.EarliestAcceptableDrivingLicenceExpiryDate
@@ -34,8 +37,9 @@ class TypesOfPhotoIDScreenTest {
     private lateinit var nonUKPassportImage: SemanticsMatcher
     private lateinit var brpImage: SemanticsMatcher
     private lateinit var drivingLicenceImage: SemanticsMatcher
+    private lateinit var closeButton: SemanticsMatcher
     private lateinit var fakeSessionStore: FakeSessionStore
-
+    private var closeButtonPressed = false
     private val earliestAcceptableDrivingLicenceExpiryDate = EarliestAcceptableDrivingLicenceExpiryDate(testClock())
     private val viewModel by
         lazy {
@@ -50,10 +54,14 @@ class TypesOfPhotoIDScreenTest {
     fun setUp(disableBrpJourney: Boolean) {
         initialiseMatchers(disableBrpJourney)
 
+        closeButtonPressed = false
+
         composeTestRule.setContent {
             TypesOfPhotoIDScreen(
                 viewModel = viewModel,
-            )
+            ) {
+                closeButtonPressed = true
+            }
         }
     }
 
@@ -73,6 +81,8 @@ class TypesOfPhotoIDScreenTest {
             hasContentDescription(context.getString(R.string.typesofphotoid_drivinglicence_imagedescription))
 
         fakeSessionStore = FakeSessionStore(Session.createTestInstance(disableBrpJourney = disableBrpJourney))
+
+        closeButton = hasContentDescription(context.getString(componentsR.string.close_icon_button))
     }
 
     @Test
@@ -129,5 +139,14 @@ class TypesOfPhotoIDScreenTest {
             PreviewTypesOfPhotoIDScreenDisableBrpJourney()
         }
         composeTestRule.onNode(brpImage).assertDoesNotExist()
+    }
+
+    @Test
+    fun `test close button tapped`() {
+        setUp(disableBrpJourney = true)
+
+        composeTestRule.onNode(closeButton).performClick()
+
+        assertTrue(closeButtonPressed)
     }
 }
