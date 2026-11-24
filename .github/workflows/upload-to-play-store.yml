@@ -76,5 +76,12 @@ jobs:
           package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
           google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
 
+      - name: Distribute test app
+        uses: ./actions/publish-to-app-distribution
+        with:
+          aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
+          app_ids: '1:231299341389:android:8dc3977892eee5ab6dd004'
+          google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
+
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace
