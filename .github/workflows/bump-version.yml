@@ -14,11 +14,7 @@ env:
 jobs:
   bump-version:
     if: |
-      github.event_name == 'workflow_dispatch' ||
-      (
-        github.ref_name == 'firebreak' &&
-        github.event.workflow_run.conclusion == 'success'
-      )
+      github.event.workflow_run.conclusion == 'success'
     env:
       JDK_VERSION: 21
     permissions:
