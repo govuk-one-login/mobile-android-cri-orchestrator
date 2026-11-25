@@ -10,6 +10,7 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavController
@@ -34,6 +35,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.verifyNoMoreInteractions
+import uk.gov.android.ui.componentsv2.R as componentsR
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.ConfigStore
 import uk.gov.onelogin.criorchestrator.features.config.internalapi.FakeConfigStore
 import uk.gov.onelogin.criorchestrator.features.idcheckwrapper.internalapi.nfc.NfcChecker
@@ -207,6 +209,20 @@ class SelectDocNavigationTest {
         composeTestRule.assertStartIsDisplayed()
     }
 
+    @Test
+    fun `types of photo id, close button pressed`() {
+        composeTestRule.setNavGraphContent(
+            startNavigatesTo = SelectDocDestinations.TypesOfPhotoID,
+        )
+
+        composeTestRule.clickStart()
+        composeTestRule.assertTypesOfPhotoIdIsDisplayed()
+
+        // Close button tapped
+        composeTestRule.tapCloseButton()
+        composeTestRule.assertStartIsDisplayed()
+    }
+
     private fun ComposeTestRule.assertStartIsDisplayed() = onNodeWithText(START_BUTTON)
         .assertIsDisplayed()
 
@@ -263,6 +279,10 @@ class SelectDocNavigationTest {
             )
         }
     }
+
+    private fun ComposeContentTestRule.tapCloseButton() =
+        onNodeWithContentDescription(context.getString(componentsR.string.close_icon_button))
+            .performClick()
 }
 
 private const val START_BUTTON = "Start button"

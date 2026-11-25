@@ -4,8 +4,10 @@ package uk.gov.onelogin.criorchestrator.features.selectdoc.internal.photoid
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import uk.gov.android.ui.componentsv2.button.GdsIconButtonDefaults
 import uk.gov.android.ui.componentsv2.date.formatFullDate
 import uk.gov.android.ui.componentsv2.heading.GdsHeading
 import uk.gov.android.ui.componentsv2.heading.GdsHeadingAlignment
@@ -28,6 +31,7 @@ import uk.gov.android.ui.componentsv2.list.GdsBulletedList
 import uk.gov.android.ui.componentsv2.list.ListItem
 import uk.gov.android.ui.componentsv2.list.ListTitle
 import uk.gov.android.ui.componentsv2.list.TitleType
+import uk.gov.android.ui.componentsv2.topappbar.GdsTopAppBar
 import uk.gov.android.ui.patterns.leftalignedscreen.LeftAlignedScreen
 import uk.gov.android.ui.theme.m3.GdsTheme
 import uk.gov.android.ui.theme.spacingDouble
@@ -37,20 +41,32 @@ import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.R
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.components.FullWidthImage
 import uk.gov.onelogin.criorchestrator.features.selectdoc.internal.drivinglicence.expiry.previewEarliestAcceptableDrivingLicenceExpiryDateText
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TypesOfPhotoIDScreen(viewModel: TypesOfPhotoIDViewModel, modifier: Modifier = Modifier) {
+internal fun TypesOfPhotoIDScreen(
+    viewModel: TypesOfPhotoIDViewModel,
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
+) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.onScreenStart()
     }
-
-    TypesOfPhotoIDScreenContent(
-        drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
-        enableExpiredBRP = state.enableExpiredBrp,
-        disableBrpJourney = state.disableBrpJourney,
-        modifier = modifier,
-    )
+    Column {
+        GdsTopAppBar(
+            navigationButton = GdsIconButtonDefaults.defaultCloseContent(),
+            onClick = {
+                onDismissRequest()
+            },
+        )
+        TypesOfPhotoIDScreenContent(
+            drivingLicenceExpiryDateText = state.earliestExpiryDate.formatFullDate(),
+            enableExpiredBRP = state.enableExpiredBrp,
+            disableBrpJourney = state.disableBrpJourney,
+            modifier = modifier,
+        )
+    }
 }
 
 @Composable
