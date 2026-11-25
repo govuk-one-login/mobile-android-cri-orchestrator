@@ -134,9 +134,9 @@ class ModuleArchitectureTest {
             .defaultScope()
             .files
             .withPackageMatching(libraryPackage)
-            .assertTrue {
-                it.imports.none {
-                    it.hasNameMatching(featurePackageAny)
+            .assertTrue { file ->
+                file.imports.none {
+                    file.hasNameMatching(featurePackageAny)
                 }
             }
     }

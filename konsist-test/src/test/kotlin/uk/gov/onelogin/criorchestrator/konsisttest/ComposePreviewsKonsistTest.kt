@@ -1,48 +1,18 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.declaration.KoArgumentDeclaration
-import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
-import com.lemonappdev.konsist.api.verify.assertFalse
-import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Test
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withComposablePreviewAnnotations
-import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 
 class ComposePreviewsKonsistTest {
-    @Test
-    fun `Compose previews are not part of public API`() {
-        Konsist
-            .defaultScope()
-            .functions()
-            .withComposablePreviewAnnotations()
-            .assertFalse {
-                it.hasPublicOrDefaultModifier
-            }
-    }
+    private val wrapper = GdsKonsistWrapper()
 
     @Test
-    fun `Compose previews have both light and dark versions`() {
-        Konsist
-            .defaultScope()
-            .functions()
-            .withComposablePreviewAnnotations()
-            .assertTrue {
-                it.hasAnnotationWithName("PreviewLightDark") ||
-                    it.hasAnnotationWithName("LightDarkBothLocalesPreviews") ||
-                    it.hasCustomLightDarkPreviewAnnotations()
-            }
-    }
-}
+    fun `Compose previews are not part of public API`() =
+        wrapper.previewsAreNotVisible()
 
-private fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations() = hasAnnotation {
-    it.name == "Preview" && it.hasArgument { it.hasUiModeNightEnabled() }
-} &&
-    hasAnnotation {
-        it.name == "Preview" && it.hasArgument { !it.hasUiModeNightEnabled() }
-    }
-
-@Suppress("ktlint:standard:function-expression-body")
-private fun KoArgumentDeclaration.hasUiModeNightEnabled(): Boolean {
-    return name == "uiMode" && value!!.contains("UI_MODE_NIGHT_YES")
+    @Test
+    fun `Compose previews have both light and dark versions`() =
+        wrapper.previewsHaveDarkAndLightMode(
+            "PreviewLightDark",
+            "LightDarkBothLocalesPreviews"
+        )
 }
