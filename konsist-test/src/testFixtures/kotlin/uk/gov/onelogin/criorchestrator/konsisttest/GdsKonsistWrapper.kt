@@ -2,11 +2,20 @@ package uk.gov.onelogin.criorchestrator.konsisttest
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.container.KoScope
+import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
+import com.lemonappdev.konsist.api.ext.list.classes
+import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
+import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
+import com.lemonappdev.konsist.api.verify.assertEmpty
 import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasCustomLightDarkPreviewAnnotations
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withComposablePreviewAnnotations
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinRoot
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
+import java.util.Collections.singleton
+import kotlin.reflect.KClass
 
 /**
  * Wrapper object for containing functions / standards enforced through `konsist`.
@@ -75,13 +84,58 @@ class GdsKonsistWrapper(
      * @see hasCustomLightDarkPreviewAnnotations
      */
     fun previewsHaveDarkAndLightMode(
+        previewAnnotationName: String,
         vararg previewAnnotationNames: String
-    ) = previewsHaveDarkAndLightMode(previewAnnotationNames.toList())
+    ) = previewsHaveDarkAndLightMode(
+        singleton(previewAnnotationName) + previewAnnotationNames.toList()
+    )
+
+    /**
+     *
+     */
+    fun classesDoNotUseProvidedAnnotations(
+        packageRegex: Regex,
+        annotations: Collection<KClass<*>>,
+        additionalMessage: String? = null,
+        testName: String? = null,
+    ) = doesNotUseProvidedAnnotations(
+        annotations = annotations,
+        additionalMessage = additionalMessage,
+        testName = testName,
+    ) { classesWithinRoot(packageRegex) }
+
+    /**
+     * Verifies that there's no [annotations] attached on the return value of [filter].
+     *
+     * @param annotations The [Collection] of annotation classes that shouldn't be on the
+     * [filter]ed results.
+     * @param additionalMessage The additional message for the assertion, such as the reason
+     * for enforcing the `konsist` rule. Defaults to `null`, meaning that there's no additional
+     * message.
+     * @param testName The name of the test for `kotest` purposes. Defaults to `null`, meaning
+     * that test names are automatically generated from the test function's context.
+     * @param filter Converts the [GdsKonsistWrapper] instance into a List of annotatable
+     * objects.
+     *
+     * @see assertEmpty
+     * @sample classesDoNotUseProvidedAnnotations
+     */
+    fun doesNotUseProvidedAnnotations(
+        annotations: Collection<KClass<*>>,
+        additionalMessage: String? = null,
+        testName: String? = null,
+        filter: KoScope.() -> List<KoAnnotationProvider>
+    ) = filter(scope)
+        .withAnnotationOf(annotations)
+        .assertEmpty(
+            testName = testName,
+            additionalMessage = additionalMessage,
+        )
 
     /**
      * @return a List of kotlin functions that have the `@Preview` annotation.
      */
-    private fun onComposablePreviewAnnotations() = scope
+    fun onComposablePreviewAnnotations() = scope
         .functions()
         .withComposablePreviewAnnotations()
 }
