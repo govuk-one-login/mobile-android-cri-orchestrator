@@ -1,15 +1,14 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.ext.list.withImport
+import com.lemonappdev.konsist.api.verify.assertNotEmpty
 import com.lemonappdev.konsist.api.verify.assertTrue
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkWrapperInternalPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.withImportNamesMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.filesWithinPackage
 
 class IdCheckSdkEncapsulationTest {
     companion object {
@@ -25,26 +24,18 @@ class IdCheckSdkEncapsulationTest {
      */
     @Test
     fun `id check sdk is referenced inside of the dedicated wrapper module`() {
-        val filesImportingIdCheckSdk =
-            Konsist
-                .defaultScope()
-                .files
-                .withPackageMatching(idCheckSdkWrapperInternalPackage)
-                .withImport {
-                    it.hasNameMatching(idCheckSdkPackage)
-                }
-
-        Assertions.assertTrue(filesImportingIdCheckSdk.isNotEmpty())
+            defaultScope
+                .filesWithinPackage(idCheckSdkWrapperInternalPackage)
+                .withImportNamesMatching(idCheckSdkPackage)
+                .assertNotEmpty()
     }
 
     @Test
     fun `id check sdk is not referenced outside of the dedicated wrapper module`() {
-        Konsist
-            .defaultScope()
+        defaultScope
             .files
-            .withImport {
-                it.hasNameMatching(idCheckSdkPackage)
-            }.assertTrue {
+            .withImportNamesMatching(idCheckSdkPackage)
+            .assertTrue {
                 it.hasPackageMatching(idCheckSdkWrapperInternalPackage)
             }
     }

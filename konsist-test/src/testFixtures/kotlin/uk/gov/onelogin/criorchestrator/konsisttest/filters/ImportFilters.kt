@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.konsisttest.filters
 
 import com.lemonappdev.konsist.api.declaration.KoImportDeclaration
+import com.lemonappdev.konsist.api.ext.list.withImport
 import com.lemonappdev.konsist.api.provider.KoImportProvider
 
 fun KoImportProvider.doesNotImportJUnit5(): Boolean = hasAllImports { import -> !import.isJUnit5() }
