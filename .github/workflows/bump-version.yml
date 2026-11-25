@@ -16,7 +16,7 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' ||
       (
-        github.ref_name == 'main' &&
+        github.ref_name == 'firebreak' &&
         github.event.workflow_run.conclusion == 'success'
       )
     env:
