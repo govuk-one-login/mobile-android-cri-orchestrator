@@ -21,5 +21,8 @@ tasks.withType<Test> {
 
 dependencies {
     testFixturesApi(libs.com.lemonappdev.konsist)
-    testImplementation(libs.metro.runtime)
+    listOf(
+        libs.google.testparameterinjector.junit5,
+        libs.metro.runtime,
+    ).forEach(::testImplementation)
 }
