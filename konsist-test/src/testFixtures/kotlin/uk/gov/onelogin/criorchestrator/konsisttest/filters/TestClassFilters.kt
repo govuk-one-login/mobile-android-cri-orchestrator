@@ -1,11 +1,46 @@
 package uk.gov.onelogin.criorchestrator.konsisttest.filters
 
+import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
 import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
 import com.lemonappdev.konsist.api.provider.KoClassAndObjectProvider
 import com.lemonappdev.konsist.api.provider.KoImportProvider
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 
 const val TEST_CLASS_NAME_SUFFIX = "Test"
 const val SCREENSHOT_TEST_CLASS_NAME_SUFFIX = "ScreenshotTest"
+
+/**
+ *
+ */
+val instrumentationTestFiles by lazy {
+    defaultScope.files
+        .withAndroidTestSourceSet()
+}
+
+val androidUnitTestFiles: List<KoFileDeclaration> by lazy {
+    defaultScope.files
+        .withTestSourceSet()
+        .withUiTestClass()
+}
+
+val moleculePaparazziUnitTestFiles by lazy {
+    defaultScope.files
+        .withTestSourceSet()
+        .withMoleculePaparazziCompatTests()
+}
+
+val unitTestFiles: List<KoFileDeclaration> by lazy {
+    defaultScope.files
+        .withTestSourceSet()
+        .withUnitTestClass()
+        .withoutMoleculePaparazziCompatTests()
+}
+
+val screenshotUnitTestFiles: List<KoFileDeclaration> by lazy {
+    defaultScope.files
+        .withTestSourceSet()
+        .withScreenshotTestClass()
+}
 
 fun <T : KoClassAndObjectProvider> List<T>.withUnitTestClass() = filter {
     it.hasClassOrObject { cls ->
