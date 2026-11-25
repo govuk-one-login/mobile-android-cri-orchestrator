@@ -3,10 +3,7 @@ name: Bump version
 on:
   workflow_run:
     workflows: [ Test ]
-    branches:
-      - main
-      - firebreak
-      - temp/hotfix
+    branches: [ firebreak ]
     types: [ completed ]
 
   # Workflow dispatch can be used to promote a pre-release to a normal release
