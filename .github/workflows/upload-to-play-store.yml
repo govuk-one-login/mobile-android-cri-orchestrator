@@ -69,12 +69,12 @@ jobs:
           version-code: ${{ steps.generate-version-code.outputs.version-code }}
           version-name: ${{ steps.bump-version.outputs.new-version }}
 
-      - name: Upload to Play Store
-        uses: ./mobile-android-pipelines/actions/publish-to-play-store
-        with:
-          aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
-          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
-          google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
+#      - name: Upload to Play Store
+#        uses: ./mobile-android-pipelines/actions/publish-to-play-store
+#        with:
+#          aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
+#          package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
+#          google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
 
       - name: Distribute test app
         uses: ./actions/publish-to-app-distribution
