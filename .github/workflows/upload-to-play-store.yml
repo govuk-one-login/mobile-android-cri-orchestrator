@@ -48,7 +48,15 @@ jobs:
         uses: ./mobile-android-pipelines/actions/retrieve-secrets
         with:
           keystore-base64: ${{ secrets.KEYSTORE_BASE64 }}
-          google-service-account-json-base64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON_BASE64 }}
+          # No service account needed as we are using Workload Identity Federation
+          google-service-account-json-base64: ""
+
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        id: auth
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/deploy-pipelines/providers/github-actions-pipelines
+          service_account: deploy-pipelines@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Generate version code
         id: generate-version-code
@@ -74,7 +82,15 @@ jobs:
         with:
           aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
           package-name: 'uk.gov.onelogin.criorchestrator.testwrapper'
-          google-service-account-json: ${{ steps.retrieve-secrets.outputs.google-service-account-json-file-path }}
+          google-service-account-json: ${{ steps.auth.outputs.credentials_file_path }}
+
+      - name: Distribute test app
+        uses: ./actions/publish-to-app-distribution
+        continue-on-error: true
+        with:
+          aab-paths: ${{ steps.bundle-release-app.outputs.aab-paths }}
+          app_ids: '1:231299341389:android:8dc3977892eee5ab6dd004'
+          google-service-account-json: ${{ steps.auth.outputs.credentials_file_path }}
 
       - name: Clean workspace
         uses: ./mobile-android-pipelines/actions/clean-workspace
