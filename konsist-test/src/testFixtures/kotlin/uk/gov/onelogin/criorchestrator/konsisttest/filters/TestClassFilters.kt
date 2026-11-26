@@ -9,10 +9,7 @@ import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 const val TEST_CLASS_NAME_SUFFIX = "Test"
 const val SCREENSHOT_TEST_CLASS_NAME_SUFFIX = "ScreenshotTest"
 
-/**
- *
- */
-val instrumentationTestFiles by lazy {
+val instrumentationTestFiles: List<KoFileDeclaration> by lazy {
     defaultScope.files
         .withAndroidTestSourceSet()
 }
@@ -23,7 +20,7 @@ val androidUnitTestFiles: List<KoFileDeclaration> by lazy {
         .withUiTestClass()
 }
 
-val moleculePaparazziUnitTestFiles by lazy {
+val moleculePaparazziUnitTestFiles: List<KoFileDeclaration> by lazy {
     defaultScope.files
         .withTestSourceSet()
         .withMoleculePaparazziCompatTests()
@@ -42,7 +39,7 @@ val screenshotUnitTestFiles: List<KoFileDeclaration> by lazy {
         .withScreenshotTestClass()
 }
 
-fun <T : KoClassAndObjectProvider> List<T>.withUnitTestClass() = filter {
+fun <T : KoClassAndObjectProvider> Iterable<T>.withUnitTestClass() = filter {
     it.hasClassOrObject { cls ->
         cls.hasNameEndingWith(TEST_CLASS_NAME_SUFFIX) &&
             !cls.hasNameEndingWith(SCREENSHOT_TEST_CLASS_NAME_SUFFIX) &&
@@ -50,23 +47,23 @@ fun <T : KoClassAndObjectProvider> List<T>.withUnitTestClass() = filter {
     }
 }
 
-fun <T : KoClassAndObjectProvider> List<T>.withUiTestClass() = filter {
+fun <T : KoClassAndObjectProvider> Iterable<T>.withUiTestClass() = filter {
     it.hasClassOrObject { cls ->
         cls.hasRunWithAndroidJUnitRunnerAnnotation()
     }
 }
 
-fun <T : KoClassAndObjectProvider> List<T>.withScreenshotTestClass() = filter {
+fun <T : KoClassAndObjectProvider> Iterable<T>.withScreenshotTestClass() = filter {
     it.hasClassOrObject { cls ->
         cls.hasNameEndingWith(SCREENSHOT_TEST_CLASS_NAME_SUFFIX)
     }
 }
 
-fun <T : KoImportProvider> List<T>.withMoleculePaparazziCompatTests() = filter {
+fun <T : KoImportProvider> Iterable<T>.withMoleculePaparazziCompatTests() = filter {
     it.hasMoleculePaparazziCompatRuleImport()
 }
 
-fun <T : KoImportProvider> List<T>.withoutMoleculePaparazziCompatTests() = filter {
+fun <T : KoImportProvider> Iterable<T>.withoutMoleculePaparazziCompatTests() = filter {
     !it.hasMoleculePaparazziCompatRuleImport()
 }
 
