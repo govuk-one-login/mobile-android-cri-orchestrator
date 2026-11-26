@@ -64,7 +64,7 @@ class TypesOfPhotoIDScreenAnalyticsTest {
         composeTestRule.setContent {
             TypesOfPhotoIDScreen(
                 viewModel = viewModel,
-            )
+            ) {}
         }
     }
 

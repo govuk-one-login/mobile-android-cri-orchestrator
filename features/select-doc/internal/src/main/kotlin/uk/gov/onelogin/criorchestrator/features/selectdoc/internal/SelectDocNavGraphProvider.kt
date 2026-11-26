@@ -1,8 +1,10 @@
 package uk.gov.onelogin.criorchestrator.features.selectdoc.internal
 
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import uk.gov.onelogin.criorchestrator.features.resume.internalapi.nav.ProveYourIdentityNavGraphProvider
@@ -43,10 +45,14 @@ class SelectDocNavGraphProvider : ProveYourIdentityNavGraphProvider {
             )
         }
 
-        composable<SelectDocDestinations.TypesOfPhotoID> {
+        dialog<SelectDocDestinations.TypesOfPhotoID>(
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = false),
+        ) {
             TypesOfPhotoIDScreen(
                 viewModel = metroViewModel(),
-            )
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable<SelectDocDestinations.ConfirmPassport> {
