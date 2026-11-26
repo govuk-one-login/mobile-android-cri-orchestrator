@@ -12,6 +12,18 @@ plugins {
 configure<LibraryExtension> {
     baseAndroidConfig(project)
     setNamespace(project = project)
+
+    packaging {
+        /*
+         * Clash between:
+         * - kotlin-compiler-embeddable:2.4.21/kotlin-compiler-embeddable-2.4.21.jar
+         * - kotlin-stdlib:2.4.21/kotlin-stdlib-2.4.21.jar
+         */
+        resources.pickFirsts += listOf(
+            "kotlin/internal/internal.kotlin_builtins",
+            "kotlin/reflect/reflect.kotlin_builtins"
+        )
+    }
 }
 
 // https://docs.konsist.lemonappdev.com/advanced/isolate-konsist-tests

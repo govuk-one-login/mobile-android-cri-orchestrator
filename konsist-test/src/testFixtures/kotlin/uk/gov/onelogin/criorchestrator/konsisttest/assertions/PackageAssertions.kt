@@ -20,7 +20,7 @@ fun List<KoPackageProvider>.assertHasPackageMatching(
 ) = assertTrue(
     additionalMessage = additionalMessage,
     strict = strict,
-    testName = testName
+    testName = testName,
 ) { currentPackage ->
     currentPackage.hasPackageMatching(regex)
 }

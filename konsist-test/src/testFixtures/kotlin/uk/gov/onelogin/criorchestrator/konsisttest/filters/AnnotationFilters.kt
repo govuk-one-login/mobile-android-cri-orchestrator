@@ -11,16 +11,15 @@ fun KoAnnotationDeclaration.isPreview(): Boolean = name == "Preview"
  *
  * @see hasUiModeNightEnabled
  */
-fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations(): Boolean =
-    hasAnnotation { annotation ->
-        annotation.isPreview() && annotation.hasArgument { it.hasUiModeNightEnabled() }
-    } && hasAnnotation { annotation ->
-        annotation.isPreview() && annotation.hasArgument { !it.hasUiModeNightEnabled() }
-    }
+fun KoAnnotationProvider.hasCustomLightDarkPreviewAnnotations(): Boolean = hasAnnotation { annotation ->
+    annotation.isPreview() && annotation.hasArgument { it.hasUiModeNightEnabled() }
+} && hasAnnotation { annotation ->
+    annotation.isPreview() && annotation.hasArgument { !it.hasUiModeNightEnabled() }
+}
 
 fun <T : KoAnnotationProvider> Iterable<T>.withComposablePreviewAnnotations(): List<T> = filter {
     it.hasAnnotationWithName("Composable") &&
-            it.hasAnnotation { annotation ->
-                annotation.hasNameContaining("Preview")
-            }
+        it.hasAnnotation { annotation ->
+            annotation.hasNameContaining("Preview")
+        }
 }
