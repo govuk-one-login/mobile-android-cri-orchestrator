@@ -18,6 +18,7 @@ jobs:
       # Set permissions for ${{ secrets.GITHUB_TOKEN }}
       # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
       packages: read
+      id-token: write
     steps:
       - name: Run checkout github action
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -55,8 +56,8 @@ jobs:
         id: auth
         with:
           project_id: ${{ vars.GCP_PROJECT_ID }}
-          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/deploy-pipelines/providers/github-actions-pipelines
-          service_account: deploy-pipelines@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/deploy-cri-orchestrator/providers/deploy-cri-orchestrator
+          service_account: deploy-cri-orchestrator@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Generate version code
         id: generate-version-code
