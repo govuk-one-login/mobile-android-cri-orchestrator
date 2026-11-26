@@ -6,7 +6,10 @@ import com.lemonappdev.konsist.api.container.KoScope
 import com.lemonappdev.konsist.api.container.KoScopeCreator
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
+import com.lemonappdev.konsist.api.declaration.KoParentDeclaration
 import com.lemonappdev.konsist.api.ext.list.classes
+import com.lemonappdev.konsist.api.ext.list.withParent
+import com.lemonappdev.konsist.api.ext.list.withProperty
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withComposablePreviewAnnotations
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 
@@ -30,7 +33,24 @@ val productionCodeScope by lazy {
  */
 fun KoScope.classesWithinRoot(packageRegex: Regex): List<KoClassDeclaration> =
     filesWithinPackage(packageRegex)
-    .classes()
+        .classes()
+
+/**
+ * @param ignoreCase Whether the [prefix] is considered case-insensitive. Defaults to `false`.
+ * @return A [List] of [KoClassDeclaration] objects that have a class name prefixed by [prefix].
+ */
+fun KoScope.classesWithPrefix(
+    prefix: String,
+    ignoreCase: Boolean = false
+): List<KoClassDeclaration> = classes().withProperty {
+        it.hasNameStartingWith(prefix, ignoreCase = ignoreCase)
+    }
+
+fun KoScope.classesWithParent(
+    indirectParents: Boolean = false,
+    predicate: (KoParentDeclaration) -> Boolean
+) = classes()
+    .withParent(indirectParents = indirectParents, predicate)
 
 /**
  * @return All files that have a package matching [packageRegex].

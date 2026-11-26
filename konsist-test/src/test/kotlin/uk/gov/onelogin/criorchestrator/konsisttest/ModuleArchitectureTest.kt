@@ -1,11 +1,8 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.Konsist.scopeFromTest
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.filesWithinPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.productionCodeScope
