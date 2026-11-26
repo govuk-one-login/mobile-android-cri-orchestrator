@@ -56,7 +56,7 @@ jobs:
         id: auth
         with:
           project_id: ${{ vars.GCP_PROJECT_ID }}
-          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/deploy-cri-orchestrator/providers/deploy-cri-orchestrator
+          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/deploy-cri-orchestrator/providers/github-actions
           service_account: deploy-cri-orchestrator@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Generate version code
