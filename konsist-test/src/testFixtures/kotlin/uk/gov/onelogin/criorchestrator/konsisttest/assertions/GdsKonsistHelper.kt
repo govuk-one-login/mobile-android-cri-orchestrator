@@ -5,12 +5,12 @@ import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
 import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
 import com.lemonappdev.konsist.api.verify.assertEmpty
 import com.lemonappdev.konsist.api.verify.assertTrue
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasCustomLightDarkPreviewAnnotations
-import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
-import uk.gov.onelogin.criorchestrator.konsisttest.scopes.onComposablePreviewAnnotations
 import java.util.Collections.singleton
 import kotlin.collections.plus
 import kotlin.reflect.KClass
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasCustomLightDarkPreviewAnnotations
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.onComposablePreviewAnnotations
 
 /**
  * Verifies that there's no [annotations] attached to classes within packages matched by the
@@ -53,7 +53,7 @@ fun KoScope.composablePreviewsAreNotVisible() = onComposablePreviewAnnotations()
             Compose preview functions shouldn't be considered part of the public-facing API
             within a given module, as they aren't useful to consuming projects. 
             """.trimIndent(),
-        testName = "Composable previews aren't visible"
+        testName = "Composable previews aren't visible",
     )
 
 /**
@@ -76,7 +76,7 @@ fun KoScope.doesNotUseProvidedAnnotations(
     annotations: Collection<KClass<*>>,
     additionalMessage: String? = null,
     testName: String? = null,
-    filter: KoScope.() -> List<KoAnnotationProvider>
+    filter: KoScope.() -> List<KoAnnotationProvider>,
 ) = filter(this)
     .withAnnotationOf(annotations)
     .assertEmpty(
@@ -98,21 +98,21 @@ fun KoScope.doesNotUseProvidedAnnotations(
  */
 fun KoScope.previewsHaveDarkAndLightMode(
     previewAnnotationNames: Iterable<String> = listOf(
-        "PreviewLightDark"
-    )
+        "PreviewLightDark",
+    ),
 ) = onComposablePreviewAnnotations()
     .assertTrue(
         additionalMessage =
             """
                 Compose preview functions should contain variants that visualise differences
                 between dark and light UI modes.
-                """.trimIndent(),
-        testName = "Composable previews have dark/light mode variants"
+            """.trimIndent(),
+        testName = "Composable previews have dark/light mode variants",
     ) { function ->
         previewAnnotationNames
             .map(function::hasAnnotationWithName)
             .fold(false, Boolean::or) ||
-                function.hasCustomLightDarkPreviewAnnotations()
+            function.hasCustomLightDarkPreviewAnnotations()
     }
 
 /**
@@ -126,9 +126,7 @@ fun KoScope.previewsHaveDarkAndLightMode(
  * base uses.
  * @see hasCustomLightDarkPreviewAnnotations
  */
-fun KoScope.previewsHaveDarkAndLightMode(
-    previewAnnotationName: String,
-    vararg previewAnnotationNames: String
-) = previewsHaveDarkAndLightMode(
-    singleton(previewAnnotationName) + previewAnnotationNames.toList()
-)
+fun KoScope.previewsHaveDarkAndLightMode(previewAnnotationName: String, vararg previewAnnotationNames: String) =
+    previewsHaveDarkAndLightMode(
+        singleton(previewAnnotationName) + previewAnnotationNames.toList(),
+    )

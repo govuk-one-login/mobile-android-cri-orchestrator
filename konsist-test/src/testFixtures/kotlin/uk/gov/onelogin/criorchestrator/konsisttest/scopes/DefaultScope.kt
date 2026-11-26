@@ -32,25 +32,19 @@ val productionCodeScope by lazy {
 /**
  * @return All classes that have a package matching [packageRegex].
  */
-fun KoScope.classesWithinPackage(packageRegex: Regex): List<KoClassDeclaration> =
-    filesWithinPackage(packageRegex)
-        .classes()
+fun KoScope.classesWithinPackage(packageRegex: Regex): List<KoClassDeclaration> = filesWithinPackage(packageRegex)
+    .classes()
 
 /**
  * @param ignoreCase Whether the [prefix] is considered case-insensitive. Defaults to `false`.
  * @return A [List] of [KoClassDeclaration] objects that have a class name prefixed by [prefix].
  */
-fun KoScope.classesWithPrefix(
-    prefix: String,
-    ignoreCase: Boolean = false
-): List<KoClassDeclaration> = classes().withProperty {
+fun KoScope.classesWithPrefix(prefix: String, ignoreCase: Boolean = false): List<KoClassDeclaration> =
+    classes().withProperty {
         it.hasNameStartingWith(prefix, ignoreCase = ignoreCase)
     }
 
-fun KoScope.classesWithParent(
-    indirectParents: Boolean = false,
-    predicate: (KoParentDeclaration) -> Boolean
-) = classes()
+fun KoScope.classesWithParent(indirectParents: Boolean = false, predicate: (KoParentDeclaration) -> Boolean) = classes()
     .withParent(indirectParents = indirectParents, predicate)
 
 /**

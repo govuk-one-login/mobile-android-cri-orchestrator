@@ -7,11 +7,11 @@ fun List<KoClassDeclaration>.assertHasNameEndingWith(
     suffix: String,
     additionalMessage: String? = null,
     strict: Boolean = false,
-    testName: String? = null
+    testName: String? = null,
 ) = assertTrue(
     additionalMessage = additionalMessage,
     strict = strict,
-    testName = testName
+    testName = testName,
 ) {
     it.hasNameEndingWith(suffix)
 }

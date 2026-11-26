@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.IdCheckSdkEncapsulationTest.Companion.idCheckSdkWrapperInternalPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.assertions.assertHasPackageMatching
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withImportNamesMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.withImportNamesMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.filesWithinPackage
 
@@ -25,10 +25,10 @@ class IdCheckSdkEncapsulationTest {
      */
     @Test
     fun `id check sdk is referenced inside of the dedicated wrapper module`() {
-            defaultScope
-                .filesWithinPackage(idCheckSdkWrapperInternalPackage)
-                .withImportNamesMatching(idCheckSdkPackage)
-                .assertNotEmpty()
+        defaultScope
+            .filesWithinPackage(idCheckSdkWrapperInternalPackage)
+            .withImportNamesMatching(idCheckSdkPackage)
+            .assertNotEmpty()
     }
 
     @Test

@@ -15,13 +15,13 @@ import uk.gov.onelogin.criorchestrator.konsisttest.filters.unitTestFiles
 
 class JUnitImportsKonsistTest {
     @TestParameterInjectorTest
-    fun `Certain test types don't use JUnit 4`(
-        @TestParameter fileFilter: List<KoFileDeclaration> = namedTestValuesIn(junit5FileFilters)
+    fun certainTestTypesDoNotUseJUnit4(
+        @TestParameter fileFilter: List<KoFileDeclaration> = namedTestValuesIn(junit5FileFilters),
     ) = fileFilter.assertTrue { it.doesNotImportJUnit4() }
 
     @TestParameterInjectorTest
-    fun `Certain test types don't use JUnit 5`(
-        @TestParameter fileFilter: List<KoFileDeclaration> = namedTestValuesIn(junit4FileFilters)
+    fun certainTestTypesDoNotUseJUnit5(
+        @TestParameter fileFilter: List<KoFileDeclaration> = namedTestValuesIn(junit4FileFilters),
     ) = fileFilter.assertTrue { it.doesNotImportJUnit5() }
 
     private companion object {
@@ -30,11 +30,11 @@ class JUnitImportsKonsistTest {
             "Screenshot tests" to screenshotUnitTestFiles,
             "Instrumentation tests" to instrumentationTestFiles,
             // https://github.com/cashapp/paparazzi/issues/1149
-            "Molecule Paparazzi compat. tests" to moleculePaparazziUnitTestFiles
+            "Molecule Paparazzi compat. tests" to moleculePaparazziUnitTestFiles,
         )
 
         val junit5FileFilters = mapOf(
-            "Unit tests" to unitTestFiles
+            "Unit tests" to unitTestFiles,
         )
     }
 }

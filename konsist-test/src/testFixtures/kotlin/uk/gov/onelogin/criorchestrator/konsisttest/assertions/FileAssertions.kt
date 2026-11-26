@@ -3,18 +3,17 @@ package uk.gov.onelogin.criorchestrator.konsisttest.assertions
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
 import com.lemonappdev.konsist.api.verify.assertTrue
+import java.util.Collections.singleton
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.SCREENSHOT_TEST_CLASS_NAME_SUFFIX
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageAny
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageInternal
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.packagesDoNotContain
-import java.util.Collections.singleton
 
-fun KoFileDeclaration.allClassesMatchAtLeastOneOf(
-    validations: Iterable<KoClassDeclaration.() -> Boolean>
-): Boolean = classes().all { clazz ->
-    validations.any { it(clazz) }
-}
+fun KoFileDeclaration.allClassesMatchAtLeastOneOf(validations: Iterable<KoClassDeclaration.() -> Boolean>): Boolean =
+    classes().all { clazz ->
+        validations.any { it(clazz) }
+    }
 
 fun KoFileDeclaration.allClassesMatchAtLeastOneOf(
     validation: KoClassDeclaration.() -> Boolean,
@@ -33,7 +32,7 @@ fun List<KoFileDeclaration>.assertAllClassesMatchAtLeastOneOf(
 ) = assertTrue(
     additionalMessage = additionalMessage,
     strict = strict,
-    testName = testName
+    testName = testName,
 ) { file ->
     file.allClassesMatchAtLeastOneOf(validations)
 }
@@ -61,7 +60,7 @@ fun List<KoFileDeclaration>.assertDoesNotImport(
     disallowedPackages = singleton(disallowedPackage) + disallowedPackages,
     additionalMessage = additionalMessage,
     testName = testName,
-    strict = strict
+    strict = strict,
 )
 
 fun List<KoFileDeclaration>.assertPackagesDoNotContain(
@@ -73,21 +72,17 @@ fun List<KoFileDeclaration>.assertPackagesDoNotContain(
 ) = assertTrue(
     additionalMessage = additionalMessage,
     strict = strict,
-    testName = testName
+    testName = testName,
 ) { file ->
     file.packagesDoNotContain(
         packagesToSearch = packagesToSearch,
-        disallowedPackages = disallowedPackage
+        disallowedPackages = disallowedPackage,
     )
 }
 
-fun KoFileDeclaration.doesNotImport(
-    disallowedPackages: Iterable<Regex>,
-): Boolean = imports.none { import ->
+fun KoFileDeclaration.doesNotImport(disallowedPackages: Iterable<Regex>): Boolean = imports.none { import ->
     disallowedPackages.any { import.hasNameMatching(it) }
 }
 
-fun KoFileDeclaration.doesNotImport(
-    disallowedPackage: Regex,
-    vararg disallowedPackages: Regex
-) = doesNotImport(singleton(disallowedPackage) + disallowedPackages)
+fun KoFileDeclaration.doesNotImport(disallowedPackage: Regex, vararg disallowedPackages: Regex) =
+    doesNotImport(singleton(disallowedPackage) + disallowedPackages)

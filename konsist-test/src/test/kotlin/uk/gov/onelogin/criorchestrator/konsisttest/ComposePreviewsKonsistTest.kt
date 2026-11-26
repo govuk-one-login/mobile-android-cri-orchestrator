@@ -8,13 +8,11 @@ import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 class ComposePreviewsKonsistTest {
 
     @Test
-    fun `Compose previews are not part of public API`() =
-        defaultScope.composablePreviewsAreNotVisible()
+    fun `Compose previews are not part of public API`() = defaultScope.composablePreviewsAreNotVisible()
 
     @Test
-    fun `Compose previews have both light and dark versions`() =
-        defaultScope.previewsHaveDarkAndLightMode(
-            "PreviewLightDark",
-            "LightDarkBothLocalesPreviews"
-        )
+    fun `Compose previews have both light and dark versions`() = defaultScope.previewsHaveDarkAndLightMode(
+        "PreviewLightDark",
+        "LightDarkBothLocalesPreviews",
+    )
 }

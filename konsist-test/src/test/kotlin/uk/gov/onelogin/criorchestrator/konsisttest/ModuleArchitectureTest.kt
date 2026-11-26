@@ -39,7 +39,7 @@ class ModuleArchitectureTest {
                     API modules.
                     """.trimIndent(),
                 packagesToSearch = featurePackageAny,
-                disallowedPackage = featurePackageInternal
+                disallowedPackage = featurePackageInternal,
             )
     }
 
@@ -53,9 +53,8 @@ class ModuleArchitectureTest {
                     Internal API modules and internal implementation modules may know about public APIs but not 
                     the other way around.
                     """.trimIndent(),
-                disallowedPackages = listOf(featurePackageInternal, featurePackageInternalApi)
+                disallowedPackages = listOf(featurePackageInternal, featurePackageInternalApi),
             )
-
     }
 
     @Test
@@ -67,7 +66,7 @@ class ModuleArchitectureTest {
                     Internal API modules shouldn't know about internal implementations.
                     Internal implementation modules may know about the internal APIs but not the other way around.
                     """.trimIndent(),
-                disallowedPackage = featurePackageInternal
+                disallowedPackage = featurePackageInternal,
             )
     }
 
