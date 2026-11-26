@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.filesWithinPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.productionCodeScope
 
 class ModuleArchitectureTest {
     companion object {
@@ -21,16 +23,12 @@ class ModuleArchitectureTest {
             """(uk\.gov\..*\.features\..*)\.internal(?:\..*|$)""".toRegex()
         private val featurePackageApi =
             """(uk\.gov\..*\.features\..*)\.(:?internalapi|publicapi)(?:\..*|$)""".toRegex()
+        private val potentialFeaturePackage = "uk\\.gov\\..*\\.features\\..*".toRegex()
     }
 
     @Test
     fun `feature modules have valid package names`() {
-        val potentialFeaturePackage =
-            "uk\\.gov\\..*\\.features\\..*".toRegex()
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(potentialFeaturePackage)
+        defaultScope.filesWithinPackage(potentialFeaturePackage)
             .assertTrue {
                 it.hasPackageMatching(featurePackageAny)
             }
@@ -38,10 +36,7 @@ class ModuleArchitectureTest {
 
     @Test
     fun `feature modules do not depend directly on other features internals`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackageAny)
+        defaultScope.filesWithinPackage(featurePackageAny)
             .assertTrue(
                 additionalMessage =
                     """
@@ -52,24 +47,20 @@ class ModuleArchitectureTest {
                     API of the feature and the implementation should live in one of its feature's
                     API modules.
                     """.trimIndent(),
-            ) {
+            ) { file ->
                 val thisFeaturePackage =
-                    featurePackageAny.find(it.packagee!!.text)!!.groupValues[1]
-                it.imports
-                    .filter {
-                        !it.hasNameStartingWith(thisFeaturePackage)
-                    }.none {
-                        it.hasNameMatching(featurePackageInternal)
-                    }
+                    featurePackageAny.find(file.packagee!!.text)!!.groupValues[1]
+                file.imports.filter { import ->
+                    !import.hasNameStartingWith(thisFeaturePackage)
+                }.none { import ->
+                    import.hasNameMatching(featurePackageInternal)
+                }
             }
     }
 
     @Test
     fun `public api modules do not depend on internal api or internal implementation modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackagePublicApi)
+        defaultScope.filesWithinPackage(featurePackagePublicApi)
             .assertTrue(
                 additionalMessage =
                     """
@@ -81,17 +72,14 @@ class ModuleArchitectureTest {
                 it.imports
                     .none {
                         it.hasNameMatching(featurePackageInternal) ||
-                            it.hasNameMatching(featurePackageInternalApi)
+                                it.hasNameMatching(featurePackageInternalApi)
                     }
             }
     }
 
     @Test
     fun `internal api modules do not depend on internal implementation modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackageInternalApi)
+        defaultScope.filesWithinPackage(featurePackageInternalApi)
             .assertTrue(
                 additionalMessage =
                     """
@@ -108,32 +96,26 @@ class ModuleArchitectureTest {
 
     @Test
     fun `api modules do not contain implementations`() {
-        Konsist
-            .defaultScope()
-            .minus(scope = scopeFromTest())
-            .files
-            .withPackageMatching(featurePackageApi)
+        productionCodeScope
+            .filesWithinPackage(featurePackageApi)
             .assertTrue(
                 additionalMessage =
                     """
                     Implementations should live in a feature's internal module.
                     Only interfaces data structures should be exposed through API modules.
                     """.trimIndent(),
-            ) {
-                it.classes().all {
+            ) { file ->
+                file.classes().all {
                     it.hasAbstractModifier ||
-                        it.hasDataModifier ||
-                        it.hasEnumModifier
+                            it.hasDataModifier ||
+                            it.hasEnumModifier
                 }
             }
     }
 
     @Test
     fun `library modules do not depend on feature modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(libraryPackage)
+        defaultScope.filesWithinPackage(libraryPackage)
             .assertTrue { file ->
                 file.imports.none {
                     file.hasNameMatching(featurePackageAny)

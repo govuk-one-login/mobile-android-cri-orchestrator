@@ -73,6 +73,7 @@ composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePrevi
 google-play-review = { module = "com.google.android.play:review", version.ref = "google-play-review" }
 google-play-review-kotlin = { module = "com.google.android.play:review-ktx", version.ref = "google-play-review" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testparameterinjector" }
+google-testparameterinjector-junit5 = { module = "com.google.testparameterinjector:test-parameter-injector-junit5", version.ref = "testparameterinjector" }
 imposter-config-parser = { group = "io.gatehill.imposter", name = "config-dynamic", version.ref = "imposter" }
 imposter-main = { group = "io.gatehill.imposter", name = "distro-embedded", version.ref = "imposter" }
 imposter-openapi-plugin = { group = "io.gatehill.imposter", name = "mock-openapi", version.ref = "imposter" }

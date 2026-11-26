@@ -1,6 +1,7 @@
 package uk.gov.onelogin.criorchestrator.konsisttest.scopes
 
 import com.lemonappdev.konsist.api.Konsist
+import com.lemonappdev.konsist.api.Konsist.scopeFromTest
 import com.lemonappdev.konsist.api.container.KoScope
 import com.lemonappdev.konsist.api.container.KoScopeCreator
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
@@ -18,6 +19,10 @@ fun KoScopeCreator.defaultScope(): KoScope = with(this) {
 
 val defaultScope by lazy {
     Konsist.defaultScope()
+}
+
+val productionCodeScope by lazy {
+    defaultScope - scopeFromTest()
 }
 
 /**
