@@ -21,7 +21,7 @@ configure<LibraryExtension> {
          */
         resources.pickFirsts += listOf(
             "kotlin/internal/internal.kotlin_builtins",
-            "kotlin/reflect/reflect.kotlin_builtins"
+            "kotlin/reflect/reflect.kotlin_builtins",
         )
     }
 }
