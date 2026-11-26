@@ -4,10 +4,9 @@ import com.lemonappdev.konsist.api.container.KoScope
 import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
 import com.lemonappdev.konsist.api.provider.KoAnnotationProvider
 import com.lemonappdev.konsist.api.verify.assertEmpty
-import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasCustomLightDarkPreviewAnnotations
-import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinRoot
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.onComposablePreviewAnnotations
 import java.util.Collections.singleton
 import kotlin.collections.plus
@@ -38,7 +37,7 @@ fun KoScope.classesDoNotUseProvidedAnnotations(
     annotations = annotations,
     additionalMessage = additionalMessage,
     testName = testName,
-) { classesWithinRoot(packageRegex) }
+) { classesWithinPackage(packageRegex) }
 
 /**
  * Verifies that all Jetpack Compose `Preview` functions are invisible to consumers of the

@@ -11,7 +11,7 @@ class ScreenshotTestKonsistTest {
     @Test
     fun `screenshot tests use ScreenshotTest suffix`() {
         defaultScope
-            .classesWithPrefix("Paparazzi")
+            .classesWithPrefix("Paparazzi", ignoreCase = true)
             .assertTrue {
                 it.hasNameEndingWith(SCREENSHOT_TEST_CLASS_NAME_SUFFIX)
             }

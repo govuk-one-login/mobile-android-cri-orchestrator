@@ -8,6 +8,18 @@ fun List<KoFileDeclaration>.withPackageMatching(regex: Regex) = filter {
     it.hasPackageMatching(regex)
 }
 
+fun KoFileDeclaration.packagesDoNotContain(
+    packagesToSearch: Regex,
+    disallowedPackages: Regex
+): Boolean {
+    val currentPackage = packagesToSearch.find(packagee!!.text)!!.groupValues[1]
+    return imports.filter { import ->
+        !import.hasNameStartingWith(currentPackage)
+    }.none { import ->
+        import.hasNameMatching(disallowedPackages)
+    }
+}
+
 fun KoFileDeclaration.hasPackageMatching(regex: Regex) = packagee?.hasNameMatching(regex) == true
 
 fun <Importable : KoImportProvider> List<Importable>.withImportNamesMatching(

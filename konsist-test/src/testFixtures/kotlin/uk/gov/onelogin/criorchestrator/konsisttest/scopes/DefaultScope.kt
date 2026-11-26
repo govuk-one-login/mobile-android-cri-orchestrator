@@ -6,6 +6,7 @@ import com.lemonappdev.konsist.api.container.KoScope
 import com.lemonappdev.konsist.api.container.KoScopeCreator
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
+import com.lemonappdev.konsist.api.declaration.KoImportDeclaration
 import com.lemonappdev.konsist.api.declaration.KoParentDeclaration
 import com.lemonappdev.konsist.api.ext.list.classes
 import com.lemonappdev.konsist.api.ext.list.withParent
@@ -31,7 +32,7 @@ val productionCodeScope by lazy {
 /**
  * @return All classes that have a package matching [packageRegex].
  */
-fun KoScope.classesWithinRoot(packageRegex: Regex): List<KoClassDeclaration> =
+fun KoScope.classesWithinPackage(packageRegex: Regex): List<KoClassDeclaration> =
     filesWithinPackage(packageRegex)
         .classes()
 

@@ -1,11 +1,14 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
+import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
+import com.lemonappdev.konsist.api.verify.assertEmpty
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.ContributesTo
 import org.junit.jupiter.api.Test
 import uk.gov.onelogin.criorchestrator.konsisttest.assertions.classesDoNotUseProvidedAnnotations
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 
 class DependencyInjectionKonsistTest {
@@ -15,22 +18,22 @@ class DependencyInjectionKonsistTest {
 
     @Test
     fun `library modules do not contribute graph bindings`() {
-        defaultScope.classesDoNotUseProvidedAnnotations(
-            packageRegex = libraryPackage,
-            annotations = listOf(
+        defaultScope
+            .classesWithinPackage(libraryPackage)
+            .withAnnotationOf(
                 ContributesTo::class,
                 ContributesBinding::class,
                 ContributesIntoSet::class,
                 ContributesIntoMap::class,
-            ),
-            additionalMessage =
-                """
-                Libraries should be designed as simple standalone utilities and
-                shouldn't contribute dependencies directly to the SDK's dependency graph.
-                If you need to contribute an implementation from a library module into
-                the SDK, configure this in a feature module or sdk module.
-                Library modules may still declare binding containers or injectable classes.
-                """.trimIndent(),
-        )
+            ).assertEmpty(
+                additionalMessage =
+                    """
+                    Libraries should be designed as simple standalone utilities and
+                    shouldn't contribute dependencies directly to the SDK's dependency graph.
+                    If you need to contribute an implementation from a library module into
+                    the SDK, configure this in a feature module or sdk module.
+                    Library modules may still declare binding containers or injectable classes.
+                    """.trimIndent(),
+            )
     }
 }
