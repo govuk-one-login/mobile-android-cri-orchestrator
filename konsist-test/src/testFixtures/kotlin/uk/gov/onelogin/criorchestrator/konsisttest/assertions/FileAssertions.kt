@@ -3,6 +3,7 @@ package uk.gov.onelogin.criorchestrator.konsisttest.assertions
 import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import com.lemonappdev.konsist.api.declaration.KoFileDeclaration
 import com.lemonappdev.konsist.api.verify.assertTrue
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.SCREENSHOT_TEST_CLASS_NAME_SUFFIX
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageAny
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageInternal
 import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
