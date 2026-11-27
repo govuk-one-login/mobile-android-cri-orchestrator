@@ -37,7 +37,7 @@ runs:
         echo "AAB path = $AAB_PATH"
                 
         export SUPPLY_UPLOAD_MAX_RETRIES=5
-        bundle exec fastlane distribute \
+        bundle exec fastlane android distribute \
           app_id: "$INPUT_APP_IDS" \
           json_key: "${INPUT_JSON_KEY_PATH}" \
           aab_path: ${AAB_PATH}
