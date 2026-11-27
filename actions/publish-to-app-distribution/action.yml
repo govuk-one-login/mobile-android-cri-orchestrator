@@ -27,7 +27,7 @@ runs:
       run: |
         BUNDLES=($(echo $INPUT_AAB_PATHS | tr ";" "\n"))
         
-        BUNDLE = ${BUNDLES[1]}
+        BUNDLE=${BUNDLES[1]}
         echo "Bundle = $BUNDLE" 
         IFS=: VER=(${BUNDLE})
         
