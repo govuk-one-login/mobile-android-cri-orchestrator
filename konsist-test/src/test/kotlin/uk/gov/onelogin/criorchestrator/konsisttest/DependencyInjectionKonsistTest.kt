@@ -7,7 +7,6 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.ContributesTo
 import org.junit.jupiter.api.Test
-import uk.gov.onelogin.criorchestrator.konsisttest.assertions.classesDoNotUseProvidedAnnotations
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 
