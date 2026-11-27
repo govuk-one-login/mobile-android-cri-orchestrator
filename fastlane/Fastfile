@@ -21,7 +21,7 @@ platform :android do
     firebase_app_distribution(
         app: options[:app_id],
         service_credentials_file: options[:json_key],
-        android_artifact_type: "aab",
+        android_artifact_type: "AAB",
         android_artifact_path: options[:aab_path],
         testers: "chris.donnelly1@digital.cabinet-office.gov.uk, ctest7832@gmail.com",
         release_notes: "Release notes will go here",
