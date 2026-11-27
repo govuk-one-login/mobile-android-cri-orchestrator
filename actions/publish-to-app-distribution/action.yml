@@ -32,9 +32,9 @@ runs:
         IFS=: VER=(${BUNDLE})
         
         FLAVOR=${VER[0]}
-        AAB_PATH=${VER[1]}
+        AAB_PATH="../${VER[1]}"
         echo "Flavor = $FLAVOR"
-        echo "AAB path = $AAB_PATH"
+        echo "AAB path for fastlane = $AAB_PATH"
                 
         export SUPPLY_UPLOAD_MAX_RETRIES=5
         bundle exec fastlane android distribute \
