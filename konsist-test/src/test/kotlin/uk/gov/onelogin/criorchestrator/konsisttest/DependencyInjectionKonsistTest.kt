@@ -1,7 +1,5 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.ext.list.classes
 import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
 import com.lemonappdev.konsist.api.verify.assertEmpty
 import dev.zacsweers.metro.ContributesBinding
@@ -9,7 +7,7 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.ContributesTo
 import org.junit.jupiter.api.Test
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.classesWithinPackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
 
 class DependencyInjectionKonsistTest {
@@ -19,18 +17,13 @@ class DependencyInjectionKonsistTest {
 
     @Test
     fun `library modules do not contribute graph bindings`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(libraryPackage)
-            .classes()
+        defaultScope
+            .classesWithinPackage(libraryPackage)
             .withAnnotationOf(
-                listOf(
-                    ContributesTo::class,
-                    ContributesBinding::class,
-                    ContributesIntoSet::class,
-                    ContributesIntoMap::class,
-                ),
+                ContributesTo::class,
+                ContributesBinding::class,
+                ContributesIntoSet::class,
+                ContributesIntoMap::class,
             ).assertEmpty(
                 additionalMessage =
                     """

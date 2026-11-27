@@ -1,48 +1,34 @@
 package uk.gov.onelogin.criorchestrator.konsisttest
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.Konsist.scopeFromTest
-import com.lemonappdev.konsist.api.verify.assertTrue
+import com.lemonappdev.konsist.api.declaration.KoClassDeclaration
 import org.junit.jupiter.api.Test
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.hasPackageMatching
-import uk.gov.onelogin.criorchestrator.konsisttest.filters.withPackageMatching
+import uk.gov.onelogin.criorchestrator.konsisttest.assertions.assertAllClassesMatchAtLeastOneOf
+import uk.gov.onelogin.criorchestrator.konsisttest.assertions.assertDoesNotImport
+import uk.gov.onelogin.criorchestrator.konsisttest.assertions.assertHasPackageMatching
+import uk.gov.onelogin.criorchestrator.konsisttest.assertions.assertPackagesDoNotContain
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageAny
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageApi
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageInternal
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackageInternalApi
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.featurePackagePublicApi
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.libraryPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.filters.potentialFeaturePackage
 import uk.gov.onelogin.criorchestrator.konsisttest.scopes.defaultScope
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.filesWithinPackage
+import uk.gov.onelogin.criorchestrator.konsisttest.scopes.productionCodeScope
 
 class ModuleArchitectureTest {
-    companion object {
-        private val libraryPackage = """uk\.gov\..*\.libraries\..*""".toRegex()
-        private val featurePackageAny =
-            """(uk\.gov\..*\.features\..*)\.(?:internal|internalapi|publicapi|)(?:\..*|$)""".toRegex()
-        private val featurePackagePublicApi =
-            """(uk\.gov\..*\.features\..*)\.publicapi(?:\..*|$)""".toRegex()
-        private val featurePackageInternalApi =
-            """(uk\.gov\..*\.features\..*)\.internalapi(?:\..*|$)""".toRegex()
-        private val featurePackageInternal =
-            """(uk\.gov\..*\.features\..*)\.internal(?:\..*|$)""".toRegex()
-        private val featurePackageApi =
-            """(uk\.gov\..*\.features\..*)\.(:?internalapi|publicapi)(?:\..*|$)""".toRegex()
-    }
 
     @Test
     fun `feature modules have valid package names`() {
-        val potentialFeaturePackage =
-            "uk\\.gov\\..*\\.features\\..*".toRegex()
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(potentialFeaturePackage)
-            .assertTrue {
-                it.hasPackageMatching(featurePackageAny)
-            }
+        defaultScope.filesWithinPackage(potentialFeaturePackage)
+            .assertHasPackageMatching(featurePackageAny)
     }
 
     @Test
     fun `feature modules do not depend directly on other features internals`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackageAny)
-            .assertTrue(
+        defaultScope.filesWithinPackage(featurePackageAny)
+            .assertPackagesDoNotContain(
                 additionalMessage =
                     """
                     Features shouldn't know about other features internals.
@@ -52,92 +38,59 @@ class ModuleArchitectureTest {
                     API of the feature and the implementation should live in one of its feature's
                     API modules.
                     """.trimIndent(),
-            ) {
-                val thisFeaturePackage =
-                    featurePackageAny.find(it.packagee!!.text)!!.groupValues[1]
-                it.imports
-                    .filter {
-                        !it.hasNameStartingWith(thisFeaturePackage)
-                    }.none {
-                        it.hasNameMatching(featurePackageInternal)
-                    }
-            }
+                packagesToSearch = featurePackageAny,
+                disallowedPackage = featurePackageInternal,
+            )
     }
 
     @Test
     fun `public api modules do not depend on internal api or internal implementation modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackagePublicApi)
-            .assertTrue(
+        defaultScope.filesWithinPackage(featurePackagePublicApi)
+            .assertDoesNotImport(
                 additionalMessage =
                     """
                     Public API modules shouldn't know about internals.
                     Internal API modules and internal implementation modules may know about public APIs but not 
                     the other way around.
                     """.trimIndent(),
-            ) {
-                it.imports
-                    .none {
-                        it.hasNameMatching(featurePackageInternal) ||
-                            it.hasNameMatching(featurePackageInternalApi)
-                    }
-            }
+                disallowedPackages = listOf(featurePackageInternal, featurePackageInternalApi),
+            )
     }
 
     @Test
     fun `internal api modules do not depend on internal implementation modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(featurePackageInternalApi)
-            .assertTrue(
+        defaultScope.filesWithinPackage(featurePackageInternalApi)
+            .assertDoesNotImport(
                 additionalMessage =
                     """
                     Internal API modules shouldn't know about internal implementations.
                     Internal implementation modules may know about the internal APIs but not the other way around.
                     """.trimIndent(),
-            ) {
-                it.imports
-                    .none {
-                        it.hasNameMatching(featurePackageInternal)
-                    }
-            }
+                disallowedPackage = featurePackageInternal,
+            )
     }
 
     @Test
     fun `api modules do not contain implementations`() {
-        Konsist
-            .defaultScope()
-            .minus(scope = scopeFromTest())
-            .files
-            .withPackageMatching(featurePackageApi)
-            .assertTrue(
+        productionCodeScope
+            .filesWithinPackage(featurePackageApi)
+            .assertAllClassesMatchAtLeastOneOf(
                 additionalMessage =
                     """
                     Implementations should live in a feature's internal module.
                     Only interfaces data structures should be exposed through API modules.
                     """.trimIndent(),
-            ) {
-                it.classes().all {
-                    it.hasAbstractModifier ||
-                        it.hasDataModifier ||
-                        it.hasEnumModifier
-                }
-            }
+                validations = listOf(
+                    KoClassDeclaration::hasAbstractModifier,
+                    KoClassDeclaration::hasDataModifier,
+                    KoClassDeclaration::hasEnumModifier,
+                ),
+            )
     }
 
     @Test
     fun `library modules do not depend on feature modules`() {
-        Konsist
-            .defaultScope()
-            .files
-            .withPackageMatching(libraryPackage)
-            .assertTrue {
-                it.imports.none {
-                    it.hasNameMatching(featurePackageAny)
-                }
-            }
+        defaultScope.filesWithinPackage(libraryPackage)
+            .assertDoesNotImport(featurePackageAny)
     }
 }
